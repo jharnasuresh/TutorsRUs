@@ -7,17 +7,17 @@ export const Login = (props) => {
         console.log(user);
     }
     return (
-        <>
-        <form onSubmit={handleSubmit}>
+        <div className = "auth-form-container">
+        <form classname="login-form" onSubmit={handleSubmit}>
             <label htmlFor="username:">username</label>
             <input value={user} onChange={(e) => setUsername(e.target.value)}type="username" placeholder="enter your username" id="username" name="username"/>
             <br></br>
-            <label htmlFor="password:">password</label>
+            <label for="password:">password</label>
             <input value={pass} onChange={(e) => setPassword(e.target.value)}type="password" placeholder="enter your password" id="password" name="password"/>
             <br></br>
-            <button type="submit"> Log In</button>
+            <button type = "submit">Log In</button>
         </form>
-        <button onClick={() => props.onFormSwitch('register')}> Don't have an account? Register here. </button>
-        </>
+        <button className="link-btn" onClick={() => props.onFormSwitch('register')}>Don't have an account? Register here. </button>
+     </div>
     )
 }
