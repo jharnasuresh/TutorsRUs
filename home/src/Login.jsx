@@ -8,11 +8,12 @@ export const Login = (props) => {
     }
     return (
         <div className = "auth-form-container">
+            <h2>Login</h2>
         <form classname="login-form" onSubmit={handleSubmit}>
-            <label htmlFor="username:">username</label>
+            <label htmlFor="username:">Username: </label>
             <input value={user} onChange={(e) => setUsername(e.target.value)}type="username" placeholder="enter your username" id="username" name="username"/>
             <br></br>
-            <label for="password:">password</label>
+            <label for="password:">Password: </label>
             <input value={pass} onChange={(e) => setPassword(e.target.value)}type="password" placeholder="enter your password" id="password" name="password"/>
             <br></br>
             <button type = "submit">Log In</button>
