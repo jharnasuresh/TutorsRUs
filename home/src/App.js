@@ -10,11 +10,11 @@ function App() {
   }
   return (
     <div className="App">
+      <img src = "/Images/TutorsRUs_nobackground.png" alt = ""/>
       {
         //ternary operator if currentForm = login then return login screen else display register page
         currentForm === "login" ? <Login onFormSwitch={toggleForm}/> : <Register onFormSwitch={toggleForm}/>
       }
-
     </div>
   );
 }
