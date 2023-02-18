@@ -9,12 +9,13 @@ export const Verification = (props) => {
 
     return (
         <div className = "verify">
+            <h2>Verify Your Email</h2>
             <form className = "verify-page" onSubmit={handleSubmit}>
-            <label htmlFor="code:">Enter Your 4-digit Verification Code: </label>
-            <input value={code} onChange={(e) => setCode(e.target.value)}type="code" placeholder="enter your code" id="code" name="code"/>
+                <label htmlFor="code:">Enter Your 4-digit Verification Code: </label>
+                <input value={code} onChange={(e) => setCode(e.target.value)}type="code" placeholder="enter your code" id="code" name="code"/>
+                <button type = "submit">Submit</button>
             </form>
             <button type = "submit" className="verify-btn" onClick={() => props.onFormSwitch('register')}>Back </button>
         </div>
     )
-
 }

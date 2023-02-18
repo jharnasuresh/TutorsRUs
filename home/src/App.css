@@ -30,6 +30,7 @@ img {
   background-color: rgba(255, 255, 255, 0.365);
 }
 
+
 label {
   text-align: left;
   padding: 0.25rem 0;
@@ -56,4 +57,6 @@ button {
   color: black;
   text-decoration: underline;
 }
+
+
 
