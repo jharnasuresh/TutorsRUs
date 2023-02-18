@@ -6,14 +6,14 @@
   min-height: 100vh;
   align-items: center;
   justify-content: center;
-  color: rgb(47, 47, 47);
+  color: black;
   background-image: linear-gradient(79deg, #be8dff, #fffdba 48%, #88caff);
 
 }
 
 img {
   position: relative;
-  top: -300px;
+  top: -350px;
   left: 410px;
   height: 100px;
 }
@@ -25,9 +25,9 @@ img {
 
 .auth-form-container {
   padding: 5rem;
-  border: 2px solid rgb(47, 47, 47);
+  border: 2px solid black;
   border-radius: 10px;
-  background-color: rgb(232, 250, 255);
+  background-color: rgba(255, 255, 255, 0.365);
 }
 
 label {
@@ -48,7 +48,7 @@ button {
   padding: 20px;
   border-radius: 10px;
   cursor: pointer;
-  color: rgb(47, 47, 47);
+  color: black;
 }
 
 .link-btn {
@@ -56,37 +56,4 @@ button {
   color: black;
   text-decoration: underline;
 }
-/* .App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-} */
