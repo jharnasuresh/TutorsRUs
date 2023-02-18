@@ -4,12 +4,26 @@ export const Register = (props) => {
     const [lastName, setLastName] = useState('');
     const [user, setUsername] = useState('');
     const [pass, setPassword] = useState('');
+    const [done, setDone] = useState(false);
     
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(user);
+        
         const requestData = JSON.stringify({ firstName, lastName, user, pass });
-        const headers = { "content-type": "application/json" };
+        const headers = { "Content-Type": "application/json", 'Accept': 'application/json' };
+
+        async function getResponse() {
+            const response = await fetch('http://localhost:3001/register', { method: 'POST', body: requestData, headers });
+            await response.json();
+            setDone(true)
+          }
+      
+          getResponse();
+
+          if (done) {
+            return console.log("hi");
+          }
         
     }
     return (
