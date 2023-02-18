@@ -1,4 +1,5 @@
 const express = require("express");
+const { db } = require('./firebase.js')
 
 const PORT = process.env.PORT || 3001;
 
