@@ -8,6 +8,9 @@ export const Register = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(user);
+        const requestData = JSON.stringify({ firstName, lastName, user, pass });
+        const headers = { "content-type": "application/json" };
+        
     }
     return (
         <div className = "auth-form-container">
