@@ -4,6 +4,7 @@ export const Login = (props) => {
     const [pass, setPassword] = useState('');
     const handleSubmit = (e) => {
         e.preventDefault();
+        
         this.props.history.push('/Start')
         console.log(user);
         const requestData = JSON.stringify({ "username": user, "pass": pass });
@@ -17,6 +18,7 @@ export const Login = (props) => {
         }
     
         getResponse();
+        
 
         return;
     }
