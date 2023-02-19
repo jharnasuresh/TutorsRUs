@@ -4,12 +4,10 @@ export const Login = (props) => {
     const [pass, setPassword] = useState('');
     const handleSubmit = (e) => {
         e.preventDefault();
-        
-        this.props.history.push('/Start')
         console.log(user);
         const requestData = JSON.stringify({ "username": user, "pass": pass });
         const headers = { "content-type": "application/json" };
-
+        props.onFormSwitch('start')
         async function getResponse() {
             const response = await fetch('http://localhost:3001/login', { method: 'POST', body: requestData, headers: headers });
             console.log("sup")
@@ -33,7 +31,7 @@ export const Login = (props) => {
             <input value={pass} onChange={(e) => setPassword(e.target.value)}type="password" placeholder="enter your password" id="password" name="password"/>
             <br></br>
 
-            <button type = "submit" onClick={() => props.onFormSwitch('start')}>Log In</button>
+            <button type = "submit" onSubmit={handleSubmit}>Log In</button>
 
         </form>
         <button className="link-btn" onClick={() => props.onFormSwitch('register')}>Don't have an account? Register here. </button>
