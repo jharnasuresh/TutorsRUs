@@ -10,7 +10,7 @@ const bcrypt = require("bcrypt") //packate bcrypt imported
 const PORT = process.env.PORT || 3001;
 //const nodemailer = require("nodemailer");
 const admin = require("firebase-admin");
-//const crypto = require('crypto');
+const crypto = require('crypto');
 console.log("library imports work");
 const users = [] //temporarily storing in array
 app.use(express.urlencoded({extended:false}))
