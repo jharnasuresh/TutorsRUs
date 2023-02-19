@@ -9,22 +9,26 @@ export const Register = (props) => {
     
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(user);
+        console.log(user + " " + firstName + " " + lastName + " " + pass + " " + email);
         
-        const requestData = JSON.stringify({ firstName, lastName, user, pass });
-        const headers = { "Content-Type": "application/json", 'Accept': 'application/json' };
+        const requestData = JSON.stringify({ "firstName": firstName, "lastName": lastName, "user": user, "pass": pass, "email": email });
+        const headers = { "content-type": "application/json" };
 
         async function getResponse() {
-            const response = await fetch('http://localhost:3001/register', { method: 'POST', body: requestData, headers });
+            setDone(false)
+            const response = await fetch('http://localhost:3001/signup', { method: 'POST', body: requestData, headers: headers });
+            console.log("sup")
             await response.json();
+            console.log("sup2")
             setDone(true)
-          }
-      
-          getResponse();
+        }
+    
+        getResponse();
 
-          if (done) {
-            return console.log("hi");
-          }
+        if (done) {
+            console.log("hi");
+        }
+        return;
         
     }
     return (
@@ -39,7 +43,7 @@ export const Register = (props) => {
             <input value={lastName} onChange={(e) => setLastName(e.target.value)}type="lastName" placeholder="enter your last name" id="lastName" name="lastName"/>
             <br></br>
             <label htmlFor="email:">Email: </label>
-            <input value={lastName} onChange={(e) => setEmail(e.target.value)}type="email" placeholder="enter your email" id="email" name="email"/>
+            <input value={email} onChange={(e) => setEmail(e.target.value)}type="email" placeholder="enter your email" id="email" name="email"/>
             <br></br>
             <label htmlFor="username:">Username: </label>
             <input value={user} onChange={(e) => setUsername(e.target.value)}type="username" placeholder="enter your username" id="username" name="username"/>
@@ -47,7 +51,7 @@ export const Register = (props) => {
             <label htmlFor="password:">Password: </label>
             <input value={pass} onChange={(e) => setPassword(e.target.value)}type="password" placeholder="enter your password" id="password" name="password"/>
             <br></br>
-            <button type="submit" className = "verify-btn" onClick={() => props.onFormSwitch('verify')}> Register </button>
+            <button type="submit" onSubmit={handleSubmit}> Register </button>
         </form>
         <button className="link-btn" onClick={() => props.onFormSwitch('login')}> Already have an account? Login here. </button>
 

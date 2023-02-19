@@ -5,6 +5,19 @@ export const Login = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(user);
+        const requestData = JSON.stringify({ "username": user, "pass": pass });
+        const headers = { "content-type": "application/json" };
+
+        async function getResponse() {
+            const response = await fetch('http://localhost:3001/login', { method: 'POST', body: requestData, headers: headers });
+            console.log("sup")
+            await response.json();
+            console.log("sup2")
+        }
+    
+        getResponse();
+
+        return;
     }
     return (
         <div className = "auth-form-container">
