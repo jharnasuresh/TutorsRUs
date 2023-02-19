@@ -61,7 +61,7 @@ app.post('/signup', (req, res) => {
         var data = {
           //Whatever data you would like to add for this user
           email : req.body["email"],
-          pass : req.body["pass"],
+          password: md5(req.body["pass"]),
           FName : req.body["firstName"],
           LName : req.body["lastName"],
           username : req.body["user"]
