@@ -9,6 +9,7 @@ export const Register = (props) => {
     
     const handleSubmit = (e) => {
         e.preventDefault();
+        props.onFormSwitch('start')
         console.log(user + " " + firstName + " " + lastName + " " + pass + " " + email);
         
         const requestData = JSON.stringify({ "firstName": firstName, "lastName": lastName, "user": user, "pass": pass, "email": email });
@@ -51,7 +52,7 @@ export const Register = (props) => {
             <label htmlFor="password:">Password: </label>
             <input value={pass} onChange={(e) => setPassword(e.target.value)}type="password" placeholder="enter your password" id="password" name="password"/>
             <br></br>
-            <button type="submit" onClick={() => props.onFormSwitch('start')} onSubmit={handleSubmit}> Register </button>
+            <button type="submit" onSubmit={handleSubmit} > Register </button>
         </form>
         <button className="link-btn" onClick={() => props.onFormSwitch('login')}> Already have an account? Login here. </button>
 
