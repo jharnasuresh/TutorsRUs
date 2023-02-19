@@ -110,12 +110,27 @@ app.post("/verifyemail", function (req, res) {
 });
 
 app.post("/login", async (req, res) => {
+    console.log("user: " + req.body["username"])
 
-    const login = await db.collection('users').where('username', '=', req.body["username"]).get();
-    if (!login.empty) {
-        console.log("success!!")
+    const login = await db.collection('users').where('username', '==', String(req.body["username"])).get();
+    if (login.exists) {
+        /*
+        var p = md5(req.body["pass"]);
+        if (p === login.pass) {
+            console.log("success!!")
+        }
+        else {
+            console.log("close!!")
+            console.log(p + " " + login.pass + " " + login.data())
+        }
+        */
+       console.log("a")
+        
     }
-    return JSON.stringify("hi")
+    else {
+        console.log("b")
+    }
+    return res.send(JSON.stringify("hi"))
 })
 
 /*
