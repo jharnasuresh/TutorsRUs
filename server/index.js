@@ -41,9 +41,7 @@ app.listen(PORT, () => {
     console.log(`Server listening on ${PORT}`);
 });
 
-app.post("/register", (req, res) => {
+app.post("/register", async (req, res) => {
     console.log("here");
-    res.json = db.collection('Users').doc(req.body.user).set(req.body);
-    return res.json();
-
+    await db.collection('Users').doc().set(req.body);
 });
