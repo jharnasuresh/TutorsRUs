@@ -17,7 +17,6 @@ export const Register = (props) => {
         setLengthErr(false)
         setReqErr(false)
         
-        console.log(user + " " + firstName + " " + lastName + " " + pass + " " + email);
         
         const requestData = JSON.stringify({ "firstName": firstName, "lastName": lastName, "user": user, "pass": pass, "email": email });
         const headers = { "content-type": "application/json" };
@@ -73,7 +72,7 @@ export const Register = (props) => {
                 <ul style={{ color: 'red' }}>
                     <li>One capital letter</li>
                     <li>One number</li>
-                    <li>And one special character (#$+%@)</li>
+                    <li>And one special character (#$+%@!)</li>
                 </ul></>
                 ): <span></span>
             }

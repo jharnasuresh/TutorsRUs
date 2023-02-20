@@ -20,7 +20,6 @@ const cors = require('cors')
 app.use(cors())
 
 app.post('/signup', async (req, res) => {
-    console.log("sign up: email = " + req.body["email"])
     var username = req.body.user;
     var useremail = req.body.email;
     var userpassword = String(req.body.pass);
@@ -40,7 +39,7 @@ app.post('/signup', async (req, res) => {
     if (userpassword.length <= 8) {
         return res.send(JSON.stringify("not long enough"))
     }
-    if (!userpassword.includes("#") && userpassword.includes("$") && userpassword.includes("+") && userpassword.includes("%") && userpassword.includes("@")) {
+    if (!(/[!#$+%@]/.test(userpassword))) {
         return res.send(JSON.stringify("requirements"))
     }
     if (!(/\d/.test(userpassword))) {
