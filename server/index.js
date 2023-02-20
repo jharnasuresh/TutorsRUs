@@ -120,12 +120,12 @@ app.post("/login", async (req, res) => {
     if (!login.empty) {
         var doc = login.docs[0];
        console.log("a " + doc.get("password"))
-       return res.send(JSON.stringify("hi1"))
+       return res.send(JSON.stringify("success"))
        //it works!
         
     }
     else {
-        console.log("b")
+        console.log("error")
         // not in databse, send error
     }
     //console.log("none " + md5(req.body["pass"]) + " " + )
