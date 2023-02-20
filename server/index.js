@@ -112,27 +112,21 @@ app.post("/verifyemail", function (req, res) {
 app.post("/login", async (req, res) => {
     console.log("user: " + req.body["username"])
 
-    const login = await db.collection('users').where('username', '==', String(req.body["username"])).get();
-    if (login.exists) {
-        
-       console.log("a")
+    const login = await db.collection('users').where('username', '==', req.body["username"]).where('password', '==', md5(req.body["pass"])).get();
+    if (!login.empty) {
+        var doc = login.docs[0];
+       console.log("a " + doc.get("password"))
+       //
         
     }
     else {
         console.log("b")
     }
+    //console.log("none " + md5(req.body["pass"]) + " " + )
     return res.send(JSON.stringify("hi"))
 })
 
-/*
-app.post("/register", async (req, res) => {
-    console.log("here");
-    await db.collection('Users').doc().set(req.body);
-});
-*/
 
-
-
-    function md5(string) {
-        return crypto.createHash('md5').update(string).digest('hex');
-    }
+function md5(string) {
+    return crypto.createHash('md5').update(string).digest('hex');
+}
