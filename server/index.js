@@ -116,15 +116,19 @@ app.listen(PORT, () => {
 app.post("/login", async (req, res) => {
     console.log("user: " + req.body["username"])
 
-    const login = await db.collection('users').where('username', '==', String(req.body["username"])).get();
-    if (login.exists) {
-        
-       console.log("a")
+    const login = await db.collection('users').where('username', '==', req.body["username"]).where('password', '==', md5(req.body["pass"])).get();
+    if (!login.empty) {
+        var doc = login.docs[0];
+       console.log("a " + doc.get("password"))
+       return res.send(JSON.stringify("hi1"))
+       //it works!
         
     }
     else {
         console.log("b")
+        // not in databse, send error
     }
+    //console.log("none " + md5(req.body["pass"]) + " " + )
     return res.send(JSON.stringify("hi"))
 })
 
@@ -177,6 +181,6 @@ transporter.sendMail(mailConfigurations, function(error, info){
 });
 }
 
-    function md5(string) {
-        return crypto.createHash('md5').update(string).digest('hex');
-    }
+function md5(string) {
+    return crypto.createHash('md5').update(string).digest('hex');
+}
