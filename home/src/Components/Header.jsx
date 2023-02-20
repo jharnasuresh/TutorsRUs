@@ -1,5 +1,5 @@
-import React, {useState} from "react"
-import './css/Main.css'
+import React, { Component } from "react"
+
 
 class Header extends Component {
     render () {

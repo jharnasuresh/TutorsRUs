@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import './css/Main.css'
 
 class CourseInfo extends Component {
     render() {

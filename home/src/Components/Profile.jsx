@@ -1,8 +1,7 @@
 import React from 'react';
-import './App.css';
-import Header from './Components/Header'
-import About from './Components/About'
-import CourseInfo from './Components/CourseInfo'
+import Header from './Header';
+import About from './About';
+import CourseInfo from './CourseInfo';
 
 function Profile() {
     return (
@@ -13,7 +12,7 @@ function Profile() {
         <br />
         <CourseInfo />
       </div>
-  );
+    );
 }
 
 export default Profile;
