@@ -4,7 +4,7 @@ import {Login} from "./Login";
 import {Register} from "./Register";
 import {Verification} from "./Verification"
 import {Start} from "./Start"
-import Tabs from "./Components/Tabs";
+import {Tabs} from "./Components/Tabs";
 
 function App() {
   const [currentForm, setCurrentForm] = useState('login');
