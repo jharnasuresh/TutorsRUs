@@ -1,18 +1,19 @@
 //libraries
 const express = require("express");
 const { db } = require('./firebase.js')
-
+//const toSendToken = require('./tokenSender.js');
 const app = express();
 const bp = require('body-parser')
 app.use(bp.json())
 app.use(bp.urlencoded({ extended: true }))
 const bcrypt = require("bcrypt") //packate bcrypt imported
 const PORT = process.env.PORT || 3001;
-//const nodemailer = require("nodemailer");
+    const nodemailer = require('nodemailer');
+const jwt = require('jsonwebtoken');
 const admin = require("firebase-admin");
 const crypto = require('crypto');
 console.log("library imports work");
-const users = [] //temporarily storing in array
+//const users = [] //temporarily storing in array
 app.use(express.urlencoded({extended:false}))
 
 const cors = require('cors')
@@ -69,6 +70,7 @@ app.post('/signup', (req, res) => {
 
         var setDoc = db.collection('users').add(data);
         var userIDHash = md5(userRecord.uid);
+        sendToken();
         //adding hashed userid and userid to Email-Verifications collection
         
        
@@ -90,7 +92,9 @@ app.listen(PORT, () => {
     console.log(`Server listening on ${PORT}`);
 });
 
-app.post("/verifyemail", function (req, res) {
+/*app.post("/verifyemail", function (req, res) {
+
+
     //res.render("profile.html");
     var email = req.body.email;
     var pass = req.body.pass;
@@ -107,7 +111,7 @@ app.post("/verifyemail", function (req, res) {
           console.log("success")
         }
     })
-});
+});*/
 
 app.post("/login", async (req, res) => {
 
@@ -125,7 +129,47 @@ app.post("/register", async (req, res) => {
 });
 */
 
+function sendToken () {
 
+console.log("send token entered");
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: secure_configuration.EMAIL_USERNAME,
+        pass: secure_configuration.PASSWORD
+    }
+});
+  
+const token = jwt.sign({
+        data: 'Token Data'  ,
+    }, 'ourSecretKey', { expiresIn: '10m' }  
+);    
+  
+const mailConfigurations = {
+  
+    // It should be a string of sender/server email
+    from: 'no-reply@gmail.com',
+  
+    to: req.body.email,
+  
+    // Subject of Email
+    subject: 'Email Verification',
+      
+    // This would be the text of email body
+    text: `Hi! There, You have recently visited 
+           our website and entered your email.
+           Please follow the given link to verify your email
+           http://localhost:3000/verify/${token} 
+           Thanks`
+      
+};
+  
+transporter.sendMail(mailConfigurations, function(error, info){
+    if (error) throw Error(error);
+    console.log('Email Sent Successfully');
+    console.log(info);
+});
+}
 
     function md5(string) {
         return crypto.createHash('md5').update(string).digest('hex');
