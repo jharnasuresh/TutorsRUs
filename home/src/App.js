@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import './App.css';
 import {Login} from "./Login";
 import {Register} from "./Register";
-import {Verification} from "./Verification";
+import {Verification} from "./Verification"
 import {Start} from "./Start"
+import Tabs from "./Components/Tabs";
 
 function App() {
   const [currentForm, setCurrentForm] = useState('login');
@@ -13,8 +14,10 @@ function App() {
  
   return (
     <div className="App">
+      
       <img src = "/Images/TutorsRUs_nobackground.png" alt = ""/>
       {
+        
         //ternary operator if currentForm = login then return login screen else display register page
         //currentForm === "login" ? <Login onFormSwitch={toggleForm}/> : <Register onFormSwitch={toggleForm}/>
         currentForm === "login" ? <Login onFormSwitch={toggleForm}/> 
