@@ -129,7 +129,7 @@ app.post("/login", async (req, res) => {
         // not in databse, send error
     }
     //console.log("none " + md5(req.body["pass"]) + " " + )
-    return res.send(JSON.stringify("hi"))
+    return res.send(JSON.stringify("error"))
 })
 
 /*
