@@ -21,7 +21,7 @@ export const Login = (props) => {
             const response = await fetch('http://localhost:3001/login', { method: 'POST', body: requestData, headers: headers });
             var r = await response.json();
             console.log(r)
-            if (r === "hi") {
+            if (r === "error") {
                 console.log("error");
                 setShowErr(true)
 
