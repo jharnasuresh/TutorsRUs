@@ -7,11 +7,15 @@ export const Register = (props) => {
     const [pass, setPassword] = useState('');
     const [userErr, setUserErr] = useState(false);
     const [emailErr, setEmailErr] = useState(false);
+    const [lengthErr, setLengthErr] = useState(false);
+    const [reqErr, setReqErr] = useState(false);
     
     const handleSubmit = (e) => {
         e.preventDefault();
         setEmailErr(false)
         setUserErr(false)
+        setLengthErr(false)
+        setReqErr(false)
         
         console.log(user + " " + firstName + " " + lastName + " " + pass + " " + email);
         
@@ -31,6 +35,14 @@ export const Register = (props) => {
                 setUserErr(true)
                 
             }
+            else if (r === "not long enough") {
+                console.log("not long enough")
+                setLengthErr(true)
+            }
+            else if (r === "requirements") {
+                console.log("requirements")
+                setReqErr(true)
+            }
             else {
                 console.log("success yay")
                 props.onFormSwitch('start')
@@ -48,10 +60,22 @@ export const Register = (props) => {
         <div className = "auth-form-container">
             <h2>Register</h2>
             {
-                userErr ? (<p style={{color:'red'}}>That username is already taken. Try Again.</p>): <p></p>
+                userErr ? (<p style={{color:'red'}}>That username is already taken. Try Again.</p>): <span></span>
             }
             {
-                emailErr ? (<p style={{color:'red'}}>That email is already taken. Try Again.</p>): <p></p>
+                emailErr ? (<p style={{color:'red'}}>That email is already taken. Try Again.</p>): <span></span>
+            }
+            {
+                lengthErr ? (<p style={{color:'red'}}>Your password is not long enough. It must be at least 8 characters.</p>): <span></span>
+            }
+            {
+                reqErr ? (<><p style={{ color: 'red' }}>Your password must include at least:</p>
+                <ul style={{ color: 'red' }}>
+                    <li>One capital letter</li>
+                    <li>One number</li>
+                    <li>And one special character (#$+%@)</li>
+                </ul></>
+                ): <span></span>
             }
 
         <form className="register-form" method = "POST" onSubmit={handleSubmit}>
