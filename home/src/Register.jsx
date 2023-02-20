@@ -5,36 +5,54 @@ export const Register = (props) => {
     const [email, setEmail] = useState('');
     const [user, setUsername] = useState('');
     const [pass, setPassword] = useState('');
-    const [done, setDone] = useState(false);
+    const [userErr, setUserErr] = useState(false);
+    const [emailErr, setEmailErr] = useState(false);
     
     const handleSubmit = (e) => {
         e.preventDefault();
-        props.onFormSwitch('start')
+        setEmailErr(false)
+        setUserErr(false)
+        
         console.log(user + " " + firstName + " " + lastName + " " + pass + " " + email);
         
         const requestData = JSON.stringify({ "firstName": firstName, "lastName": lastName, "user": user, "pass": pass, "email": email });
         const headers = { "content-type": "application/json" };
 
         async function getResponse() {
-            setDone(false)
             const response = await fetch('http://localhost:3001/signup', { method: 'POST', body: requestData, headers: headers });
-            console.log("sup")
-            await response.json();
-            console.log("sup2")
-            setDone(true)
+            var r = await response.json();
+            if (r === "email is taken") {
+                console.log("email err")
+                setEmailErr(true)
+
+
+            } else if (r === "username is taken") {
+                console.log("user error")
+                setUserErr(true)
+                
+            }
+            else {
+                console.log("success yay")
+                props.onFormSwitch('start')
+
+            }
         }
+
     
         getResponse();
 
-        if (done) {
-            console.log("hi");
-        }
         return;
         
     }
     return (
         <div className = "auth-form-container">
             <h2>Register</h2>
+            {
+                userErr ? (<p style={{color:'red'}}>That username is already taken. Try Again.</p>): <p></p>
+            }
+            {
+                emailErr ? (<p style={{color:'red'}}>That email is already taken. Try Again.</p>): <p></p>
+            }
 
         <form className="register-form" method = "POST" onSubmit={handleSubmit}>
             <label htmlFor="firstName:">First Name: </label>

@@ -8,7 +8,7 @@ app.use(bp.json())
 app.use(bp.urlencoded({ extended: true }))
 const bcrypt = require("bcrypt") //packate bcrypt imported
 const PORT = process.env.PORT || 3001;
-    const nodemailer = require('nodemailer');
+const nodemailer = require('nodemailer');
 const jwt = require('jsonwebtoken');
 const admin = require("firebase-admin");
 const crypto = require('crypto');
@@ -19,35 +19,24 @@ app.use(express.urlencoded({extended:false}))
 const cors = require('cors')
 app.use(cors())
 
-app.post("/register", async (req, res) => {
-    try {
-        console.log("start try: pass = " + req.body.pass);
-
-        //const hashedPassword = await bcrypt.hash(pass)
-        /*users.push({
-            id: Date.now().toString(),
-            name : req.body.firstName,
-            //email:req.body.email,
-            password: hashedPassword
-        })
-        */
-
-
-
-        console.log("end try");
-        console.log(users);
-        res.redirect("/login")
-    } catch (e) {
-        console.log(e);
-        res.redirect("/register");
-    }
-})
-
-app.post('/signup', (req, res) => {
+app.post('/signup', async (req, res) => {
     console.log("sign up: email = " + req.body["email"])
     var username = req.body.user;
     var useremail = req.body.email;
     var userpassword = String(req.body.pass);
+
+    var emailTaken = await db.collection('users').where('email', '==', req.body["email"]).get()
+    var userTaken = await db.collection('users').where('username', '==', req.body["user"]).get()
+
+    if (!emailTaken.empty) {
+        //email is already taken
+        return res.send(JSON.stringify("email is taken"))
+    }
+    if (!userTaken.empty) {
+        //email is already taken
+        return res.send(JSON.stringify("username is taken"))
+    }
+
     //any verifications you would like to do
     admin.auth().createUser({ //Create user in authentication section of firebase
        email: useremail, //user email from request body
@@ -92,27 +81,6 @@ app.listen(PORT, () => {
     console.log(`Server listening on ${PORT}`);
 });
 
-/*app.post("/verifyemail", function (req, res) {
-
-
-    //res.render("profile.html");
-    var email = req.body.email;
-    var pass = req.body.pass;
-    var FName = req.body.FName;
-    var LName = req.body.LName;
-    var username = req.body.user;
-    console.log("slay")
-    db.ref("customPath").set(obj, function(error) {
-        if (error) {
-          // The write failed...
-          console.log("Failed with error: " + error)
-        } else {
-          // The write was successful...
-          console.log("success")
-        }
-    })
-});*/
-
 app.post("/login", async (req, res) => {
     console.log("user: " + req.body["username"])
 
@@ -132,12 +100,6 @@ app.post("/login", async (req, res) => {
     return res.send(JSON.stringify("error"))
 })
 
-/*
-app.post("/register", async (req, res) => {
-    console.log("here");
-    await db.collection('Users').doc().set(req.body);
-});
-*/
 
 function sendToken () {
 
