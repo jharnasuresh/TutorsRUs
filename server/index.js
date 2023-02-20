@@ -36,6 +36,19 @@ app.post('/signup', async (req, res) => {
         //email is already taken
         return res.send(JSON.stringify("username is taken"))
     }
+    
+    if (userpassword.length <= 8) {
+        return res.send(JSON.stringify("not long enough"))
+    }
+    if (!userpassword.includes("#") && userpassword.includes("$") && userpassword.includes("+") && userpassword.includes("%") && userpassword.includes("@")) {
+        return res.send(JSON.stringify("requirements"))
+    }
+    if (!(/\d/.test(userpassword))) {
+        return res.send(JSON.stringify("requirements"))
+    }
+    if (!(/[A-Z]/.test(userpassword))) {
+        return res.send(JSON.stringify("requirements"))
+    }
 
     //any verifications you would like to do
     admin.auth().createUser({ //Create user in authentication section of firebase
