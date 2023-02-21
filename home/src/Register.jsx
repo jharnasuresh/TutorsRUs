@@ -9,7 +9,16 @@ export const Register = (props) => {
     const [emailErr, setEmailErr] = useState(false);
     const [lengthErr, setLengthErr] = useState(false);
     const [reqErr, setReqErr] = useState(false);
-    
+    const [emptyFieldsErr, setEmptyFieldsErr] = useState(false);
+    /*const isFormValid = (e) => {
+        const {firstName, lastName, email, user, pass} = this.state
+      
+        return firstName && lastName && email && user && pass
+      }
+    const handleClick = (e) => {
+        e.currentTarget.disabled = true;
+        console.log('button clicked');
+      };*/
     const handleSubmit = (e) => {
         e.preventDefault();
         setEmailErr(false)
@@ -25,7 +34,11 @@ export const Register = (props) => {
         async function getResponse() {
             const response = await fetch('http://localhost:3001/signup', { method: 'POST', body: requestData, headers: headers });
             var r = await response.json();
-            if (r === "email is taken") {
+            if (firstName === '' || lastName === '' || email === '' || user === '' || pass === '') {
+                console.log("empty field err")
+                setEmptyFieldsErr(true)
+            }
+            else if (r === "email is taken") {
                 console.log("email err")
                 setEmailErr(true)
 
@@ -77,6 +90,9 @@ export const Register = (props) => {
                 </ul></>
                 ): <span></span>
             }
+             {
+                emptyFieldsErr ? (<p style={{color:'red'}}>Please fill out all fields before submitting.</p>): <span></span>
+            }
 
         <form className="register-form" method = "POST" onSubmit={handleSubmit}>
             <label htmlFor="firstName:">First Name: </label>
@@ -94,7 +110,7 @@ export const Register = (props) => {
             <label htmlFor="password:">Password: </label>
             <input value={pass} onChange={(e) => setPassword(e.target.value)}type="password" placeholder="enter your password" id="password" name="password"/>
             <br></br>
-            <button type="submit" onSubmit={handleSubmit} > Register </button>
+            <button type="submit" onSubmit={handleSubmit}  > Register </button>
         </form>
         <button className="link-btn" onClick={() => props.onFormSwitch('login')}> Already have an account? Login here. </button>
 
