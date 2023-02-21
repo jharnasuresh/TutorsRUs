@@ -41,7 +41,7 @@ export const Verification = (props) => {
             <form className = "verify-page" onSubmit={handleSubmit}>
                 <label htmlFor="code:">Enter Your 4-digit Verification Code: </label>
                 <input value={code} onChange={(e) => setCode(e.target.value)}type="code" placeholder="enter your code" id="code" name="code"/>
-                <button type = "submit">Submit</button>
+                <button type = "submit" className = "verSub">Submit</button>
             </form>
             <button type = "submit" className="verify-btn" onClick={() => props.onFormSwitch('register')}>Back </button>
         </div>

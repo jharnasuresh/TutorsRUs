@@ -1,5 +1,4 @@
 import React, { useState } from "react"
-import Popup from 'reactjs-popup';
 
 
 
@@ -42,7 +41,7 @@ export const Login = (props) => {
         <div className="auth-form-container">
             <h2>Login</h2>
             {
-                showErr ? (<p style={{color:'red'}}>Incorrect username or password. Try Again.</p>): <p></p>
+                showErr ? (<p style={{color:'red'}}>Incorrect username or password. Try Again.</p>): <span></span>
             }
             
             <form classname="login-form" onSubmit={handleSubmit}>
@@ -56,6 +55,7 @@ export const Login = (props) => {
                 <button type="submit" onSubmit={handleSubmit}>Log In</button>
 
             </form>
+            <button className="link-btn" onClick={() => props.onFormSwitch('profile')}>Profile. </button>
             <button className="link-btn" onClick={() => props.onFormSwitch('register')}>Don't have an account? Register here. </button>
         </div>
     )

@@ -45,6 +45,7 @@ const transport = nodemailer.createTransport(
         }
     });*/
 //---------------------------------------------------------------------------
+
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 console.log("library imports work");
@@ -86,6 +87,32 @@ app.post('/signup', (req, res) => {
         email:req.body.email,
         password: req.body
     }
+
+    var emailTaken = await db.collection('users').where('email', '==', req.body["email"]).get()
+    var userTaken = await db.collection('users').where('username', '==', req.body["user"]).get()
+
+    if (!emailTaken.empty) {
+        //email is already taken
+        return res.send(JSON.stringify("email is taken"))
+    }
+    if (!userTaken.empty) {
+        //email is already taken
+        return res.send(JSON.stringify("username is taken"))
+    }
+    
+    if (userpassword.length <= 8) {
+        return res.send(JSON.stringify("not long enough"))
+    }
+    if (!userpassword.includes("#") && userpassword.includes("$") && userpassword.includes("+") && userpassword.includes("%") && userpassword.includes("@")) {
+        return res.send(JSON.stringify("requirements"))
+    }
+    if (!(/\d/.test(userpassword))) {
+        return res.send(JSON.stringify("requirements"))
+    }
+    if (!(/[A-Z]/.test(userpassword))) {
+        return res.send(JSON.stringify("requirements"))
+    }
+    
     //any verifications you would like to do
     const userResponse = admin.auth().createUser({ //Create user in authentication section of firebase
        email: useremail, //user email from request body
@@ -199,13 +226,6 @@ app.listen(PORT, () => {
     console.log(`Server listening on ${PORT}`);
 });
 
-/*app.post('/verify', (req, res) => {
-
-
-    
-    
-});*/
-
 app.post("/login", async (req, res) => {
     console.log("user: " + req.body["username"])
 
@@ -225,12 +245,6 @@ app.post("/login", async (req, res) => {
     return res.send(JSON.stringify("error"))
 })
 
-/*
-app.post("/register", async (req, res) => {
-    console.log("here");
-    await db.collection('Users').doc().set(req.body);
-});
-*/
 
 
 
