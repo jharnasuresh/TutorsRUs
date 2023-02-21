@@ -78,7 +78,7 @@ app.post("/register", async (req, res) => {
     }
 })
 
-app.post('/signup', (req, res) => {
+app.post('/signup', async(req, res) => {
     console.log("sign up: email = " + req.body["email"])
     var username = req.body.user;
     var useremail = req.body.email;
