@@ -9,7 +9,7 @@ export const Register = (props) => {
     
     const handleSubmit = (e) => {
         e.preventDefault();
-        props.onFormSwitch('start')
+        props.onFormSwitch('verify')
         console.log(user + " " + firstName + " " + lastName + " " + pass + " " + email);
         
         const requestData = JSON.stringify({ "firstName": firstName, "lastName": lastName, "user": user, "pass": pass, "email": email });

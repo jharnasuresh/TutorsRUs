@@ -1,20 +1,54 @@
 //libraries
+const { getAuth, sendSignInLinkToEmail }  = require('firebase/auth');
+
+const {linkWithCredential, EmailAuthProvider } = require ("firebase/auth");
+const {reauthenticateWithCredential} = require ("firebase/auth");
+const toVerify = new Boolean(true);
 const express = require("express");
+const app = express();
+//app.use(express.json);
+app.use(express.urlencoded({extended:false}));
+const admin = require("firebase-admin");
+
 const { db } = require('./firebase.js')
 //const toSendToken = require('./tokenSender.js');
-const app = express();
 const bp = require('body-parser')
 app.use(bp.json())
 app.use(bp.urlencoded({ extended: true }))
 const bcrypt = require("bcrypt") //packate bcrypt imported
 const PORT = process.env.PORT || 3001;
-    const nodemailer = require('nodemailer');
+const nodemailer = require('nodemailer');
+//--------------------------ADDED FOR VERIFICATION --------------------
+const nodemailerSendgrid = require('nodemailer-sendgrid');
+const transport = nodemailer.createTransport(
+    nodemailerSendgrid({
+        apiKey: process.env.SENDGRID_API_KEY
+    })
+);
+/*transport
+    .sendMail({
+        from: 'andris@kreata.ee',
+        to: 'Andris Reinman <andris.reinman@gmail.com>, andris@ethereal.email',
+        subject: 'hello world',
+        html: '<h1>Hello world!</h1>'
+    })
+    .then(([res]) => {
+        console.log('Message delivered with code %s %s', res.statusCode, res.statusMessage);
+    })
+    .catch(err => {
+        console.log('Errors occurred, failed to deliver message');
+
+        if (err.response && err.response.body && err.response.body.errors) {
+            err.response.body.errors.forEach(error => console.log('%s: %s', error.field, error.message));
+        } else {
+            console.log(err);
+        }
+    });*/
+//---------------------------------------------------------------------------
 const jwt = require('jsonwebtoken');
-const admin = require("firebase-admin");
 const crypto = require('crypto');
 console.log("library imports work");
 //const users = [] //temporarily storing in array
-app.use(express.urlencoded({extended:false}))
 
 const cors = require('cors')
 app.use(cors())
@@ -36,7 +70,7 @@ app.post("/register", async (req, res) => {
 
         console.log("end try");
         console.log(users);
-        res.redirect("/login")
+        res.redirect("/verify")
     } catch (e) {
         console.log(e);
         res.redirect("/register");
@@ -48,8 +82,12 @@ app.post('/signup', (req, res) => {
     var username = req.body.user;
     var useremail = req.body.email;
     var userpassword = String(req.body.pass);
+    const user = {
+        email:req.body.email,
+        password: req.body
+    }
     //any verifications you would like to do
-    admin.auth().createUser({ //Create user in authentication section of firebase
+    const userResponse = admin.auth().createUser({ //Create user in authentication section of firebase
        email: useremail, //user email from request body
        emailVerified: false, //user email from request body
        password: md5(userpassword), //hashed user password
@@ -70,11 +108,80 @@ app.post('/signup', (req, res) => {
 
         var setDoc = db.collection('users').add(data);
         var userIDHash = md5(userRecord.uid);
-        sendToken();
         //adding hashed userid and userid to Email-Verifications collection
+        console.log("Jharna i'm in verify");
+        //var user = FirebaseAuth.instance.currentUser;
+
+        if (userRecord.isEmailVerified == false) {
+            console.log("verify email");
+        }
+        else {
+            console.log("Jharna email is already verified");
+            console.log(userRecord.email)
+        }
+        const functions = require('firebase-functions');
+        /*const gmailEmail = functions.config().gmail.email;
+        const gmailPassword = functions.config().gmail.password;*/
+        console.log("1");
+        const mailTransport = nodemailer.createTransport({
+          service: 'gmail',
+          auth: {
+            userVar: user.email,
+            passVar: user.password,
+          },
+        });
+        console.log("2");
+        // Sends an email confirmation when a user changes his mailing list subscription.
+        exports.sendEmailConfirmation = functions.database.ref('/users/{uid}').onWrite(async(toVerify) => {
+          // Early exit if the 'subscribedToMailingList' field has not changed
+          /*if (change.after.child('subscribedToMailingList').val() === change.before.child('subscribedToMailingList').val()) {
+            return null;
+          }*/
+          console.log("3");
+          const val = change.after.val();
+          console.log("got to mail options");
+          const mailOptions = {
+            from: '"Spammy Corp." <noreply@firebase.com>',
+            to: val.email,
+          };
+          console.log("4");
+          //const subscribed = val.subscribedToMailingList;
         
-       
+          // Building Email message.
+          mailOptions.subject ='Verification link';
+          mailOptions.text = 
+              'Click on this link to verify';
+          console.log("5");
+          try {
+            await mailTransport.sendMail(mailOptions);
+            functions.logger.log(
+              `New verification email sent to:`,
+              val.email
+            );
+            console.log("sent mail june !!!!!!!!");
+          } catch(error) {
+            functions.logger.error(
+              'There was an error while sending the email:',
+              error
+            );
+          }
+          return null;
+        });
+    /*getAuth()
+        .generateEmailVerificationLink(useremail, actionCodeSettings)
+            .then((link) => {
+                // Construct email verification template, embed the link and send
+                // using custom SMTP server.
+        return sendCustomVerificationEmail(useremail, displayName, link);
+    })
+    .catch((error) => {
+    // Some error occurred.
+     });*/
+
        })
+
+       
+
        .catch(function(error) {
           console.log("Error creating new user:", error);
        });
@@ -92,25 +199,11 @@ app.listen(PORT, () => {
     console.log(`Server listening on ${PORT}`);
 });
 
-/*app.post("/verifyemail", function (req, res) {
+/*app.post('/verify', (req, res) => {
 
 
-    //res.render("profile.html");
-    var email = req.body.email;
-    var pass = req.body.pass;
-    var FName = req.body.FName;
-    var LName = req.body.LName;
-    var username = req.body.user;
-    console.log("slay")
-    db.ref("customPath").set(obj, function(error) {
-        if (error) {
-          // The write failed...
-          console.log("Failed with error: " + error)
-        } else {
-          // The write was successful...
-          console.log("success")
-        }
-    })
+    
+    
 });*/
 
 app.post("/login", async (req, res) => {
@@ -139,47 +232,7 @@ app.post("/register", async (req, res) => {
 });
 */
 
-function sendToken () {
 
-console.log("send token entered");
-const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: secure_configuration.EMAIL_USERNAME,
-        pass: secure_configuration.PASSWORD
-    }
-});
-  
-const token = jwt.sign({
-        data: 'Token Data'  ,
-    }, 'ourSecretKey', { expiresIn: '10m' }  
-);    
-  
-const mailConfigurations = {
-  
-    // It should be a string of sender/server email
-    from: 'no-reply@gmail.com',
-  
-    to: req.body.email,
-  
-    // Subject of Email
-    subject: 'Email Verification',
-      
-    // This would be the text of email body
-    text: `Hi! There, You have recently visited 
-           our website and entered your email.
-           Please follow the given link to verify your email
-           http://localhost:3000/verify/${token} 
-           Thanks`
-      
-};
-  
-transporter.sendMail(mailConfigurations, function(error, info){
-    if (error) throw Error(error);
-    console.log('Email Sent Successfully');
-    console.log(info);
-});
-}
 
 function md5(string) {
     return crypto.createHash('md5').update(string).digest('hex');
