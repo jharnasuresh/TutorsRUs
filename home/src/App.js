@@ -5,8 +5,10 @@ import {Register} from "./Register";
 import {Verification} from "./Verification"
 import {Start} from "./Start"
 
+
 import Profile from "./Components/Profile"
 import Tabs from "./Components/Tabs";
+
 
 
 function App() {
