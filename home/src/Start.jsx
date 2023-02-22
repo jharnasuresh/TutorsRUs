@@ -1,4 +1,5 @@
 import React, {useState} from "react"
+import Tabs from "./Components/Tabs";
 export const Start = (props) => {
     
     const handleSubmit = (e) => {
@@ -8,6 +9,7 @@ export const Start = (props) => {
     }
     return (
         <div className = "auth-form-container">
+        <Tabs/>
             <h2>Start</h2>
 
         
