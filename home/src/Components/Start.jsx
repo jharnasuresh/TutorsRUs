@@ -1,6 +1,7 @@
 import React, {useState} from "react"
+
 import "./styles.css"
-import Tabs from "./Tabs";
+import Tabs from "./Components/Tabs";
 export const Start = (props) => {
     
     const handleSubmit = (e) => {
