@@ -1,15 +1,24 @@
 import React from "react";
 
-function Tabs() {
+export const Tabs = (props) => {
     return (
         <div>
             <nav>
                 <div className="logo">TutorsRUs</div>
                 <ul className="nav-links">
-                    <li><a>Home</a></li>
-                    <li><a>Profile</a></li>
-                    <li><a>Log Out</a></li>
-                    <li><a>Help</a></li>
+                    <li>
+                        <a href="./Start.jsx"> Home </a>
+                        onClick={() => props.onFormSwitch('profile')}
+                    </li>
+                    <li>
+                        <a href="./Profile.jsx">Profile</a>
+                    </li>
+                    <li>
+                        <a href="./Profile">Log Out</a>
+                    </li>
+                    <li>
+                        <a href="./Profile">Help</a>
+                    </li>
                 </ul>
             </nav>
         </div>

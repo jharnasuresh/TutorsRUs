@@ -57,7 +57,8 @@ export const Register = (props) => {
         
     }
     return (
-        <div className = "auth-form-container">
+        <div className = "App auth-form-container img">
+            <img src = "/Images/TutorsRUs_nobackground.png" alt = ""/>
             <h2>Register</h2>
             {
                 userErr ? (<p style={{color:'red'}}>That username is already taken. Try Again.</p>): <span></span>
