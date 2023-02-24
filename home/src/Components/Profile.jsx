@@ -7,12 +7,13 @@ import  './Main.css'
 
 function Profile() {
     return (
-      <div className="Profile">
+      <div className="App Profile">
         <Header />
         <hr />
         <About />
         <br />
         <CourseInfo />
+        <button type = "submit" className="edit-btn" onClick={() => props.onFormSwitch('settings')}>Edit Profile</button>
       </div>
     );
 }

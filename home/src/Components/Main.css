@@ -1,23 +1,60 @@
 .header-h1 {
-   padding: 10px;
-    display: flex;
+   padding: 20px;
+   padding-top: 10px;
+    position: absolute;
     color: black;
-    margin-left: -500px;
-    margin-right: 500px;
     background-image: white;
-    border: 2px solid black;
-    border-radius: 10px;
-    background-color: rgb(255, 255, 255)
+    background-color: rgb(255, 255, 255);
+    margin-left: 80px;
 }
 
 #profileid {
-position: relative;
+position: absolute;
+padding-left: 50px;
 display: flex;
-align-items: left;
-top: 10px;
-left: -500px;
-height: 100px;
-border: 2px solid black;
-border-radius: 10px;
+align-items: center;
 background-color: white;
+height: 250px;
+margin-top: 80px;
 }
+
+#home {
+    position: absolute;
+    background-color: white;
+    height: 200px;
+    border: 2px solid black;
+    border-radius: 25px;
+    padding: 20px; 
+  width: 400px;
+  height: 400px; 
+  margin-top: -100px;
+  margin-left: -500px;
+ 
+}
+#container-about {
+    position: absolute;
+    background-color: white;
+    height: -500px;
+    border: 2px solid black;
+    border-radius: 25px;
+    padding: 20px; 
+  width: 700px;
+  height: 250px; 
+ margin-left: 800px;
+ margin-top: -300px;
+}
+
+#container-course {
+    position: absolute;
+    background-color: white;
+    height: -500px;
+    border: 2px solid black;
+    border-radius: 25px;
+    padding: 20px; 
+  width: 700px;
+  height: 150px; 
+ margin-left: 800px;
+ margin-top: 200px;
+}
+
+
