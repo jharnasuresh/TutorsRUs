@@ -18,34 +18,7 @@ app.use(bp.urlencoded({ extended: true }))
 const bcrypt = require("bcrypt") //packate bcrypt imported
 const PORT = process.env.PORT || 3001;
 const nodemailer = require('nodemailer');
-//--------------------------ADDED FOR VERIFICATION --------------------
-const nodemailerSendgrid = require('nodemailer-sendgrid');
-const transport = nodemailer.createTransport(
-    nodemailerSendgrid({
-        apiKey: process.env.SENDGRID_API_KEY
-    })
-);
-/*transport
-    .sendMail({
-        from: 'andris@kreata.ee',
-        to: 'Andris Reinman <andris.reinman@gmail.com>, andris@ethereal.email',
-        subject: 'hello world',
-        html: '<h1>Hello world!</h1>'
-    })
-    .then(([res]) => {
-        console.log('Message delivered with code %s %s', res.statusCode, res.statusMessage);
-    })
-    .catch(err => {
-        console.log('Errors occurred, failed to deliver message');
-
-        if (err.response && err.response.body && err.response.body.errors) {
-            err.response.body.errors.forEach(error => console.log('%s: %s', error.field, error.message));
-        } else {
-            console.log(err);
-        }
-    });*/
-//---------------------------------------------------------------------------
-
+const router = express.Router();
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 console.log("library imports work");
@@ -146,54 +119,38 @@ app.post('/signup', async(req, res) => {
             console.log("Jharna email is already verified");
             console.log(userRecord.email)
         }
-        const functions = require('firebase-functions');
-        /*const gmailEmail = functions.config().gmail.email;
-        const gmailPassword = functions.config().gmail.password;*/
-        console.log("1");
-        const mailTransport = nodemailer.createTransport({
-          service: 'gmail',
-          auth: {
-            userVar: user.email,
-            passVar: user.password,
-          },
-        });
-        console.log("2");
-        // Sends an email confirmation when a user changes his mailing list subscription.
-        exports.sendEmailConfirmation = functions.database.ref('/users/{uid}').onWrite(async(toVerify) => {
-          // Early exit if the 'subscribedToMailingList' field has not changed
-          /*if (change.after.child('subscribedToMailingList').val() === change.before.child('subscribedToMailingList').val()) {
-            return null;
-          }*/
-          console.log("3");
-          const val = change.after.val();
-          console.log("got to mail options");
-          const mailOptions = {
-            from: '"Spammy Corp." <noreply@firebase.com>',
-            to: val.email,
-          };
-          console.log("4");
-          //const subscribed = val.subscribedToMailingList;
+
+        //router.post('/', async (req,res) => {
+            console.log("june look" + req.body.email)
+            var transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'tutorsrus62@gmail.com',
+                pass: 'suP3rTut0r$'
+            }
+            });
         
-          // Building Email message.
-          mailOptions.subject ='Verification link';
-          mailOptions.text = 
-              'Click on this link to verify';
-          console.log("5");
-          try {
-            await mailTransport.sendMail(mailOptions);
-            functions.logger.log(
-              `New verification email sent to:`,
-              val.email
-            );
-            console.log("sent mail june !!!!!!!!");
-          } catch(error) {
-            functions.logger.error(
-              'There was an error while sending the email:',
-              error
-            );
-          }
+            var mailOptions = {
+            from: 'tutorsrus62@gmail.com',
+            to: req.body.email,
+            subject: 'Sending Email using Node.js',
+            text: 'That was easy!'
+            };
+        
+            transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+                console.log(error);
+                res.send(error)
+            } else {
+                console.log('Email sent: ' + info.response);
+                res.status(200).send("Success")
+            }
+            })
+        //});
+        
+        module.exports = router;
+
           return null;
-        });
     /*getAuth()
         .generateEmailVerificationLink(useremail, actionCodeSettings)
             .then((link) => {

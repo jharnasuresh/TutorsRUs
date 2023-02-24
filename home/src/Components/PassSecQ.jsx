@@ -1,24 +1,9 @@
-import React, {useState} from "react"
-export const Register = (props) => {
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [email, setEmail] = useState('');
-    const [user, setUsername] = useState('');
-    const [pass, setPassword] = useState('');
-    const [userErr, setUserErr] = useState(false);
-    const [emailErr, setEmailErr] = useState(false);
-    const [lengthErr, setLengthErr] = useState(false);
-    const [reqErr, setReqErr] = useState(false);
-    const [emptyFieldsErr, setEmptyFieldsErr] = useState(false);
-    /*const isFormValid = (e) => {
-        const {firstName, lastName, email, user, pass} = this.state
-      
-        return firstName && lastName && email && user && pass
-      }
-    const handleClick = (e) => {
-        e.currentTarget.disabled = true;
-        console.log('button clicked');
-      };*/
+/*import React, {useState} from "react"
+export const PassSecQ = (props) => {
+    const [question1, setQuestion1] = React.useState('fruit');
+    const [question2, setQuestion2] = React.useState('water');
+    const [question3, setQuestion3] = React.useState('water');
+
     const handleSubmit = (e) => {
         e.preventDefault();
         setEmailErr(false)
@@ -117,4 +102,4 @@ export const Register = (props) => {
     </div>
     )
     
-}
+}*/
