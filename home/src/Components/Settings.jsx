@@ -1,15 +1,19 @@
 import React, {useState} from "react"
 import  './Main.css'
+import About from './About';
 
 export const Settings = (props) => {
     const [name, setName] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
-}
-function Settings() {
+
+    const handleSubmit = (e) => {
+    }
+
     return (
-      <div className="settings">
+      <div className="App Profile">
+        <About />
         <h2> Edit Profile </h2>
         <form className = "settings-name" onSubmit={handleSubmit}>
             <label htmlFor="name">Name: </label>
@@ -30,7 +34,8 @@ function Settings() {
             <label htmlFor="email">Email: </label>
             <input value={email} onChange={(e) => setEmail(e.target.value)}type="email" placeholder="Email Address" id="email" name="email"/>
         </form>
-        <button type = "submit" className = "setting-sub">Submit</button>
+        <button type = "submit" className = "setting-sub">Submit Changes</button>
+        <button type = "submit" className="profile-btn" onClick={() => props.onFormSwitch('profile')}>Back to Profile</button>
       </div>
     );
 }
