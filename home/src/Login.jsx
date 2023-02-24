@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import { useHref } from "react-router-dom";
 
 
 
@@ -31,7 +32,7 @@ export const Login = (props) => {
                 }
             }
             else {
-                props.onFormSwitch('start')
+                 return <a href="./Start"> </a>;
             }
 
         }
@@ -66,9 +67,12 @@ export const Login = (props) => {
                 <button type="submit" onSubmit={handleSubmit}>Log In</button>
 
             </form>
-            <button className="link-btn" onClick={() => props.onFormSwitch('profile')}>Profile. </button>
-            <button className="link-btn" onClick={() => props.onFormSwitch('register')}>Don't have an account? Register here. </button>
-            <button className="link-btn" onClick={() => props.onFormSwitch('register')}> Forgot Username or Password?</button>
+            <a href="/Profile">
+            <button className="link-btn"> Profile </button>
+            </a>
+            <a href="./Register">
+            <button className="link-btn" > Don't have an account? Register here. </button>
+            </a>
         </div>
     )
 }
