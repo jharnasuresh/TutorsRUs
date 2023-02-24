@@ -4,9 +4,9 @@ import {Login} from "./Login";
 import {Register} from "./Register";
 import {Verification} from "./Verification"
 import {Start} from "./Components/Start"
+import {Settings} from "./Components/Settings"
+import {Profile} from "./Components/Profile"
 
-
-import Profile from "./Components/Profile"
 import Tabs from "./Components/Tabs";
 
 
@@ -29,6 +29,7 @@ function App() {
         : currentForm === "profile" ? <Profile onFormSwitch={toggleForm}/>
         : currentForm === "start" ? <Start onFormSwitch={toggleForm}/>
         : currentForm === "verify" ? <Verification onFormSwitch={toggleForm}/>
+        : currentForm === "settings" ? <Settings onFormSwitch={toggleForm}/>
 
         : <Register onFormSwitch={toggleForm}/>
       }
