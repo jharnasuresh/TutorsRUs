@@ -38,12 +38,13 @@ export const Login = (props) => {
         return;
     }
     return (
-        <div className="auth-form-container">
+
+        <div className="App auth-form-container img">
             <h2>Login</h2>
             {
                 showErr ? (<p style={{color:'red'}}>Incorrect username or password. Try Again.</p>): <span></span>
             }
-            
+            <img src = "/Images/TutorsRUs_nobackground.png" alt = ""/>
             <form classname="login-form" onSubmit={handleSubmit}>
                 <label htmlFor="username:">Username: </label>
                 <input value={user} onChange={(e) => setUsername(e.target.value)} type="username" placeholder="enter your username" id="username" name="username" />

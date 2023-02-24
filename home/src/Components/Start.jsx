@@ -1,4 +1,6 @@
 import React, {useState} from "react"
+
+import "./styles.css"
 import Tabs from "./Components/Tabs";
 export const Start = (props) => {
     
@@ -8,14 +10,13 @@ export const Start = (props) => {
         
     }
     return (
-        <div className = "auth-form-container">
+        <div classNames = "nav">
         <Tabs/>
-            <h2>Start</h2>
 
         
-        <button className="link-btn" onClick={() => props.onFormSwitch('login')}> Already have an account? Login here. </button>
+       
 
-    </div>
+        </div>
     )
     
 }
