@@ -1,14 +1,20 @@
 import React from "react";
-
+import {useState} from "react"
 export const Tabs = (props) => {
+    const [currentForm, setCurrentForm] = useState('start');
+  const toggleForm = (formName) => {
+    setCurrentForm(formName);
+  }
+ 
     return (
         <div>
             <nav>
                 <div className="logo">TutorsRUs</div>
                 <ul className="nav-links">
                     <li>
-                        <a href="./Start.jsx"> Home </a>
-                        onClick={() => props.onFormSwitch('profile')}
+                    <button className="link-btn" onClick={() => props.onFormSwitch('profile')}>Profile. </button>
+                    {/*<a> Home </a>*/}
+
                     </li>
                     <li>
                         <a href="./Profile.jsx">Profile</a>
