@@ -4,8 +4,8 @@ import Header from './Header';
 import About from './About';
 import CourseInfo from './CourseInfo';
 import  './Main.css'
+export const Profile = (props) => {
 
-function Profile() {
     return (
       <div className="App Profile">
         <Header />
