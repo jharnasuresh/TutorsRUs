@@ -25,6 +25,7 @@ export const Register = (props) => {
         setUserErr(false)
         setLengthErr(false)
         setReqErr(false)
+        setEmptyFieldsErr(false)
         
         
         const requestData = JSON.stringify({ "firstName": firstName, "lastName": lastName, "user": user, "pass": pass, "email": email });
