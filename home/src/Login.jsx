@@ -6,6 +6,8 @@ export const Login = (props) => {
     const [user, setUsername] = useState('');
     const [pass, setPassword] = useState('');
     const [showErr, setShowErr] = useState(false);
+    const [errCount, setErrCount] = useState(0);
+    const [resetPassword, setResetPassword] = useState(false)
     
 
     const handleSubmit = (e) => {
@@ -19,11 +21,14 @@ export const Login = (props) => {
         async function getResponse() {
             const response = await fetch('http://localhost:3001/login', { method: 'POST', body: requestData, headers: headers });
             var r = await response.json();
-            console.log(r)
             if (r === "error") {
                 console.log("error");
+                setErrCount(errCount + 1)
+                console.log("err count = " + errCount)
                 setShowErr(true)
-
+                if (errCount === 2) {
+                    setResetPassword(true)
+                }
             }
             else {
                 props.onFormSwitch('start')
@@ -44,6 +49,9 @@ export const Login = (props) => {
             {
                 showErr ? (<p style={{color:'red'}}>Incorrect username or password. Try Again.</p>): <span></span>
             }
+            {
+                resetPassword ? (<p style={{color:'red'}}>Click below to reset your username or password or create an account.</p>): <span></span>
+            }
             <img src = "/Images/TutorsRUs_nobackground.png" alt = ""/>
             <form classname="login-form" onSubmit={handleSubmit}>
                 <label htmlFor="username:">Username: </label>
@@ -58,6 +66,7 @@ export const Login = (props) => {
             </form>
             <button className="link-btn" onClick={() => props.onFormSwitch('profile')}>Profile. </button>
             <button className="link-btn" onClick={() => props.onFormSwitch('register')}>Don't have an account? Register here. </button>
+            <button className="link-btn" onClick={() => props.onFormSwitch('register')}> Forgot Username or Password?</button>
         </div>
     )
 }
