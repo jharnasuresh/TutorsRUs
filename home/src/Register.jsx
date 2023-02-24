@@ -76,7 +76,7 @@ export const Register = (props) => {
                 userErr ? (<p style={{color:'red'}}>That username is already taken. Try Again.</p>): <span></span>
             }
             {
-                emailErr ? (<p style={{color:'red'}}>That email is already taken. Try Again.</p>): <span></span>
+                emailErr ? (<p style={{color:'red'}}>That email is already taken. Either log in with that email or try another email.</p>): <span></span>
             }
             {
                 lengthErr ? (<p style={{color:'red'}}>Your password is not long enough. It must be at least 8 characters.</p>): <span></span>
