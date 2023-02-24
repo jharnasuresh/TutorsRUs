@@ -13,7 +13,7 @@ class About extends Component {
                     <h2>Primary Language:</h2> 
                     <p>Blah blah blah </p>
                     <h2>Email:</h2> 
-                    <p>urmom@gmail.com</p>
+                    <a href="mailto:urmom@gmail.com">urmom@gmail.com</a>
                     <h2>Rating:</h2>
                     <p>0.00</p>
             </section>
