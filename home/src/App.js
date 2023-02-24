@@ -7,6 +7,8 @@ import {Start} from "./Components/Start"
 import { Routes, Route, Link, Router } from "react-router-dom";
 import {RouterProvider, createBrowserRouter} from "react-router-dom";
 import Profile from "./Components/Profile"
+import {Settings} from "./Components/Settings"
+import {Profile} from "./Components/Profile"
 import Tabs from "./Components/Tabs";
 
 
@@ -41,6 +43,7 @@ return (
         : currentForm === "profile" ? <Profile onFormSwitch={toggleForm}/>
         : currentForm === "start" ? <Start onFormSwitch={toggleForm}/>
         : currentForm === "verify" ? <Verification onFormSwitch={toggleForm}/>
+        : currentForm === "settings" ? <Settings onFormSwitch={toggleForm}/>
 
         : <Register onFormSwitch={toggleForm}/>
   }*/
