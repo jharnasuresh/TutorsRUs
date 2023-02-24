@@ -3,7 +3,7 @@ import './App.css';
 import {Login} from "./Login";
 import {Register} from "./Register";
 import {Verification} from "./Verification"
-import {Start} from "./Start"
+import {Start} from "./Components/Start"
 
 
 import Profile from "./Components/Profile"
@@ -18,9 +18,9 @@ function App() {
   }
  
   return (
-    <div className="App">
+    <div>
       
-      <img src = "/Images/TutorsRUs_nobackground.png" alt = ""/>
+      
       {
         
         //ternary operator if currentForm = login then return login screen else display register page

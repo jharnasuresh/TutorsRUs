@@ -27,32 +27,8 @@ console.log("library imports work");
 const cors = require('cors')
 app.use(cors())
 
-app.post("/register", async (req, res) => {
-    try {
-        console.log("start try: pass = " + req.body.pass);
 
-        //const hashedPassword = await bcrypt.hash(pass)
-        /*users.push({
-            id: Date.now().toString(),
-            name : req.body.firstName,
-            //email:req.body.email,
-            password: hashedPassword
-        })
-        */
-
-
-
-        console.log("end try");
-        console.log(users);
-        res.redirect("/verify")
-    } catch (e) {
-        console.log(e);
-        res.redirect("/register");
-    }
-})
-
-app.post('/signup', async(req, res) => {
-    console.log("sign up: email = " + req.body["email"])
+app.post('/signup', async (req, res) => {
     var username = req.body.user;
     var useremail = req.body.email;
     var userpassword = String(req.body.pass);
@@ -76,7 +52,7 @@ app.post('/signup', async(req, res) => {
     if (userpassword.length <= 8) {
         return res.send(JSON.stringify("not long enough"))
     }
-    if (!userpassword.includes("#") && userpassword.includes("$") && userpassword.includes("+") && userpassword.includes("%") && userpassword.includes("@")) {
+    if (!(/[!#$+%@]/.test(userpassword))) {
         return res.send(JSON.stringify("requirements"))
     }
     if (!(/\d/.test(userpassword))) {

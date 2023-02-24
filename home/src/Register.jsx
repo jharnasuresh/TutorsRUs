@@ -26,7 +26,6 @@ export const Register = (props) => {
         setLengthErr(false)
         setReqErr(false)
         
-        console.log(user + " " + firstName + " " + lastName + " " + pass + " " + email);
         
         const requestData = JSON.stringify({ "firstName": firstName, "lastName": lastName, "user": user, "pass": pass, "email": email });
         const headers = { "content-type": "application/json" };
@@ -70,7 +69,8 @@ export const Register = (props) => {
         
     }
     return (
-        <div className = "auth-form-container">
+        <div className = "App auth-form-container img">
+            <img src = "/Images/TutorsRUs_nobackground.png" alt = ""/>
             <h2>Register</h2>
             {
                 userErr ? (<p style={{color:'red'}}>That username is already taken. Try Again.</p>): <span></span>
@@ -86,7 +86,7 @@ export const Register = (props) => {
                 <ul style={{ color: 'red' }}>
                     <li>One capital letter</li>
                     <li>One number</li>
-                    <li>And one special character (#$+%@)</li>
+                    <li>And one special character (#$+%@!)</li>
                 </ul></>
                 ): <span></span>
             }
