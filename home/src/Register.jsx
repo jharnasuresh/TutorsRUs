@@ -70,7 +70,6 @@ export const Register = (props) => {
     }
     return (
         <div className = "App auth-form-container img">
-            <img src = "/Images/TutorsRUs_nobackground.png" alt = ""/>
             <h2>Register</h2>
             {
                 userErr ? (<p style={{color:'red'}}>That username is already taken. Try Again.</p>): <span></span>
@@ -95,6 +94,7 @@ export const Register = (props) => {
             }
 
         <form className="register-form" method = "POST" onSubmit={handleSubmit}>
+            <img class="img" src = "/Images/TutorsRUs_nobackground.png"/>
             <label htmlFor="firstName:">First Name: </label>
             <input value={firstName} onChange={(e) => setFirstName(e.target.value)}type="firstName" placeholder="enter your first name" id="firstName" name="firstName"/>
             <br></br>
@@ -111,8 +111,10 @@ export const Register = (props) => {
             <input value={pass} onChange={(e) => setPassword(e.target.value)}type="password" placeholder="enter your password" id="password" name="password"/>
             <br></br>
             <button type="submit" onSubmit={handleSubmit}  > Register </button>
+            <button className="link-btn" onClick={() => props.onFormSwitch('login')}> Already have an account? Login here. </button>
+
         </form>
-        <button className="link-btn" onClick={() => props.onFormSwitch('login')}> Already have an account? Login here. </button>
+       
 
     </div>
     )
