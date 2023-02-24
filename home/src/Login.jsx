@@ -44,7 +44,7 @@ export const Login = (props) => {
             {
                 showErr ? (<p style={{color:'red'}}>Incorrect username or password. Try Again.</p>): <span></span>
             }
-            <img src = "/Images/TutorsRUs_nobackground.png" alt = ""/>
+            <img class="img" src = "/Images/TutorsRUs_nobackground.png"/>
             <form classname="login-form" onSubmit={handleSubmit}>
                 <label htmlFor="username:">Username: </label>
                 <input value={user} onChange={(e) => setUsername(e.target.value)} type="username" placeholder="enter your username" id="username" name="username" />

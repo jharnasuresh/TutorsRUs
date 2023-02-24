@@ -20,7 +20,7 @@ function App() {
   return (
     <div>
       
-      
+
       {
         
         //ternary operator if currentForm = login then return login screen else display register page
