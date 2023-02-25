@@ -1,4 +1,6 @@
 import React, {useState} from "react"
+import { useHref, useNavigate } from "react-router-dom";
+
 import {Login} from "../Login";
 import {Register} from "../Register";
 import {Verification} from "../Verification"
@@ -12,11 +14,9 @@ export const Start = (props) => {
     
         
     }
-    const [currentForm, setCurrentForm] = useState('login');
-  const toggleForm = (formName) => {
-    setCurrentForm(formName);
-  }
+
     return (
+      /*
         
         <div classNames = "nav">
         {
@@ -30,12 +30,13 @@ export const Start = (props) => {
 
         : <Register onFormSwitch={toggleForm}/>
       }
+      */
         <Tabs/>
 
         
        
 
-        </div>
+        //</div>
     )
     
 }

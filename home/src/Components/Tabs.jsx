@@ -17,13 +17,13 @@ export const Tabs = (props) => {
 
                     </li>
                     <li>
-                        <a href="./Profile.jsx">Profile</a>
+                        <a href="/Profile">Profile</a>
                     </li>
                     <li>
-                        <a href="./Profile">Log Out</a>
+                        <a href="/Login">Log Out</a>
                     </li>
                     <li>
-                        <a href="./Profile">Help</a>
+                        <a href="/Profile">Help</a>
                     </li>
                 </ul>
             </nav>

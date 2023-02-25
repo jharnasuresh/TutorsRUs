@@ -1,4 +1,5 @@
 import React, {useState} from "react"
+import { useHref, useNavigate } from "react-router-dom";
 export const Register = (props) => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -10,6 +11,7 @@ export const Register = (props) => {
     const [lengthErr, setLengthErr] = useState(false);
     const [reqErr, setReqErr] = useState(false);
     const [emptyFieldsErr, setEmptyFieldsErr] = useState(false);
+    const navigate = useNavigate();
     /*const isFormValid = (e) => {
         const {firstName, lastName, email, user, pass} = this.state
       
@@ -58,7 +60,7 @@ export const Register = (props) => {
             }
             else {
                 console.log("success yay")
-                props.onFormSwitch('start')
+                navigate("/Verification");
 
             }
         }

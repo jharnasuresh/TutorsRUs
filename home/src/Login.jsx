@@ -35,7 +35,7 @@ export const Login = (props) => {
             }
             else {
                 console.log(r)
-                navigate("/Profile");
+                navigate("/Start");
             }
 
         }
