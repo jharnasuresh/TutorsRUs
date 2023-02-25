@@ -88,6 +88,7 @@ app.post('/signup', async (req, res) => {
         console.log("Jharna i'm in verify");
         //var user = FirebaseAuth.instance.currentUser;
 
+        /*
         if (userRecord.isEmailVerified == false) {
             console.log("verify email");
         }
@@ -127,6 +128,7 @@ app.post('/signup', async (req, res) => {
         module.exports = router;
 
           return null;
+          */
     /*getAuth()
         .generateEmailVerificationLink(useremail, actionCodeSettings)
             .then((link) => {
