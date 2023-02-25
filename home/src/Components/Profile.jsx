@@ -33,9 +33,9 @@ const location = useLocation();
 console.log("l " + location.state.u)
     return (
       <div className="App Profile">
-        <Header />
+        <Header fname={location.state.fname} lname={location.state.lname}/>
         <hr />
-        <About />
+        <About user={location.state.u} email={location.state.email}/>
         <br></br>
           <a href="/Profile">
             <button className="submit" > {location.state.u} </button>

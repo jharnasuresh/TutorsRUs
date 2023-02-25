@@ -33,10 +33,13 @@ export const Login = (props) => {
                 }
             }
             else {
-                console.log("u " + user)
+                console.log("u " + user +", fname " + r["fname"])
                 navigate("/Profile", {
                     state: {
-                        u: user
+                        u: user,
+                        fname: r["fname"],
+                        lname: r["lname"], 
+                        email: r["email"]
                     }
                 });
             }

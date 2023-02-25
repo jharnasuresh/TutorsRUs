@@ -163,7 +163,6 @@ app.listen(PORT, () => {
 
 //app.post("/delete")
 
-
 app.post("/login", async (req, res) => {
     console.log("user: " + req.body["username"])
 
@@ -171,7 +170,7 @@ app.post("/login", async (req, res) => {
     if (!login.empty) {
         var doc = login.docs[0];
        console.log("a " + doc.get("password"))
-       return res.send(JSON.stringify("success"))
+       return res.send(JSON.stringify({"u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email")}))
        //it works!
         
     }
