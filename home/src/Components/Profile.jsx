@@ -9,6 +9,7 @@ export const Profile = (props) => {
         <Header />
         <hr />
         <About />
+        <button type = "submit" className = "follow-btn">Follow</button>
         <br />
         <CourseInfo />
         <button type = "submit" className="edit-btn" onClick={() => props.onFormSwitch('settings')}>Edit Profile</button>

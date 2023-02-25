@@ -8,7 +8,7 @@ import { Routes, Route, Link, Router } from "react-router-dom";
 import {RouterProvider, createBrowserRouter} from "react-router-dom";
 import Profile from "./Components/Profile"
 import {Settings} from "./Components/Settings"
-import {Profile} from "./Components/Profile"
+
 import Tabs from "./Components/Tabs";
 
 
