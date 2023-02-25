@@ -58,6 +58,7 @@ margin-top: 80px;
 }
 
 .edit-btn {
+    position: absolute;
     margin-top: 600px;
     margin-right: 500px;
 }
@@ -66,4 +67,8 @@ margin-top: 80px;
     flex-direction: column;
 }
 
-
+.follow-btn {
+    position: absolute;
+    margin-top: 600px;
+    margin-right: 700px;
+}

@@ -10,7 +10,6 @@ import {Settings} from "./Components/Settings"
 import Tabs from "./Components/Tabs";
 
 
-
 function App() {
 
 

@@ -36,6 +36,7 @@ export const Settings = (props) => {
         </form>
         <button type = "submit" className = "setting-sub">Submit Changes</button>
         <button type = "submit" className="profile-btn" onClick={() => props.onFormSwitch('profile')}>Back to Profile</button>
+        <button type = "submit" className = "deactivate-btn">Deactivate Account</button>
       </div>
     );
 }
