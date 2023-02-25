@@ -3,16 +3,23 @@ import Header from './Header';
 import About from './About';
 import CourseInfo from './CourseInfo';
 import  './Main.css'
+import { useHref, useNavigate } from "react-router-dom";
+
 export const Profile = (props) => {
     return (
       <div className="App Profile">
         <Header />
         <hr />
         <About />
-        <button type = "submit" className = "follow-btn">Follow</button>
-        <br />
+        <br></br>
+          <a href="/Profile">
+            <button className="submit" > Follow </button>
+            </a>
+        <br></br>
         <CourseInfo />
-        <button type = "submit" className="edit-btn" onClick={() => props.onFormSwitch('settings')}>Edit Profile</button>
+        <a href="/Settings">
+            <button className="submit" > Edit Profile </button>
+            </a>
       </div>
     );
 }
