@@ -13,7 +13,6 @@ export const Settings = (props) => {
 
     return (
       <div className="App Profile">
-        <About />
         <h2> Edit Profile </h2>
         <form className = "settings-name" onSubmit={handleSubmit}>
             <label htmlFor="name">Name: </label>
