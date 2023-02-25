@@ -5,8 +5,7 @@ import {Register} from "./Register";
 import {Verification} from "./Verification"
 import {Start} from "./Components/Start"
 import { Routes, Route, Link, Router } from "react-router-dom";
-import {RouterProvider, createBrowserRouter} from "react-router-dom";
-import Profile from "./Components/Profile"
+import {RouterProvider, createBrowserRouter, useNavigate} from "react-router-dom";
 import {Settings} from "./Components/Settings"
 import {Profile} from "./Components/Profile"
 import Tabs from "./Components/Tabs";
@@ -24,10 +23,10 @@ return (
     <div>  
     <Routes>
 
-        <Route exact path="./home/src/Login" Element={< Login />} /> 
-        <Route exact path="./home/src/Components/Start" Element={< Start />} /> 
-        <Route exact path="./home/src/Register" Element={< Register />} /> 
-        <Route exact path="./home/src/Verification" Element={< Verification />} /> 
+        <Route exact path="/Login" element={< Login />} /> 
+        <Route exact path="/Start" element={< Start />} /> 
+        <Route exact path="/Register" element={< Register />} /> 
+        <Route exact path="/Verification" element={< Verification />} /> 
         <Route exact path="/Profile" element={< Profile />} /> 
         <Route path="*" element={<Login />} />
     </Routes>
