@@ -4,7 +4,6 @@ import About from './About';
 import CourseInfo from './CourseInfo';
 import  './Main.css'
 import { Route, useHref, useNavigate, useLocation } from "react-router-dom";
-import { response } from 'express';
 
 export const Profile = () => {
   const handleSubmit = (e) => {

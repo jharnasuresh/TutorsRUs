@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { createSearchParams, useHref, useNavigate, useSearchParams } from "react-router-dom";
+import { useHref, useNavigate, useLocation } from "react-router-dom";
 import { Start } from "./Components/Start";
 
 
@@ -34,10 +34,11 @@ export const Login = (props) => {
             }
             else {
                 console.log("u " + user)
-                
-                navigate("/Profile", {state: {
-                    u: user
-                }});
+                navigate("/Profile", {
+                    state: {
+                        u: user
+                    }
+                });
             }
 
         }
