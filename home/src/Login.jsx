@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { useHref, useNavigate } from "react-router-dom";
+import { createSearchParams, useHref, useNavigate, useSearchParams } from "react-router-dom";
 import { Start } from "./Components/Start";
 
 
@@ -20,7 +20,6 @@ export const Login = (props) => {
         const requestData = JSON.stringify({ "username": user, "pass": pass });
         const headers = { "content-type": "application/json" };
 
-
         async function getResponse() {
             const response = await fetch('http://localhost:3001/login', { method: 'POST', body: requestData, headers: headers });
             var r = await response.json();
@@ -34,15 +33,16 @@ export const Login = (props) => {
                 }
             }
             else {
-                console.log(r)
-                navigate("/Start");
+                console.log("u " + user)
+                
+                navigate("/Profile", {state: {
+                    u: user
+                }});
             }
 
         }
 
-
         getResponse();
-
 
         return;
     }
