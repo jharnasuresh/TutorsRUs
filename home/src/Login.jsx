@@ -1,5 +1,6 @@
 import React, { useState } from "react"
-import { useHref } from "react-router-dom";
+import { useHref, useNavigate } from "react-router-dom";
+import { Start } from "./Components/Start";
 
 
 
@@ -9,6 +10,7 @@ export const Login = (props) => {
     const [showErr, setShowErr] = useState(false);
     const [errCount, setErrCount] = useState(0);
     const [resetPassword, setResetPassword] = useState(false)
+    const navigate = useNavigate();
     
 
     const handleSubmit = (e) => {
@@ -32,7 +34,8 @@ export const Login = (props) => {
                 }
             }
             else {
-                 return <a href="./Start"> </a>;
+                console.log(r)
+                navigate("/Profile");
             }
 
         }
