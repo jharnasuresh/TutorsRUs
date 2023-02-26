@@ -170,8 +170,38 @@ app.post("/info", async (req, res) => {
     
     return res.send(JSON.stringify({"u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email")}))
 
+})
 
+app.post("/update", async (req, res) => {
+    var u = req.body.oldU
+    const login = await db.collection('users').where('username', '==', req.body.oldU).get();
+    var doc = login.docs[0];
+    var fname = doc.get("FName")
+    var lname = doc.get("LName")
+    var email = doc.get("email")
+    var user = doc.get("username")
+    var pass = doc.get("password")
+    console.log(req.body.fname + " " + req.body.lname + " " + req.body.user + " " + req.body.email + " " + req.body.pass)
+    if (req.body.fname != "" && req.body.fname !== fname) {
+        await doc.ref.update({FName: req.body.fname});
+    }
+    if (req.body.lname != "" && req.body.lname !== lname) {
+        await doc.ref.update({LName: req.body.lname});
+    }
+    if (req.body.user != "" && req.body.user !== user) {
+        user = req.body.user
+        await doc.ref.update({username: req.body.user});
+    }
+    if (req.body.email != "" && req.body.email !== email) {
+        await doc.ref.update({email: req.body.email});
+    }
+    if (req.body.pass != "" && md5(req.body.pass) !== pass) {
+        await doc.ref.update({password: md5(req.body.pass)});
+    }
 
+    const up = await db.collection('users').where('username', '==', user).get();
+    doc = up.docs[0];
+    return res.send(JSON.stringify({"u": doc.get("username"), "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email")}))
 
 })
 

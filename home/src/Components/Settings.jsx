@@ -1,18 +1,94 @@
 import React, { useState } from "react"
 import './Main.css'
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, Link, useNavigate} from "react-router-dom";
 import About from './About';
 
 export const Settings = (props) => {
-    const [name, setName] = useState('');
+    const [Fname, setFName] = useState('');
+    const [Lname, setLName] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
+    //const oldU = 
+    const location = useLocation();
+    const navigate = useNavigate();
+    console.log("aesawda " + location.state.user)
+
 
     const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log("hi " + Fname)
+
+        const headers = { "content-type": "application/json" };
+        const requestData = JSON.stringify({ "oldU": location.state.user, "fname": Fname, "lname": Lname, "user": username, "email": email, "pass": password});
+
+        fetch('http://localhost:3001/update', { method: 'POST', body: requestData, headers: headers })
+        .then((res) => res.json())
+        .then((res) => {
+            console.log(res["fname"] + " " + res.u) 
+            navigate("/Profile", {
+            
+                state: {
+                    u: res.u,
+                    fname: res["fname"],
+                    lname: res["lname"], 
+                    email: res["email"]
+                }
+            });
+        })
+
+    }
+
+    const backToProfile = (e) => {
+
+        e.preventDefault();
+        console.log("ppp")
+        const headers = { "content-type": "application/json" };
+        const requestData = JSON.stringify({ "username": location.state.user });
+
+        fetch('http://localhost:3001/info', { method: 'POST', body: requestData, headers: headers })
+        .then((res) => res.json())
+        .then((res) => {
+            navigate("/Profile", {
+            
+                state: {
+                    u: res.u,
+                    fname: res["fname"],
+                    lname: res["lname"], 
+                    email: res["email"]
+                }
+            });
+        })
+              
     }
 
     return (
+        <div className="App Profile">
+        <h2> Edit Profile </h2>
+        <form className="settings" onSubmit={handleSubmit}>
+            <label htmlFor="name">First Name: </label>
+            <input value={Fname} onChange={(e) => setFName(e.target.value)} type="Fname" placeholder="Enter Your First Name" id="Fname" name="Fname" />
+            <br></br>
+            <label htmlFor="name">Last Name: </label>
+            <input value={Lname} onChange={(e) => setLName(e.target.value)} type="LName" placeholder="Enter Your Last Name" id="LName" name="LName" />
+            <br></br>
+            <label htmlFor="username">Username: </label>
+            <input value={username} onChange={(e) => setUsername(e.target.value)} type="username" placeholder="Username" id="username" name="username" />
+            <br></br>
+            <label htmlFor="password">Password: </label>
+            <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Password" id="password" name="password" />
+            <br></br>
+            <label htmlFor="email">Email: </label>
+            <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Email Address" id="email" name="email" />
+            <br></br>
+            <button type="submit" className="setting-sub" onSubmit={handleSubmit}>Submit Changes</button>
+        </form>
+        
+        <button type="submit" onClick={backToProfile}>Back to profile</button>
+
+        <button type="submit" className="deactivate-btn">Deactivate Account</button>
+    </div>
+        /*
         <div className="App Profile">
             <h2> Edit Profile </h2>
             <form className="settings-name" onSubmit={handleSubmit}>
@@ -35,11 +111,11 @@ export const Settings = (props) => {
                 <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Email Address" id="email" name="email" />
             </form>
             <button type="submit" className="setting-sub">Submit Changes</button>
-            <Link to="/Profile" state={{ u: username }}>
-                <button type="submit">Back to profile</button>
-            </Link>
+            <button type="submit" onClick={backToProfile}>Back to profile</button>
+
             <button type="submit" className="deactivate-btn">Deactivate Account</button>
         </div>
+        */
     );
 }
 
