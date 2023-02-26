@@ -13,7 +13,6 @@ export const Settings = (props) => {
 
     return (
       <div className="App Profile">
-        <About />
         <h2> Edit Profile </h2>
         <form className = "settings-name" onSubmit={handleSubmit}>
             <label htmlFor="name">Name: </label>
@@ -36,6 +35,7 @@ export const Settings = (props) => {
         </form>
         <button type = "submit" className = "setting-sub">Submit Changes</button>
         <button type = "submit" className="profile-btn" onClick={() => props.onFormSwitch('profile')}>Back to Profile</button>
+        <button type = "submit" className = "deactivate-btn">Deactivate Account</button>
       </div>
     );
 }

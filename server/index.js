@@ -88,6 +88,7 @@ app.post('/signup', async (req, res) => {
         console.log("Jharna i'm in verify");
         //var user = FirebaseAuth.instance.currentUser;
 
+        /*
         if (userRecord.isEmailVerified == false) {
             console.log("verify email");
         }
@@ -127,6 +128,7 @@ app.post('/signup', async (req, res) => {
         module.exports = router;
 
           return null;
+          */
     /*getAuth()
         .generateEmailVerificationLink(useremail, actionCodeSettings)
             .then((link) => {
@@ -159,6 +161,18 @@ app.listen(PORT, () => {
     console.log(`Server listening on ${PORT}`);
 });
 
+//app.post("/delete")
+
+app.post("/info", async (req, res) => {
+    const login = await db.collection('users').where('username', '==', req.body["username"]).get();
+    var doc = login.docs[0];
+    return res.send(JSON.stringify({"u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email")}))
+
+
+
+
+})
+
 app.post("/login", async (req, res) => {
     console.log("user: " + req.body["username"])
 
@@ -166,7 +180,7 @@ app.post("/login", async (req, res) => {
     if (!login.empty) {
         var doc = login.docs[0];
        console.log("a " + doc.get("password"))
-       return res.send(JSON.stringify("success"))
+       return res.send(JSON.stringify({"u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email")}))
        //it works!
         
     }

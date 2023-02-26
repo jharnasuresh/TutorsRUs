@@ -9,8 +9,7 @@ import { Routes, Route, Link, Router } from "react-router-dom";
 import {RouterProvider, createBrowserRouter, useNavigate} from "react-router-dom";
 import {Settings} from "./Components/Settings"
 import Tabs from "./Components/Tabs";
-import Profile from "./Components/Profile"
-
+import Profile from './Components/Profile';
 
 
 function App() {
@@ -30,6 +29,7 @@ return (
         <Route exact path="/Verification" element={< Verification />} /> 
         <Route exact path="/Profile" element={< Profile />} /> 
         <Route exact path="/PassSecQ" element={< PassSecQ />} /> 
+        <Route exact path="/Settings" element={< Settings />} />
         <Route path="*" element={<Login />} />
     </Routes>
     </div>
