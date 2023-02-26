@@ -118,7 +118,9 @@ export const Register = (props) => {
         <a href="/Login">
             <button className="link-btn" > Already have an account? Login here. </button>
             </a>
-       
+        <a href="/PassSecQ">
+            <button classname = "link-btn" > Go to Security questions </button>
+        </a>
 
     </div>
     )
