@@ -163,6 +163,16 @@ app.listen(PORT, () => {
 
 //app.post("/delete")
 
+app.post("/info", async (req, res) => {
+    const login = await db.collection('users').where('username', '==', req.body["username"]).get();
+    var doc = login.docs[0];
+    return res.send(JSON.stringify({"u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email")}))
+
+
+
+
+})
+
 app.post("/login", async (req, res) => {
     console.log("user: " + req.body["username"])
 
