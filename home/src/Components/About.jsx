@@ -16,7 +16,7 @@ class About extends Component {
         
         return (
             <section id="container-about" className="container-about">
-                     <h2>Follow</h2>
+                     <h2>{this.props.user}</h2>
                     <h2>Primary Language:</h2> 
                     <p>Blah blah blah </p>
                     <h2>Email:</h2> 
