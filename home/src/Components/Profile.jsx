@@ -6,6 +6,24 @@ import  './Main.css'
 import { Route, useHref, useNavigate, useLocation } from "react-router-dom";
 
 export const Profile = () => {
+  const location = useLocation();
+console.log("l " + location.state.u)
+async function getInfo(location) {
+
+console.log("here")
+const requestData = JSON.stringify({ "username": location.state.u});
+const headers = { "content-type": "application/json" };
+const response = await fetch('http://localhost:3001/info', { method: 'POST', body: requestData, headers: headers })
+var r = await response.json();
+console.log("rr " + r["fname"])
+return r;
+
+}
+
+
+var r = getInfo();
+console.log("r = " + r["u"])
+console.log("name = " + r['fname'])
   const handleSubmit = (e) => {
     e.preventDefault();
     
@@ -28,21 +46,8 @@ export const Profile = () => {
 
     return;
 }
-const location = useLocation();
-console.log("l " + location.state.u)
-async function getInfo(location) {
 
 
-const requestData = JSON.stringify({ "username": location.state.u});
-const headers = { "content-type": "application/json" };
-const response = await fetch('http://localhost:3001/info', { method: 'POST', body: requestData, headers: headers })
-var r = await response.json();
-return r;
-
-}
-
-var r = getInfo();
-console.log("name = " + r['fname'])
 
 
 
