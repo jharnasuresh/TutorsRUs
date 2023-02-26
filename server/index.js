@@ -192,6 +192,9 @@ app.post("/login", async (req, res) => {
     return res.send(JSON.stringify("error"))
 })
 
+app.post("/passsecurity", async(req, res) => {
+    console.log("got in passsecurity");
+});
 
 
 
