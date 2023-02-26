@@ -172,6 +172,15 @@ app.post("/info", async (req, res) => {
 
 })
 
+app.post("/delete", async (req, res) => {
+    const login = await db.collection('users').where('username', '==', req.body["username"]).get();
+    var doc = login.docs[0];
+    doc.ref.delete();
+    
+    return res.send(JSON.stringify("success"))
+
+})
+
 app.post("/update", async (req, res) => {
     var u = req.body.oldU
     const login = await db.collection('users').where('username', '==', req.body.oldU).get();

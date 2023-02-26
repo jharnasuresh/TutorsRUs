@@ -1,13 +1,15 @@
-import React from 'react';
+import {React, useState} from 'react';
 import Header from './Header';
 import About from './About';
 import CourseInfo from './CourseInfo';
+import Popup from './Popup';
 import './Main.css'
 import { Route, useHref, useNavigate, useLocation, Link } from "react-router-dom";
 
 export const Profile = () => {
   const location = useLocation();
   console.log("ll " + location.state.u)
+  const [buttonPopup, setButtonPopup] = useState(false);
 
 
 
@@ -41,7 +43,7 @@ export const Profile = () => {
       <Header fname={location.state.fname} lname={location.state.lname} />
       <hr />
       <About user={location.state.u} email={location.state.email} mail={"mailto:" + location.state.email} />
-      <br></br>
+      <br/>
       <a href="/Profile">
         <button className="submit" > Follow </button>
       </a>
@@ -56,8 +58,10 @@ export const Profile = () => {
       <Link to="/Settings" state={{ user: location.state.u }}>Edit Profile</Link>
       </button>
       
-      <button className='submit' onSubmit={handleSubmit}>Delete Account</button>
+      <button className='submit' onClick={() => setButtonPopup(true)}>Delete Account</button>
+      <Popup trigger={buttonPopup} setTrigger={setButtonPopup} state={{user: location.state.u}}>Are you sure you want to delete your account?</Popup>
     </div>
+    
   );
 }
 
