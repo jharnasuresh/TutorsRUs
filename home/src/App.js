@@ -13,10 +13,13 @@ import Profile from './Components/Profile';
 import { DrawerNew } from './Components/DrawerNew';
 import { Transcript } from './Components/Transcript';
 import 'bootstrap/dist/css/bootstrap.css'
-
+import DragDrop from './Components/DragDrop';
 
 function App() {
 
+  const [currUser, setCurrUser] = useState('')
+
+  const GlobalState = { currUser, setCurrUser}
 
   const [currentForm, setCurrentForm] = useState('login');
   const toggleForm = (formName) => {
@@ -24,11 +27,11 @@ function App() {
   }
 return (
     <div>  
-    <Tabs/>
+    <Tabs GlobalState={GlobalState}/>
 
     <Routes>
 
-        <Route exact path="/Login" element={< Login />} /> 
+        <Route exact path="/Login" element={< Login GlobalState={GlobalState}/>} /> 
         <Route exact path="/Start" element={< Start />} /> 
         <Route exact path="/Register" element={< Register />} /> 
         <Route exact path="/Verification" element={< Verification />} /> 

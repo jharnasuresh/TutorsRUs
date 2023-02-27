@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import './DragDrop'
+import DragDrop from "./DragDrop";
 
 export const Transcript = () => {
 
@@ -29,30 +31,27 @@ export const Transcript = () => {
 
     const handlePdfFileSubmit=(e)=>{
         e.preventDefault();
-        if(pdfFile!==null){
-          setViewPdf(pdfFile);
-        }
-        else{
-          setViewPdf(null);
-        }
+        // TODO
+        console.log("here!!!")
       }
 
 
 return (
-    <div className="container">
+    <>
+        <DragDrop />
+        <div className="container">
         <form className="form-group" onSubmit={handlePdfFileSubmit}>
             <input type='file' className='form-control'
                 required onChange={handlePdfFileChange} />
             {pdfFileError&&<div className='error-msg'>{pdfFileError}</div>}
             <br></br>
-            <button type="submit" className="btn btn-success btn-lg">
+            <button type="submit" className="btn btn-success btn-lg" onSubmit={handlePdfFileSubmit}>
                 UPLOAD
             </button>
         </form>
-        <br></br>
-        <h4>View PDF</h4>
-        <div className="pdf-container"></div>
     </div>
+    </>
+
 )
 
 }
