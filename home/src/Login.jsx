@@ -39,7 +39,8 @@ export const Login = ({GlobalState}) => {
                 setCurrUser(user)
                 navigate("/Start", {
                     state: {
-                        u: user
+                        u: user,
+                        //GlobalState: GlobalState
                     }
                 });
             }

@@ -6,9 +6,11 @@ import { Verification } from "../Verification"
 import Profile from "./Profile"
 import "./styles.css"
 import Tabs from "./Tabs";
-export const Start = (props) => {
+export const Start = () => {
   const location = useLocation();
-  console.log("here?? " + location.state.u)
+
+  console.log("lll " + location.state.u)
+
 
 
   const handleSubmit = (e) => {

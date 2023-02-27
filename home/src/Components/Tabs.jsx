@@ -12,6 +12,7 @@ export const Tabs = ({GlobalState}) => {
   const backToProfile = (e) => {
 
     e.preventDefault();
+    console.log("tabs2 " + currUser)
     const headers = { "content-type": "application/json" };
     const requestData = JSON.stringify({ "username":  currUser});
 
@@ -40,7 +41,7 @@ export const Tabs = ({GlobalState}) => {
                 <div className="logo">TutorsRUs</div>
                 <ul className="nav-links">
                     <li>
-                        <a href="./Start"> Home </a>
+                        <a href="./Start" state={{GlobalState: {GlobalState}, u: {currUser}}} > Home </a>
 
                     </li>
                     <li>
