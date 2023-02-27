@@ -11,6 +11,8 @@ import {Settings} from "./Components/Settings"
 import Tabs from "./Components/Tabs";
 import Profile from './Components/Profile';
 import { DrawerNew } from './Components/DrawerNew';
+import { Transcript } from './Components/Transcript';
+import 'bootstrap/dist/css/bootstrap.css'
 
 
 function App() {
@@ -33,6 +35,7 @@ return (
         <Route exact path="/Profile" element={< Profile />} /> 
         <Route exact path="/PassSecQ" element={< PassSecQ />} /> 
         <Route exact path="/Settings" element={< Settings />} />
+        <Route exact path="/Transcript" element={< Transcript />} />
         <Route path="*" element={<Login />} />
     </Routes>
     </div>

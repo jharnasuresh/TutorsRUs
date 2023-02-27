@@ -54,6 +54,9 @@ export const Tabs = (props) => {
                     <li>
                         <a href="./Profile">Help</a>
                     </li>
+                    <li>
+                        <a href="./Transcript">Transcript</a>
+                    </li>
                 </ul>
             </nav>
         </div>
