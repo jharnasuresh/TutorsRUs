@@ -34,12 +34,9 @@ export const Login = (props) => {
             }
             else {
                 console.log("u " + user +", fname " + r["fname"])
-                navigate("/Profile", {
+                navigate("/Start", {
                     state: {
-                        u: user,
-                        fname: r["fname"],
-                        lname: r["lname"], 
-                        email: r["email"]
+                        u: user
                     }
                 });
             }

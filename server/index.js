@@ -89,6 +89,7 @@ app.post('/signup', async (req, res) => {
           answer1 : "",
           answer2: "",
           answer3: ""
+          active: true
         };
 
         var setDoc = db.collection('users').add(data);
@@ -175,8 +176,10 @@ app.post("/info", async (req, res) => {
     console.log("iii")
     const login = await db.collection('users').where('username', '==', req.body["username"]).get();
     var doc = login.docs[0];
+
+    console.log("aaa " + doc.get("active"))
     
-    return res.send(JSON.stringify({"u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email")}))
+    return res.send(JSON.stringify({"u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active")}))
 
 })
 
@@ -189,6 +192,18 @@ app.post("/delete", async (req, res) => {
 
 })
 
+app.post("/deactivate", async (req, res) => {
+    const login = await db.collection('users').where('username', '==', req.body["username"]).get();
+    var doc = login.docs[0];
+    doc.ref.update({active: !doc.get("active")})
+    console.log("a? " + doc.get("active"))
+    
+    return res.send(JSON.stringify("success"))
+
+})
+
+
+
 app.post("/update", async (req, res) => {
     var u = req.body.oldU
     const login = await db.collection('users').where('username', '==', req.body.oldU).get();
@@ -198,7 +213,6 @@ app.post("/update", async (req, res) => {
     var email = doc.get("email")
     var user = doc.get("username")
     var pass = doc.get("password")
-    console.log(req.body.fname + " " + req.body.lname + " " + req.body.user + " " + req.body.email + " " + req.body.pass)
     if (req.body.fname != "" && req.body.fname !== fname) {
         await doc.ref.update({FName: req.body.fname});
     }
