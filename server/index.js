@@ -32,6 +32,9 @@ app.post('/signup', async (req, res) => {
     var username = req.body.user;
     var useremail = req.body.email;
     var userpassword = String(req.body.pass);
+    var answer1 = "";
+    var answer2 = "";
+    var answer3 = "";
     const user = {
         email:req.body.email,
         password: req.body
@@ -68,7 +71,10 @@ app.post('/signup', async (req, res) => {
        emailVerified: false, //user email from request body
        password: md5(userpassword), //hashed user password
        displayName: username, //user name from request body
-       disabled: false
+       disabled: false,
+       answer1: "",
+       answer2: "",
+       answer3: ""
        })
         .then(function(userRecord) {
         console.log("Successfully created new user:", userRecord.uid);
@@ -80,6 +86,9 @@ app.post('/signup', async (req, res) => {
           FName : req.body["firstName"],
           LName : req.body["lastName"],
           username : req.body["user"],
+          answer1 : "",
+          answer2: "",
+          answer3: ""
           active: true
         };
 
@@ -97,7 +106,6 @@ app.post('/signup', async (req, res) => {
             console.log("Jharna email is already verified");
             console.log(userRecord.email)
         }
-
         //router.post('/', async (req,res) => {
             console.log("june look" + req.body.email)
             var transporter = nodemailer.createTransport({
@@ -127,7 +135,6 @@ app.post('/signup', async (req, res) => {
         //});
         
         module.exports = router;
-
           return null;
           */
     /*getAuth()
@@ -148,7 +155,8 @@ app.post('/signup', async (req, res) => {
        .catch(function(error) {
           console.log("Error creating new user:", error);
        });
-       return res.send(JSON.stringify(username));
+       return res.send(JSON.stringify({username}))
+
     });
 
 
@@ -249,6 +257,30 @@ app.post("/login", async (req, res) => {
 
 app.post("/passsecurity", async(req, res) => {
     console.log("got in passsecurity");
+    var u = req.body.oldU
+    console.log("first problem area " + u);
+    const passsec = await db.collection('users').where('username', '==', req.body.oldU).get();
+    console.log("the problem")
+    var doc = passsec.docs[0];
+    var user = doc.get("username")
+    var answer1 = doc.get("answer1")
+    var answer2 = doc.get("answer2")
+    var answer3 = doc.get("answer3")
+
+    console.log(req.body.question1 + " " + req.body.question2 + " " + req.body.question3)
+    if (req.body.question1 !== answer1) {
+        await doc.ref.update({answer1: req.body.question1});
+    }
+    if (req.body.question2 !== answer2) {
+        await doc.ref.update({answer2: req.body.question2});
+    }
+    if (req.body.question3 !== answer3) {
+        await doc.ref.update({answer3: req.body.question3});
+    }
+    const up = await db.collection('users').where('username', '==', user).get();
+    doc = up.docs[0];
+    return res.send(JSON.stringify({"u": doc.get("username"), "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "answer1": doc.get("question1"), "answer2": doc.get("question2"), "answer3": doc.get("question3")}))
+
 });
 
 

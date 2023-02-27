@@ -1,6 +1,8 @@
 import React, {useState} from "react"
-import { useHref, useNavigate } from "react-router-dom";
+import { Route, useHref, useNavigate, useLocation, Link } from "react-router-dom";
+
 export const Register = (props) => {
+    const location = useLocation();
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
@@ -60,7 +62,13 @@ export const Register = (props) => {
             }
             else {
                 console.log("success yay")
-                navigate("/Verification");
+                console.log("jharna look it should go to password security")
+                console.log("u " + user)
+                navigate("/PassSecQ", {
+                    state: {
+                        oldU: user
+                    }
+                });
 
             }
         }
@@ -120,9 +128,6 @@ export const Register = (props) => {
         <a href="/Login">
             <button className="link-btn" > Already have an account? Login here. </button>
             </a>
-        <a href="/PassSecQ">
-            <button classname = "link-btn" > Go to Security questions </button>
-        </a>
 
     </div>
     )
