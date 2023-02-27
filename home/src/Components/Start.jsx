@@ -1,5 +1,5 @@
 import React, {useState} from "react"
-import { useHref, useNavigate } from "react-router-dom";
+import { useHref, useNavigate, useLocation } from "react-router-dom";
 
 import {Login} from "../Login";
 import {Register} from "../Register";
@@ -8,7 +8,10 @@ import Profile from "./Profile"
 import "./styles.css"
 import Tabs from "./Tabs";
 export const Start = (props) => {
-    
+const location = useLocation();
+  console.log("here?? " + location.state.u)
+
+  
     const handleSubmit = (e) => {
         e.preventDefault();
     
@@ -31,7 +34,7 @@ export const Start = (props) => {
         : <Register onFormSwitch={toggleForm}/>
       }
       */
-        <Tabs/>
+        <Tabs u={location.state.u}/>
 
         
        
