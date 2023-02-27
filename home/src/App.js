@@ -6,12 +6,10 @@ import {Verification} from "./Verification"
 import {Start} from "./Components/Start"
 import {PassSecQ} from "./Components/PassSecQ"
 import { Routes, Route, Link, Router } from "react-router-dom";
-import {RouterProvider, createBrowserRouter} from "react-router-dom";
-import Profile from "./Components/Profile"
+import {RouterProvider, createBrowserRouter, useNavigate} from "react-router-dom";
 import {Settings} from "./Components/Settings"
 import Tabs from "./Components/Tabs";
-
-import Profile from './Components/Profile';
+import {Profile} from './Components/Profile';
 import { DrawerNew } from './Components/DrawerNew';
 
 

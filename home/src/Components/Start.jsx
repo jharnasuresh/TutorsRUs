@@ -22,18 +22,7 @@ const location = useLocation();
 
         
         <div classNames = "nav">
-        {
         
-        //ternary operator if currentForm = login then return login screen else display register page
-        //currentForm === "login" ? <Login onFormSwitch={toggleForm}/> : <Register onFormSwitch={toggleForm}/>
-        currentForm === "login" ? <Login onFormSwitch={toggleForm}/> 
-        : currentForm === "profile" ? <Profile onFormSwitch={toggleForm}/>
-        : currentForm === "start" ? <Start onFormSwitch={toggleForm}/>
-        : currentForm === "verify" ? <Verification onFormSwitch={toggleForm}/>
-
-        : <Register onFormSwitch={toggleForm}/>
-      }
-      */
         <Tabs u={location.state.u}/>
 
         </div>
