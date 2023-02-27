@@ -94,6 +94,13 @@ margin-top: 80px;
     background-color: #FFF;
     }
 
+    .error-msg {
+        width: 100%;
+        color: red;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
 .passsecurity-form {
     padding-top: -50px;
     padding-left: 100px;

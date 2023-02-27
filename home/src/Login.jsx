@@ -4,12 +4,14 @@ import { Start } from "./Components/Start";
 
 
 
-export const Login = (props) => {
+export const Login = ({GlobalState}) => {
     const [user, setUsername] = useState('');
     const [pass, setPassword] = useState('');
     const [showErr, setShowErr] = useState(false);
     const [errCount, setErrCount] = useState(0);
     const [resetPassword, setResetPassword] = useState(false)
+    const { currUser, setCurrUser } = GlobalState;
+
     const navigate = useNavigate();
     
 
@@ -34,6 +36,7 @@ export const Login = (props) => {
             }
             else {
                 console.log("u " + user +", fname " + r["fname"])
+                setCurrUser(user)
                 navigate("/Start", {
                     state: {
                         u: user
