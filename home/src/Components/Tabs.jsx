@@ -6,17 +6,20 @@ import { faImages } from '@fortawesome/free-regular-svg-icons';
 import { dom } from '@fortawesome/fontawesome-svg-core'
 import  DrawerNew  from './DrawerNew';
 export const Tabs = (props) => {
+
+import DragDrop from "./DragDrop";
+
+export const Tabs = ({GlobalState}) => {
     const [currentForm, setCurrentForm] = useState('start');
     const location = useLocation();
     const navigate = useNavigate();
-    console.log(props.u)
-
+    const { currUser, setCurrUser } = GlobalState;
+    console.log("tabs " + currUser)
   const backToProfile = (e) => {
 
     e.preventDefault();
-    console.log("ppp")
     const headers = { "content-type": "application/json" };
-    const requestData = JSON.stringify({ "username": props.u });
+    const requestData = JSON.stringify({ "username":  currUser});
 
     fetch('http://localhost:3001/info', { method: 'POST', body: requestData, headers: headers })
     .then((res) => res.json())
@@ -46,9 +49,8 @@ export const Tabs = (props) => {
 
                     </li>
                     <li>
-                        <a href="./Profile onClick={backToProfile}">Profile</a>
 
-                        {/*<button type="link-btn" onClick={backToProfile}>Profile</button>*/}
+                        <a href="./Profile" onClick={backToProfile}>Profile</a>
 
                     </li>
                     <li>
@@ -56,6 +58,9 @@ export const Tabs = (props) => {
                     </li>
                     <li>
                         <a href="./Profile">Help</a>
+                    </li>
+                    <li>
+                        <a href="./Transcript">Transcript</a>
                     </li>
                 </ul>
                 <DrawerNew/>
