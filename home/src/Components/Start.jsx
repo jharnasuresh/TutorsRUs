@@ -19,7 +19,7 @@ const location = useLocation();
     }
 
     return (
-      /*
+
         
         <div classNames = "nav">
         {
@@ -36,10 +36,10 @@ const location = useLocation();
       */
         <Tabs u={location.state.u}/>
 
+        </div>
         
        
 
-        //</div>
     )
     
 }

@@ -5,6 +5,7 @@ import CourseInfo from './CourseInfo';
 import Popup from './Popup';
 import './Main.css'
 import { Route, useHref, useNavigate, useLocation, Link } from "react-router-dom";
+import Tabs from "./Tabs";
 
 export const Profile = () => {
   const location = useLocation();
@@ -26,6 +27,7 @@ export const Profile = () => {
 
   return (
     <div className="App Profile">
+
       <h1 style={{color: 'red'}}>{a}</h1>
       <Header fname={location.state.fname} lname={location.state.lname} />
       <hr />

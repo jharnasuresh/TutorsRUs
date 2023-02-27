@@ -10,6 +10,7 @@ import {RouterProvider, createBrowserRouter, useNavigate} from "react-router-dom
 import {Settings} from "./Components/Settings"
 import Tabs from "./Components/Tabs";
 import Profile from './Components/Profile';
+import { DrawerNew } from './Components/DrawerNew';
 
 
 function App() {
@@ -21,6 +22,8 @@ function App() {
   }
 return (
     <div>  
+    <Tabs/>
+
     <Routes>
 
         <Route exact path="/Login" element={< Login />} /> 
@@ -36,19 +39,7 @@ return (
    
 
   );
-      {/*
-        
-        //ternary operator if currentForm = login then return login screen else display register page
-        //currentForm === "login" ? <Login onFormSwitch={toggleForm}/> : <Register onFormSwitch={toggleForm}/>
-        currentForm === "login" ? <Login onFormSwitch={toggleForm}/> 
-        : currentForm === "profile" ? <Profile onFormSwitch={toggleForm}/>
-        : currentForm === "start" ? <Start onFormSwitch={toggleForm}/>
-        : currentForm === "verify" ? <Verification onFormSwitch={toggleForm}/>
-        : currentForm === "settings" ? <Settings onFormSwitch={toggleForm}/>
-
-        : <Register onFormSwitch={toggleForm}/>
-  }*/
-}
+     
 }
 
 export default App;
