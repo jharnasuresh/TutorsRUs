@@ -10,7 +10,7 @@ import {RouterProvider, createBrowserRouter, useNavigate} from "react-router-dom
 import {Settings} from "./Components/Settings"
 import Tabs from "./Components/Tabs";
 import Profile from './Components/Profile';
-import { DrawerNew } from './Components/DrawerNew';
+
 
 
 function App() {
@@ -22,7 +22,7 @@ function App() {
   }
 return (
     <div>  
-    <Tabs/>
+    {/*<Tabs u={location.state.u}/>*/}
 
     <Routes>
 

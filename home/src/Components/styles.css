@@ -42,12 +42,17 @@ nav .nav-links a:hover{
     
 }
 
-.side-drawer ul {
-    list-style: none;
-    display:flex;
-    flex-direction: column;
+
+nav .Menu {
+    font-size:25px;
+    display: block;
 }
-.side-drawer a {
-    color: aliceblue;
-    text-decoration: none;
+
+
+
+
+@media all and (max-width: 200px) {
+    
+
+        
 }

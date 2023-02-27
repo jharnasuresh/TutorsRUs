@@ -1,6 +1,10 @@
 import React from "react";
 import {useState} from "react"
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faImages } from '@fortawesome/free-regular-svg-icons';
+import { dom } from '@fortawesome/fontawesome-svg-core'
+import  DrawerNew  from './DrawerNew';
 export const Tabs = (props) => {
     const [currentForm, setCurrentForm] = useState('start');
     const location = useLocation();
@@ -35,17 +39,16 @@ export const Tabs = (props) => {
     return (
         <div>
             <nav>
-            
-                <div className="logo">TutorsRUs</div>
+                <div className="img"><img class="img" src = "/Images/TutorsRUs_nobackground.png"/></div>
                 <ul className="nav-links">
                     <li>
                         <a href="./Start"> Home </a>
 
                     </li>
                     <li>
-                        <a href="./Profile">Profile</a>
+                        <a href="./Profile onClick={backToProfile}">Profile</a>
 
-                        <button type="link-btn" onClick={backToProfile}>Profile</button>
+                        {/*<button type="link-btn" onClick={backToProfile}>Profile</button>*/}
 
                     </li>
                     <li>
@@ -55,6 +58,9 @@ export const Tabs = (props) => {
                         <a href="./Profile">Help</a>
                     </li>
                 </ul>
+                <DrawerNew/>
+                
+               
             </nav>
         </div>
     )

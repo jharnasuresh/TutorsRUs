@@ -1,35 +1,49 @@
-import React, {useState} from "react";
-import Drawer from "@mui/material/Drawer"; 
-import Box from "@mui/material/Box"; 
-import Typography from "@mui/material/Typography"; 
-import IconButton from "@mui/material/IconButton"; 
+import React from "react";
+import {useState} from "react"
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
-import MenuIcon from '@mui/icons-material/Menu';
-export const DrawerNew = () => {
-    const [isDrawerOpen, setIsDrawerOpen] = useState(false)
+export const Tabs = (props) => {
+    const [currentForm, setCurrentForm] = useState('start');
+    const location = useLocation();
+    const navigate = useNavigate();
+    console.log(props.u)
+
+  const backToProfile = (e) => {
+
+    e.preventDefault();
+    console.log("ppp")
+    const headers = { "content-type": "application/json" };
+    const requestData = JSON.stringify({ "username": props.u });
+
+    fetch('http://localhost:3001/info', { method: 'POST', body: requestData, headers: headers })
+    .then((res) => res.json())
+    .then((res) => {
+        console.log("aaaa? " + res["active"])
+        navigate("/Profile", {
+        
+            state: {
+                u: res.u,
+                fname: res["fname"],
+                lname: res["lname"], 
+                email: res["email"], 
+                active: res["active"]
+            }
+        });
+    })
+          
+}
+ 
     return (
-        <>
-        <IconButton 
-        size='large' 
-        edge= 'start'
-        color='inherit'
-        aria-label='logo'
-        onClick= {() => setIsDrawerOpen(true)}
-        >
-            <MenuIcon />
-        </IconButton>
-       <Drawer anchor ='left' 
-       open={isDrawerOpen}
-        onClose={() => setIsDrawerOpen(false)}
-
-        >
-            <Box p={2} width='250px' textAlign="center" role="presentation">
-                <Typography variant='h6' component='div'>
-                    Side Panel
-                </Typography>
-
-            </Box>
-        </Drawer>
-        </>
+        <div>
+            <nav>
+                <ul className="nav-links .side">
+                    
+                </ul>
+                <i className="fa-solid fa-ellipsis-vertical Menu"></i>
+                
+               
+            </nav>
+        </div>
     )
 }
+export default Tabs;
