@@ -1,27 +1,37 @@
 import React, {useState} from "react"
+import { Route, useHref, useNavigate, useLocation, Link } from "react-router-dom";
+
 export const PassSecQ = (props) => {
+  const location = useLocation();
     //const [pass, setPassword] = useState('');
     const [question1, setQuestion1] = React.useState('');
     const [question2, setQuestion2] = React.useState('');
     const [question3, setQuestion3] = React.useState('');
     const [showErr, setShowErr] = useState(false);
     const [emptyFieldsErr, setEmptyFieldsErr] = useState(false);
+    const navigate = useNavigate();
 
+    console.log("aesawda " + location.state.oldU)
       
     const handleSubmit = (e) => {
+        var oldU;
         e.preventDefault();
         setEmptyFieldsErr(false)
        console.log(question1 + " " + question2 + " " + question3);
-        
-        const requestData = JSON.stringify({ "question1": question1, "question2": question2, "question3": question3});
+        const requestData = JSON.stringify({"oldU": location.state.oldU, "question1": question1, "question2": question2, "question3": question3});
         const headers = { "content-type": "application/json" };
 
         async function getResponse() {
-            const response = await fetch('http://localhost:3001/passsecurity', { method: 'POST', headers: headers });
+            const response = await fetch('http://localhost:3001/passsecurity', { method: 'POST', body: requestData, headers: headers });
             var r = await response.json();
             if (question1 === '' || question2 === '' || question3 === '') {
                 console.log("empty field err")
                 setEmptyFieldsErr(true)
+            }
+            else {
+                console.log("jharna hellooooooooo");
+                console.log("u " + oldU +", fname " + r["fname"])
+                navigate("/Login");
             }
         }
 
