@@ -1,5 +1,9 @@
 import React, {useState} from "react"
+import Header from './Header';
+import { Route, useHref, useNavigate, useLocation, Link } from "react-router-dom";
+
 export const PassSecQ = (props) => {
+  const location = useLocation();
     //const [pass, setPassword] = useState('');
     const [question1, setQuestion1] = React.useState('');
     const [question2, setQuestion2] = React.useState('');
@@ -7,21 +11,25 @@ export const PassSecQ = (props) => {
     const [showErr, setShowErr] = useState(false);
     const [emptyFieldsErr, setEmptyFieldsErr] = useState(false);
 
+    console.log("aesawda " + location.state.oldU)
       
     const handleSubmit = (e) => {
+        var oldU;
         e.preventDefault();
         setEmptyFieldsErr(false)
        console.log(question1 + " " + question2 + " " + question3);
-        
-        const requestData = JSON.stringify({ "question1": question1, "question2": question2, "question3": question3});
+        const requestData = JSON.stringify({"oldU": location.state.oldU, "question1": question1, "question2": question2, "question3": question3});
         const headers = { "content-type": "application/json" };
 
         async function getResponse() {
-            const response = await fetch('http://localhost:3001/passsecurity', { method: 'POST', headers: headers });
+            const response = await fetch('http://localhost:3001/passsecurity', { method: 'POST', body: requestData, headers: headers });
             var r = await response.json();
             if (question1 === '' || question2 === '' || question3 === '') {
                 console.log("empty field err")
                 setEmptyFieldsErr(true)
+            }
+            else {
+                console.log("jharna hellooooooooo");
             }
         }
 
@@ -35,6 +43,8 @@ export const PassSecQ = (props) => {
         <div className = "App auth-form-container">
         <form className="passsecurity-form" method = "POST" onSubmit={handleSubmit}>
             <img class="img" src = "/Images/TutorsRUs_nobackground.png"/>
+            <Header fname={location.state.fname} lname={location.state.lname} />
+      <hr />
             <label htmlFor="question1"> What was the name of your first stufffed animal? </label>
             <input value={question1} onChange={(e) => setQuestion1(e.target.value)}type="question1" placeholder="enter your answer" id="question1" name="question1"/>
             <br></br>
