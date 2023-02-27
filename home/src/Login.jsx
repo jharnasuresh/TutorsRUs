@@ -80,6 +80,9 @@ export const Login = (props) => {
             <a href="./Register">
             <button className="link-btn" > Don't have an account? Register here. </button>
             </a>
+            <a href="./ResetPass">
+            <button className="link-btn" > Forgot Username/Password? </button>
+            </a>
         </div>
     )
 }

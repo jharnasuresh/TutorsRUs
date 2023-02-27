@@ -257,11 +257,11 @@ app.post("/passsecurity", async(req, res) => {
     if (req.body.question1 !== answer1) {
         await doc.ref.update({answer1: req.body.question1});
     }
-    if (req.body.question2 !== answer1) {
-        await doc.ref.update({answer1: req.body.question2});
+    if (req.body.question2 !== answer2) {
+        await doc.ref.update({answer2: req.body.question2});
     }
-    if (req.body.question3 !== answer1) {
-        await doc.ref.update({answer1: req.body.question3});
+    if (req.body.question3 !== answer3) {
+        await doc.ref.update({answer3: req.body.question3});
     }
     const up = await db.collection('users').where('username', '==', user).get();
     doc = up.docs[0];

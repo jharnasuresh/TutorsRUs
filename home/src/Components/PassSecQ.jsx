@@ -1,5 +1,4 @@
 import React, {useState} from "react"
-import Header from './Header';
 import { Route, useHref, useNavigate, useLocation, Link } from "react-router-dom";
 
 export const PassSecQ = (props) => {
@@ -10,6 +9,7 @@ export const PassSecQ = (props) => {
     const [question3, setQuestion3] = React.useState('');
     const [showErr, setShowErr] = useState(false);
     const [emptyFieldsErr, setEmptyFieldsErr] = useState(false);
+    const navigate = useNavigate();
 
     console.log("aesawda " + location.state.oldU)
       
@@ -30,6 +30,8 @@ export const PassSecQ = (props) => {
             }
             else {
                 console.log("jharna hellooooooooo");
+                console.log("u " + oldU +", fname " + r["fname"])
+                navigate("/Login");
             }
         }
 
@@ -43,8 +45,6 @@ export const PassSecQ = (props) => {
         <div className = "App auth-form-container">
         <form className="passsecurity-form" method = "POST" onSubmit={handleSubmit}>
             <img class="img" src = "/Images/TutorsRUs_nobackground.png"/>
-            <Header fname={location.state.fname} lname={location.state.lname} />
-      <hr />
             <label htmlFor="question1"> What was the name of your first stufffed animal? </label>
             <input value={question1} onChange={(e) => setQuestion1(e.target.value)}type="question1" placeholder="enter your answer" id="question1" name="question1"/>
             <br></br>
