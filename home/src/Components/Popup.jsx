@@ -11,8 +11,9 @@ function Popup(props) {
         e.preventDefault();
         
     
-        const requestData = JSON.stringify({ "username":  location.state.u});
+        const requestData = JSON.stringify({ "username":  location.state.user});
         const headers = { "content-type": "application/json" };
+        console.log("uuu " + location.state.user)
     
         async function getResponse() {
           const response = await fetch('http://localhost:3001/delete', { method: 'POST', body: requestData, headers: headers });
