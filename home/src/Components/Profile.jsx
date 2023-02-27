@@ -1,10 +1,11 @@
-import {React, useState} from 'react';
+import React, {useState} from 'react';
 import Header from './Header';
 import About from './About';
 import CourseInfo from './CourseInfo';
 import Popup from './Popup';
 import './Main.css'
 import { Route, useHref, useNavigate, useLocation, Link } from "react-router-dom";
+import Tabs from "./Tabs";
 
 export const Profile = () => {
   const location = useLocation();
@@ -40,6 +41,7 @@ export const Profile = () => {
 
   return (
     <div className="App Profile">
+
       <Header fname={location.state.fname} lname={location.state.lname} />
       <hr />
       <About user={location.state.u} email={location.state.email} mail={"mailto:" + location.state.email} />
@@ -49,11 +51,7 @@ export const Profile = () => {
       </a>
       <br></br>
       <CourseInfo />
-      {/*
-      <a href="/Settings">
-        <button className="submit" > Edit Profile </button>
-      </a>
-  */}
+
       <button className='submit'>
       <Link to="/Settings" state={{ user: location.state.u }}>Edit Profile</Link>
       </button>

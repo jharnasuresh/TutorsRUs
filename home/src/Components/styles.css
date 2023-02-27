@@ -41,3 +41,13 @@ nav .nav-links a:hover{
     border-bottom: 1px #88caff;
     
 }
+
+.side-drawer ul {
+    list-style: none;
+    display:flex;
+    flex-direction: column;
+}
+.side-drawer a {
+    color: aliceblue;
+    text-decoration: none;
+}
