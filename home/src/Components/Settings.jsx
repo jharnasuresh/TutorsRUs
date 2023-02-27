@@ -2,18 +2,21 @@ import React, { useState } from "react"
 import './Main.css'
 import { useLocation, Link, useNavigate} from "react-router-dom";
 import About from './About';
+import Popup from "./Popup";
 
 export const Settings = (props) => {
+    const location = useLocation();
+    const navigate = useNavigate();
     const [Fname, setFName] = useState('');
     const [Lname, setLName] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
-    //const oldU = 
-    const location = useLocation();
-    const navigate = useNavigate();
-    console.log("aesawda " + location.state.user)
+    const [buttonPopup, setButtonPopup] = useState(false);
+    const [active, setActive] = useState(location.state.active)
+    var aButton = (active) ? "Deactivate" : "Activate";
 
+    console.log("aesawda " + location.state.active)
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -39,6 +42,25 @@ export const Settings = (props) => {
 
     }
 
+    const handleDeactivate = (e) => {
+        e.preventDefault();
+        
+    
+        const requestData = JSON.stringify({ "username":  location.state.user});
+        const headers = { "content-type": "application/json" };
+    
+        async function getResponse() {
+          const response = await fetch('http://localhost:3001/deactivate', { method: 'POST', body: requestData, headers: headers });
+          var r = await response.json();
+          navigate("/Login");
+    
+        }
+    
+        getResponse();
+    
+        return;
+      }
+
     const backToProfile = (e) => {
 
         e.preventDefault();
@@ -55,7 +77,8 @@ export const Settings = (props) => {
                     u: res.u,
                     fname: res["fname"],
                     lname: res["lname"], 
-                    email: res["email"]
+                    email: res["email"],
+                    active: res["active"]
                 }
             });
         })
@@ -86,7 +109,11 @@ export const Settings = (props) => {
         
         <button type="submit" onClick={backToProfile}>Back to profile</button>
 
-        <button type="submit" className="deactivate-btn">Deactivate Account</button>
+        <div>
+      <button className='submit' onClick={() => setButtonPopup(true)}>Delete Account</button>
+      <Popup trigger={buttonPopup} setTrigger={setButtonPopup} state={{user: location.state.user}}>Are you sure you want to delete your account?</Popup>
+      </div>
+      <button className='submit' onClick={handleDeactivate}>{aButton} Account</button>
     </div>
         /*
         <div className="App Profile">
