@@ -79,7 +79,8 @@ app.post('/signup', async (req, res) => {
           password: md5(req.body["pass"]),
           FName : req.body["firstName"],
           LName : req.body["lastName"],
-          username : req.body["user"]
+          username : req.body["user"],
+          active: true
         };
 
         var setDoc = db.collection('users').add(data);
@@ -161,6 +162,72 @@ app.listen(PORT, () => {
     console.log(`Server listening on ${PORT}`);
 });
 
+//app.post("/delete")
+
+app.post("/info", async (req, res) => {
+    console.log("iii")
+    const login = await db.collection('users').where('username', '==', req.body["username"]).get();
+    var doc = login.docs[0];
+
+    console.log("aaa " + doc.get("active"))
+    
+    return res.send(JSON.stringify({"u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active")}))
+
+})
+
+app.post("/delete", async (req, res) => {
+    const login = await db.collection('users').where('username', '==', req.body["username"]).get();
+    var doc = login.docs[0];
+    doc.ref.delete();
+    
+    return res.send(JSON.stringify("success"))
+
+})
+
+app.post("/deactivate", async (req, res) => {
+    const login = await db.collection('users').where('username', '==', req.body["username"]).get();
+    var doc = login.docs[0];
+    doc.ref.update({active: !doc.get("active")})
+    console.log("a? " + doc.get("active"))
+    
+    return res.send(JSON.stringify("success"))
+
+})
+
+
+
+app.post("/update", async (req, res) => {
+    var u = req.body.oldU
+    const login = await db.collection('users').where('username', '==', req.body.oldU).get();
+    var doc = login.docs[0];
+    var fname = doc.get("FName")
+    var lname = doc.get("LName")
+    var email = doc.get("email")
+    var user = doc.get("username")
+    var pass = doc.get("password")
+    if (req.body.fname != "" && req.body.fname !== fname) {
+        await doc.ref.update({FName: req.body.fname});
+    }
+    if (req.body.lname != "" && req.body.lname !== lname) {
+        await doc.ref.update({LName: req.body.lname});
+    }
+    if (req.body.user != "" && req.body.user !== user) {
+        user = req.body.user
+        await doc.ref.update({username: req.body.user});
+    }
+    if (req.body.email != "" && req.body.email !== email) {
+        await doc.ref.update({email: req.body.email});
+    }
+    if (req.body.pass != "" && md5(req.body.pass) !== pass) {
+        await doc.ref.update({password: md5(req.body.pass)});
+    }
+
+    const up = await db.collection('users').where('username', '==', user).get();
+    doc = up.docs[0];
+    return res.send(JSON.stringify({"u": doc.get("username"), "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email")}))
+
+})
+
 app.post("/login", async (req, res) => {
     console.log("user: " + req.body["username"])
 
@@ -168,7 +235,7 @@ app.post("/login", async (req, res) => {
     if (!login.empty) {
         var doc = login.docs[0];
        console.log("a " + doc.get("password"))
-       return res.send(JSON.stringify("success"))
+       return res.send(JSON.stringify({"u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email")}))
        //it works!
         
     }
@@ -180,6 +247,9 @@ app.post("/login", async (req, res) => {
     return res.send(JSON.stringify("error"))
 })
 
+app.post("/passsecurity", async(req, res) => {
+    console.log("got in passsecurity");
+});
 
 
 
