@@ -27,7 +27,7 @@ export const Profile = () => {
 
   return (
     <div className="App Profile">
-
+      <Tabs/>
       <h1 style={{color: 'red'}}>{a}</h1>
       <Header fname={location.state.fname} lname={location.state.lname} />
       <hr />

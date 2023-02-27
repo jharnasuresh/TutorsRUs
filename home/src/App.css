@@ -58,4 +58,9 @@ button {
 }
 
 
+@media all and (max-width: 768px) {
+  body {
+    display: none;
+  }
+}
 

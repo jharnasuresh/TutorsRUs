@@ -10,24 +10,23 @@ export const Start = (props) => {
   const location = useLocation();
   console.log("here?? " + location.state.u)
 
+  
+    const handleSubmit = (e) => {
+        e.preventDefault();
+    
+        
+    }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+    return (
 
+        
+        <div classNames = "nav">
+                <Tabs/>
 
-  }
+        </div>
+        
+       
 
-  return (
-
-
-    <div classNames="nav">
-
-
-    </div>
-
-
-
-  )
-
+    )
 
 }
