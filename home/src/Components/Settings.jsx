@@ -35,7 +35,8 @@ export const Settings = (props) => {
                     u: res.u,
                     fname: res["fname"],
                     lname: res["lname"], 
-                    email: res["email"]
+                    email: res["email"],
+                    active: res["active"]
                 }
             });
         })

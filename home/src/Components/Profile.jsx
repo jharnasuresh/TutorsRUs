@@ -18,17 +18,10 @@ export const Profile = () => {
   var a = (active) ? "" : "Your account is not currently active";
 
 
-
-
-
-  
-
-  
-
   return (
     <div className="App Profile">
       <Tabs/>
-      <h1 style={{color: 'red'}}>{a}</h1>
+      <div className='activate'><h1>{a}</h1></div>
       <Header fname={location.state.fname} lname={location.state.lname} />
       <hr />
       <About user={location.state.u} email={location.state.email} mail={"mailto:" + location.state.email} />

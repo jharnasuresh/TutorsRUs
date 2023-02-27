@@ -20,6 +20,7 @@ import DragDrop from './Components/DragDrop';
 function App() {
 
   const [currUser, setCurrUser] = useState('')
+  console.log("setting??")
 
   const GlobalState = { currUser, setCurrUser}
 
