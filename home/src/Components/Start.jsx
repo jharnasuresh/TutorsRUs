@@ -12,24 +12,23 @@ export const Start = () => {
   console.log("lll " + location.state.u)
 
 
+  
+    const handleSubmit = (e) => {
+        e.preventDefault();
+    
+        
+    }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+    return (
 
+        
+        <div classNames = "nav">
+                <Tabs/>
 
-  }
+        </div>
+        
+       
 
-  return (
-
-
-    <div classNames="nav">
-
-
-    </div>
-
-
-
-  )
-
+    )
 
 }
