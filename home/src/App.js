@@ -35,13 +35,13 @@ return (
     <Routes>
 
         <Route exact path="/Login" element={< Login GlobalState={GlobalState}/>} /> 
-        <Route exact path="/Start" element={< Start />} /> 
-        <Route exact path="/Register" element={< Register />} /> 
-        <Route exact path="/Verification" element={< Verification />} /> 
-        <Route exact path="/Profile" element={< Profile />} /> 
+        <Route exact path="/Start" element={< Start GlobalState={GlobalState}/>} /> 
+        <Route exact path="/Register" element={< Register GlobalState={GlobalState}/>} /> 
+        <Route exact path="/Verification" element={< Verification GlobalState={GlobalState}/>} /> 
+        <Route exact path="/Profile" element={< Profile GlobalState={GlobalState}/>} /> 
         <Route exact path="/PassSecQ" element={< PassSecQ />} /> 
-        <Route exact path="/Settings" element={< Settings />} />
-        <Route exact path="/Transcript" element={< Transcript />} />
+        <Route exact path="/Settings" element={< Settings GlobalState={GlobalState}/>} />
+        <Route exact path="/Transcript" element={< Transcript GlobalState={GlobalState}/>} />
         <Route exact path="/ResetPass" element={< ResetPass />} />
         <Route path="*" element={<Login />} />
     </Routes>

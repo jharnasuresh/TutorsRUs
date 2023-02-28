@@ -6,8 +6,13 @@ import { Verification } from "../Verification"
 import Profile from "./Profile"
 import "./styles.css"
 import Tabs from "./Tabs";
-export const Start = () => {
+export const Start = ({GlobalState}) => {
   const location = useLocation();
+  
+
+  const { currUser, setCurrUser } = GlobalState;
+  console.log(currUser)
+
 
   console.log("lll " + location.state.u)
 
@@ -23,7 +28,6 @@ export const Start = () => {
 
         
         <div classNames = "nav">
-                <Tabs/>
 
         </div>
         
