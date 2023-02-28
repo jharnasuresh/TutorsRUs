@@ -17,7 +17,10 @@ app.use(bp.json())
 app.use(bp.urlencoded({ extended: true }))
 const bcrypt = require("bcrypt") //packate bcrypt imported
 const PORT = process.env.PORT || 3001;
+require('dotenv').config();
+
 const nodemailer = require('nodemailer');
+//let transport = nodemailer.createTransport(options[, defaults])
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
@@ -96,58 +99,32 @@ app.post('/signup', async (req, res) => {
         var userIDHash = md5(userRecord.uid);
         //adding hashed userid and userid to Email-Verifications collection
         console.log("Jharna i'm in verify");
-        //var user = FirebaseAuth.instance.currentUser;
-
-        /*
-        if (userRecord.isEmailVerified == false) {
-            console.log("verify email");
-        }
-        else {
-            console.log("Jharna email is already verified");
-            console.log(userRecord.email)
-        }
-        //router.post('/', async (req,res) => {
-            console.log("june look" + req.body.email)
-            var transporter = nodemailer.createTransport({
-            service: 'gmail',
+        let transport = nodemailer.createTransport({
+            host: "smtp.gmail.com",
+            port: 465,
+            secure: true,
             auth: {
-                user: 'tutorsrus62@gmail.com',
-                pass: 'suP3rTut0r$'
+              user: 'tutorsrus62@gmail.com',
+              pass: 'cshikqpjzgbcwejb'
             }
-            });
+         });
         
-            var mailOptions = {
-            from: 'tutorsrus62@gmail.com',
-            to: req.body.email,
-            subject: 'Sending Email using Node.js',
-            text: 'That was easy!'
-            };
+         const mailOptions = {
+            from: 'tutorsrus62@gmail.com', // Sender address
+            to: req.body.email, // List of recipients
+            subject: 'Welcome To TutorsRUs', // Subject line
+            text: 'Pleases click on the verification link', // Plain text body
+        };
         
-            transporter.sendMail(mailOptions, function(error, info){
-            if (error) {
-                console.log(error);
-                res.send(error)
-            } else {
-                console.log('Email sent: ' + info.response);
-                res.status(200).send("Success")
-            }
-            })
-        //});
+        transport.sendMail(mailOptions, function(err, info) {
+           if (err) {
+             console.log(err)
+           } else {
+             console.log(info);
+           }
+        });
         
-        module.exports = router;
-          return null;
-          */
-    /*getAuth()
-        .generateEmailVerificationLink(useremail, actionCodeSettings)
-            .then((link) => {
-                // Construct email verification template, embed the link and send
-                // using custom SMTP server.
-        return sendCustomVerificationEmail(useremail, displayName, link);
-    })
-    .catch((error) => {
-    // Some error occurred.
-     });*/
-
+          
        })
 
        
