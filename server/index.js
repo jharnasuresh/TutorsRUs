@@ -88,7 +88,7 @@ app.post('/signup', async (req, res) => {
           username : req.body["user"],
           answer1 : "",
           answer2: "",
-          answer3: ""
+          answer3: "",
           active: true
         };
 
