@@ -9,9 +9,12 @@ import Tabs from "./Tabs";
 export const Start = ({GlobalState}) => {
   const location = useLocation();
   
-
   const { currUser, setCurrUser } = GlobalState;
   console.log(currUser)
+
+  if (currUser === "") {
+    setCurrUser(location.state.u)
+  }
 
 
   console.log("lll " + location.state.u)

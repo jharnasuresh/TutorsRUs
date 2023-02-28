@@ -7,7 +7,7 @@ import './Main.css'
 import { Route, useHref, useNavigate, useLocation, Link } from "react-router-dom";
 import Tabs from "./Tabs";
 
-export const Profile = () => {
+export const Profile = ({GlobalState}) => {
   const location = useLocation();
   const navigate  = useNavigate();
   console.log("ll " + location.state.u)

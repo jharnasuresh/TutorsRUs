@@ -42,7 +42,8 @@ export const Tabs = ({GlobalState}) => {
                 <div className="img"><img class="img" src = "/Images/TutorsRUs_nobackground.png"/></div>
                 <ul className="nav-links">
                     <li>
-                        <a href="./Start" state={{GlobalState: {GlobalState}, u: {currUser}}} > Home </a>
+                        {/*<a href="./Start" state={{GlobalState: {GlobalState}, u: {currUser}}} > Home </a>*/}
+                        <a href="./Start" onClick={() => navigate('/Start', {state: {u: currUser}})} > Home </a>
 
                     </li>
                     <li>

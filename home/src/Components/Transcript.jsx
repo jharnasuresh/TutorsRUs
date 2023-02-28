@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import './DragDrop'
 import DragDrop from "./DragDrop";
 
-export const Transcript = () => {
+export const Transcript = ({GlobalState}) => {
 
     const [pdfFile, setPdfFile] = useState(null);
     const [pdfFileError, setPdfFileError] = useState("");
