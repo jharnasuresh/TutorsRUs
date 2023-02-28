@@ -2,7 +2,7 @@ import React from "react";
 import {useState} from "react"
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
-export const Tabs = (props) => {
+export const DrawerNew = (props) => {
     const [currentForm, setCurrentForm] = useState('start');
     const location = useLocation();
     const navigate = useNavigate();
@@ -46,4 +46,4 @@ export const Tabs = (props) => {
         </div>
     )
 }
-export default Tabs;
+export default DrawerNew;

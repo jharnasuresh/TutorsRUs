@@ -1,11 +1,7 @@
 import React from "react";
 import {useState} from "react"
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faImages } from '@fortawesome/free-regular-svg-icons';
-import { dom } from '@fortawesome/fontawesome-svg-core'
 import  DrawerNew  from './DrawerNew';
-export const Tabs = (props) => {
 
 import DragDrop from "./DragDrop";
 
@@ -64,7 +60,7 @@ export const Tabs = ({GlobalState}) => {
                         <a href="./Transcript">Transcript</a>
                     </li>
                 </ul>
-                <DrawerNew/>
+                {/*<DrawerNew/>*/}
                 
                
             </nav>
