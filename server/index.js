@@ -28,10 +28,6 @@ console.log("library imports work");
 //const users = [] //temporarily storing in array
 
 const cors = require('cors')
-
-await fetch(url, {
-    mode: 'no-cors'
-})
 app.use(cors())
 
 

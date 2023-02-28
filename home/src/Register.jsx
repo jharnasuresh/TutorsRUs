@@ -36,9 +36,7 @@ export const Register = ({GlobalState}) => {
         const requestData = JSON.stringify({ "firstName": firstName, "lastName": lastName, "user": user, "pass": pass, "email": email });
         const headers = { "content-type": "application/json" };
 
-        async function getResponse() {
-
-   
+        async function getResponse() { 
             const response = await fetch('http://localhost:3001/signup', { method: 'POST', body: requestData, headers: headers });
             var r = await response.json();
             if (firstName === '' || lastName === '' || email === '' || user === '' || pass === '') {
