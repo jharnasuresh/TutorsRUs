@@ -11,10 +11,12 @@ import {RouterProvider, createBrowserRouter, useNavigate} from "react-router-dom
 import {Settings} from "./Components/Settings"
 import Tabs from "./Components/Tabs";
 import Profile from './Components/Profile';
+
 import { DrawerNew } from './Components/DrawerNew';
 import { Transcript } from './Components/Transcript';
-import 'bootstrap/dist/css/bootstrap.css'
+
 import DragDrop from './Components/DragDrop';
+import {Help} from './Components/Help';
 
 
 function App() {
@@ -43,7 +45,9 @@ return (
         <Route exact path="/Settings" element={< Settings GlobalState={GlobalState}/>} />
         <Route exact path="/Transcript" element={< Transcript GlobalState={GlobalState}/>} />
         <Route exact path="/ResetPass" element={< ResetPass />} />
+        <Route exact path="/Help" element={< Help />} /> 
         <Route path="*" element={<Login />} />
+        
     </Routes>
     </div>
    

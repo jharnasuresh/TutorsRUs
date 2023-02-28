@@ -54,7 +54,7 @@ export const Tabs = ({GlobalState}) => {
                         <a href="./Login">Log Out</a>
                     </li>
                     <li>
-                        <a href="./Profile">Help</a>
+                        <a href="./Help">Help</a>
                     </li>
                     <li>
                         <a href="./Transcript">Transcript</a>
