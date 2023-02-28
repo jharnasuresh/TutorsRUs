@@ -20,8 +20,11 @@ export const Profile = () => {
 
   return (
     <div className="App Profile">
-      <Tabs/>
-      <div className='activate'><h1>{a}</h1></div>
+
+      <div className='activate'><h1 style={{color: 'red'}}>{a}</h1></div>
+
+      
+
       <Header fname={location.state.fname} lname={location.state.lname} />
       <hr />
       <About user={location.state.u} email={location.state.email} mail={"mailto:" + location.state.email} />
