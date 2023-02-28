@@ -10,7 +10,6 @@ export const Login = ({GlobalState}) => {
     const [showErr, setShowErr] = useState(false);
     const [errCount, setErrCount] = useState(0);
     const [resetPassword, setResetPassword] = useState(false)
-    const { currUser, setCurrUser } = GlobalState;
 
     const navigate = useNavigate();
     
@@ -36,7 +35,6 @@ export const Login = ({GlobalState}) => {
             }
             else {
                 console.log("u " + user +", fname " + r["fname"])
-                setCurrUser(user)
                 navigate("/Start", {state: {u: user}});
             }
 
