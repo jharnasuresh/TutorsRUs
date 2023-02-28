@@ -44,7 +44,7 @@ export const PassSecQ = (props) => {
     return (
         <div className = "App auth-form-container">
         <form className="passsecurity-form" method = "POST" onSubmit={handleSubmit}>
-            <img class="img" src = "/Images/TutorsRUs_nobackground.png"/>
+            <img class="img-sec" src = "/Images/TutorsRUs_nobackground.png"/>
             <label htmlFor="question1"> What was the name of your first stufffed animal? </label>
             <input value={question1} onChange={(e) => setQuestion1(e.target.value)}type="question1" placeholder="enter your answer" id="question1" name="question1"/>
             <br></br>

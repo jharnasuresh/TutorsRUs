@@ -99,4 +99,16 @@ margin-top: 80px;
     padding-left: 100px;
 }
     
+.img-sec {
+    padding-top: -50px;
+}
+.resetpass-q1, .resetpass-q2, .resetpass-q3, .resetpass-email, .SecurityQuestions {
+    padding-top: 10px;
+    margin-right: 400px;
+ }   
+
+ .reset-head {
+    padding-left: 400px;
+    padding-bottom: 300px;
+ }
 
