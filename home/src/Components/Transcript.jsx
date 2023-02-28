@@ -1,8 +1,15 @@
 import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
 import './DragDrop'
 import DragDrop from "./DragDrop";
 
 export const Transcript = ({GlobalState}) => {
+    const { currUser, setCurrUser } = GlobalState;
+
+    const location = useLocation();
+    if (currUser === "") {
+        setCurrUser(location.state.u)
+      }
 
     const [pdfFile, setPdfFile] = useState(null);
     const [pdfFileError, setPdfFileError] = useState("");

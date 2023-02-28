@@ -21,8 +21,13 @@ import {Help} from './Components/Help';
 
 function App() {
 
-  const [currUser, setCurrUser] = useState('')
-  console.log("setting??")
+  const [currUser, setCurrUser] = useState("");
+
+  if (currUser === undefined) {
+    setCurrUser('');
+  }
+     
+  console.log("setting??" + currUser)
 
   const GlobalState = { currUser, setCurrUser}
 
