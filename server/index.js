@@ -173,9 +173,13 @@ app.listen(PORT, () => {
 //app.post("/delete")
 
 app.post("/info", async (req, res) => {
-    console.log("iii")
+    console.log("iii " + req.body["username"])
     const login = await db.collection('users').where('username', '==', req.body["username"]).get();
+    if (login.empty) {
+        return res.send("error")
+    }
     var doc = login.docs[0];
+
 
     console.log("aaa " + doc.get("active"))
     
@@ -213,6 +217,7 @@ app.post("/update", async (req, res) => {
     var email = doc.get("email")
     var user = doc.get("username")
     var pass = doc.get("password")
+    var active = doc.get("active")
     if (req.body.fname != "" && req.body.fname !== fname) {
         await doc.ref.update({FName: req.body.fname});
     }
@@ -232,7 +237,7 @@ app.post("/update", async (req, res) => {
 
     const up = await db.collection('users').where('username', '==', user).get();
     doc = up.docs[0];
-    return res.send(JSON.stringify({"u": doc.get("username"), "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email")}))
+    return res.send(JSON.stringify({"u": doc.get("username"), "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": active}))
 
 })
 

@@ -10,15 +10,17 @@ import { Routes, Route, Link, Router } from "react-router-dom";
 import {RouterProvider, createBrowserRouter, useNavigate} from "react-router-dom";
 import {Settings} from "./Components/Settings"
 import Tabs from "./Components/Tabs";
-import {Profile} from './Components/Profile';
+import Profile from './Components/Profile';
 import { DrawerNew } from './Components/DrawerNew';
 import { Transcript } from './Components/Transcript';
 import 'bootstrap/dist/css/bootstrap.css'
 import DragDrop from './Components/DragDrop';
 
+
 function App() {
 
   const [currUser, setCurrUser] = useState('')
+  console.log("setting??")
 
   const GlobalState = { currUser, setCurrUser}
 

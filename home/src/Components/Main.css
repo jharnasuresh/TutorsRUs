@@ -105,6 +105,13 @@ margin-top: 80px;
     padding-top: -50px;
     padding-left: 100px;
 }
+
+.activate {
+    position: absolute;
+    top: 10em;
+    color: red;
+    right: 30em;
+}
     
 
 .activate {

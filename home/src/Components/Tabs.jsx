@@ -1,6 +1,12 @@
 import React from "react";
 import {useState} from "react"
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faImages } from '@fortawesome/free-regular-svg-icons';
+import { dom } from '@fortawesome/fontawesome-svg-core'
+import  DrawerNew  from './DrawerNew';
+export const Tabs = (props) => {
+
 import DragDrop from "./DragDrop";
 
 export const Tabs = ({GlobalState}) => {
@@ -12,6 +18,7 @@ export const Tabs = ({GlobalState}) => {
   const backToProfile = (e) => {
 
     e.preventDefault();
+    console.log("tabs2 " + currUser)
     const headers = { "content-type": "application/json" };
     const requestData = JSON.stringify({ "username":  currUser});
 
@@ -36,14 +43,14 @@ export const Tabs = ({GlobalState}) => {
     return (
         <div>
             <nav>
-            
-                <div className="logo">TutorsRUs</div>
+                <div className="img"><img class="img" src = "/Images/TutorsRUs_nobackground.png"/></div>
                 <ul className="nav-links">
                     <li>
-                        <a href="./Start"> Home </a>
+                        <a href="./Start" state={{GlobalState: {GlobalState}, u: {currUser}}} > Home </a>
 
                     </li>
                     <li>
+
                         <a href="./Profile" onClick={backToProfile}>Profile</a>
 
                     </li>
@@ -57,6 +64,9 @@ export const Tabs = ({GlobalState}) => {
                         <a href="./Transcript">Transcript</a>
                     </li>
                 </ul>
+                <DrawerNew/>
+                
+               
             </nav>
         </div>
     )
