@@ -17,10 +17,11 @@ const DragDrop = () => {
     const handleUpload = () => {
         const formData = new FormData();
         formData.append("Files", files);
-        console.log(formData.getAll())
+        console.log(formData.getAll("Files"))
+        const headers = { 'Content-Type': 'multipart/form-data'};
 
         async function getResponse() {
-            const response = await fetch('http://localhost:3001/parse', {method: "POST", body: formData});
+            const response = await fetch('http://localhost:3001/parse', {method: "POST", body: formData, headers: headers});
             var r = await response.json();
   
           }

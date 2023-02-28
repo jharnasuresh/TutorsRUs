@@ -166,6 +166,10 @@ app.get("/api", (req, res) => {
     res.json({ message: "ur mom" });
 });
 
+app.post("/parse", (req, res) => {
+    console.log(req.body.Files)
+});
+
 app.listen(PORT, () => {
     console.log(`Server listening on ${PORT}`);
 });
