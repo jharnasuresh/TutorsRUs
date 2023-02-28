@@ -23,6 +23,7 @@ export const Register = ({GlobalState}) => {
         e.currentTarget.disabled = true;
         console.log('button clicked');
       };*/
+
     const handleSubmit = (e) => {
         e.preventDefault();
         setEmailErr(false)
@@ -36,6 +37,8 @@ export const Register = ({GlobalState}) => {
         const headers = { "content-type": "application/json" };
 
         async function getResponse() {
+
+   
             const response = await fetch('http://localhost:3001/signup', { method: 'POST', body: requestData, headers: headers });
             var r = await response.json();
             if (firstName === '' || lastName === '' || email === '' || user === '' || pass === '') {
