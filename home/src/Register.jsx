@@ -1,7 +1,7 @@
 import React, {useState} from "react"
 import { Route, useHref, useNavigate, useLocation, Link } from "react-router-dom";
 
-export const Register = (props) => {
+export const Register = ({GlobalState}) => {
     const location = useLocation();
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');

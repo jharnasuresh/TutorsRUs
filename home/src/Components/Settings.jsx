@@ -4,7 +4,7 @@ import { useLocation, Link, useNavigate} from "react-router-dom";
 import About from './About';
 import Popup from "./Popup";
 
-export const Settings = (props) => {
+export const Settings = ({GlobalState}) => {
     const location = useLocation();
     const navigate = useNavigate();
     const [Fname, setFName] = useState('');
@@ -15,6 +15,8 @@ export const Settings = (props) => {
     const [buttonPopup, setButtonPopup] = useState(false);
     const [active, setActive] = useState(location.state.active)
     var aButton = (active) ? "Deactivate" : "Activate";
+    const { currUser, setCurrUser } = GlobalState;
+
 
     console.log("aesawda " + location.state.active)
 
@@ -29,6 +31,7 @@ export const Settings = (props) => {
         .then((res) => res.json())
         .then((res) => {
             console.log(res["fname"] + " " + res.u) 
+            setCurrUser(res.u)
             navigate("/Profile", {
             
                 state: {
