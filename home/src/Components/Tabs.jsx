@@ -56,6 +56,7 @@ export const Tabs = ({GlobalState}) => {
                     </li>
                     <li>
                         <a href="./Profile" onClick={() => navigate('/Profile', {state: {u: currUser}})}>Help</a>
+
                     </li>
                     <li>
                         <a href="./Transcript" onClick={() => navigate('/Transcript', {state: {u: currUser}})}>Transcript</a>
