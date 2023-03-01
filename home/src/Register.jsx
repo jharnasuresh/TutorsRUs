@@ -82,7 +82,8 @@ export const Register = ({GlobalState}) => {
     }
     return (
         <div className = "App auth-form-container img">
-            <h2>Register</h2>
+            <br></br>
+            <h2><br></br>Register</h2>
             {
                 userErr ? (<p style={{color:'red'}}>That username is already taken. Try Again.</p>): <span></span>
             }
