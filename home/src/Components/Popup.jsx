@@ -10,7 +10,6 @@ function Popup(props) {
     const handleSubmit = (e) => {
         e.preventDefault();
         
-    
         const requestData = JSON.stringify({ "username":  location.state.user});
         const headers = { "content-type": "application/json" };
         console.log("uuu " + location.state.user)
