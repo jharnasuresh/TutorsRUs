@@ -12,7 +12,7 @@
 }
 /*{ border: 1px solid red; }*/
 .img {
-  height: 100px;
+  height: 50px;
   object-position : top -550px left 100 px
 
 }
@@ -23,7 +23,7 @@
 }
 
 .auth-form-container {
-  padding: 5rem;
+  padding: 25rem;
   border: 2px solid black;
   border-radius: 10px;
   background-color: rgba(255, 255, 255, 0.365);
