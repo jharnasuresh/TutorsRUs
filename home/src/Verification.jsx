@@ -1,13 +1,20 @@
 import React, {useState} from "react"
 import { Route, useHref, useNavigate, useLocation, Link } from "react-router-dom";
 
-export const Verification = (props) => {
+export const Verification = ({GlobalState}) => {
     const [userUniqueCode, setUserUniqueCode] = useState('');
     const [user, setUsername] = useState('');
     const [showErr, setShowErr] = useState(false);
 
     const location = useLocation();
     const navigate = useNavigate();
+
+    const { currUser, setCurrUser } = GlobalState;
+
+    if (currUser === "") {
+        setCurrUser(location.state.oldU)
+      }
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -30,7 +37,8 @@ export const Verification = (props) => {
 
             }
             else {
-                navigate("/Login")
+                //navigate("/Login")
+                backToProfile();
             }
 
         }
@@ -40,6 +48,30 @@ export const Verification = (props) => {
 
 
         return;
+    }
+
+    const backToProfile = () => {
+
+        console.log("tabs2 " + currUser)
+        const headers = { "content-type": "application/json" };
+        const requestData = JSON.stringify({ "username":  currUser});
+    
+        fetch('http://localhost:3001/info', { method: 'POST', body: requestData, headers: headers })
+        .then((res) => res.json())
+        .then((res) => {
+            console.log("aaaa? " + res["active"])
+            navigate("/Profile", {
+            
+                state: {
+                    u: res.u,
+                    fname: res["fname"],
+                    lname: res["lname"], 
+                    email: res["email"], 
+                    active: res["active"]
+                }
+            });
+        })
+              
     }
 
     return (
