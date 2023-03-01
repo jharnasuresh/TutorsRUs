@@ -51,7 +51,7 @@ const DragDrop = () => {
         {!files && (
             <div className="dropzone" onDragOver={handleDragOver} onDrop={handleDrop}>
                 <h1>Drag and drop files to upload</h1>
-                <h1>Or</h1>
+                <h1>or</h1>
                 <input type="file" multiple onChange={(event) => {setFiles(event.target.files)}} hidden ref={inputRef}/>
                 <button onClick={() => inputRef.current.click()}>Select Files</button>
             </div>

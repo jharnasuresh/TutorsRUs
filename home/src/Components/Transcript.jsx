@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import './DragDrop'
 import DragDrop from "./DragDrop";
-
+import App from '../App';
 export const Transcript = ({GlobalState}) => {
     const { currUser, setCurrUser } = GlobalState;
 
@@ -44,8 +44,9 @@ export const Transcript = ({GlobalState}) => {
 
 
 return (
-    <>
+    <div className="App">
         <DragDrop />
+    
         {/*
         <div className="container">
         <form className="form-group" onSubmit={handlePdfFileSubmit}>
@@ -59,7 +60,8 @@ return (
         </form>
     </div>
 */}
-    </>
+    </div>
+
 
 )
 

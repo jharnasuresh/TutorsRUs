@@ -11,7 +11,7 @@ a {
 }
 .Back {
     color: black;
-    background-image: linear-gradient(79deg, #be8dff, #fffdba 48%, #88caff);
+    background-image: linear-gradient(79deg, #F8C8DC, #ffffff 48%, #89CFF0);
   
   }
 nav {
@@ -20,7 +20,7 @@ nav {
     min-height: 10vh;
     align-items: center;
     font-family: Georgia, 'Times New Roman', Times, serif;
-    background-color: #be8dff;
+    background-color: #F8C8DC;
 }
 
 
