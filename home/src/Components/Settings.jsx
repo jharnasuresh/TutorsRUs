@@ -114,6 +114,7 @@ export const Settings = ({ GlobalState }) => {
             </form>
 
             <button type="submit" onClick={backToProfile}>Back to profile</button>
+            <button type="submit" onClick={() => navigate('/Transcript', {state: {u: currUser}})}>Get Verified</button>
 
             <div>
                 <button className='submit' onClick={() => setButtonPopup(true)}>Delete Account</button>

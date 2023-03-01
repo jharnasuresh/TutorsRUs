@@ -46,6 +46,7 @@ export const Transcript = ({GlobalState}) => {
 return (
     <>
         <DragDrop />
+        {/*
         <div className="container">
         <form className="form-group" onSubmit={handlePdfFileSubmit}>
             <input type='file' className='form-control'
@@ -57,6 +58,7 @@ return (
             </button>
         </form>
     </div>
+*/}
     </>
 
 )
