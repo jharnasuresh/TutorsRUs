@@ -58,9 +58,7 @@ export const Tabs = ({GlobalState}) => {
                         <a href="./Help" onClick={() => navigate('/Help', {state: {u: currUser}})}>Help</a>
 
                     </li>
-                    <li>
-                        <a href="./Transcript" onClick={() => navigate('/Transcript', {state: {u: currUser}})}>Transcript</a>
-                    </li>
+
                 </ul>
                 <DrawerNew/>
                 
