@@ -39,7 +39,7 @@ export const Profile = ({GlobalState}) => {
           <button className="submit" > See Followers </button>
         </a> */}
 
-        <main>
+        <main className="popupbutton">
           <button onClick={() => setButtonPopup(true)}className="submit">Click to See Followers</button>
       </main>
       <Followers trigger={buttonPopup} setTrigger={setButtonPopup}>
