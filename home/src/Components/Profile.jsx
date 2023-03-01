@@ -6,8 +6,12 @@ import Popup from './Popup';
 import './Main.css'
 import { Route, useHref, useNavigate, useLocation, Link } from "react-router-dom";
 import Tabs from "./Tabs";
+import Followers from './Followers'
+
 
 export const Profile = ({GlobalState}) => {
+  const [buttonPopup, setButtonPopup] = useState(false);
+
   const location = useLocation();
   const navigate  = useNavigate();
   console.log("ll " + location.state.u)
@@ -31,16 +35,24 @@ export const Profile = ({GlobalState}) => {
       <br/>
       <CourseInfo />
       <div className='profile-btn'>
-        <a href="/Profile">
+        {/*<a href="/Profile">
           <button className="submit" > See Followers </button>
-        </a>
+        </a> */}
+
+        <main>
+          <button onClick={() => setButtonPopup(true)}className="submit">Click to See Followers</button>
+      </main>
+      <Followers trigger={buttonPopup} setTrigger={setButtonPopup}>
+            <h3>User's Followers:</h3>
+            <p> Cindy Loo Hoo</p>
+            <p>John Smith</p>
+      </Followers>
         
         <button className='submit'> 
         <Link to="/Settings" state={{ user: location.state.u, active: location.state.active}}>Edit Profile</Link>
         </button>
+
       </div>
-      
-      
       
       <br/>
     </div>
