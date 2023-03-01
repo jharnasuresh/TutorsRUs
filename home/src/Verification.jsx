@@ -19,7 +19,7 @@ export const Verification = ({GlobalState}) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         setShowErr(false)
-        const requestData = JSON.stringify({ "oldU": location.state.oldU});
+        const requestData = JSON.stringify({ "oldU": location.state.oldU, "userUniqueString": location.state.userUniqueString});
         const headers = { "content-type": "application/json" };
 
         async function getResponse() {
@@ -29,9 +29,14 @@ export const Verification = ({GlobalState}) => {
 
             console.log(location.state.oldU);
             var userUniqueString = r["userUniqueString"]
+            console.log("useruniquecode " + userUniqueCode)
             console.log(userUniqueString)
             console.log(r)
-            if (r === "error") {
+            if (r === "invalid code") {
+                console.log("in invalid code")
+                setUserUniqueCode(false)
+            }
+            else if (r === "error") {
                 console.log("error");
                 setShowErr(true)
 
