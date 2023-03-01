@@ -1,5 +1,5 @@
 //libraries
-const { getAuth, sendSignInLinkToEmail }  = require('firebase/auth');
+const { getAuth, sendSignInLinkToEmail, sendEmailVerification }  = require('firebase/auth');
 
 const {linkWithCredential, EmailAuthProvider } = require ("firebase/auth");
 const {reauthenticateWithCredential} = require ("firebase/auth");
@@ -39,6 +39,8 @@ app.post('/signup', async (req, res) => {
     var answer1 = "";
     var answer2 = "";
     var answer3 = "";
+    var userUniqueString = "";
+    var active = false;
     const user = {
         email:req.body.email,
         password: req.body
@@ -69,6 +71,8 @@ app.post('/signup', async (req, res) => {
         return res.send(JSON.stringify("requirements"))
     }
     
+    const uniqueString = randString()
+
     //any verifications you would like to do
     const userResponse = admin.auth().createUser({ //Create user in authentication section of firebase
        email: useremail, //user email from request body
@@ -78,7 +82,9 @@ app.post('/signup', async (req, res) => {
        disabled: false,
        answer1: "",
        answer2: "",
-       answer3: ""
+       answer3: "",
+       active: true,
+       userUniqueString: uniqueString
        })
         .then(function(userRecord) {
         console.log("Successfully created new user:", userRecord.uid);
@@ -93,37 +99,28 @@ app.post('/signup', async (req, res) => {
           answer1 : "",
           answer2: "",
           answer3: "",
-          active: true
+          active: true,
+          userUniqueString: uniqueString
         };
 
         var setDoc = db.collection('users').add(data);
         var userIDHash = md5(userRecord.uid);
         //adding hashed userid and userid to Email-Verifications collection
         console.log("Jharna i'm in verify");
-        let transport = nodemailer.createTransport({
-            host: "smtp.gmail.com",
-            port: 465,
-            secure: true,
-            auth: {
-              user: 'tutorsrus62@gmail.com',
-              pass: 'cshikqpjzgbcwejb'
-            }
-         });
         
-         const mailOptions = {
-            from: 'tutorsrus62@gmail.com', // Sender address
-            to: req.body.email, // List of recipients
-            subject: 'Welcome To TutorsRUs', // Subject line
-            text: 'Pleases click on the verification link', // Plain text body
-        };
-        
-        transport.sendMail(mailOptions, function(err, info) {
-           if (err) {
-             console.log(err)
-           } else {
-             console.log(info);
-           }
-        });
+
+        console.log("junie pie this is the email: " + req.body.email)
+
+        const { email } = req.body.email
+        sendVerificationMail(req.body.email, uniqueString)
+        console.log("june papi " + uniqueString)
+
+        /*const { email } = req.body.email
+        const uniqueString = randString()
+        const isValid = false
+        sendMail(email, uniqueString)
+        res.redirect('back')*/
+
         
           
        })
@@ -133,12 +130,30 @@ app.post('/signup', async (req, res) => {
        .catch(function(error) {
           console.log("Error creating new user:", error);
        });
-       return res.send(JSON.stringify({username}))
+       return res.send(JSON.stringify({username, uniqueString}))
 
     });
 
 
+app.post("/verify", async(req, res) => {
+    console.log("jharna im in verify post function in index.js")
+    //var u = req.body.oldU
+    //console.log("first problem area " + u);
+    const passsec = await db.collection('users').where('username', '==', req.body.oldU).get();
+    console.log("the problem")
+    var doc = passsec.docs[0];
+    var user = doc.get("username")
+    console.log("look this is the user " + user)
+    var answer1 = doc.get("answer1")
+    var answer2 = doc.get("answer2")
+    var answer3 = doc.get("answer3")
+    var uniqueString = doc.get("userUniqueString")
 
+    const up = await db.collection('users').where('username', '==', user).get();
+    doc = up.docs[0];
+    return res.send(JSON.stringify({"u": doc.get("username"), "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "answer1": doc.get("question1"), "answer2": doc.get("question2"), "answer3": doc.get("question3"), "userUniqueString": doc.get("userUniqueString")}))
+
+})
 
 app.get("/api", (req, res) => {
     res.json({ message: "ur mom" });
@@ -165,7 +180,7 @@ app.post("/info", async (req, res) => {
 
     console.log("aaa " + doc.get("active"))
     
-    return res.send(JSON.stringify({"u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active")}))
+    return res.send(JSON.stringify({"u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString")}))
 
 })
 
@@ -253,6 +268,7 @@ app.post("/passsecurity", async(req, res) => {
     var answer1 = doc.get("answer1")
     var answer2 = doc.get("answer2")
     var answer3 = doc.get("answer3")
+    var uniqueString = doc.get("userUniqueString")
 
     console.log(req.body.question1 + " " + req.body.question2 + " " + req.body.question3)
     if (req.body.question1 !== answer1) {
@@ -266,7 +282,7 @@ app.post("/passsecurity", async(req, res) => {
     }
     const up = await db.collection('users').where('username', '==', user).get();
     doc = up.docs[0];
-    return res.send(JSON.stringify({"u": doc.get("username"), "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "answer1": doc.get("question1"), "answer2": doc.get("question2"), "answer3": doc.get("question3")}))
+    return res.send(JSON.stringify({"u": doc.get("username"), "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "answer1": doc.get("question1"), "answer2": doc.get("question2"), "answer3": doc.get("question3"), "userUniqueString": doc.get("userUniqueString")}))
 
 });
 
@@ -274,4 +290,74 @@ app.post("/passsecurity", async(req, res) => {
 
 function md5(string) {
     return crypto.createHash('md5').update(string).digest('hex');
+}
+
+const randString = () => {
+    const len = 2
+    let randStr = ''
+    let i = 0
+    while (i < len) {
+        i++
+        const ch = Math.floor((Math.random() + 10) + 1)
+        randStr += ch
+    }
+    return randStr
+}
+
+
+const sendVerificationMail = (email, uniqueString) => {
+    console.log("in send mail")
+    let transport = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        port: 465,
+        secure: true,
+        auth: {
+          user: 'tutorsrus62@gmail.com',
+          pass: 'cshikqpjzgbcwejb'
+        }
+     });
+    
+     const mailOptions = {
+        from: 'tutorsrus62@gmail.com', // Sender address
+        to: email, // List of recipients
+        subject: 'Welcome To TutorsRUs', // Subject line
+        html: `Your verification code is ` + uniqueString // Plain text body
+    };
+    
+    transport.sendMail(mailOptions, function(err, info) {
+       if (err) {
+         console.log(err)
+       } else {
+         console.log(info);
+       }
+    });
+}
+
+
+const sendMail = (email, uniqueString) => {
+    console.log("in send mail")
+    let transport = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        port: 465,
+        secure: true,
+        auth: {
+          user: 'tutorsrus62@gmail.com',
+          pass: 'cshikqpjzgbcwejb'
+        }
+     });
+    
+     const mailOptions = {
+        from: 'tutorsrus62@gmail.com', // Sender address
+        to: email, // List of recipients
+        subject: 'Welcome To TutorsRUs', // Subject line
+        html: `Press <a href=http://localhost:3000/verify/$(uniqueString)> here </a> to reset your password. Thanks` // Plain text body
+    };
+    
+    transport.sendMail(mailOptions, function(err, info) {
+       if (err) {
+         console.log(err)
+       } else {
+         console.log(info);
+       }
+    });
 }
