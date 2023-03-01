@@ -17,6 +17,7 @@ import { Transcript } from './Components/Transcript';
 
 import DragDrop from './Components/DragDrop';
 import {Help} from './Components/Help';
+import EditCourse from './Components/EditCourse';
 
 
 function App() {
@@ -51,6 +52,7 @@ return (
         <Route exact path="/Transcript" element={< Transcript GlobalState={GlobalState}/>} />
         <Route exact path="/ResetPass" element={< ResetPass />} />
         <Route exact path="/Help" element={< Help GlobalState={GlobalState}/>} /> 
+        <Route exact path="/EditCourse" element={< EditCourse GlobalState={GlobalState}/>} /> 
         <Route path="*" element={<Login />} />
         
     </Routes>

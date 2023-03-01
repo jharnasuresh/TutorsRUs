@@ -8,7 +8,6 @@ import  './Main.css'
 class About extends Component {
     render() {
         
-        
         return (
             <section id="container-about" className="container-about">
                      <h2>{this.props.user}</h2>
