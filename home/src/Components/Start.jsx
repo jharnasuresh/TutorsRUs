@@ -6,7 +6,9 @@ import { Verification } from "../Verification"
 import Profile from "./Profile"
 import "./styles.css"
 import Tabs from "./Tabs";
+import {getMonth} from "./cal"
 export const Start = ({GlobalState}) => {
+  console.table("HERE" + getMonth())
   const location = useLocation();
   
   const { currUser, setCurrUser } = GlobalState;
