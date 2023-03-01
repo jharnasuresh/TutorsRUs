@@ -50,7 +50,7 @@ return (
         <Route exact path="/Settings" element={< Settings GlobalState={GlobalState}/>} />
         <Route exact path="/Transcript" element={< Transcript GlobalState={GlobalState}/>} />
         <Route exact path="/ResetPass" element={< ResetPass />} />
-        <Route exact path="/Help" element={< Help />} /> 
+        <Route exact path="/Help" element={< Help GlobalState={GlobalState}/>} /> 
         <Route path="*" element={<Login />} />
         
     </Routes>

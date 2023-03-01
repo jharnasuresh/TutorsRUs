@@ -8,14 +8,13 @@ import Profile from "./Profile"
 import "./Help.css"
 import Tabs from "./Tabs";
 export const Help = ({GlobalState}) => {
-const location = useLocation();
+    const location = useLocation();
 
+    const { currUser, setCurrUser } = GlobalState;
+    console.log(currUser)
 
-  
-    const handleSubmit = (e) => {
-        e.preventDefault();
-    
-        
+    if (currUser === "") {
+        setCurrUser(location.state.u)
     }
 
     return (
