@@ -137,8 +137,8 @@ app.post('/signup', async (req, res) => {
 
 app.post("/verify", async(req, res) => {
     console.log("jharna im in verify post function in index.js")
-    //var u = req.body.oldU
-    //console.log("first problem area " + u);
+    var u = req.body.oldU
+    console.log("first problem area " + u);
     const passsec = await db.collection('users').where('username', '==', req.body.oldU).get();
     console.log("the problem")
     var doc = passsec.docs[0];
