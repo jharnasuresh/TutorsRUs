@@ -17,7 +17,7 @@
 
 }
 
-.auth-form-container, .login-form, .register-form {
+.auth-form-container, .login-form, .register-form, .pass-form {
   display: flex;
   flex-direction: column;
 }

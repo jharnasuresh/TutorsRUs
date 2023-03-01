@@ -1,0 +1,18 @@
+.App {
+    position: relative;
+    padding-right: 400px;
+    text-align: center;
+    display: flex;
+    min-height: 125vh;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    background-image: linear-gradient(79deg, #be8dff, #fffdba 48%, #88caff);
+  
+  }
+
+  .imgHelp {
+    height: 645px;
+    object-position : top -550px left 100 px
+  
+  }
