@@ -15,13 +15,14 @@ const DragDrop = () => {
     };
 
     const handleUpload = () => {
-        const formData = new FormData();
-        formData.append("Files", files);
-        console.log(formData.getAll("Files"))
-        const headers = { 'Content-Type': 'multipart/form-data'};
+        const formData = require('form-data');
+        const form = new FormData();
+        form.append("Files", files[0]);
+        console.log(form.get("Files"))
+        const headers = { 'content-type': 'multipart/form-data'};
 
         async function getResponse() {
-            const response = await fetch('http://localhost:3001/parse', {method: "POST", body: formData, headers: headers});
+            const response = await fetch('http://localhost:3001/parse', {method: "POST", body: form, headers: headers});
             var r = await response.json();
   
           }

@@ -5,11 +5,6 @@ import  './Main.css'
     console.log(code);
 }*/
 
-async function getEmail(mail) {
-    var m="mailto:" + mail
-    return m;
-}
-
 class About extends Component {
     render() {
         
@@ -21,7 +16,7 @@ class About extends Component {
                     <p>Blah blah blah </p>
                     <h2>Email:</h2> 
                     {/* fix so user cant click on a mailto link on their own page, only other peoples*/}
-                    <a href={this.props.mail}>{this.props.email}</a>
+                    <p>{this.props.email}</p>
                     <h2>Rating:</h2>
                     <p>0.00</p>
             </section>
