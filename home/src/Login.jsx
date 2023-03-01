@@ -55,8 +55,6 @@ export const Login = ({GlobalState}) => {
                 resetPassword ? (<p style={{color:'red'}}>Click below to reset your username or password or create an account.</p>): <span></span>
             }
 
-            <img class="img" src = "/Images/TutorsRUs_nobackground.png"/>
-
             <form classname="login-form" onSubmit={handleSubmit}>
                 <label htmlFor="username:">Username: </label>
                 <input value={user} onChange={(e) => setUsername(e.target.value)} type="username" placeholder="enter your username" id="username" name="username" />

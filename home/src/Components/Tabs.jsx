@@ -39,7 +39,7 @@ export const Tabs = ({GlobalState}) => {
     return (
         <div>
             <nav>
-                <div className="img"><img class="img" src = "/Images/TutorsRUs_nobackground.png"/></div>
+                <div className="img"><img class="img" src = "/Images/IMG_4596.png"/></div>
                 <ul className="nav-links">
                     <li>
                         {/*<a href="./Start" state={{GlobalState: {GlobalState}, u: {currUser}}} > Home </a>*/}
