@@ -107,7 +107,6 @@ export const Register = ({GlobalState}) => {
             }
 
         <form className="register-form" method = "POST" onSubmit={handleSubmit}>
-            <img class="img" src = "/Images/TutorsRUs_nobackground.png"/>
             <label htmlFor="firstName:">First Name: </label>
             <input value={firstName} onChange={(e) => setFirstName(e.target.value)}type="firstName" placeholder="enter your first name" id="firstName" name="firstName"/>
             <br></br>
