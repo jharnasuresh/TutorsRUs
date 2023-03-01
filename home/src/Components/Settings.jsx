@@ -1,10 +1,10 @@
 import React, { useState } from "react"
 import './Main.css'
-import { useLocation, Link, useNavigate} from "react-router-dom";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 import About from './About';
 import Popup from "./Popup";
 
-export const Settings = ({GlobalState}) => {
+export const Settings = ({ GlobalState }) => {
     const location = useLocation();
     const navigate = useNavigate();
     const [Fname, setFName] = useState('');
@@ -25,45 +25,45 @@ export const Settings = ({GlobalState}) => {
         console.log("hi " + Fname)
 
         const headers = { "content-type": "application/json" };
-        const requestData = JSON.stringify({ "oldU": location.state.user, "fname": Fname, "lname": Lname, "user": username, "email": email, "pass": password});
+        const requestData = JSON.stringify({ "oldU": location.state.user, "fname": Fname, "lname": Lname, "user": username, "email": email, "pass": password });
 
         fetch('http://localhost:3001/update', { method: 'POST', body: requestData, headers: headers })
-        .then((res) => res.json())
-        .then((res) => {
-            console.log(res["fname"] + " " + res.u) 
-            setCurrUser(res.u)
-            navigate("/Profile", {
-            
-                state: {
-                    u: res.u,
-                    fname: res["fname"],
-                    lname: res["lname"], 
-                    email: res["email"],
-                    active: res["active"]
-                }
-            });
-        })
+            .then((res) => res.json())
+            .then((res) => {
+                console.log(res["fname"] + " " + res.u)
+                setCurrUser(res.u)
+                navigate("/Profile", {
+
+                    state: {
+                        u: res.u,
+                        fname: res["fname"],
+                        lname: res["lname"],
+                        email: res["email"],
+                        active: res["active"]
+                    }
+                });
+            })
 
     }
 
     const handleDeactivate = (e) => {
         e.preventDefault();
-        
-    
-        const requestData = JSON.stringify({ "username":  location.state.user});
+
+
+        const requestData = JSON.stringify({ "username": location.state.user });
         const headers = { "content-type": "application/json" };
-    
+
         async function getResponse() {
-          const response = await fetch('http://localhost:3001/deactivate', { method: 'POST', body: requestData, headers: headers });
-          var r = await response.json();
-          navigate("/Login");
-    
+            const response = await fetch('http://localhost:3001/deactivate', { method: 'POST', body: requestData, headers: headers });
+            var r = await response.json();
+            navigate("/Login");
+
         }
-    
+
         getResponse();
-    
+
         return;
-      }
+    }
 
     const backToProfile = (e) => {
 
@@ -73,52 +73,54 @@ export const Settings = ({GlobalState}) => {
         const requestData = JSON.stringify({ "username": location.state.user });
 
         fetch('http://localhost:3001/info', { method: 'POST', body: requestData, headers: headers })
-        .then((res) => res.json())
-        .then((res) => {
-            navigate("/Profile", {
-            
-                state: {
-                    u: res.u,
-                    fname: res["fname"],
-                    lname: res["lname"], 
-                    email: res["email"],
-                    active: res["active"]
-                }
-            });
-        })
-              
+            .then((res) => res.json())
+            .then((res) => {
+                navigate("/Profile", {
+
+                    state: {
+                        u: res.u,
+                        fname: res["fname"],
+                        lname: res["lname"],
+                        email: res["email"],
+                        active: res["active"]
+                    }
+                });
+            })
+
     }
 
     return (
         <div className="App Profile">
-        <h2> Edit Profile </h2>
-        <form className="settings" onSubmit={handleSubmit}>
-            <label htmlFor="name">First Name: </label>
-            <input value={Fname} onChange={(e) => setFName(e.target.value)} type="Fname" placeholder="Enter Your First Name" id="Fname" name="Fname" />
-            <br></br>
-            <label htmlFor="name">Last Name: </label>
-            <input value={Lname} onChange={(e) => setLName(e.target.value)} type="LName" placeholder="Enter Your Last Name" id="LName" name="LName" />
-            <br></br>
-            <label htmlFor="username">Username: </label>
-            <input value={username} onChange={(e) => setUsername(e.target.value)} type="username" placeholder="Username" id="username" name="username" />
-            <br></br>
-            <label htmlFor="password">Password: </label>
-            <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Password" id="password" name="password" />
-            <br></br>
-            <label htmlFor="email">Email: </label>
-            <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Email Address" id="email" name="email" />
-            <br></br>
-            <button type="submit" className="setting-sub" onSubmit={handleSubmit}>Submit Changes</button>
-        </form>
-        
-        <button type="submit" onClick={backToProfile}>Back to profile</button>
+            <h2> Edit Profile </h2>
+            <form className="settings" onSubmit={handleSubmit}>
+                <span style={{ padding: '40px' }}>
+                    <label htmlFor="Fname">First Name: </label>
+                    <input value={Fname} onChange={(e) => setFName(e.target.value)} type="Fname" placeholder="Enter Your First Name" id="Fname" name="Fname" />
+                </span>
+                <label htmlFor="Lname">Last Name: </label>
+                <input value={Lname} onChange={(e) => setLName(e.target.value)} type="LName" placeholder="Enter Your Last Name" id="LName" name="LName" />
+                <br></br>
+                <span style={{ padding: '40px' }}>
+                    <label htmlFor="username">Username: </label>
+                    <input value={username} onChange={(e) => setUsername(e.target.value)} type="username" placeholder="Username" id="username" name="username" />
+                </span>
+                <label htmlFor="password">Password: </label>
+                <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Password" id="password" name="password" />
+                <br></br>
+                <label htmlFor="email">Email: </label>
+                <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Email Address" id="email" name="email" />
+                <br></br>
+                <button type="submit" className="setting-sub" onSubmit={handleSubmit}>Submit Changes</button>
+            </form>
 
-        <div>
-      <button className='submit' onClick={() => setButtonPopup(true)}>Delete Account</button>
-      <Popup trigger={buttonPopup} setTrigger={setButtonPopup} state={{user: location.state.user}}>Are you sure you want to delete your account?</Popup>
-      </div>
-      <button className='submit' onClick={handleDeactivate}>{aButton} Account</button>
-    </div>
+            <button type="submit" onClick={backToProfile}>Back to profile</button>
+
+            <div>
+                <button className='submit' onClick={() => setButtonPopup(true)}>Delete Account</button>
+                <Popup trigger={buttonPopup} setTrigger={setButtonPopup} state={{ user: location.state.user }}>Are you sure you want to delete your account?</Popup>
+            </div>
+            <button className='submit' onClick={handleDeactivate}>{aButton} Account</button>
+        </div>
         /*
         <div className="App Profile">
             <h2> Edit Profile </h2>

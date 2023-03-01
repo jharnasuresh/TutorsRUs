@@ -31,6 +31,7 @@ const cors = require('cors')
 app.use(cors())
 
 
+
 app.post('/signup', async (req, res) => {
     var username = req.body.user;
     var useremail = req.body.email;
@@ -144,7 +145,7 @@ app.get("/api", (req, res) => {
 });
 
 app.post("/parse", (req, res) => {
-    console.log(req.body.Files)
+    console.log(req.body);
 });
 
 app.listen(PORT, () => {

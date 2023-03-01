@@ -27,17 +27,18 @@ export const Profile = ({GlobalState}) => {
 
       <Header fname={location.state.fname} lname={location.state.lname} />
       <hr />
-      <About user={location.state.u} email={location.state.email} mail={"mailto:" + location.state.email} />
+      <About user={location.state.u} email={location.state.email}/>
       <br/>
-      <a href="/Profile">
-        <button className="submit" > See Followers </button>
-      </a>
-      <br></br>
       <CourseInfo />
-
-      <button className='submit'>
-      <Link to="/Settings" state={{ user: location.state.u, active: location.state.active}}>Edit Profile</Link>
-      </button>
+      <div className='profile-btn'>
+        <a href="/Profile">
+          <button className="submit" > See Followers </button>
+        </a>
+        
+        <button className='submit'> 
+        <Link to="/Settings" state={{ user: location.state.u, active: location.state.active}}>Edit Profile</Link>
+        </button>
+      </div>
       
       
       

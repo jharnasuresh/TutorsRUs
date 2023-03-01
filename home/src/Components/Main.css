@@ -132,3 +132,10 @@ margin-top: 80px;
     top: 10em;
     right: 30em;
 }
+
+.profile-btn {
+    position: absolute;
+    bottom: 8em;
+    left: 8em;
+}
+
