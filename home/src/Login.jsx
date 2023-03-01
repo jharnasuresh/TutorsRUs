@@ -56,7 +56,6 @@ export const Login = ({GlobalState}) => {
             }
 
 
-
             <form classname="login-form" onSubmit={handleSubmit}>
                 <label htmlFor="username:">Username: </label>
                 <input value={user} onChange={(e) => setUsername(e.target.value)} type="username" placeholder="enter your username" id="username" name="username" />
