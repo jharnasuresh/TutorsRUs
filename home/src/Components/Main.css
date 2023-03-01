@@ -175,6 +175,34 @@ margin-top: 80px;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-   
 }
 
+#container-editcourse {
+padding: 5rem;
+  border: 2px solid black;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.365);
+ 
+}
+
+.EditCourse h1 {
+    padding: 10px;
+    text-align: center;
+}
+
+
+#container-currentcourse {
+    position: absolute;
+    padding: 10rem;
+    margin-left: 900px;
+    margin-bottom: 150px;
+    border: 2px solid black;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.365);
+}
+
+.currenth1 {
+    position: absolute;
+    margin-bottom: 600px;
+    margin-left: 900px;
+}
