@@ -11,6 +11,8 @@ import Followers from './Followers'
 
 export const Profile = ({GlobalState}) => {
   const [buttonPopup, setButtonPopup] = useState(false);
+  const { currUser, setCurrUser } = GlobalState;
+
 
   const location = useLocation();
   const navigate  = useNavigate();
@@ -20,6 +22,9 @@ export const Profile = ({GlobalState}) => {
   console.log("avtive = " + location.state.active)
 
   var a = (active) ? "" : "Your account is not currently active";
+  if (currUser === "") {
+    setCurrUser(location.state.u)
+  }
 
 
   return (
