@@ -30,10 +30,10 @@ export const PassSecQ = (props) => {
             }
             else {
                 console.log("jharna hellooooooooo");
-                console.log("u " + oldU + ", fname " + r["fname"] + ", string" + r["userUniqueString"])
+                console.log("u " + r["u"] + ", fname " + r["fname"] + ", string" + r["userUniqueString"])
                 navigate("/Verification", {
                     state: {
-                        oldU: oldU,
+                        oldU: r["u"],
                         userUniqueString: r["userUniqueString"]
                     }
                 });
