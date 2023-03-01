@@ -33,7 +33,7 @@ export const Register = ({GlobalState}) => {
         setEmptyFieldsErr(false)
         
         
-        const requestData = JSON.stringify({ "firstName": firstName, "lastName": lastName, "user": user, "pass": pass, "email": email });
+        const requestData = JSON.stringify({ "firstName": firstName, "lastName": lastName, "user": user, "pass": pass, "email": email});
         const headers = { "content-type": "application/json" };
 
         async function getResponse() { 
@@ -67,7 +67,8 @@ export const Register = ({GlobalState}) => {
                 console.log("u " + user)
                 navigate("/PassSecQ", {
                     state: {
-                        oldU: user
+                        oldU: user,
+                        userUniqueString: r["userUniqueString"]
                     }
                 });
 

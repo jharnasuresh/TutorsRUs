@@ -3,13 +3,13 @@ import { Route, useHref, useNavigate, useLocation, Link } from "react-router-dom
 
 export const PassSecQ = (props) => {
   const location = useLocation();
+  const navigate = useNavigate();
     //const [pass, setPassword] = useState('');
     const [question1, setQuestion1] = React.useState('');
     const [question2, setQuestion2] = React.useState('');
     const [question3, setQuestion3] = React.useState('');
     const [showErr, setShowErr] = useState(false);
     const [emptyFieldsErr, setEmptyFieldsErr] = useState(false);
-    const navigate = useNavigate();
 
     console.log("aesawda " + location.state.oldU)
       
@@ -30,8 +30,13 @@ export const PassSecQ = (props) => {
             }
             else {
                 console.log("jharna hellooooooooo");
-                console.log("u " + oldU +", fname " + r["fname"])
-                navigate("/Login");
+                console.log("u " + oldU + ", fname " + r["fname"] + ", string" + r["userUniqueString"])
+                navigate("/Verification", {
+                    state: {
+                        oldU: oldU,
+                        userUniqueString: r["userUniqueString"]
+                    }
+                });
             }
         }
 
