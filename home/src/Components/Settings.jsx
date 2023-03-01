@@ -110,6 +110,8 @@ export const Settings = ({ GlobalState }) => {
                 <label htmlFor="email">Email: </label>
                 <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Email Address" id="email" name="email" />
                 <br></br>
+                <button type="submit">Edit Courses</button>
+                <br></br>
                 <button type="submit" className="setting-sub" onSubmit={handleSubmit}>Submit Changes</button>
             </form>
 
