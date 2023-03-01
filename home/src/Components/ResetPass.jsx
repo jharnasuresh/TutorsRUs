@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import './Main.css'
+import '../App.css'
 import About from './About';
 import { Route, useHref, useNavigate, useLocation, Link } from "react-router-dom";
 
@@ -67,10 +68,9 @@ export const ResetPass = (props) => {
     }
 
     return (
-        <div className="App Reset-Pass">
-            <About />
-            <h1 className="reset-head"> Reset Password </h1>
-            <form className="resetpass-email" onSubmit={handleSubmit}>
+        <div className="App auth-form-container pass-form ">
+            <h1> Reset Password </h1>
+            <form className="pass-form" onSubmit={handleSubmit}>
                 <label htmlFor="name">Verification Email </label>
                 <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Enter Verification Email" id="email" name="email" />
                 <button type="submit" onSubmit={handleSubmit}  > Submit </button>
@@ -89,7 +89,7 @@ export const ResetPass = (props) => {
                     ]} value="quest1"
                     onChange={handleQ1Change} />
 
-                <form className="resetpass-q1" onSubmit={handleSubmit}>
+                <form className="pass-form" onSubmit={handleSubmit}>
                     <label htmlFor="answer1">Answer: </label>
                     <input value={answer1} onChange={(e) => setAnswer1(e.target.value)} type="answer1" placeholder="Enter Your Answer" id="answer1" name="answer1" />
                 </form>
@@ -106,7 +106,7 @@ export const ResetPass = (props) => {
                     ]} value="quest2"
                     onChange={handleQ2Change} />
 
-                <form className="resetpass-q2" onSubmit={handleSubmit}>
+                <form className="pass-form" onSubmit={handleSubmit}>
                     <label htmlFor="answer2">Answer: </label>
                     <input value={answer2} onChange={(e) => setAnswer2(e.target.value)} type="answer2" placeholder="Enter Your Answer" id="answer2" name="answer2" />
                 </form>
@@ -124,7 +124,7 @@ export const ResetPass = (props) => {
                     ]} value="quest3"
                     onChange={handleQ3Change} />
 
-            <form className="resetpass-q3" onSubmit={handleSubmit}>
+            <form className="pass-form" onSubmit={handleSubmit}>
                 <label htmlFor="answer3">Answer: </label>
                 <input value={answer3} onChange={(e) => setAnswer3(e.target.value)} type="answer3" placeholder="Enter Your Answer" id="answer3" name="answer3" />
             </form>

@@ -15,7 +15,7 @@ function DrawerNew () {
                 >
                     
                 </ul>
-                <i button type="link-btn" onClick={() => setOpen(!open)} className="fa-solid fa-ellipsis-vertical Menu"> </i>
+                <i button type="link-btn" onClick={() => setOpen(!open)} className="fa-solid fa-ellipsis-vertical Menu" > </i>
                 
                
             </nav>

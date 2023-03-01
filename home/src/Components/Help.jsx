@@ -5,11 +5,11 @@ import {Login} from "../Login";
 import {Register} from "../Register";
 import {Verification} from "../Verification"
 import Profile from "./Profile"
-import "./styles.css"
+import "./Help.css"
 import Tabs from "./Tabs";
-export const Help = (props) => {
+export const Help = ({GlobalState}) => {
 const location = useLocation();
-  console.log("here?? " + location.state.u)
+
 
   
     const handleSubmit = (e) => {
@@ -22,8 +22,9 @@ const location = useLocation();
 
         
         <div classNames = "">
-            <Tabs/>
-         <a> HEKFHlsj </a>
+            <img class="imgHelp" src = "/Images/Help1.png"/>
+            <br></br>
+            <img class="imgHelp" src = "/Images/Help2.png"/>
         </div>
         
        
