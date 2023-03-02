@@ -72,6 +72,8 @@ export const ResetPass = (props) => {
 
             
             <label htmlFor="name"> Choose a Security Question to Answer </label>
+
+            <label htmlFor="name"> Question 1 </label>
                     <label htmlFor="answer1"> What was the name of your first stufffed animal? </label>
                     <input value={answer1} onChange={(e) => setAnswer1(e.target.value)} type="answer1" placeholder="Enter Your Answer" id="answer1" name="answer1" />
 
