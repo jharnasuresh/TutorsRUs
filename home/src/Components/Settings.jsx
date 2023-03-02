@@ -12,6 +12,7 @@ export const Settings = ({ GlobalState }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
+    const [lang, setLang] = useState('');
     const [buttonPopup, setButtonPopup] = useState(false);
     const [active, setActive] = useState(location.state.active)
     var aButton = (active) ? "Deactivate" : "Activate";
@@ -25,7 +26,7 @@ export const Settings = ({ GlobalState }) => {
         console.log("hi " + Fname)
 
         const headers = { "content-type": "application/json" };
-        const requestData = JSON.stringify({ "oldU": location.state.user, "fname": Fname, "lname": Lname, "user": username, "email": email, "pass": password });
+        const requestData = JSON.stringify({ "oldU": location.state.user, "fname": Fname, "lname": Lname, "user": username, "email": email, "pass": password, "lang": lang });
 
         fetch('http://localhost:3001/update', { method: 'POST', body: requestData, headers: headers })
             .then((res) => res.json())
@@ -83,7 +84,8 @@ export const Settings = ({ GlobalState }) => {
                         fname: res["fname"],
                         lname: res["lname"],
                         email: res["email"],
-                        active: res["active"]
+                        active: res["active"],
+                        lang: res["lang"]
                     }
                 });
             })
@@ -108,8 +110,12 @@ export const Settings = ({ GlobalState }) => {
                 <label htmlFor="password">Password: </label>
                 <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Password" id="password" name="password" />
                 <br></br>
+                <span style={{ padding: '40px' }}>
                 <label htmlFor="email">Email: </label>
                 <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Email Address" id="email" name="email" />
+                </span>
+                <label htmlFor="lang">Language: </label>
+                <input value={lang} onChange={(e) => setLang(e.target.value)} type="lang" placeholder="Enter Your Primary Language" id="lang" name="lang" />
                 <br></br>
                 <button type="submit" onClick={() => navigate('/EditCourse', {state: {u: currUser}})}>Edit Courses</button>
                 <br></br>

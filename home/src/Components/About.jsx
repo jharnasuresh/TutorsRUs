@@ -6,6 +6,7 @@ import  './Main.css'
 }*/
 
 class About extends Component {
+    
     render() {
         
         return (

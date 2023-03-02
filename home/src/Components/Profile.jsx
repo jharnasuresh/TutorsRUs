@@ -29,6 +29,7 @@ export const Profile = ({GlobalState}) => {
   if (currUser === "") {
     setCurrUser(location.state.u)
   }
+  console.log(location.state.lang)
 
 
   return (

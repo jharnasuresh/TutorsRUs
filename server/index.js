@@ -88,7 +88,7 @@ app.post('/signup', async (req, res) => {
        userUniqueString: uniqueString,
        followers: [""],
        following: [""],
-       lang: [""]
+       lang: ""
        })
         .then(function(userRecord) {
         console.log("Successfully created new user:", userRecord.uid);
@@ -107,7 +107,7 @@ app.post('/signup', async (req, res) => {
           userUniqueString: uniqueString,
           followers: [""],
           following: [""],
-          lang: [""]
+          lang: ""
         };
 
         var setDoc = db.collection('users').add(data);
@@ -230,6 +230,7 @@ app.post("/update", async (req, res) => {
     var user = doc.get("username")
     var pass = doc.get("password")
     var active = doc.get("active")
+    var lang = doc.get("lang")
     if (req.body.fname != "" && req.body.fname !== fname) {
         await doc.ref.update({FName: req.body.fname});
     }
@@ -246,10 +247,13 @@ app.post("/update", async (req, res) => {
     if (req.body.pass != "" && md5(req.body.pass) !== pass) {
         await doc.ref.update({password: md5(req.body.pass)});
     }
+    if (req.body.lang != "" && req.body.lang !== lang) {
+        await doc.ref.update({lang: req.body.lang});
+    }
 
     const up = await db.collection('users').where('username', '==', user).get();
     doc = up.docs[0];
-    return res.send(JSON.stringify({"u": doc.get("username"), "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": active}))
+    return res.send(JSON.stringify({"u": doc.get("username"), "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": active, "lang": doc.get("lang")}))
 
 })
 
