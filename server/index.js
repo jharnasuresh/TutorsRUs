@@ -85,8 +85,8 @@ app.post('/signup', async (req, res) => {
        answer3: "",
        active: true,
        userUniqueString: uniqueString,
-       followers: [],
-       following: []
+       followers: [""],
+       following: [""]
        })
         .then(function(userRecord) {
         console.log("Successfully created new user:", userRecord.uid);
@@ -103,8 +103,8 @@ app.post('/signup', async (req, res) => {
           answer3: "",
           active: true,
           userUniqueString: uniqueString,
-          followers: [],
-          following: []
+          followers: [""],
+          following: [""]
         };
 
         var setDoc = db.collection('users').add(data);
@@ -190,8 +190,9 @@ app.post("/info", async (req, res) => {
 
 
     console.log("aaa " + doc.get("active"))
+    console.log("look here are your followers: " + doc.get("followers"))
     
-    return res.send(JSON.stringify({"u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString")}))
+    return res.send(JSON.stringify({"u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following") }))
 
 })
 
