@@ -1,7 +1,14 @@
 import React from 'react'
 import './Main.css'
+import ButtonList from './ButtonList';
+
+
 
 function Followers(props) {
+    console.log("f " + props.followers)
+
+
+    
     return (props.trigger) ? (
         <div className='popup'>
             <div className="popup-inner">
@@ -11,4 +18,5 @@ function Followers(props) {
         </div>
     ) : "";
 }
+
 export default Followers

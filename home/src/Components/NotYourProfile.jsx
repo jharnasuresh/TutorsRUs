@@ -19,6 +19,7 @@ export const NotYourProfile = ({GlobalState}) => {
 
 
   return (
+    
     <div className="App NotYourProfile">
 
       <div className='activate'><h1 style={{color: 'red'}}>{a}</h1></div>
@@ -27,19 +28,14 @@ export const NotYourProfile = ({GlobalState}) => {
 
       <Header fname={location.state.fname} lname={location.state.lname} />
       <hr />
-      <About user={location.state.u} email={location.state.email} mail={"mailto:" + location.state.email} />
-      <br/>
-      <a href="/Profile">
-        <button className="submit" > Follow </button>
-        <button className="submit" > See Followers </button>
-      </a>
-      <br></br>
-      <CourseInfo />
+      <About user={location.state.u} mail={"mailto:" + location.state.email} email={location.state.email} yours={false}/>
+      <CourseInfo courses={location.state.courses}/>
       
       
       
       <br/>
     </div>
+
     
   );
 }

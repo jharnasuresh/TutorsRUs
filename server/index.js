@@ -42,7 +42,7 @@ app.post('/signup', async (req, res) => {
     var userUniqueString = "";
     var active = false;
     var lang = "";
-    var courses = [];
+    var courses = [""];
     const user = {
         email:req.body.email,
         password: req.body
@@ -90,7 +90,7 @@ app.post('/signup', async (req, res) => {
        followers: [""],
        following: [""],
        lang: "",
-       courses: []
+       courses: [""]
        })
         .then(function(userRecord) {
         console.log("Successfully created new user:", userRecord.uid);
@@ -110,7 +110,7 @@ app.post('/signup', async (req, res) => {
           followers: [""],
           following: [""],
           lang: "",
-          courses: []
+          courses: [""]
         };
 
         var setDoc = db.collection('users').add(data);
