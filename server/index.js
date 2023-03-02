@@ -84,7 +84,9 @@ app.post('/signup', async (req, res) => {
        answer2: "",
        answer3: "",
        active: true,
-       userUniqueString: uniqueString
+       userUniqueString: uniqueString,
+       followers: [],
+       following: []
        })
         .then(function(userRecord) {
         console.log("Successfully created new user:", userRecord.uid);
@@ -100,7 +102,9 @@ app.post('/signup', async (req, res) => {
           answer2: "",
           answer3: "",
           active: true,
-          userUniqueString: uniqueString
+          userUniqueString: uniqueString,
+          followers: [],
+          following: []
         };
 
         var setDoc = db.collection('users').add(data);
@@ -149,8 +153,8 @@ app.post("/verify", async(req, res) => {
     var answer3 = doc.get("answer3")
     var uniqueString = doc.get("userUniqueString")
     console.log("this is the string" + uniqueString)
-    console.log("this is what jahrna typed: " + String(req.body.userUniqueString))
-    if (String(uniqueString) === String(req.body.userUniqueString)) {
+    console.log("this is what jharna typed: " + String(req.body.userUniqueString))
+    if (uniqueString === req.body["userUniqueString"]) {
         console.log("they equal the same thing")
     }
     else {
@@ -293,6 +297,51 @@ app.post("/passsecurity", async(req, res) => {
 
 });
 
+app.post("/resetpass", async(req,res) => {
+    console.log("jharna i made it in the reset post")
+    console.log("j look")
+    const passsec = await db.collection('users').where('email', '==', req.body.email).get();
+
+    var doc = passsec.docs[0];
+
+    var user = doc.get("username")
+    var answer1 = doc.get("answer1")
+    var answer2 = doc.get("answer2")
+    var answer3 = doc.get("answer3")
+    console.log("answer1: " + answer1 + " reqanswer: " + req.body.answer1)
+    console.log("answer2: " + answer2 + " reqanswer: " + req.body.answer2)
+    console.log("answer3: " + answer3 + " reqanswer: " + req.body.answer3)
+    if (answer1 === req.body["answer1"]|| answer2 === req.body["answer2"] || answer3 === req.body["answer3"]) {
+        console.log("june look it worked")
+        /*const { email } = req.body.email
+        const uniqueString = randString()
+        const isValid = false
+        sendMail(email, uniqueString)
+        res.redirect('back')*/
+
+
+        /*user.save((err) => {
+            if (err) {
+              res.status(500).send({ message: err });
+                   return;
+                }
+               res.send({
+                   message:
+                     "User was registered successfully! Please check your email",
+                });
+       
+              nodemailer.sendConfirmationEmail(req.body.email, uniqueString);
+       });*/
+
+    }
+    else {
+        return res.send(JSON.stringify("error"))
+    }
+    console.log("this is the username " + user)
+    return res.send(JSON.stringify({"u": doc.get("username"), "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "answer1": doc.get("question1"), "answer2": doc.get("question2"), "answer3": doc.get("question3"), "userUniqueString": doc.get("userUniqueString")}))
+
+
+})
 
 
 function md5(string) {
@@ -341,30 +390,16 @@ const sendVerificationMail = (email, uniqueString) => {
 }
 
 
-const sendMail = (email, uniqueString) => {
-    console.log("in send mail")
-    let transport = nodemailer.createTransport({
-        host: "smtp.gmail.com",
-        port: 465,
-        secure: true,
-        auth: {
-          user: 'tutorsrus62@gmail.com',
-          pass: 'cshikqpjzgbcwejb'
-        }
-     });
-    
-     const mailOptions = {
-        from: 'tutorsrus62@gmail.com', // Sender address
-        to: email, // List of recipients
-        subject: 'Welcome To TutorsRUs', // Subject line
-        html: `Press <a href=http://localhost:3000/verify/$(uniqueString)> here </a> to reset your password. Thanks` // Plain text body
-    };
-    
-    transport.sendMail(mailOptions, function(err, info) {
-       if (err) {
-         console.log(err)
-       } else {
-         console.log(info);
-       }
-    });
-}
+module.exports.sendConfirmationEmail = (name, email, uniqueString) => {
+    console.log("Check");
+    transport.sendMail({
+      from: user,
+      to: email,
+      subject: "Please confirm your account",
+      html: `<h1>Email Confirmation</h1>
+          <h2>Hello ${name}</h2>
+          <p>Thank you for subscribing. Please confirm your email by clicking on the following link</p>
+          <a href=http://localhost:3001/confirm/${uniqueString}> Click here</a>
+          </div>`,
+    }).catch(err => console.log(err));
+  };
