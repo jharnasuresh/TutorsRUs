@@ -296,7 +296,7 @@ app.post("/addcourse", async (req, res) => {
         }
         if (doc.get("courses").includes(req.body.title)) {
             // cant add, already added
-            return res.send(JSON.stringify("already there"))
+            return res.send(JSON.stringify({"courses": c}))
         }
         c.push(req.body.title)
         doc.ref.update({courses: c})
