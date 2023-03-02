@@ -119,7 +119,7 @@ app.post('/signup', async (req, res) => {
         console.log("junie pie this is the email: " + req.body.email)
 
         const { email } = req.body.email
-        sendVerificationMail(req.body.email, uniqueString, `Your verification code is ` + uniqueString)
+        sendVerificationMail(req.body.username, req.body.email, uniqueString, `Your verification code is ` + uniqueString)
         console.log("june papi " + uniqueString)
 
         /*const { email } = req.body.email
@@ -331,7 +331,7 @@ app.post("/resetpass", async(req,res) => {
     console.log("answer3: " + answer3 + " reqanswer: " + req.body.answer3)
     if (answer1 === req.body["answer1"]|| answer2 === req.body["answer2"] || answer3 === req.body["answer3"]) {
         console.log("june look it worked")
-        sendVerificationMail(doc.get("email"), doc.get("userUniqueString"), "resetpass")
+        sendVerificationMail(user, doc.get("email"), doc.get("userUniqueString"), "resetpass")
 
         /*user.save((err) => {
             if (err) {
@@ -357,6 +357,31 @@ app.post("/resetpass", async(req,res) => {
 })
 
 
+
+app.post("/securepassreset", async(req, res) => {
+    console.log("got in securepassreset");
+    var u = req.body.username
+    console.log("first potential problem area " + u);
+    const passsec = await db.collection('users').where('username', '==', req.body.username).get();
+    console.log("no problem here!")
+    var doc = passsec.docs[0];
+    var user = doc.get("username")
+
+    console.log(req.body.username + " " + req.body["password"] + " " + req.body["confirmPassword"])
+    if (req.body["password"] != req.body["confirmPassword"]) {
+        return res.send(JSON.stringify("passwords don't match"))
+    }
+    if (req.body["password"] === req.body["confirmPassword"]){
+        await doc.ref.update({password: md5(req.body.password)});
+    }
+    const up = await db.collection('users').where('username', '==', user).get();
+    doc = up.docs[0];
+    return res.send(JSON.stringify({"username": req.body["username"], "password": req.body["password"]}))
+    
+});
+
+
+
 function md5(string) {
     return crypto.createHash('md5').update(string).digest('hex');
 }
@@ -372,7 +397,7 @@ return token
 }
 
 
-const sendVerificationMail = (email, uniqueString, whichService) => {
+const sendVerificationMail = (username, email, uniqueString, whichService) => {
     console.log("in send mail")
 
     console.log("uniqueString: " + uniqueString)
@@ -404,9 +429,10 @@ const sendVerificationMail = (email, uniqueString, whichService) => {
             from: 'tutorsrus62@gmail.com', // Sender address
             to: email, // List of recipients
             subject: 'Username/Password Reset', // Subject line
-            html: `<h1>Email Confirmation</h1>
-            <p>Thank you for subscribing. Please confirm your email by clicking on the following link</p>
-            <a href=http://localhost:3000/${uniqueString}> Click here</a>
+            html: `<h1>CONFIDENTIAL</h1>
+            <p> Your username is: ${username} </p>
+            <p>Click this link to reset your password</p>
+            <a href=http://localhost:3000/SecurePassReset> Click here</a>
             </div>`
         };
     }
