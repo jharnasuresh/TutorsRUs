@@ -67,9 +67,6 @@ export const Login = ({GlobalState}) => {
                 <button type="submit" onSubmit={handleSubmit}>Log In</button>
 
             </form>
-            <a href="/Profile">
-            <button className="link-btn"> Profile </button>
-            </a>
             <a href="./Register">
             <button className="link-btn" > Don't have an account? Register here. </button>
             </a>
