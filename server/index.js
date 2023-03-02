@@ -119,7 +119,7 @@ app.post('/signup', async (req, res) => {
         console.log("junie pie this is the email: " + req.body.email)
 
         const { email } = req.body.email
-        sendVerificationMail(req.body.email, uniqueString)
+        sendVerificationMail(req.body.email, uniqueString, `Your verification code is ` + uniqueString)
         console.log("june papi " + uniqueString)
 
         /*const { email } = req.body.email
@@ -156,7 +156,7 @@ app.post("/verify", async(req, res) => {
     var answer3 = doc.get("answer3")
     var uniqueString = doc.get("userUniqueString")
     console.log("this is the string" + uniqueString)
-    console.log("this is what jharna typed: " + String(req.body.userUniqueString))
+    console.log("this is what jharna typed: " + req.body["userUniqueString"])
     if (uniqueString === req.body["userUniqueString"]) {
         console.log("they equal the same thing")
     }
@@ -301,6 +301,16 @@ app.post("/passsecurity", async(req, res) => {
 
 });
 
+const verifyUser = (req, res, next) => {
+    console.log("hi jharna suresh")
+}
+
+app.get("localhost:3000/confirmationCode", verifyUser)
+
+
+
+
+
 app.post("/resetpass", async(req,res) => {
     console.log("jharna i made it in the reset post")
     console.log("j look")
@@ -317,12 +327,7 @@ app.post("/resetpass", async(req,res) => {
     console.log("answer3: " + answer3 + " reqanswer: " + req.body.answer3)
     if (answer1 === req.body["answer1"]|| answer2 === req.body["answer2"] || answer3 === req.body["answer3"]) {
         console.log("june look it worked")
-        /*const { email } = req.body.email
-        const uniqueString = randString()
-        const isValid = false
-        sendMail(email, uniqueString)
-        res.redirect('back')*/
-
+        sendVerificationMail(doc.get("email"), doc.get("userUniqueString"), "resetpass")
 
         /*user.save((err) => {
             if (err) {
@@ -353,20 +358,20 @@ function md5(string) {
 }
 
 const randString = () => {
-    const len = 2
-    let randStr = ''
-    let i = 0
-    while (i < len) {
-        i++
-        const ch = Math.floor((Math.random() + 10) + 1)
-        randStr += ch
-    }
-    return randStr
+    
+const characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+let token = '';
+for (let i = 0; i < 25; i++) {
+    token += characters[Math.floor(Math.random() * characters.length )];
+}
+return token
 }
 
 
-const sendVerificationMail = (email, uniqueString) => {
+const sendVerificationMail = (email, uniqueString, whichService) => {
     console.log("in send mail")
+
+    console.log("uniqueString: " + uniqueString)
     let transport = nodemailer.createTransport({
         host: "smtp.gmail.com",
         port: 465,
@@ -377,12 +382,31 @@ const sendVerificationMail = (email, uniqueString) => {
         }
      });
     
-     const mailOptions = {
-        from: 'tutorsrus62@gmail.com', // Sender address
-        to: email, // List of recipients
-        subject: 'Welcome To TutorsRUs', // Subject line
-        html: `Your verification code is ` + uniqueString // Plain text body
-    };
+     var verify = true
+     if (whichService === "resetpass") {
+        verify = false
+     }
+     var mailOptions;
+     if (whichService != "resetpass") {
+        mailOptions = {
+            from: 'tutorsrus62@gmail.com', // Sender address
+            to: email, // List of recipients
+            subject: 'Welcome To TutorsRUs', // Subject line
+            html: 'Your verification code is ' + uniqueString
+        };
+    }
+    else {
+        mailOptions = {
+            from: 'tutorsrus62@gmail.com', // Sender address
+            to: email, // List of recipients
+            subject: 'Username/Password Reset', // Subject line
+            html: `<h1>Email Confirmation</h1>
+            <p>Thank you for subscribing. Please confirm your email by clicking on the following link</p>
+            <a href=http://localhost:3000/${uniqueString}> Click here</a>
+            </div>`
+        };
+    }
+    
     
     transport.sendMail(mailOptions, function(err, info) {
        if (err) {
@@ -394,16 +418,4 @@ const sendVerificationMail = (email, uniqueString) => {
 }
 
 
-module.exports.sendConfirmationEmail = (name, email, uniqueString) => {
-    console.log("Check");
-    transport.sendMail({
-      from: user,
-      to: email,
-      subject: "Please confirm your account",
-      html: `<h1>Email Confirmation</h1>
-          <h2>Hello ${name}</h2>
-          <p>Thank you for subscribing. Please confirm your email by clicking on the following link</p>
-          <a href=http://localhost:3001/confirm/${uniqueString}> Click here</a>
-          </div>`,
-    }).catch(err => console.log(err));
-  };
+

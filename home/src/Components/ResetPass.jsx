@@ -53,7 +53,7 @@ export const ResetPass = (props) => {
         }
 
 
-        getResponse();
+        getResponse(); 
 
         return;
 
