@@ -12,7 +12,7 @@ class About extends Component {
             <section id="container-about" className="container-about">
                      <h2>{this.props.user}</h2>
                     <h2>Primary Language:</h2> 
-                    <p>Blah blah blah </p>
+                    <p>{ this.props.lang === "" ? "English" : this.props.lang} </p>
                     <h2>Email:</h2> 
                     {/* fix so user cant click on a mailto link on their own page, only other peoples*/}
                     <p>{this.props.email}</p>

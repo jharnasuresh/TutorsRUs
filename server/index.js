@@ -41,6 +41,7 @@ app.post('/signup', async (req, res) => {
     var answer3 = "";
     var userUniqueString = "";
     var active = false;
+    var lang = "";
     const user = {
         email:req.body.email,
         password: req.body
@@ -86,7 +87,8 @@ app.post('/signup', async (req, res) => {
        active: true,
        userUniqueString: uniqueString,
        followers: [""],
-       following: [""]
+       following: [""],
+       lang: [""]
        })
         .then(function(userRecord) {
         console.log("Successfully created new user:", userRecord.uid);
@@ -104,7 +106,8 @@ app.post('/signup', async (req, res) => {
           active: true,
           userUniqueString: uniqueString,
           followers: [""],
-          following: [""]
+          following: [""],
+          lang: [""]
         };
 
         var setDoc = db.collection('users').add(data);
@@ -192,7 +195,7 @@ app.post("/info", async (req, res) => {
     console.log("aaa " + doc.get("active"))
     console.log("look here are your followers: " + doc.get("followers"))
     
-    return res.send(JSON.stringify({"u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following") }))
+    return res.send(JSON.stringify({"u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang") }))
 
 })
 
