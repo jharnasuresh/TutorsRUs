@@ -149,8 +149,8 @@ app.post("/verify", async(req, res) => {
     var answer3 = doc.get("answer3")
     var uniqueString = doc.get("userUniqueString")
     console.log("this is the string" + uniqueString)
-    console.log("this is what jahrna typed: " + String(req.body.userUniqueCode))
-    if (String(uniqueString) === String(req.body.userUniqueCode)) {
+    console.log("this is what jahrna typed: " + String(req.body.userUniqueString))
+    if (String(uniqueString) === String(req.body.userUniqueString)) {
         console.log("they equal the same thing")
     }
     else {

@@ -2,7 +2,7 @@ import React, {useState} from "react"
 import { Route, useHref, useNavigate, useLocation, Link } from "react-router-dom";
 
 export const Verification = ({GlobalState}) => {
-    const [userUniqueCode, setUserUniqueCode] = useState('');
+    const [userUniqueString, setUserUniqueString] = useState('');
     const [user, setUsername] = useState('');
     const [showErr, setShowErr] = useState(false);
 
@@ -29,12 +29,11 @@ export const Verification = ({GlobalState}) => {
 
             console.log(location.state.oldU);
             var userUniqueString = r["userUniqueString"]
-            console.log("useruniquecode " + userUniqueCode)
+            console.log("useruniquecode " + userUniqueString)
             console.log(userUniqueString)
             console.log(r)
             if (r === "invalid code") {
                 console.log("in invalid code")
-                setUserUniqueCode(false)
             }
             else if (r === "error") {
                 console.log("error");
@@ -87,7 +86,7 @@ export const Verification = ({GlobalState}) => {
                 <label htmlFor="checkEmail"> Check your Email </label>
                 <br></br>
                 <label htmlFor="code:"> Enter Your 4-digit Verification Code: </label>
-                <input value={userUniqueCode} onChange={(e) => setUserUniqueCode(e.target.value)}type="userUniqueCode" placeholder="enter your code" id="userUniqueCode" name="userUniqueCode"/>
+                <input value={userUniqueString} onChange={(e) => setUserUniqueString(e.target.value)}type="userUniqueString" placeholder="enter your code" id="userUniqueString" name="userUniqueString"/>
                 <br></br>
             <button type="submit" onSubmit={handleSubmit}  > Submit </button>
             </form>
