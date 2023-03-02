@@ -73,7 +73,8 @@ export const Verification = ({GlobalState}) => {
                     lname: res["lname"], 
                     email: res["email"], 
                     active: res["active"],
-                    lang: res["lang"]
+                    lang: res["lang"],
+                    courses: res["courses"]
                 }
             });
         })
@@ -87,7 +88,7 @@ export const Verification = ({GlobalState}) => {
                 <br></br>
                 <label htmlFor="checkEmail"> Check your Email </label>
                 <br></br>
-                <label htmlFor="code:"> Enter Your 4-digit Verification Code: </label>
+                <label htmlFor="code:"> Enter Your Verification Code: </label>
                 <input value={userUniqueString} onChange={(e) => setUserUniqueString(e.target.value)}type="userUniqueString" placeholder="enter your code" id="userUniqueString" name="userUniqueString"/>
                 <br></br>
             <button type="submit" onSubmit={handleSubmit}  > Submit </button>

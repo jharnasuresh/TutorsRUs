@@ -85,7 +85,8 @@ export const Settings = ({ GlobalState }) => {
                         lname: res["lname"],
                         email: res["email"],
                         active: res["active"],
-                        lang: res["lang"]
+                        lang: res["lang"],
+                        courses: res["courses"]
                     }
                 });
             })
@@ -117,7 +118,7 @@ export const Settings = ({ GlobalState }) => {
                 <label htmlFor="lang">Language: </label>
                 <input value={lang} onChange={(e) => setLang(e.target.value)} type="lang" placeholder="Enter Your Primary Language" id="lang" name="lang" />
                 <br></br>
-                <button type="submit" onClick={() => navigate('/EditCourse', {state: {u: currUser}})}>Edit Courses</button>
+                <button type="submit" onClick={() => navigate('/EditCourse', {state: {u: currUser, courses: location.state.courses}})}>Edit Courses</button>
                 <br></br>
                 <button type="submit" className="setting-sub" onSubmit={handleSubmit}>Submit Changes</button>
             </form>
