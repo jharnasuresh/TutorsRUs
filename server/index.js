@@ -148,7 +148,14 @@ app.post("/verify", async(req, res) => {
     var answer2 = doc.get("answer2")
     var answer3 = doc.get("answer3")
     var uniqueString = doc.get("userUniqueString")
-
+    console.log("this is the string" + uniqueString)
+    console.log("this is what jahrna typed: " + String(req.body.userUniqueString))
+    if (String(uniqueString) === String(req.body.userUniqueString)) {
+        console.log("they equal the same thing")
+    }
+    else {
+        return res.send(JSON.stringify("invalid code"))
+    }
     const up = await db.collection('users').where('username', '==', user).get();
     doc = up.docs[0];
     return res.send(JSON.stringify({"u": doc.get("username"), "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "answer1": doc.get("question1"), "answer2": doc.get("question2"), "answer3": doc.get("question3"), "userUniqueString": doc.get("userUniqueString")}))
