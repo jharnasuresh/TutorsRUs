@@ -16,7 +16,9 @@ class About extends Component {
                     <p>{ this.props.lang === "" ? "English" : this.props.lang} </p>
                     <h2>Email:</h2> 
                     {/* fix so user cant click on a mailto link on their own page, only other peoples*/}
-                    <p>{this.props.email}</p>
+                    {
+                        (this.props.yours) ? <p>{this.props.email}</p> : <a href={this.props.mail}>{this.props.email}</a>
+                    }
                     <h2>Rating:</h2>
                     <p>0.00</p>
             </section>
