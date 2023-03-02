@@ -9,6 +9,7 @@ export const ResetPass = (props) => {
     const [answer1, setAnswer1] = useState('');
     const [answer2, setAnswer2] = useState('');
     const [answer3, setAnswer3] = useState('');
+    const [showErr, setShowErr] = useState(false);
 
     const options = [
 
@@ -19,44 +20,36 @@ export const ResetPass = (props) => {
         { label: 'Q3', value: 'q3' },
 
     ];
-    const [quest1, setQ1] = React.useState('q1');
-    const [quest2, setQ2] = React.useState('q2');
-    const [quest3, setQ3] = React.useState('q3');
     const [emptyFieldsErr, setEmptyFieldsErr] = React.useState(false);
 
-    const handleQ1Change = (event) => {
-        setQ1(event.target.value);
-    };
-    const handleQ2Change = (event) => {
-        setQ2(event.target.value);
-    };
-    const handleQ3Change = (event) => {
-        setQ3(event.target.value);
-    };
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    
 
     const handleSubmit = (e) => {
         var oldU;
         e.preventDefault();
         //setEmptyFieldsErr(false)
-        const requestData = JSON.stringify({ "email": email });
+        const requestData = JSON.stringify({ "email": email, "answer1": answer1,  "answer2": answer2, "answer3": answer3});
         const headers = { "content-type": "application/json" };
         console.log("jharna this is for reset password " + email)
-        /*const requestData = JSON.stringify({"oldU": location.state.oldU, "question1": question1, "question2": question2, "question3": question3});
-        const headers = { "content-type": "application/json" };*/
 
         async function getResponse() {
-            /*const response = await fetch('http://localhost:3001/resetpass', { method: 'POST', body: requestData, headers: headers });
+            const response = await fetch('http://localhost:3001/resetpass', { method: 'POST', body: requestData, headers: headers });
             var r = await response.json();
-            if (question1 === '' || question2 === '' || question3 === '') {
-                console.log("empty field err")
-                setEmptyFieldsErr(true)
-            }
-            else {
                 console.log("jharna hellooooooooo");
                 console.log("u " + oldU +", fname " + r["fname"])
-                navigate("/Login");
-                
-            }*/
+                console.log("answer1: " + answer1)
+                console.log("answer2: " + answer2)
+                console.log("answer3: " + answer3)
+            if (r === "error") {
+                console.log("error");
+                setShowErr(false)
+            }
+            else {
+                setShowErr(true)
+            }
         }
 
 
@@ -70,65 +63,32 @@ export const ResetPass = (props) => {
     return (
         <div className="App auth-form-container pass-form ">
             <h1> Reset Password </h1>
+            {
+                showErr ? (<p style={{color:'red'}}>Check your email to reset your password!</p>): <span></span>
+            }
             <form className="pass-form" onSubmit={handleSubmit}>
                 <label htmlFor="name">Verification Email </label>
                 <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Enter Verification Email" id="email" name="email" />
-                <button type="submit" onSubmit={handleSubmit}  > Submit </button>
 
-            </form>
             
-                <Dropdown
-                    label="SecurityQuestions" options={[
-
-                        { label: 'Question 1', value: 'q1' },
-
-                        { label: 'Question 2', value: 'q2' },
-
-                        { label: 'Question 3', value: 'q3' },
-
-                    ]} value="quest1"
-                    onChange={handleQ1Change} />
-
-                <form className="pass-form" onSubmit={handleSubmit}>
-                    <label htmlFor="answer1">Answer: </label>
+            <label htmlFor="name"> Choose a Security Question to Answer </label>
+                    <label htmlFor="answer1"> What was the name of your first stufffed animal? </label>
                     <input value={answer1} onChange={(e) => setAnswer1(e.target.value)} type="answer1" placeholder="Enter Your Answer" id="answer1" name="answer1" />
-                </form>
 
-                <Dropdown 
-                    label="SecurityQuestions" options={[
 
-                        { label: 'Question 1', value: 'q1' },
-
-                        { label: 'Question 2', value: 'q2' },
-
-                        { label: 'Question 3', value: 'q3' },
-
-                    ]} value="quest2"
-                    onChange={handleQ2Change} />
-
-                <form className="pass-form" onSubmit={handleSubmit}>
-                    <label htmlFor="answer2">Answer: </label>
+                <label htmlFor="name"> Question 2 </label>
+                    <label htmlFor="answer2"> What was the first concert you attended? </label>
                     <input value={answer2} onChange={(e) => setAnswer2(e.target.value)} type="answer2" placeholder="Enter Your Answer" id="answer2" name="answer2" />
-                </form>
 
-                <Dropdown 
 
-                    label="SecurityQuestions" options={[
-
-                        { label: 'Question 1', value: 'q1' },
-
-                        { label: 'Question 2', value: 'q2' },
-
-                        { label: 'Question 3', value: 'q3' },
-
-                    ]} value="quest3"
-                    onChange={handleQ3Change} />
-
-            <form className="pass-form" onSubmit={handleSubmit}>
-                <label htmlFor="answer3">Answer: </label>
+                <label htmlFor="name"> Question 3 </label>
+                <label htmlFor="answer3"> What was the make and model of your first car? </label>
                 <input value={answer3} onChange={(e) => setAnswer3(e.target.value)} type="answer3" placeholder="Enter Your Answer" id="answer3" name="answer3" />
+            
+                <button type="submit" onSubmit={handleSubmit}  > Submit </button>
             </form>
         </div>
+        
     );
 }
 
