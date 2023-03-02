@@ -22,6 +22,7 @@ export const Tabs = ({GlobalState}) => {
     .then((res) => res.json())
     .then((res) => {
         console.log("aaaa? " + res["active"])
+        console.log("june? " + res["followers"])
         navigate("/Profile", {
         
             state: {
@@ -29,6 +30,8 @@ export const Tabs = ({GlobalState}) => {
                 fname: res["fname"],
                 lname: res["lname"], 
                 email: res["email"], 
+                followers: res["followers"],
+                following: res["following"],
                 active: res["active"]
             }
         });
