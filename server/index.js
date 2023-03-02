@@ -42,6 +42,7 @@ app.post('/signup', async (req, res) => {
     var userUniqueString = "";
     var active = false;
     var lang = "";
+    var courses = [];
     const user = {
         email:req.body.email,
         password: req.body
@@ -88,7 +89,8 @@ app.post('/signup', async (req, res) => {
        userUniqueString: uniqueString,
        followers: [""],
        following: [""],
-       lang: ""
+       lang: "",
+       courses: []
        })
         .then(function(userRecord) {
         console.log("Successfully created new user:", userRecord.uid);
@@ -107,7 +109,8 @@ app.post('/signup', async (req, res) => {
           userUniqueString: uniqueString,
           followers: [""],
           following: [""],
-          lang: ""
+          lang: "",
+          courses: []
         };
 
         var setDoc = db.collection('users').add(data);
@@ -195,7 +198,7 @@ app.post("/info", async (req, res) => {
     console.log("aaa " + doc.get("active"))
     console.log("look here are your followers: " + doc.get("followers"))
     
-    return res.send(JSON.stringify({"u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang") }))
+    return res.send(JSON.stringify({"u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), courses: doc.get("courses") }))
 
 })
 
@@ -274,6 +277,59 @@ app.post("/login", async (req, res) => {
     }
     //console.log("none " + md5(req.body["pass"]) + " " + )
     return res.send(JSON.stringify("error"))
+})
+
+app.post("/addcourse", async (req, res) => {
+
+    console.log("here!")
+
+
+    const login = await db.collection('users').where('username', '==', req.body["u"]).get();
+        var doc = login.docs[0];
+        console.log("before " + doc.get("courses"))
+        c = doc.get("courses")
+        if (doc.get("courses").length == 0) {
+            console.log("und")
+            c.push(req.body.title)
+            doc.ref.update({courses: [req.body.title]})
+            return res.send(JSON.stringify({"courses": c}))
+        }
+        if (doc.get("courses").includes(req.body.title)) {
+            // cant add, already added
+            return res.send(JSON.stringify("already there"))
+        }
+        c.push(req.body.title)
+        doc.ref.update({courses: c})
+       return res.send(JSON.stringify({"courses": c}))
+        
+    
+})
+
+app.post("/deletecourse", async (req, res) => {
+
+    console.log("here!")
+
+
+    const login = await db.collection('users').where('username', '==', req.body["u"]).get();
+        var doc = login.docs[0];
+        console.log("before " + doc.get("courses"))
+        c = doc.get("courses")
+        if (doc.get("courses").length == 0) {
+            console.log("und")
+            // empty list
+            return res.send(JSON.stringify({"courses": c}))
+        }
+        if (doc.get("courses").includes(req.body.title)) {
+            // deleting
+            console.log("delete")
+            c.splice(c.indexOf(req.body.title), 1)
+            doc.ref.update({courses: c})
+            console.log(c)
+            return res.send(JSON.stringify({"courses": c}))
+        }
+       return res.send(JSON.stringify({"courses": c}))
+        
+    
 })
 
 app.post("/passsecurity", async(req, res) => {

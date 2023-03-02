@@ -33,7 +33,8 @@ export const Tabs = ({GlobalState}) => {
                 followers: res["followers"],
                 following: res["following"],
                 active: res["active"],
-                lang: res["lang"]
+                lang: res["lang"],
+                courses: res["courses"]
             }
         });
     })
