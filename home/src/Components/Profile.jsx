@@ -29,6 +29,7 @@ export const Profile = ({GlobalState}) => {
   if (currUser === "") {
     setCurrUser(location.state.u)
   }
+  console.log(location.state.lang)
 
 
   return (
@@ -40,7 +41,7 @@ export const Profile = ({GlobalState}) => {
 
       <Header fname={location.state.fname} lname={location.state.lname} />
       <hr />
-      <About user={location.state.u} email={location.state.email}/>
+      <About user={location.state.u} email={location.state.email} lang={location.state.lang}/>
       <br/>
       <CourseInfo />
       <div className='profile-btn'>
