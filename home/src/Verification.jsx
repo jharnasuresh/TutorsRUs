@@ -1,5 +1,6 @@
 import React, {useState} from "react"
 import { Route, useHref, useNavigate, useLocation, Link } from "react-router-dom";
+import './App.css'
 
 export const Verification = ({GlobalState}) => {
     const [userUniqueString, setUserUniqueString] = useState('');
@@ -79,7 +80,7 @@ export const Verification = ({GlobalState}) => {
     }
 
     return (
-        <div className = "verify">
+        <div className = "App verify">
             <h2>Verify Your Email</h2>
             <form className = "verify-page" onSubmit={handleSubmit}>
                 <br></br>
