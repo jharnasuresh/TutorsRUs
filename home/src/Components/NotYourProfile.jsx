@@ -12,9 +12,17 @@ export const NotYourProfile = ({GlobalState}) => {
   const navigate  = useNavigate();
   console.log("ll " + location.state.u)
   const [active, setActive] = useState(location.state.active)
+  var numFollowers = (location.state.followers).length + ""
+  if ((location.state.followers).length > 500)
+    numFollowers = "500+"
+  var numFollowing = (location.state.following).length + ""
 
-  console.log("avtive = " + location.state.active)
-
+  if ((location.state.following).length > 500)
+    numFollowing = "500+"
+  console.log("avtiveNYP = " + location.state.active)
+  
+  console.log("followersNYP = " + numFollowers);
+  console.log("followingNYP = " + numFollowing);
   var a = (active) ? "" : "Your account is not currently active";
 
 
@@ -30,6 +38,10 @@ export const NotYourProfile = ({GlobalState}) => {
       <hr />
       <About user={location.state.u} mail={"mailto:" + location.state.email} email={location.state.email} yours={false}/>
       <CourseInfo courses={location.state.courses}/>
+      <div  className='profile-btn'>
+      <h3>Followers: {numFollowers}</h3>
+      <h3>Following: {numFollowing} </h3>
+      </div>
       
       
       
