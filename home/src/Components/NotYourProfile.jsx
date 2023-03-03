@@ -43,7 +43,7 @@ export const NotYourProfile = ({GlobalState}) => {
       async function getResponse() { 
           const response = await fetch('http://localhost:3001/notyourprofile', { method: 'POST', body: requestData, headers: headers });
           var r = await response.json();
-              if ((r["newFollowers"]).includes(location.state.oldU)) {
+              if (isFollowing === "Follow") {
                 isFollowing = "Unfollow"
               }
               else {
