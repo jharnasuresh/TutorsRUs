@@ -6,6 +6,7 @@ import Popup from './Popup';
 import './Main.css'
 import { Route, useHref, useNavigate, useLocation, Link } from "react-router-dom";
 import Tabs from "./Tabs";
+import { LocationSearching } from '@mui/icons-material';
 
 export const NotYourProfile = ({GlobalState}) => {
   const location = useLocation();
@@ -35,7 +36,31 @@ export const NotYourProfile = ({GlobalState}) => {
   var a = (active) ? "" : "Your account is not currently active";
 
   const handleSubmit = (e) => {
+      console.log("in handle submit of nyp")
+      const requestData = JSON.stringify({"currUser": location.state.u, "oldUser": location.state.oldU});
+      const headers = { "content-type": "application/json" };
+
+      async function getResponse() { 
+          const response = await fetch('http://localhost:3001/notyourprofile', { method: 'POST', body: requestData, headers: headers });
+          var r = await response.json();
+              if ((r["newFollowers"]).includes(location.state.oldU)) {
+                isFollowing = "Unfollow"
+              }
+              else {
+                isFollowing = "Follow"
+              }
+              console.log("success yay")
+              console.log("jharna look its done done done")
+
+          }
+
+  
+      getResponse();
+
+      return;
+      
   }
+    
   return (
     
     <div className="App NotYourProfile">
@@ -51,13 +76,14 @@ export const NotYourProfile = ({GlobalState}) => {
       <div  className='profile-btn'>
       <h3>Followers: {numFollowers}</h3>
       <h3>Following: {numFollowing} </h3>
-
-      <button type="submit" onSubmit={handleSubmit}  > {isFollowing} </button>
       </div>
       
       
       
       <br/>
+
+
+      <button type="submit" onClick={handleSubmit}> {isFollowing} </button>
     </div>
 
     

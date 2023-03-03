@@ -437,6 +437,39 @@ app.post("/securepassreset", async(req, res) => {
 });
 
 
+app.post("/notyourprofile", async(req, res) => {
+    console.log("in back end of NYP")
+    var currUser = req.body.currUser
+    console.log("first potential problem area " + currUser);
+    const currentUserData = await db.collection('users').where('username', '==', currUser).get();
+    console.log("no problem here!")
+    var currentUserDataDoc = currentUserData.docs[0];
+    var followers = currentUserDataDoc.get("followers")
+    
+
+    var oldUser = req.body.oldUser
+    console.log("first potential problem area " + oldUser);
+    const oldUserData = await db.collection('users').where('username', '==', oldUser).get();
+    console.log("no problem here!")
+    var oldUserDataDoc = oldUserData.docs[0];
+    var following = oldUserDataDoc.get("following")
+
+
+    following.push(currUser)
+    followers.push(oldUser)
+
+
+    await currentUserDataDoc.ref.update({followers: followers});
+    await oldUserDataDoc.ref.update({following: following});
+    
+    const upCurr = await db.collection('users').where('username', '==', currUser).get();
+    currentUserDataDoc = upCurr.docs[0];
+
+    const upOld = await db.collection('users').where('username', '==', oldUser).get();
+    oldUserDataDoc = upOld.docs[0];
+    return res.send(JSON.stringify({"newFollowers": followers, "newFollowing": following}))
+    
+});
 
 function md5(string) {
     return crypto.createHash('md5').update(string).digest('hex');
