@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 var followingArr = []
+var oldUser = ""
 const Button = (props) => {
   const [color, setColors] = React.useState("");
   const [active, setActive] = React.useState(false);
@@ -20,6 +21,7 @@ const Button = (props) => {
             navigate("/NotYourProfile", {
 
                 state: {
+                    oldU: oldUser,
                     u: res.u,
                     fname: res["fname"],
                     lname: res["lname"], 
@@ -51,6 +53,7 @@ const Button = (props) => {
 
 function ButtonList2(props) {
   const following = props.following;
+  oldUser = props.oldUser
   followingArr = following
   const navigate = useNavigate();
 
