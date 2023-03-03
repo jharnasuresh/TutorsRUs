@@ -3,6 +3,8 @@ import Header from './Header';
 import About from './About';
 import CourseInfo from './CourseInfo';
 import ButtonList from './ButtonList';
+
+import ButtonList2 from './ButtonList2';
 import Popup from './Popup';
 import './Main.css'
 import { Route, useHref, useNavigate, useLocation, Link } from "react-router-dom";
@@ -62,9 +64,7 @@ export const Profile = ({ GlobalState }) => {
         </a>
         <Following trigger={buttonPopup2} setTrigger={setButtonPopup2}>
           <h3>User is Following:</h3>
-          <p>Shrek</p>
-          <p>Donkey</p>
-          <p>Princess Peach</p>
+          <ButtonList2 following={location.state.following} />
         </Following>
 
 
