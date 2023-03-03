@@ -16,7 +16,10 @@ export const NotYourProfile = ({GlobalState}) => {
   if ((location.state.followers).length > 500)
     numFollowers = "500+"
   var numFollowing = (location.state.following).length + ""
-
+  var isFollowing = "Follow"
+  if (location.state.follows) {
+    isFollowing = "Unfollow"
+  }
   if ((location.state.following).length > 500)
     numFollowing = "500+"
   console.log("avtiveNYP = " + location.state.active)
@@ -25,7 +28,8 @@ export const NotYourProfile = ({GlobalState}) => {
   console.log("followingNYP = " + numFollowing);
   var a = (active) ? "" : "Your account is not currently active";
 
-
+  const handleSubmit = (e) => {
+  }
   return (
     
     <div className="App NotYourProfile">
@@ -41,6 +45,8 @@ export const NotYourProfile = ({GlobalState}) => {
       <div  className='profile-btn'>
       <h3>Followers: {numFollowers}</h3>
       <h3>Following: {numFollowing} </h3>
+
+      <button type="submit" onSubmit={handleSubmit}  > {isFollowing} </button>
       </div>
       
       
