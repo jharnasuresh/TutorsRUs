@@ -65,7 +65,9 @@ export const NotYourProfile = ({GlobalState}) => {
                     following: r["newFollowing"],
                     active: r["active"],
                     lang: r["lang"],
-                    courses: r["courses"]
+                    courses: r["courses"],
+                    followers: r["followers"],
+                    following: r["following"]
                 }
             });
           }

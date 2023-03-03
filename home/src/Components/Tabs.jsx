@@ -34,7 +34,9 @@ export const Tabs = ({GlobalState}) => {
                 following: res["following"],
                 active: res["active"],
                 lang: res["lang"],
-                courses: res["courses"]
+                courses: res["courses"],
+                followers: res["followers"],
+                following: res["following"]
             }
         });
     })
