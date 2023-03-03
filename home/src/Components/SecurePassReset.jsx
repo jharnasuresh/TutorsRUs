@@ -55,15 +55,14 @@ export const SecurePassReset = (props) => {
             }
             <form className="pass-form" onSubmit={handleSubmit}>
                 <label htmlFor="name">Username </label>
-                <input value={username} onChange={(e) => setUsername(e.target.value)} type="email" placeholder="Enter Username" id="username" name="username" />
+                <input value={username} onChange={(e) => setUsername(e.target.value)} type="username" placeholder="Enter Username" id="username" name="username" />
 
                     <label htmlFor="password"> New Password </label>
                     <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Enter Your New Password" id="password" name="password" />
 
 
-                <label htmlFor="name"> Confirm Password </label>
                     <label htmlFor="confirmPassword"> Confirm Password </label>
-                    <input value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} type="confirmPassword" placeholder="Confirm Your Password" id="confirmPassword" name="confirmPassword" />
+                    <input value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} type="password" placeholder="Confirm Your Password" id="confirmPassword" name="confirmPassword" />
 
                 <button type="submit" onSubmit={handleSubmit}  > Submit </button>
             </form>
