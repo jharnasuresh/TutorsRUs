@@ -25,6 +25,8 @@ const Button = (props) => {
                     email: res["email"], 
                     active: res["active"],
                     lang: res["lang"],
+                    followers: res["followers"],
+                    following: res["following"],
                     courses: res["courses"]
                 }
             });

@@ -34,6 +34,14 @@ export const Profile = ({ GlobalState }) => {
   console.log(location.state.lang)
 
 
+  var numFollowers = (location.state.followers).length + ""
+  if ((location.state.followers).length > 500)
+    numFollowers = "500+"
+  var numFollowing = (location.state.following).length + ""
+
+  if ((location.state.following).length > 500)
+    numFollowing = "500+"
+
   return (
     <div className="App Profile">
 
@@ -52,7 +60,7 @@ export const Profile = ({ GlobalState }) => {
         </a> */}
 
           <a className="popupbutton">
-            <button onClick={() => setButtonPopup(true)} className="submit">Click to See Followers</button>
+            <button onClick={() => setButtonPopup(true)} className="submit">{numFollowers} Followers</button>
           </a>
           <Followers trigger={buttonPopup} setTrigger={setButtonPopup}>
             <h3>User's Followers:</h3>
@@ -60,7 +68,7 @@ export const Profile = ({ GlobalState }) => {
 
           </Followers>
         <a className=".popupbutton2">
-          <button onClick={() => setButtonPopup2(true)} className="submit">Click to See Following</button>
+          <button onClick={() => setButtonPopup2(true)} className="submit">{numFollowing} Following</button>
         </a>
         <Following trigger={buttonPopup2} setTrigger={setButtonPopup2}>
           <h3>User is Following:</h3>
