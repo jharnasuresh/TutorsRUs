@@ -42,7 +42,9 @@ export const Settings = ({ GlobalState }) => {
                         email: res["email"],
                         active: res["active"],
                         lang: res["lang"],
-                        courses: res["courses"]
+                        courses: res["courses"],
+                        followers: res["followers"],
+                        following: res["following"]
                     }
                 });
             })
@@ -87,7 +89,9 @@ export const Settings = ({ GlobalState }) => {
                         email: res["email"],
                         active: res["active"],
                         lang: res["lang"],
-                        courses: res["courses"]
+                        courses: res["courses"],
+                        followers: res["followers"],
+                        following: res["following"]
                     }
                 });
             })
