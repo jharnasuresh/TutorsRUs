@@ -439,24 +439,37 @@ app.post("/securepassreset", async(req, res) => {
 
 app.post("/notyourprofile", async(req, res) => {
     console.log("in back end of NYP")
-    var currUser = req.body.currUser
+    var currUser = req.body["currUser"]
     console.log("first potential problem area " + currUser);
     const currentUserData = await db.collection('users').where('username', '==', currUser).get();
     console.log("no problem here!")
     var currentUserDataDoc = currentUserData.docs[0];
     var followers = currentUserDataDoc.get("followers")
+    var currentUsername = currentUserDataDoc.get("username")
     
 
-    var oldUser = req.body.oldUser
+    var oldUser = req.body["oldUser"]
     console.log("first potential problem area " + oldUser);
     const oldUserData = await db.collection('users').where('username', '==', oldUser).get();
     console.log("no problem here!")
     var oldUserDataDoc = oldUserData.docs[0];
     var following = oldUserDataDoc.get("following")
+    var oldUsername = oldUserDataDoc.get("username")
 
 
-    following.push(currUser)
-    followers.push(oldUser)
+    console.log("the current user is " + currUser + " the old user " + oldUser)
+    if (following.includes(currentUsername)) {
+        console.log("we are unfollowing right now")
+        var ind = following.indexOf(currentUsername)
+        following.splice(ind, 1)
+        ind = followers.indexOf(oldUsername)
+        followers.splice(ind,1)
+    }
+    else {
+        console.log("we are following right now")
+        following.push(currUser)
+        followers.push(oldUser)
+    }
 
 
     await currentUserDataDoc.ref.update({followers: followers});
