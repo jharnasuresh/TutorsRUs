@@ -17,8 +17,14 @@ export const NotYourProfile = ({GlobalState}) => {
     numFollowers = "500+"
   var numFollowing = (location.state.following).length + ""
   var isFollowing = "Follow"
+  var email = "";
   if (location.state.follows) {
     isFollowing = "Unfollow"
+    email = location.state.email
+    console.log("we do follow")
+  }
+  else {
+    console.log("we dont follow")
   }
   if ((location.state.following).length > 500)
     numFollowing = "500+"
@@ -40,7 +46,7 @@ export const NotYourProfile = ({GlobalState}) => {
 
       <Header fname={location.state.fname} lname={location.state.lname} />
       <hr />
-      <About user={location.state.u} mail={"mailto:" + location.state.email} email={location.state.email} yours={false}/>
+      <About user={location.state.u} mail={"mailto:" + email} email={email} yours={false}/>
       <CourseInfo courses={location.state.courses}/>
       <div  className='profile-btn'>
       <h3>Followers: {numFollowers}</h3>
