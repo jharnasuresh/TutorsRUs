@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-
+const user = ""
+var followingArr = []
 const Button = (props) => {
   const [color, setColors] = React.useState("");
   const [active, setActive] = React.useState(false);
@@ -17,8 +18,10 @@ const Button = (props) => {
         .then((res) => {
           console.log(res["courses"].toString())
           var follows = false;
-          if ((res["following"]).includes(res["username"])) {
+          console.log(res["u"] + " " + res["email"] )
+          if ((followingArr).includes(res["username"])) {
             follows = true
+            console.log("we do follow this person")
           }
           console.log("june this is follow check" + follows)
             navigate("/NotYourProfile", {
@@ -54,8 +57,8 @@ const Button = (props) => {
 };
 
 function ButtonList(props) {
-  const { followers } = props;
-  console.log("button list followers " + followers)
+  const followers = props.followers;
+  followingArr = props.following
   const navigate = useNavigate();
 
   

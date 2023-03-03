@@ -11,6 +11,7 @@ import { Route, useHref, useNavigate, useLocation, Link } from "react-router-dom
 import Tabs from "./Tabs";
 import Followers from './Followers'
 import Following from './Following'
+import { LocationSearching } from '@mui/icons-material';
 
 
 export const Profile = ({ GlobalState }) => {
@@ -27,6 +28,9 @@ export const Profile = ({ GlobalState }) => {
   console.log("avtive = " + location.state.active)
   console.log("followers = " + location.state.followers)
   console.log("following = " + location.state.following)
+  const toSendFollowers = [location.state.followers, location.state.u]
+
+  const toSendFollowing = [location.state.following, location.state.u]
   var a = (active) ? "" : "Your account is not currently active";
   if (currUser === "") {
     setCurrUser(location.state.u)
@@ -62,9 +66,9 @@ export const Profile = ({ GlobalState }) => {
           <a className="popupbutton">
             <button onClick={() => setButtonPopup(true)} className="submit">Followers: {numFollowers}</button>
           </a>
-          <Followers trigger={buttonPopup} setTrigger={setButtonPopup}>
+          <Followers trigger={buttonPopup} setTrigger={setButtonPopup} followers= {location.state.followers} oldUser = {location.state.u}>
             <h3>User's Followers:</h3>
-            <ButtonList followers={location.state.followers} />
+            <ButtonList followers= {location.state.followers} oldUser = {location.state.u} following = {location.state.following}/>
 
           </Followers>
         <a className=".popupbutton2">
@@ -72,7 +76,7 @@ export const Profile = ({ GlobalState }) => {
         </a>
         <Following trigger={buttonPopup2} setTrigger={setButtonPopup2}>
           <h3>User is Following:</h3>
-          <ButtonList2 following={location.state.following} />
+          <ButtonList2 following={location.state.following} oldUser = {location.state.u}/>
         </Following>
 
 

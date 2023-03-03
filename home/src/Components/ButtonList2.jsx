@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-
+var followingArr = []
 const Button = (props) => {
   const [color, setColors] = React.useState("");
   const [active, setActive] = React.useState(false);
@@ -18,7 +18,7 @@ const Button = (props) => {
           console.log(res["courses"].toString())
           
             navigate("/NotYourProfile", {
-              
+
                 state: {
                     u: res.u,
                     fname: res["fname"],
@@ -50,8 +50,8 @@ const Button = (props) => {
 };
 
 function ButtonList2(props) {
-  const { following } = props;
-  console.log("button list following " + following)
+  const following = props.following;
+  followingArr = following
   const navigate = useNavigate();
 
   
