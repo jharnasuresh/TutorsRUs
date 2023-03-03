@@ -52,6 +52,20 @@ export const NotYourProfile = ({GlobalState}) => {
               console.log("success yay")
               console.log("jharna look its done done done")
 
+              navigate("/Profile", {
+        
+                state: {
+                    u: location.state.oldU,
+                    fname: r["fname"],
+                    lname: r["lname"], 
+                    email: r["email"], 
+                    followers: r["followers"],
+                    following: r["newFollowing"],
+                    active: r["active"],
+                    lang: r["lang"],
+                    courses: r["courses"]
+                }
+            });
           }
 
   

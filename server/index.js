@@ -455,6 +455,14 @@ app.post("/notyourprofile", async(req, res) => {
     var oldUserDataDoc = oldUserData.docs[0];
     var following = oldUserDataDoc.get("following")
     var oldUsername = oldUserDataDoc.get("username")
+    var oldfname = oldUserDataDoc.get("FName")
+    var oldlname = oldUserDataDoc.get("LName")
+    var oldemail = oldUserDataDoc.get("email")
+    var oldfollowers = oldUserDataDoc.get("followers")
+    var oldactive = oldUserDataDoc.get("active")
+    var oldlang = oldUserDataDoc.get("lang")
+    var oldcourse = oldUserDataDoc.get("courses")
+
 
 
     console.log("the current user is " + currUser + " the old user " + oldUser)
@@ -480,7 +488,7 @@ app.post("/notyourprofile", async(req, res) => {
 
     const upOld = await db.collection('users').where('username', '==', oldUser).get();
     oldUserDataDoc = upOld.docs[0];
-    return res.send(JSON.stringify({"newFollowers": followers, "newFollowing": following}))
+    return res.send(JSON.stringify({"newFollowers": followers, "newFollowing": following, "u": oldUser, "fname": oldfname, "lname": oldlname, "email": oldemail, "followers": oldfollowers, "active": oldactive, "lang":oldlang, "courses":oldcourse}))
     
 });
 
