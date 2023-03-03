@@ -41,7 +41,8 @@ export const Settings = ({ GlobalState }) => {
                         lname: res["lname"],
                         email: res["email"],
                         active: res["active"],
-                        lang: res["lang"]
+                        lang: res["lang"],
+                        courses: res["courses"]
                     }
                 });
             })
