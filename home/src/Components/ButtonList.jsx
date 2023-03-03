@@ -35,10 +35,13 @@ const Button = (props) => {
   }
 
   return (
-    <button
+    <div>
+      <button
       onClick={() => handleSubmit(props.text)}>
       {props.text}
     </button>
+    </div>
+    
   );
 };
 

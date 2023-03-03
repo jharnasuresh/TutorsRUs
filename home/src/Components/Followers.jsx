@@ -10,9 +10,9 @@ function Followers(props) {
 
     
     return (props.trigger) ? (
-        <div className='popup'>
-            <div className="popup-inner">
-                <button className="close-btn" onClick={() => props.setTrigger(false)}> close </button>
+        <div className='popup2'>
+            <div className="popup-inner2">
+                <button className="close-btn2" onClick={() => props.setTrigger(false)}> close </button>
                 { props.children }
             </div>
         </div>

@@ -28,8 +28,8 @@ function Popup(props) {
         return;
       }
     return (props.trigger) ? (
-        <div className='popup'>
-            <div className='popup-inner'>
+        <div className='popup2'>
+            <div className='popup-inner2'>
             {props.children}
                 <br/>
                 <button onClick={handleSubmit}>Yes</button>
