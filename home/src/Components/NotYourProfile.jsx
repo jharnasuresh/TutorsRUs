@@ -39,8 +39,8 @@ export const NotYourProfile = ({GlobalState}) => {
       <About user={location.state.u} mail={"mailto:" + location.state.email} email={location.state.email} yours={false}/>
       <CourseInfo courses={location.state.courses}/>
       <div  className='profile-btn'>
-      <h3>{numFollowers} Followers </h3>
-      <h3>{numFollowing} Following </h3>
+      <h3>Followers: {numFollowers}</h3>
+      <h3>Following: {numFollowing} </h3>
       </div>
       
       
