@@ -39,13 +39,13 @@ export const Profile = ({ GlobalState }) => {
 
 
   var numFollowers = (location.state.followers).length + ""
-  if ((location.state.followers).length > 50)
-    numFollowers = "50+"
+  if ((location.state.followers).length > 3)
+    numFollowers = "3+"
   var numFollowing = (location.state.following).length + ""
 
-  if ((location.state.following).length > 50)
-    numFollowing = "50+"
-
+  if ((location.state.following).length > 3) {
+    numFollowing = "3+"
+  }
   return (
     <div className="App Profile">
 

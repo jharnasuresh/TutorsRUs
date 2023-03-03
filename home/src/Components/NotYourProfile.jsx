@@ -14,8 +14,9 @@ export const NotYourProfile = ({GlobalState}) => {
   console.log("ll " + location.state.u)
   const [active, setActive] = useState(location.state.active)
   var numFollowers = (location.state.followers).length + ""
-  if ((location.state.followers).length > 500)
-    numFollowers = "500+"
+  if ((location.state.followers).length > 3) {
+    numFollowers = "3+"
+  }
   var numFollowing = (location.state.following).length + ""
   var isFollowing = "Follow"
   var email = "";
@@ -27,8 +28,9 @@ export const NotYourProfile = ({GlobalState}) => {
   else {
     console.log("we dont follow")
   }
-  if ((location.state.following).length > 500)
-    numFollowing = "500+"
+  if ((location.state.following).length > 3) {
+    numFollowing = "3+"
+  }
   console.log("avtiveNYP = " + location.state.active)
   
   console.log("followersNYP = " + numFollowers);
