@@ -16,6 +16,11 @@ const Button = (props) => {
         .then((res) => res.json())
         .then((res) => {
           console.log(res["courses"].toString())
+          var follows = false;
+          if ((res["following"]).includes(res["username"])) {
+            follows = true
+          }
+          console.log("june this is follow check" + follows)
             navigate("/NotYourProfile", {
               
                 state: {
@@ -27,6 +32,7 @@ const Button = (props) => {
                     lang: res["lang"],
                     followers: res["followers"],
                     following: res["following"],
+                    follows: follows,
                     courses: res["courses"]
                 }
             });

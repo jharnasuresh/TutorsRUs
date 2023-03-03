@@ -16,6 +16,7 @@ const Button = (props) => {
         .then((res) => res.json())
         .then((res) => {
           console.log(res["courses"].toString())
+          
             navigate("/NotYourProfile", {
               
                 state: {
@@ -25,6 +26,9 @@ const Button = (props) => {
                     email: res["email"], 
                     active: res["active"],
                     lang: res["lang"],
+                    followers: res["followers"],
+                    following: res["following"],
+                    follows: true,
                     courses: res["courses"]
                 }
             });
