@@ -76,14 +76,14 @@ export const NotYourProfile = ({GlobalState}) => {
       <div  className='profile-btn'>
       <h3>Followers: {numFollowers}</h3>
       <h3>Following: {numFollowing} </h3>
+
+<button type="submit" onClick={handleSubmit}> {isFollowing} </button>
       </div>
       
       
       
       <br/>
 
-
-      <button type="submit" onClick={handleSubmit}> {isFollowing} </button>
     </div>
 
     
