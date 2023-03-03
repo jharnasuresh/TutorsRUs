@@ -20,7 +20,7 @@ const Button = (props) => {
           console.log(res["courses"].toString())
           var follows = false;
           console.log(res["u"] + " " + res["email"] )
-          if ((followingArr).includes(res["username"])) {
+          if ((followingArr).includes(res["u"])) {
             follows = true
             console.log("we do follow this person")
           }
