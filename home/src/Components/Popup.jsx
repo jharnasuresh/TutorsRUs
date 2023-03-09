@@ -15,12 +15,11 @@ function Popup(props) {
         console.log("uuu " + location.state.user)
     
         async function getResponse() {
-          const response = await fetch('http://localhost:3001/delete', { method: 'POST', body: requestData, headers: headers });
-          var r = await response.json();
-          props.setTrigger(false)
-          navigate("/Login");
-
-    
+                const response = await fetch('http://localhost:3001/delete', { method: 'POST', body: requestData, headers: headers });
+                var r = await response.json();
+                props.setTrigger(false)
+                navigate("/Login");
+           
         }
     
         getResponse();

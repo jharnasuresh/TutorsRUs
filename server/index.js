@@ -186,11 +186,15 @@ app.post("/parse", upload.single("file"), async (req, res) => {
         body: { user }
     } = req;
     
-    const login = await db.collection('users').where('username', '==', req.body.user).get();
+    var login = await db.collection('users').where('username', '==', req.body.user).get();
     if (!login.empty) {
         var doc = login.docs[0];
-        doc.ref.update({transcript: req.file})
-        doc.ref.update({tutor: true})
+        await doc.ref.update({transcript: req.file})
+        await doc.ref.update({tutor: true})
+        
+        login = await db.collection('users').where('username', '==', req.body.user).get();
+        doc = login.docs[0];
+        console.log("tutor now " + doc.get("tutor"))
         return res.send(JSON.stringify({"u": doc.get("username"), "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), courses: doc.get("courses"), tutor: doc.get("tutor") }))
 
     }
@@ -219,8 +223,22 @@ app.post("/info", async (req, res) => {
     console.log("aaa " + doc.get("active"))
     console.log("look here are your followers: " + doc.get("followers"))
     
-    return res.send(JSON.stringify({"u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), courses: doc.get("courses") }))
+    return res.send(JSON.stringify({"u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), courses: doc.get("courses"), tutor: doc.get("tutor") }))
 
+})
+
+app.post("/deltranscript", async (req, res) => {
+    var login = await db.collection('users').where('username', '==', req.body["username"]).get();
+    if (!login.empty) {
+        var doc = login.docs[0]
+        await doc.ref.update({transcript: null});
+       await  doc.ref.update({tutor: false});
+       login = await db.collection('users').where('username', '==', req.body["username"]).get();
+       doc = login.docs[0]
+       console.log("no longer tutor " + doc.get("tutor"))
+        return res.send(JSON.stringify({"u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), courses: doc.get("courses"), tutor: doc.get("tutor") }))
+
+    }
 })
 
 app.post("/delete", async (req, res) => {

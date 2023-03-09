@@ -38,7 +38,8 @@ const Button = (props) => {
                     followers: res["followers"],
                     following: res["following"],
                     follows: follows,
-                    courses: res["courses"]
+                    courses: res["courses"],
+                    tutor: res["tutor"]
                 }
             });
         })
