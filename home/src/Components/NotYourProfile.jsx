@@ -65,7 +65,7 @@ export const NotYourProfile = ({GlobalState}) => {
                     following: r["newFollowing"],
                     active: r["active"],
                     lang: r["lang"],
-                    courses: r["courses"],
+                    taking: r["taking"],
                     followers: r["followers"],
                     following: r["following"]
                 }
@@ -90,7 +90,7 @@ export const NotYourProfile = ({GlobalState}) => {
       <Header fname={location.state.fname} lname={location.state.lname} />
       <hr />
       <About user={location.state.u} mail={"mailto:" + email} email={email} yours={false}/>
-      <CourseInfo courses={location.state.courses}/>
+      <CourseInfo taking={location.state.taking}/>
       <div  className='profile-btn'>
       <h3>Followers: {numFollowers}</h3>
       <h3>Following: {numFollowing} </h3>

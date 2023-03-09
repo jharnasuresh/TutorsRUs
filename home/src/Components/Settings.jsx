@@ -44,7 +44,7 @@ export const Settings = ({ GlobalState }) => {
                         email: res["email"],
                         active: res["active"],
                         lang: res["lang"],
-                        courses: res["courses"],
+                        taking: res["taking"],
                         followers: res["followers"],
                         following: res["following"],
                         tutor: res["tutor"]
@@ -92,7 +92,7 @@ export const Settings = ({ GlobalState }) => {
                         email: res["email"],
                         active: res["active"],
                         lang: res["lang"],
-                        courses: res["courses"],
+                        taking: res["taking"],
                         followers: res["followers"],
                         following: res["following"],
                         tutor: res["tutor"]
@@ -120,7 +120,7 @@ export const Settings = ({ GlobalState }) => {
                         email: res["email"],
                         active: res["active"],
                         lang: res["lang"],
-                        courses: res["courses"],
+                        taking: res["taking"],
                         followers: res["followers"],
                         following: res["following"],
                         tutor: res["tutor"]
@@ -155,7 +155,7 @@ export const Settings = ({ GlobalState }) => {
                 <label htmlFor="lang">Language: </label>
                 <input value={lang} onChange={(e) => setLang(e.target.value)} type="lang" placeholder="Enter Your Primary Language" id="lang" name="lang" />
                 <br></br>
-                <button type="submit" onClick={() => navigate('/EditCourse', {state: {u: currUser, courses: location.state.courses}})}>Edit Courses</button>
+                <button type="submit" onClick={() => navigate('/EditCourse', {state: {u: currUser, taking: location.state.taking}})}>Edit Courses</button>
                 <br></br>
                 <button type="submit" className="setting-sub" onSubmit={handleSubmit}>Submit Changes</button>
             </form>
