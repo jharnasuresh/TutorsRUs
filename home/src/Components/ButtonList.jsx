@@ -17,7 +17,7 @@ const Button = (props) => {
         fetch('http://localhost:3001/info', { method: 'POST', body: requestData, headers: headers })
         .then((res) => res.json())
         .then((res) => {
-          console.log(res["courses"].toString())
+          console.log(res["taking"].toString())
           var follows = false;
           console.log(res["u"] + " " + res["email"] )
           if ((followingArr).includes(res["u"])) {
@@ -38,7 +38,7 @@ const Button = (props) => {
                     followers: res["followers"],
                     following: res["following"],
                     follows: follows,
-                    courses: res["courses"],
+                    taking: res["taking"],
                     tutor: res["tutor"]
                 }
             });
