@@ -45,7 +45,7 @@ export const Transcript = ({GlobalState}) => {
 
 return (
     <div className="App">
-        <DragDrop />
+        <DragDrop user={currUser}/>
     
         {/*
         <div className="container">

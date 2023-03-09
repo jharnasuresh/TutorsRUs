@@ -6,9 +6,10 @@ class CourseInfo extends Component {
         return (
             <section id="container-course" className="container-course">
                     <h1>Courses taking:</h1> 
-                    <p>CS 252</p>
-                    <p>CS 307</p>
-                    <p>MA 265</p>
+                    <br></br>
+                    <p>
+                        {this.props.courses.toString()}
+                    </p>
             </section>
         )
     }

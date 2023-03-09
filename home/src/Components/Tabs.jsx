@@ -32,7 +32,12 @@ export const Tabs = ({GlobalState}) => {
                 email: res["email"], 
                 followers: res["followers"],
                 following: res["following"],
-                active: res["active"]
+                active: res["active"],
+                lang: res["lang"],
+                courses: res["courses"],
+                followers: res["followers"],
+                following: res["following"],
+                tutor: res["tutor"]
             }
         });
     })

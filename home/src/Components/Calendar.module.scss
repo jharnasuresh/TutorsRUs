@@ -1,0 +1,32 @@
+.calEvents {
+    background: #393a3d;
+    min-height: 30px;
+    color:#fff;
+    border-radius:0px;
+    &:hover{
+      background: #393a3d;
+      
+    }
+    }
+  .fcContent{
+    white-space: normal;
+    &:hover{
+      text-decoration: underline;
+      text-decoration-color:#0077c5;
+    }
+  }
+  .eventTitle,.eventTime{
+    font-size: 12px;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 15px;
+    margin-left: 0;
+  }
+  .modalTitle{
+    font-size:18px;
+    font-weight: 500;
+    line-height: 1.1;
+    color: inherit;
+  }
+  

@@ -1,6 +1,5 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-const user = ""
 var followingArr = []
 var oldUser = ""
 const Button = (props) => {
@@ -18,15 +17,9 @@ const Button = (props) => {
         .then((res) => res.json())
         .then((res) => {
           console.log(res["courses"].toString())
-          var follows = false;
-          console.log(res["u"] + " " + res["email"] )
-          if ((followingArr).includes(res["u"])) {
-            follows = true
-            console.log("we do follow this person")
-          }
-          console.log("june this is follow check" + follows)
+          
             navigate("/NotYourProfile", {
-              
+
                 state: {
                     oldU: oldUser,
                     u: res.u,
@@ -37,7 +30,7 @@ const Button = (props) => {
                     lang: res["lang"],
                     followers: res["followers"],
                     following: res["following"],
-                    follows: follows,
+                    follows: true,
                     courses: res["courses"],
                     tutor: res["tutor"]
                 }
@@ -59,21 +52,21 @@ const Button = (props) => {
   );
 };
 
-function ButtonList(props) {
-  const followers = props.followers;
+function ButtonList2(props) {
+  const following = props.following;
   oldUser = props.oldUser
-  followingArr = props.following
+  followingArr = following
   const navigate = useNavigate();
 
   
 
   return (
     <div>
-      {followers.map((followers) => (
-        <Button key={followers} text={followers} />
+      {following.map((following) => (
+        <Button key={following} text={following} />
       ))}
     </div>
   );
 }
 
-export default ButtonList;
+export default ButtonList2;

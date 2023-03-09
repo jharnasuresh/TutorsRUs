@@ -24,6 +24,8 @@ const nodemailer = require('nodemailer');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
+const FormData = require('form-data');
+const multer = require('multer')
 console.log("library imports work");
 //const users = [] //temporarily storing in array
 
@@ -41,6 +43,8 @@ app.post('/signup', async (req, res) => {
     var answer3 = "";
     var userUniqueString = "";
     var active = false;
+    var lang = "";
+    var courses = [""];
     const user = {
         email:req.body.email,
         password: req.body
@@ -86,7 +90,9 @@ app.post('/signup', async (req, res) => {
        active: true,
        userUniqueString: uniqueString,
        followers: [""],
-       following: [""]
+       following: [""],
+       lang: "",
+       courses: [""]
        })
         .then(function(userRecord) {
         console.log("Successfully created new user:", userRecord.uid);
@@ -104,7 +110,9 @@ app.post('/signup', async (req, res) => {
           active: true,
           userUniqueString: uniqueString,
           followers: [""],
-          following: [""]
+          following: [""],
+          lang: "",
+          courses: [""]
         };
 
         var setDoc = db.collection('users').add(data);
@@ -116,7 +124,7 @@ app.post('/signup', async (req, res) => {
         console.log("junie pie this is the email: " + req.body.email)
 
         const { email } = req.body.email
-        sendVerificationMail(req.body.email, uniqueString, `Your verification code is ` + uniqueString)
+        sendVerificationMail(req.body.username, req.body.email, uniqueString, `Your verification code is ` + uniqueString)
         console.log("june papi " + uniqueString)
 
         /*const { email } = req.body.email
@@ -170,8 +178,31 @@ app.get("/api", (req, res) => {
     res.json({ message: "ur mom" });
 });
 
-app.post("/parse", (req, res) => {
-    console.log(req.body);
+const upload = multer();
+app.post("/parse", upload.single("file"), async (req, res) => {
+    console.log(req.file);
+    const {
+        file, 
+        body: { user }
+    } = req;
+    
+    var login = await db.collection('users').where('username', '==', req.body.user).get();
+    if (!login.empty) {
+        var doc = login.docs[0];
+        await doc.ref.update({transcript: req.file})
+        await doc.ref.update({tutor: true})
+        
+        login = await db.collection('users').where('username', '==', req.body.user).get();
+        doc = login.docs[0];
+        console.log("tutor now " + doc.get("tutor"))
+        return res.send(JSON.stringify({"u": doc.get("username"), "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), courses: doc.get("courses"), tutor: doc.get("tutor") }))
+
+    }
+    else {
+        return res.send(JSON.stringify("error"))
+    }
+    
+
 });
 
 app.listen(PORT, () => {
@@ -192,8 +223,22 @@ app.post("/info", async (req, res) => {
     console.log("aaa " + doc.get("active"))
     console.log("look here are your followers: " + doc.get("followers"))
     
-    return res.send(JSON.stringify({"u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following") }))
+    return res.send(JSON.stringify({"u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), courses: doc.get("courses"), tutor: doc.get("tutor") }))
 
+})
+
+app.post("/deltranscript", async (req, res) => {
+    var login = await db.collection('users').where('username', '==', req.body["username"]).get();
+    if (!login.empty) {
+        var doc = login.docs[0]
+        await doc.ref.update({transcript: null});
+       await  doc.ref.update({tutor: false});
+       login = await db.collection('users').where('username', '==', req.body["username"]).get();
+       doc = login.docs[0]
+       console.log("no longer tutor " + doc.get("tutor"))
+        return res.send(JSON.stringify({"u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), courses: doc.get("courses"), tutor: doc.get("tutor") }))
+
+    }
 })
 
 app.post("/delete", async (req, res) => {
@@ -227,6 +272,7 @@ app.post("/update", async (req, res) => {
     var user = doc.get("username")
     var pass = doc.get("password")
     var active = doc.get("active")
+    var lang = doc.get("lang")
     if (req.body.fname != "" && req.body.fname !== fname) {
         await doc.ref.update({FName: req.body.fname});
     }
@@ -243,10 +289,13 @@ app.post("/update", async (req, res) => {
     if (req.body.pass != "" && md5(req.body.pass) !== pass) {
         await doc.ref.update({password: md5(req.body.pass)});
     }
+    if (req.body.lang != "" && req.body.lang !== lang) {
+        await doc.ref.update({lang: req.body.lang});
+    }
 
     const up = await db.collection('users').where('username', '==', user).get();
     doc = up.docs[0];
-    return res.send(JSON.stringify({"u": doc.get("username"), "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": active}))
+    return res.send(JSON.stringify({"u": doc.get("username"), "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": active, "lang": doc.get("lang"), "courses": doc.get("courses"), "followers": doc.get("followers"), "following": doc.get("following")}))
 
 })
 
@@ -267,6 +316,59 @@ app.post("/login", async (req, res) => {
     }
     //console.log("none " + md5(req.body["pass"]) + " " + )
     return res.send(JSON.stringify("error"))
+})
+
+app.post("/addcourse", async (req, res) => {
+
+    console.log("here!")
+
+
+    const login = await db.collection('users').where('username', '==', req.body["u"]).get();
+        var doc = login.docs[0];
+        console.log("before " + doc.get("courses"))
+        c = doc.get("courses")
+        if (doc.get("courses").length == 0) {
+            console.log("und")
+            c.push(req.body.title)
+            doc.ref.update({courses: [req.body.title]})
+            return res.send(JSON.stringify({"courses": c}))
+        }
+        if (doc.get("courses").includes(req.body.title)) {
+            // cant add, already added
+            return res.send(JSON.stringify({"courses": c}))
+        }
+        c.push(req.body.title)
+        doc.ref.update({courses: c})
+       return res.send(JSON.stringify({"courses": c}))
+        
+    
+})
+
+app.post("/deletecourse", async (req, res) => {
+
+    console.log("here!")
+
+
+    const login = await db.collection('users').where('username', '==', req.body["u"]).get();
+        var doc = login.docs[0];
+        console.log("before " + doc.get("courses"))
+        c = doc.get("courses")
+        if (doc.get("courses").length == 0) {
+            console.log("und")
+            // empty list
+            return res.send(JSON.stringify({"courses": c}))
+        }
+        if (doc.get("courses").includes(req.body.title)) {
+            // deleting
+            console.log("delete")
+            c.splice(c.indexOf(req.body.title), 1)
+            doc.ref.update({courses: c})
+            console.log(c)
+            return res.send(JSON.stringify({"courses": c}))
+        }
+       return res.send(JSON.stringify({"courses": c}))
+        
+    
 })
 
 app.post("/passsecurity", async(req, res) => {
@@ -324,7 +426,7 @@ app.post("/resetpass", async(req,res) => {
     console.log("answer3: " + answer3 + " reqanswer: " + req.body.answer3)
     if (answer1 === req.body["answer1"]|| answer2 === req.body["answer2"] || answer3 === req.body["answer3"]) {
         console.log("june look it worked")
-        sendVerificationMail(doc.get("email"), doc.get("userUniqueString"), "resetpass")
+        sendVerificationMail(user, doc.get("email"), doc.get("userUniqueString"), "resetpass")
 
         /*user.save((err) => {
             if (err) {
@@ -350,6 +452,85 @@ app.post("/resetpass", async(req,res) => {
 })
 
 
+
+app.post("/securepassreset", async(req, res) => {
+    console.log("got in securepassreset");
+    var u = req.body.username
+    console.log("first potential problem area " + u);
+    const passsec = await db.collection('users').where('username', '==', req.body.username).get();
+    console.log("no problem here!")
+    var doc = passsec.docs[0];
+    var user = doc.get("username")
+
+    console.log(req.body.username + " " + req.body["password"] + " " + req.body["confirmPassword"])
+    if (req.body["password"] != req.body["confirmPassword"]) {
+        return res.send(JSON.stringify("passwords don't match"))
+    }
+    if (req.body["password"] === req.body["confirmPassword"]){
+        await doc.ref.update({password: md5(req.body.password)});
+    }
+    const up = await db.collection('users').where('username', '==', user).get();
+    doc = up.docs[0];
+    return res.send(JSON.stringify({"username": req.body["username"], "password": req.body["password"]}))
+    
+});
+
+
+app.post("/notyourprofile", async(req, res) => {
+    console.log("in back end of NYP")
+    var currUser = req.body["currUser"]
+    console.log("first potential problem area " + currUser);
+    const currentUserData = await db.collection('users').where('username', '==', currUser).get();
+    console.log("no problem here!")
+    var currentUserDataDoc = currentUserData.docs[0];
+    var followers = currentUserDataDoc.get("followers")
+    var currentUsername = currentUserDataDoc.get("username")
+    
+
+    var oldUser = req.body["oldUser"]
+    console.log("first potential problem area " + oldUser);
+    const oldUserData = await db.collection('users').where('username', '==', oldUser).get();
+    console.log("no problem here!")
+    var oldUserDataDoc = oldUserData.docs[0];
+    var following = oldUserDataDoc.get("following")
+    var oldUsername = oldUserDataDoc.get("username")
+    var oldfname = oldUserDataDoc.get("FName")
+    var oldlname = oldUserDataDoc.get("LName")
+    var oldemail = oldUserDataDoc.get("email")
+    var oldfollowers = oldUserDataDoc.get("followers")
+    var oldactive = oldUserDataDoc.get("active")
+    var oldlang = oldUserDataDoc.get("lang")
+    var oldcourse = oldUserDataDoc.get("courses")
+
+
+
+    console.log("the current user is " + currUser + " the old user " + oldUser)
+    if (following.includes(currentUsername)) {
+        console.log("we are unfollowing right now")
+        var ind = following.indexOf(currentUsername)
+        following.splice(ind, 1)
+        ind = followers.indexOf(oldUsername)
+        followers.splice(ind,1)
+    }
+    else {
+        console.log("we are following right now")
+        following.push(currUser)
+        followers.push(oldUser)
+    }
+
+
+    await currentUserDataDoc.ref.update({followers: followers});
+    await oldUserDataDoc.ref.update({following: following});
+    
+    const upCurr = await db.collection('users').where('username', '==', currUser).get();
+    currentUserDataDoc = upCurr.docs[0];
+
+    const upOld = await db.collection('users').where('username', '==', oldUser).get();
+    oldUserDataDoc = upOld.docs[0];
+    return res.send(JSON.stringify({"newFollowers": followers, "newFollowing": following, "u": oldUser, "fname": oldfname, "lname": oldlname, "email": oldemail, "followers": oldfollowers, "active": oldactive, "lang":oldlang, "courses":oldcourse}))
+    
+});
+
 function md5(string) {
     return crypto.createHash('md5').update(string).digest('hex');
 }
@@ -365,7 +546,7 @@ return token
 }
 
 
-const sendVerificationMail = (email, uniqueString, whichService) => {
+const sendVerificationMail = (username, email, uniqueString, whichService) => {
     console.log("in send mail")
 
     console.log("uniqueString: " + uniqueString)
@@ -397,9 +578,10 @@ const sendVerificationMail = (email, uniqueString, whichService) => {
             from: 'tutorsrus62@gmail.com', // Sender address
             to: email, // List of recipients
             subject: 'Username/Password Reset', // Subject line
-            html: `<h1>Email Confirmation</h1>
-            <p>Thank you for subscribing. Please confirm your email by clicking on the following link</p>
-            <a href=http://localhost:3000/${uniqueString}> Click here</a>
+            html: `<h1>CONFIDENTIAL</h1>
+            <p> Your username is: ${username} </p>
+            <p>Click this link to reset your password</p>
+            <a href=http://localhost:3000/SecurePassReset> Click here</a>
             </div>`
         };
     }

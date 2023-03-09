@@ -6,16 +6,19 @@ import  './Main.css'
 }*/
 
 class About extends Component {
+    
     render() {
         
         return (
             <section id="container-about" className="container-about">
                      <h2>{this.props.user}</h2>
                     <h2>Primary Language:</h2> 
-                    <p>Blah blah blah </p>
+                    <p>{ this.props.lang === "" ? "English" : this.props.lang} </p>
                     <h2>Email:</h2> 
                     {/* fix so user cant click on a mailto link on their own page, only other peoples*/}
-                    <p>{this.props.email}</p>
+                    {
+                        (this.props.yours) ? <p>{this.props.email}</p> : <a href={this.props.mail}>{this.props.email}</a>
+                    }
                     <h2>Rating:</h2>
                     <p>0.00</p>
             </section>
