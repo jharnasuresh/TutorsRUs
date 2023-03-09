@@ -28,6 +28,7 @@ export const EditCourse = ({ GlobalState }) => {
                         u: location.state.u, 
                         courses: res["courses"],
                         tutor: res["tutor"]
+                        taking: res["taking"]
                     }
                 });
             })
@@ -51,13 +52,14 @@ export const EditCourse = ({ GlobalState }) => {
                         u: location.state.u, 
                         courses: res["courses"] ,
                         tutor: res["tutor"]
+                        taking: res["taking"]
                     }
                 });
             })
 
     }
 
-    console.log(typeof location.state.courses)
+    console.log(typeof location.state.taking)
 
     return (
         <div className="App EditCourse">
@@ -78,7 +80,7 @@ export const EditCourse = ({ GlobalState }) => {
 
             <h1 className="currenth1">Current Courses</h1>
             <section id="container-currentcourse" className="container-currentcourse">
-                <p>{location.state.courses.toString()}</p>
+                <p>{location.state.taking.toString()}</p>
             </section>
             {tut === 'tut' &&
                 <section id="container-editcoursetutor" className="container-editcoursetutor">

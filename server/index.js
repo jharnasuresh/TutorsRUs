@@ -44,7 +44,7 @@ app.post('/signup', async (req, res) => {
     var userUniqueString = "";
     var active = false;
     var lang = "";
-    var courses = [""];
+    var taking = [""];
     const user = {
         email:req.body.email,
         password: req.body
@@ -92,7 +92,7 @@ app.post('/signup', async (req, res) => {
        followers: [""],
        following: [""],
        lang: "",
-       courses: [""]
+       taking: [""]
        })
         .then(function(userRecord) {
         console.log("Successfully created new user:", userRecord.uid);
@@ -112,7 +112,7 @@ app.post('/signup', async (req, res) => {
           followers: [""],
           following: [""],
           lang: "",
-          courses: [""]
+          taking: [""]
         };
 
         var setDoc = db.collection('users').add(data);
@@ -195,7 +195,7 @@ app.post("/parse", upload.single("file"), async (req, res) => {
         login = await db.collection('users').where('username', '==', req.body.user).get();
         doc = login.docs[0];
         console.log("tutor now " + doc.get("tutor"))
-        return res.send(JSON.stringify({"u": doc.get("username"), "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), courses: doc.get("courses"), tutor: doc.get("tutor") }))
+        return res.send(JSON.stringify({"u": doc.get("username"), "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), taking: doc.get("taking"), tutor: doc.get("tutor") }))
 
     }
     else {
@@ -223,7 +223,7 @@ app.post("/info", async (req, res) => {
     console.log("aaa " + doc.get("active"))
     console.log("look here are your followers: " + doc.get("followers"))
     
-    return res.send(JSON.stringify({"u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), courses: doc.get("courses"), tutor: doc.get("tutor") }))
+    return res.send(JSON.stringify({"u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), taking: doc.get("taking"), tutor: doc.get("tutor") }))
 
 })
 
@@ -236,7 +236,7 @@ app.post("/deltranscript", async (req, res) => {
        login = await db.collection('users').where('username', '==', req.body["username"]).get();
        doc = login.docs[0]
        console.log("no longer tutor " + doc.get("tutor"))
-        return res.send(JSON.stringify({"u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), courses: doc.get("courses"), tutor: doc.get("tutor") }))
+        return res.send(JSON.stringify({"u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), taking: doc.get("taking"), tutor: doc.get("tutor") }))
 
     }
 })
@@ -295,7 +295,7 @@ app.post("/update", async (req, res) => {
 
     const up = await db.collection('users').where('username', '==', user).get();
     doc = up.docs[0];
-    return res.send(JSON.stringify({"u": doc.get("username"), "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": active, "lang": doc.get("lang"), "courses": doc.get("courses"), "followers": doc.get("followers"), "following": doc.get("following")}))
+    return res.send(JSON.stringify({"u": doc.get("username"), "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": active, "lang": doc.get("lang"), "taking": doc.get("taking"), "followers": doc.get("followers"), "following": doc.get("following")}))
 
 })
 
@@ -325,21 +325,21 @@ app.post("/addcourse", async (req, res) => {
 
     const login = await db.collection('users').where('username', '==', req.body["u"]).get();
         var doc = login.docs[0];
-        console.log("before " + doc.get("courses"))
-        c = doc.get("courses")
-        if (doc.get("courses").length == 0) {
+        console.log("before " + doc.get("taking"))
+        c = doc.get("taking")
+        if (doc.get("taking").length == 0) {
             console.log("und")
             c.push(req.body.title)
-            doc.ref.update({courses: [req.body.title]})
-            return res.send(JSON.stringify({"courses": c}))
+            doc.ref.update({taking: [req.body.title]})
+            return res.send(JSON.stringify({"taking": c}))
         }
-        if (doc.get("courses").includes(req.body.title)) {
+        if (doc.get("taking").includes(req.body.title)) {
             // cant add, already added
-            return res.send(JSON.stringify({"courses": c}))
+            return res.send(JSON.stringify({"taking": c}))
         }
         c.push(req.body.title)
-        doc.ref.update({courses: c})
-       return res.send(JSON.stringify({"courses": c}))
+        doc.ref.update({taking: c})
+       return res.send(JSON.stringify({"taking": c}))
         
     
 })
@@ -351,22 +351,22 @@ app.post("/deletecourse", async (req, res) => {
 
     const login = await db.collection('users').where('username', '==', req.body["u"]).get();
         var doc = login.docs[0];
-        console.log("before " + doc.get("courses"))
-        c = doc.get("courses")
-        if (doc.get("courses").length == 0) {
+        console.log("before " + doc.get("taking"))
+        c = doc.get("taking")
+        if (doc.get("taking").length == 0) {
             console.log("und")
             // empty list
-            return res.send(JSON.stringify({"courses": c}))
+            return res.send(JSON.stringify({"taking": c}))
         }
-        if (doc.get("courses").includes(req.body.title)) {
+        if (doc.get("taking").includes(req.body.title)) {
             // deleting
             console.log("delete")
             c.splice(c.indexOf(req.body.title), 1)
-            doc.ref.update({courses: c})
+            doc.ref.update({taking: c})
             console.log(c)
-            return res.send(JSON.stringify({"courses": c}))
+            return res.send(JSON.stringify({"taking": c}))
         }
-       return res.send(JSON.stringify({"courses": c}))
+       return res.send(JSON.stringify({"taking": c}))
         
     
 })
@@ -500,7 +500,7 @@ app.post("/notyourprofile", async(req, res) => {
     var oldfollowers = oldUserDataDoc.get("followers")
     var oldactive = oldUserDataDoc.get("active")
     var oldlang = oldUserDataDoc.get("lang")
-    var oldcourse = oldUserDataDoc.get("courses")
+    var oldcourse = oldUserDataDoc.get("taking")
 
 
 
@@ -527,7 +527,7 @@ app.post("/notyourprofile", async(req, res) => {
 
     const upOld = await db.collection('users').where('username', '==', oldUser).get();
     oldUserDataDoc = upOld.docs[0];
-    return res.send(JSON.stringify({"newFollowers": followers, "newFollowing": following, "u": oldUser, "fname": oldfname, "lname": oldlname, "email": oldemail, "followers": oldfollowers, "active": oldactive, "lang":oldlang, "courses":oldcourse}))
+    return res.send(JSON.stringify({"newFollowers": followers, "newFollowing": following, "u": oldUser, "fname": oldfname, "lname": oldlname, "email": oldemail, "followers": oldfollowers, "active": oldactive, "lang":oldlang, "taking":oldcourse}))
     
 });
 

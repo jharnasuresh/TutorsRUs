@@ -59,7 +59,7 @@ export const Profile = ({ GlobalState }) => {
       <hr />
       <About user={location.state.u} email={location.state.email} lang={location.state.lang} yours={true}/>
       <br />
-      <CourseInfo courses={location.state.courses} />
+      <CourseInfo taking={location.state.taking} />
       <div className='profile-btn'>
         {/*<a href="/Profile">
           <button className="submit" > See Followers </button>
@@ -84,7 +84,7 @@ export const Profile = ({ GlobalState }) => {
 
 
         <button className='submit'>
-          <Link to="/Settings" state={{ user: location.state.u, active: location.state.active, courses: location.state.courses, tutor: location.state.tutor }}>Edit Profile</Link>
+          <Link to="/Settings" state={{ user: location.state.u, active: location.state.active, taking: location.state.taking, tutor: location.state.tutor }}>Edit Profile</Link>
         </button>
 
       </div>
