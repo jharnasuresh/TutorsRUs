@@ -24,6 +24,8 @@ const nodemailer = require('nodemailer');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
+const FormData = require('form-data');
+const multer = require('multer')
 console.log("library imports work");
 //const users = [] //temporarily storing in array
 
@@ -176,8 +178,27 @@ app.get("/api", (req, res) => {
     res.json({ message: "ur mom" });
 });
 
-app.post("/parse", (req, res) => {
-    console.log(req.body);
+const upload = multer();
+app.post("/parse", upload.single("file"), async (req, res) => {
+    console.log(req.file);
+    const {
+        file, 
+        body: { user }
+    } = req;
+    
+    const login = await db.collection('users').where('username', '==', req.body.user).get();
+    if (!login.empty) {
+        var doc = login.docs[0];
+        doc.ref.update({transcript: req.file})
+        doc.ref.update({tutor: true})
+        return res.send(JSON.stringify({"u": doc.get("username"), "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), courses: doc.get("courses"), tutor: doc.get("tutor") }))
+
+    }
+    else {
+        return res.send(JSON.stringify("error"))
+    }
+    
+
 });
 
 app.listen(PORT, () => {
