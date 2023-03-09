@@ -30,31 +30,28 @@ const DragDrop = (props) => {
             formData.append('file', files[0])
             formData.append("user", props.user)
             console.log([...formData])
-            const response = await fetch('http://localhost:3001/parse', {
-                method: 'POST',
-                body: formData
-            })
-            var res = await response.json();
-
-            console.log("here")
-
             
+            fetch('http://localhost:3001/parse', { method: 'POST', body: formData})
+            .then((res) => res.json())
+            .then((res) => {
+                console.log("verified! " + res["tutor"])
             navigate("/Profile", {
-
+            
                 state: {
                     u: res.u,
                     fname: res["fname"],
-                    lname: res["lname"],
-                    email: res["email"],
-                    followers: res["followers"],
-                    following: res["following"],
+                    lname: res["lname"], 
+                    email: res["email"], 
                     active: res["active"],
                     lang: res["lang"],
                     courses: res["courses"],
                     followers: res["followers"],
-                    following: res["following"]
+                    following: res["following"],
+                    tutor: res["tutor"]
                 }
             });
+        })
+
                     
             }
 

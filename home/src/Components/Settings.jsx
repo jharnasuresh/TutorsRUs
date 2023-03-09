@@ -18,6 +18,8 @@ export const Settings = ({ GlobalState }) => {
     var aButton = (active) ? "Deactivate" : "Activate";
     const { currUser, setCurrUser } = GlobalState;
 
+    console.log("ttt " + location.state.tutor)
+
 
     console.log("aesawda " + location.state.active)
 
@@ -44,7 +46,8 @@ export const Settings = ({ GlobalState }) => {
                         lang: res["lang"],
                         courses: res["courses"],
                         followers: res["followers"],
-                        following: res["following"]
+                        following: res["following"],
+                        tutor: res["tutor"]
                     }
                 });
             })
@@ -70,6 +73,34 @@ export const Settings = ({ GlobalState }) => {
         return;
     }
 
+    const handleDelTranscript = (e) => {
+        e.preventDefault();
+        const requestData = JSON.stringify({ "username": location.state.user });
+        const headers = { "content-type": "application/json" };
+        fetch('http://localhost:3001/deltranscript', { method: 'POST', body: requestData, headers: headers })
+            .then((res) => res.json())
+            .then((res) => {
+                console.log("TT " + res["tutor"])
+                setCurrUser(res.u)
+                console.log(" no more tutor " + res["tutor"])
+                navigate("/Profile", {
+
+                    state: {
+                        u: res.u,
+                        fname: res["fname"],
+                        lname: res["lname"],
+                        email: res["email"],
+                        active: res["active"],
+                        lang: res["lang"],
+                        courses: res["courses"],
+                        followers: res["followers"],
+                        following: res["following"],
+                        tutor: res["tutor"]
+                    }
+                });
+            })
+}
+
     const backToProfile = (e) => {
 
         e.preventDefault();
@@ -91,7 +122,8 @@ export const Settings = ({ GlobalState }) => {
                         lang: res["lang"],
                         courses: res["courses"],
                         followers: res["followers"],
-                        following: res["following"]
+                        following: res["following"],
+                        tutor: res["tutor"]
                     }
                 });
             })
@@ -129,11 +161,16 @@ export const Settings = ({ GlobalState }) => {
             </form>
 
             <button type="submit" onClick={backToProfile}>Back to profile</button>
-            <button type="submit" onClick={() => navigate('/Transcript', {state: {u: currUser}})}>Get Verified</button>
+            {
+                location.state.tutor ? 
+                <button type="submit" onClick={handleDelTranscript}>Delete Transcript</button>
+                : <button type="submit" onClick={() => navigate('/Transcript', {state: {u: currUser}})}>Get Verified</button>
+            }
+            
 
             <div>
                 <button className='submit' onClick={() => setButtonPopup(true)}>Delete Account</button>
-                <Popup trigger={buttonPopup} setTrigger={setButtonPopup} state={{ user: location.state.user }}>Are you sure you want to delete your account?</Popup>
+                <Popup trigger={buttonPopup} setTrigger={setButtonPopup} state={{ user: location.state.user, del: "acct" }}>Are you sure you want to delete your account?</Popup>
             </div>
             <button className='submit' onClick={handleDeactivate}>{aButton} Account</button>
         </div>

@@ -15,6 +15,7 @@ import { LocationSearching } from '@mui/icons-material';
 
 
 export const Profile = ({ GlobalState }) => {
+  console.log("in profile now")
   const [buttonPopup, setButtonPopup] = useState(false);
   const [buttonPopup2, setButtonPopup2] = useState(false);
   const { currUser, setCurrUser } = GlobalState;
@@ -36,6 +37,7 @@ export const Profile = ({ GlobalState }) => {
     setCurrUser(location.state.u)
   }
   console.log(location.state.lang)
+  console.log("tt " + location.state.tutor)
 
 
   var numFollowers = (location.state.followers).length + ""
@@ -82,7 +84,7 @@ export const Profile = ({ GlobalState }) => {
 
 
         <button className='submit'>
-          <Link to="/Settings" state={{ user: location.state.u, active: location.state.active, courses: location.state.courses }}>Edit Profile</Link>
+          <Link to="/Settings" state={{ user: location.state.u, active: location.state.active, courses: location.state.courses, tutor: location.state.tutor }}>Edit Profile</Link>
         </button>
 
       </div>
