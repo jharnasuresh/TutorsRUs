@@ -1,13 +1,13 @@
 //libraries
-const { getAuth, sendSignInLinkToEmail, sendEmailVerification }  = require('firebase/auth');
+const { getAuth, sendSignInLinkToEmail, sendEmailVerification } = require('firebase/auth');
 
-const {linkWithCredential, EmailAuthProvider } = require ("firebase/auth");
-const {reauthenticateWithCredential} = require ("firebase/auth");
+const { linkWithCredential, EmailAuthProvider } = require("firebase/auth");
+const { reauthenticateWithCredential } = require("firebase/auth");
 const toVerify = new Boolean(true);
 const express = require("express");
 const app = express();
 //app.use(express.json);
-app.use(express.urlencoded({extended:false}));
+app.use(express.urlencoded({ extended: false }));
 const admin = require("firebase-admin");
 
 const { db } = require('./firebase.js')
@@ -46,7 +46,7 @@ app.post('/signup', async (req, res) => {
     var lang = "";
     var taking = [""];
     const user = {
-        email:req.body.email,
+        email: req.body.email,
         password: req.body
     }
 
@@ -61,7 +61,7 @@ app.post('/signup', async (req, res) => {
         //email is already taken
         return res.send(JSON.stringify("username is taken"))
     }
-    
+
     if (userpassword.length <= 8) {
         return res.send(JSON.stringify("not long enough"))
     }
@@ -74,80 +74,80 @@ app.post('/signup', async (req, res) => {
     if (!(/[A-Z]/.test(userpassword))) {
         return res.send(JSON.stringify("requirements"))
     }
-    
+
     const uniqueString = randString()
 
     //any verifications you would like to do
     const userResponse = admin.auth().createUser({ //Create user in authentication section of firebase
-       email: useremail, //user email from request body
-       emailVerified: false, //user email from request body
-       password: md5(userpassword), //hashed user password
-       displayName: username, //user name from request body
-       disabled: false,
-       answer1: "",
-       answer2: "",
-       answer3: "",
-       active: true,
-       userUniqueString: uniqueString,
-       followers: [""],
-       following: [""],
-       lang: "",
-       taking: [""]
-       })
-        .then(function(userRecord) {
-        console.log("Successfully created new user:", userRecord.uid);
-        //add data to database
-        var data = {
-          //Whatever data you would like to add for this user
-          email : req.body["email"],
-          password: md5(req.body["pass"]),
-          FName : req.body["firstName"],
-          LName : req.body["lastName"],
-          username : req.body["user"],
-          answer1 : "",
-          answer2: "",
-          answer3: "",
-          active: true,
-          userUniqueString: uniqueString,
-          followers: [""],
-          following: [""],
-          lang: "",
-          taking: [""]
-        };
+        email: useremail, //user email from request body
+        emailVerified: false, //user email from request body
+        password: md5(userpassword), //hashed user password
+        displayName: username, //user name from request body
+        disabled: false,
+        answer1: "",
+        answer2: "",
+        answer3: "",
+        active: true,
+        userUniqueString: uniqueString,
+        followers: [""],
+        following: [""],
+        lang: "",
+        taking: [""]
+    })
+        .then(function (userRecord) {
+            console.log("Successfully created new user:", userRecord.uid);
+            //add data to database
+            var data = {
+                //Whatever data you would like to add for this user
+                email: req.body["email"],
+                password: md5(req.body["pass"]),
+                FName: req.body["firstName"],
+                LName: req.body["lastName"],
+                username: req.body["user"],
+                answer1: "",
+                answer2: "",
+                answer3: "",
+                active: true,
+                userUniqueString: uniqueString,
+                followers: [""],
+                following: [""],
+                lang: "",
+                taking: [""]
+            };
 
-        var setDoc = db.collection('users').add(data);
-        var userIDHash = md5(userRecord.uid);
-        //adding hashed userid and userid to Email-Verifications collection
-        console.log("Jharna i'm in verify");
-        
-
-        console.log("junie pie this is the email: " + req.body.email)
-
-        const { email } = req.body.email
-        sendVerificationMail(req.body.username, req.body.email, uniqueString, `Your verification code is ` + uniqueString)
-        console.log("june papi " + uniqueString)
-
-        /*const { email } = req.body.email
-        const uniqueString = randString()
-        const isValid = false
-        sendMail(email, uniqueString)
-        res.redirect('back')*/
-
-        
-          
-       })
-
-       
-
-       .catch(function(error) {
-          console.log("Error creating new user:", error);
-       });
-       return res.send(JSON.stringify({username, uniqueString}))
-
-    });
+            var setDoc = db.collection('users').add(data);
+            var userIDHash = md5(userRecord.uid);
+            //adding hashed userid and userid to Email-Verifications collection
+            console.log("Jharna i'm in verify");
 
 
-app.post("/verify", async(req, res) => {
+            console.log("junie pie this is the email: " + req.body.email)
+
+            const { email } = req.body.email
+            sendVerificationMail(req.body.username, req.body.email, uniqueString, `Your verification code is ` + uniqueString)
+            console.log("june papi " + uniqueString)
+
+            /*const { email } = req.body.email
+            const uniqueString = randString()
+            const isValid = false
+            sendMail(email, uniqueString)
+            res.redirect('back')*/
+
+
+
+        })
+
+
+
+        .catch(function (error) {
+            console.log("Error creating new user:", error);
+        });
+    return res.send(JSON.stringify({ username, uniqueString }))
+
+});
+
+
+app.post("/verify", async (req, res) => {
     console.log("jharna im in verify post function in index.js")
     var u = req.body.oldU
     console.log("first problem area " + u);
@@ -170,7 +170,7 @@ app.post("/verify", async(req, res) => {
     }
     const up = await db.collection('users').where('username', '==', user).get();
     doc = up.docs[0];
-    return res.send(JSON.stringify({"u": doc.get("username"), "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "answer1": doc.get("question1"), "answer2": doc.get("question2"), "answer3": doc.get("question3"), "userUniqueString": doc.get("userUniqueString")}))
+    return res.send(JSON.stringify({ "u": doc.get("username"), "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "answer1": doc.get("question1"), "answer2": doc.get("question2"), "answer3": doc.get("question3"), "userUniqueString": doc.get("userUniqueString") }))
 
 })
 
@@ -182,26 +182,26 @@ const upload = multer();
 app.post("/parse", upload.single("file"), async (req, res) => {
     console.log(req.file);
     const {
-        file, 
+        file,
         body: { user }
     } = req;
-    
+
     var login = await db.collection('users').where('username', '==', req.body.user).get();
     if (!login.empty) {
         var doc = login.docs[0];
-        await doc.ref.update({transcript: req.file})
-        await doc.ref.update({tutor: true})
-        
+        await doc.ref.update({ transcript: req.file })
+        await doc.ref.update({ tutor: true })
+
         login = await db.collection('users').where('username', '==', req.body.user).get();
         doc = login.docs[0];
         console.log("tutor now " + doc.get("tutor"))
-        return res.send(JSON.stringify({"u": doc.get("username"), "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), taking: doc.get("taking"), tutor: doc.get("tutor") }))
+        return res.send(JSON.stringify({ "u": doc.get("username"), "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), taking: doc.get("taking"), tutor: doc.get("tutor") }))
 
     }
     else {
         return res.send(JSON.stringify("error"))
     }
-    
+
 
 });
 
@@ -222,8 +222,8 @@ app.post("/info", async (req, res) => {
 
     console.log("aaa " + doc.get("active"))
     console.log("look here are your followers: " + doc.get("followers"))
-    
-    return res.send(JSON.stringify({"u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), taking: doc.get("taking"), tutor: doc.get("tutor") }))
+
+    return res.send(JSON.stringify({ "u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), taking: doc.get("taking"), tutor: doc.get("tutor") }))
 
 })
 
@@ -231,12 +231,12 @@ app.post("/deltranscript", async (req, res) => {
     var login = await db.collection('users').where('username', '==', req.body["username"]).get();
     if (!login.empty) {
         var doc = login.docs[0]
-        await doc.ref.update({transcript: null});
-       await  doc.ref.update({tutor: false});
-       login = await db.collection('users').where('username', '==', req.body["username"]).get();
-       doc = login.docs[0]
-       console.log("no longer tutor " + doc.get("tutor"))
-        return res.send(JSON.stringify({"u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), taking: doc.get("taking"), tutor: doc.get("tutor") }))
+        await doc.ref.update({ transcript: null });
+        await doc.ref.update({ tutor: false });
+        login = await db.collection('users').where('username', '==', req.body["username"]).get();
+        doc = login.docs[0]
+        console.log("no longer tutor " + doc.get("tutor"))
+        return res.send(JSON.stringify({ "u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), taking: doc.get("taking"), tutor: doc.get("tutor") }))
 
     }
 })
@@ -245,7 +245,7 @@ app.post("/delete", async (req, res) => {
     const login = await db.collection('users').where('username', '==', req.body["username"]).get();
     var doc = login.docs[0];
     doc.ref.delete();
-    
+
     return res.send(JSON.stringify("success"))
 
 })
@@ -253,9 +253,9 @@ app.post("/delete", async (req, res) => {
 app.post("/deactivate", async (req, res) => {
     const login = await db.collection('users').where('username', '==', req.body["username"]).get();
     var doc = login.docs[0];
-    doc.ref.update({active: !doc.get("active")})
+    doc.ref.update({ active: !doc.get("active") })
     console.log("a? " + doc.get("active"))
-    
+
     return res.send(JSON.stringify("success"))
 
 })
@@ -274,28 +274,28 @@ app.post("/update", async (req, res) => {
     var active = doc.get("active")
     var lang = doc.get("lang")
     if (req.body.fname != "" && req.body.fname !== fname) {
-        await doc.ref.update({FName: req.body.fname});
+        await doc.ref.update({ FName: req.body.fname });
     }
     if (req.body.lname != "" && req.body.lname !== lname) {
-        await doc.ref.update({LName: req.body.lname});
+        await doc.ref.update({ LName: req.body.lname });
     }
     if (req.body.user != "" && req.body.user !== user) {
         user = req.body.user
-        await doc.ref.update({username: req.body.user});
+        await doc.ref.update({ username: req.body.user });
     }
     if (req.body.email != "" && req.body.email !== email) {
-        await doc.ref.update({email: req.body.email});
+        await doc.ref.update({ email: req.body.email });
     }
     if (req.body.pass != "" && md5(req.body.pass) !== pass) {
-        await doc.ref.update({password: md5(req.body.pass)});
+        await doc.ref.update({ password: md5(req.body.pass) });
     }
     if (req.body.lang != "" && req.body.lang !== lang) {
-        await doc.ref.update({lang: req.body.lang});
+        await doc.ref.update({ lang: req.body.lang });
     }
 
     const up = await db.collection('users').where('username', '==', user).get();
     doc = up.docs[0];
-    return res.send(JSON.stringify({"u": doc.get("username"), "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": active, "lang": doc.get("lang"), "taking": doc.get("taking"), "followers": doc.get("followers"), "following": doc.get("following")}))
+    return res.send(JSON.stringify({ "u": doc.get("username"), "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": active, "lang": doc.get("lang"), "taking": doc.get("taking"), "followers": doc.get("followers"), "following": doc.get("following") }))
 
 })
 
@@ -305,10 +305,10 @@ app.post("/login", async (req, res) => {
     const login = await db.collection('users').where('username', '==', req.body["username"]).where('password', '==', md5(req.body["pass"])).get();
     if (!login.empty) {
         var doc = login.docs[0];
-       console.log("a " + doc.get("password"))
-       return res.send(JSON.stringify({"u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email")}))
-       //it works!
-        
+        console.log("a " + doc.get("password"))
+        return res.send(JSON.stringify({ "u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email") }))
+        //it works!
+
     }
     else {
         console.log("error")
@@ -320,28 +320,20 @@ app.post("/login", async (req, res) => {
 
 app.post("/addcourse", async (req, res) => {
 
-    console.log("here!")
-
-
     const login = await db.collection('users').where('username', '==', req.body["u"]).get();
-        var doc = login.docs[0];
-        console.log("before " + doc.get("taking"))
-        c = doc.get("taking")
-        if (doc.get("taking").length == 0) {
-            console.log("und")
-            c.push(req.body.title)
-            doc.ref.update({taking: [req.body.title]})
-            return res.send(JSON.stringify({"taking": c}))
-        }
-        if (doc.get("taking").includes(req.body.title)) {
-            // cant add, already added
-            return res.send(JSON.stringify({"taking": c}))
-        }
-        c.push(req.body.title)
-        doc.ref.update({taking: c})
-       return res.send(JSON.stringify({"taking": c}))
-        
+    var doc = login.docs[0];
     
+    c = doc.get("taking")
+    
+    info = {"title": req.body.title, "professor": req.body.prof, "semester": req.body.semester}
+    
+    console.log("cyiwvfdhbkaj")
+    c[req.body.title] = info
+
+    doc.ref.update({ taking: c })
+    return res.send(JSON.stringify({ "taking": c }))
+
+
 })
 
 app.post("/deletecourse", async (req, res) => {
@@ -350,28 +342,28 @@ app.post("/deletecourse", async (req, res) => {
 
 
     const login = await db.collection('users').where('username', '==', req.body["u"]).get();
-        var doc = login.docs[0];
-        console.log("before " + doc.get("taking"))
-        c = doc.get("taking")
-        if (doc.get("taking").length == 0) {
-            console.log("und")
-            // empty list
-            return res.send(JSON.stringify({"taking": c}))
-        }
-        if (doc.get("taking").includes(req.body.title)) {
-            // deleting
-            console.log("delete")
-            c.splice(c.indexOf(req.body.title), 1)
-            doc.ref.update({taking: c})
-            console.log(c)
-            return res.send(JSON.stringify({"taking": c}))
-        }
-       return res.send(JSON.stringify({"taking": c}))
-        
-    
+    var doc = login.docs[0];
+    console.log("before " + doc.get("taking"))
+    c = doc.get("taking")
+    if (doc.get("taking").length == 0) {
+        console.log("und")
+        // empty list
+        return res.send(JSON.stringify({ "taking": c }))
+    }
+    if (doc.get("taking").includes(req.body.title)) {
+        // deleting
+        console.log("delete")
+        c.splice(c.indexOf(req.body.title), 1)
+        doc.ref.update({ taking: c })
+        console.log(c)
+        return res.send(JSON.stringify({ "taking": c }))
+    }
+    return res.send(JSON.stringify({ "taking": c }))
+
+
 })
 
-app.post("/passsecurity", async(req, res) => {
+app.post("/passsecurity", async (req, res) => {
     console.log("got in passsecurity");
     var u = req.body.oldU
     console.log("first problem area " + u);
@@ -386,17 +378,17 @@ app.post("/passsecurity", async(req, res) => {
 
     console.log(req.body.question1 + " " + req.body.question2 + " " + req.body.question3)
     if (req.body.question1 !== answer1) {
-        await doc.ref.update({answer1: req.body.question1});
+        await doc.ref.update({ answer1: req.body.question1 });
     }
     if (req.body.question2 !== answer2) {
-        await doc.ref.update({answer2: req.body.question2});
+        await doc.ref.update({ answer2: req.body.question2 });
     }
     if (req.body.question3 !== answer3) {
-        await doc.ref.update({answer3: req.body.question3});
+        await doc.ref.update({ answer3: req.body.question3 });
     }
     const up = await db.collection('users').where('username', '==', user).get();
     doc = up.docs[0];
-    return res.send(JSON.stringify({"u": doc.get("username"), "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "answer1": doc.get("question1"), "answer2": doc.get("question2"), "answer3": doc.get("question3"), "userUniqueString": doc.get("userUniqueString")}))
+    return res.send(JSON.stringify({ "u": doc.get("username"), "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "answer1": doc.get("question1"), "answer2": doc.get("question2"), "answer3": doc.get("question3"), "userUniqueString": doc.get("userUniqueString") }))
 
 });
 
@@ -410,7 +402,7 @@ app.get("localhost:3000/confirmationCode", verifyUser)
 
 
 
-app.post("/resetpass", async(req,res) => {
+app.post("/resetpass", async (req, res) => {
     console.log("jharna i made it in the reset post")
     console.log("j look")
     const passsec = await db.collection('users').where('email', '==', req.body.email).get();
@@ -424,7 +416,7 @@ app.post("/resetpass", async(req,res) => {
     console.log("answer1: " + answer1 + " reqanswer: " + req.body.answer1)
     console.log("answer2: " + answer2 + " reqanswer: " + req.body.answer2)
     console.log("answer3: " + answer3 + " reqanswer: " + req.body.answer3)
-    if (answer1 === req.body["answer1"]|| answer2 === req.body["answer2"] || answer3 === req.body["answer3"]) {
+    if (answer1 === req.body["answer1"] || answer2 === req.body["answer2"] || answer3 === req.body["answer3"]) {
         console.log("june look it worked")
         sendVerificationMail(user, doc.get("email"), doc.get("userUniqueString"), "resetpass")
 
@@ -446,14 +438,14 @@ app.post("/resetpass", async(req,res) => {
         return res.send(JSON.stringify("error"))
     }
     console.log("this is the username " + user)
-    return res.send(JSON.stringify({"u": doc.get("username"), "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "answer1": doc.get("question1"), "answer2": doc.get("question2"), "answer3": doc.get("question3"), "userUniqueString": doc.get("userUniqueString")}))
+    return res.send(JSON.stringify({ "u": doc.get("username"), "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "answer1": doc.get("question1"), "answer2": doc.get("question2"), "answer3": doc.get("question3"), "userUniqueString": doc.get("userUniqueString") }))
 
 
 })
 
 
 
-app.post("/securepassreset", async(req, res) => {
+app.post("/securepassreset", async (req, res) => {
     console.log("got in securepassreset");
     var u = req.body.username
     console.log("first potential problem area " + u);
@@ -466,17 +458,17 @@ app.post("/securepassreset", async(req, res) => {
     if (req.body["password"] != req.body["confirmPassword"]) {
         return res.send(JSON.stringify("passwords don't match"))
     }
-    if (req.body["password"] === req.body["confirmPassword"]){
-        await doc.ref.update({password: md5(req.body.password)});
+    if (req.body["password"] === req.body["confirmPassword"]) {
+        await doc.ref.update({ password: md5(req.body.password) });
     }
     const up = await db.collection('users').where('username', '==', user).get();
     doc = up.docs[0];
-    return res.send(JSON.stringify({"username": req.body["username"], "password": req.body["password"]}))
-    
+    return res.send(JSON.stringify({ "username": req.body["username"], "password": req.body["password"] }))
+
 });
 
 
-app.post("/notyourprofile", async(req, res) => {
+app.post("/notyourprofile", async (req, res) => {
     console.log("in back end of NYP")
     var currUser = req.body["currUser"]
     console.log("first potential problem area " + currUser);
@@ -485,7 +477,7 @@ app.post("/notyourprofile", async(req, res) => {
     var currentUserDataDoc = currentUserData.docs[0];
     var followers = currentUserDataDoc.get("followers")
     var currentUsername = currentUserDataDoc.get("username")
-    
+
 
     var oldUser = req.body["oldUser"]
     console.log("first potential problem area " + oldUser);
@@ -510,7 +502,7 @@ app.post("/notyourprofile", async(req, res) => {
         var ind = following.indexOf(currentUsername)
         following.splice(ind, 1)
         ind = followers.indexOf(oldUsername)
-        followers.splice(ind,1)
+        followers.splice(ind, 1)
     }
     else {
         console.log("we are following right now")
@@ -519,16 +511,16 @@ app.post("/notyourprofile", async(req, res) => {
     }
 
 
-    await currentUserDataDoc.ref.update({followers: followers});
-    await oldUserDataDoc.ref.update({following: following});
-    
+    await currentUserDataDoc.ref.update({ followers: followers });
+    await oldUserDataDoc.ref.update({ following: following });
+
     const upCurr = await db.collection('users').where('username', '==', currUser).get();
     currentUserDataDoc = upCurr.docs[0];
 
     const upOld = await db.collection('users').where('username', '==', oldUser).get();
     oldUserDataDoc = upOld.docs[0];
-    return res.send(JSON.stringify({"newFollowers": followers, "newFollowing": following, "u": oldUser, "fname": oldfname, "lname": oldlname, "email": oldemail, "followers": oldfollowers, "active": oldactive, "lang":oldlang, "taking":oldcourse}))
-    
+    return res.send(JSON.stringify({ "newFollowers": followers, "newFollowing": following, "u": oldUser, "fname": oldfname, "lname": oldlname, "email": oldemail, "followers": oldfollowers, "active": oldactive, "lang": oldlang, "taking": oldcourse }))
+
 });
 
 function md5(string) {
@@ -536,13 +528,13 @@ function md5(string) {
 }
 
 const randString = () => {
-    
-const characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-let token = '';
-for (let i = 0; i < 25; i++) {
-    token += characters[Math.floor(Math.random() * characters.length )];
-}
-return token
+
+    const characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    let token = '';
+    for (let i = 0; i < 25; i++) {
+        token += characters[Math.floor(Math.random() * characters.length)];
+    }
+    return token
 }
 
 
@@ -555,17 +547,17 @@ const sendVerificationMail = (username, email, uniqueString, whichService) => {
         port: 465,
         secure: true,
         auth: {
-          user: 'tutorsrus62@gmail.com',
-          pass: 'cshikqpjzgbcwejb'
+            user: 'tutorsrus62@gmail.com',
+            pass: 'cshikqpjzgbcwejb'
         }
-     });
-    
-     var verify = true
-     if (whichService === "resetpass") {
+    });
+
+    var verify = true
+    if (whichService === "resetpass") {
         verify = false
-     }
-     var mailOptions;
-     if (whichService != "resetpass") {
+    }
+    var mailOptions;
+    if (whichService != "resetpass") {
         mailOptions = {
             from: 'tutorsrus62@gmail.com', // Sender address
             to: email, // List of recipients
@@ -585,14 +577,14 @@ const sendVerificationMail = (username, email, uniqueString, whichService) => {
             </div>`
         };
     }
-    
-    
-    transport.sendMail(mailOptions, function(err, info) {
-       if (err) {
-         console.log(err)
-       } else {
-         console.log(info);
-       }
+
+
+    transport.sendMail(mailOptions, function (err, info) {
+        if (err) {
+            console.log(err)
+        } else {
+            console.log(info);
+        }
     });
 }
 
