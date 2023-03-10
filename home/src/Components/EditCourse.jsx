@@ -37,8 +37,7 @@ export const EditCourse = ({ GlobalState }) => {
                 navigate("/EditCourse", {
                     state: {
                         u: location.state.u, 
-                        courses: res["courses"],
-                        tutor: res["tutor"]
+                        tutor: res["tutor"],
                         taking: res["taking"]
                     }
                 });
@@ -52,7 +51,7 @@ export const EditCourse = ({ GlobalState }) => {
 
         const headers = { "content-type": "application/json" };
         var add = " " + title + "-" + professor + "-" + semester;
-        const requestData = JSON.stringify({"title": add, "u": location.state.u });
+        const requestData = JSON.stringify({"title": title, "prof": professor, "semester": semester, "u": location.state.u });
 
         fetch('http://localhost:3001/deletecourse', { method: 'POST', body: requestData, headers: headers })
             .then((res) => res.json())
@@ -61,8 +60,7 @@ export const EditCourse = ({ GlobalState }) => {
                 navigate("/EditCourse", {
                     state: {
                         u: location.state.u, 
-                        courses: res["courses"] ,
-                        tutor: res["tutor"]
+                        tutor: res["tutor"],
                         taking: res["taking"]
                     }
                 });
