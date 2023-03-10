@@ -21,6 +21,7 @@ export const EditCourse = ({ GlobalState }) => {
     Object.values(location.state.taking).forEach(p)
     console.log("pritning " + printing)
 
+    var tut = (location.state.tutor) ? "tut"  : "";
     const handleAdd = () => {
 
         console.log("adding")
@@ -36,6 +37,8 @@ export const EditCourse = ({ GlobalState }) => {
                 navigate("/EditCourse", {
                     state: {
                         u: location.state.u, 
+                        courses: res["courses"],
+                        tutor: res["tutor"]
                         taking: res["taking"]
                     }
                 });
@@ -58,6 +61,8 @@ export const EditCourse = ({ GlobalState }) => {
                 navigate("/EditCourse", {
                     state: {
                         u: location.state.u, 
+                        courses: res["courses"] ,
+                        tutor: res["tutor"]
                         taking: res["taking"]
                     }
                 });
@@ -89,6 +94,19 @@ export const EditCourse = ({ GlobalState }) => {
                 }
                 
             </section>
+            {tut === 'tut' &&
+                <section id="container-editcoursetutor" className="container-editcoursetutor">
+                <label for="title:">Class Title: </label>
+                <input value={title} onChange={(e) => setTitle(e.target.value)} type="title" placeholder="Enter Course Title" id="title" name="title" />
+                <br></br>
+                <label for="title:">Class Professor: </label>
+                <input value={professor} onChange={(e) => setProfessor(e.target.value)} type="professor" placeholder="Enter Course Professor" id="professor" name="professor" />
+                <br></br>
+                <label for="title:">Class Semester: </label>
+                <input value={semester} onChange={(e) => setSemester(e.target.value)} type="semester" placeholder="Enter Course Semester" id="semester" name="semester" />
+                <br></br>
+                </section>
+            }
         </div>
     );
 }
