@@ -11,13 +11,24 @@ export const EditCourse = ({ GlobalState }) => {
     const location = useLocation();
     const navigate = useNavigate();
 
+    console.log(JSON.stringify(Object.values(location.state.taking)))
+
+    var printing = "";
+
+    function p (str) {
+        printing+=str.title + "-" + str.professor + "-" + str.semester + ", "
+    }
+    Object.values(location.state.taking).forEach(p)
+    console.log("pritning " + printing)
+
+    var tut = (location.state.tutor) ? "tut"  : "";
     const handleAdd = () => {
 
         console.log("adding")
 
         const headers = { "content-type": "application/json" };
-        var add = " " + title + "-" + professor + "-" + semester;
-        const requestData = JSON.stringify({"title": add, "u": location.state.u });
+        //var add = " " + title + "-" + professor + "-" + semester;
+        const requestData = JSON.stringify({"title": title, "prof": professor, "semester": semester, "u": location.state.u });
 
         fetch('http://localhost:3001/addcourse', { method: 'POST', body: requestData, headers: headers })
             .then((res) => res.json())
@@ -26,7 +37,8 @@ export const EditCourse = ({ GlobalState }) => {
                 navigate("/EditCourse", {
                     state: {
                         u: location.state.u, 
-                        courses: res["courses"]
+                        tutor: res["tutor"],
+                        taking: res["taking"]
                     }
                 });
             })
@@ -39,7 +51,7 @@ export const EditCourse = ({ GlobalState }) => {
 
         const headers = { "content-type": "application/json" };
         var add = " " + title + "-" + professor + "-" + semester;
-        const requestData = JSON.stringify({"title": add, "u": location.state.u });
+        const requestData = JSON.stringify({"title": title, "prof": professor, "semester": semester, "u": location.state.u });
 
         fetch('http://localhost:3001/deletecourse', { method: 'POST', body: requestData, headers: headers })
             .then((res) => res.json())
@@ -48,14 +60,13 @@ export const EditCourse = ({ GlobalState }) => {
                 navigate("/EditCourse", {
                     state: {
                         u: location.state.u, 
-                        courses: res["courses"]
+                        tutor: res["tutor"],
+                        taking: res["taking"]
                     }
                 });
             })
 
     }
-
-    console.log(typeof location.state.courses)
 
     return (
         <div className="App EditCourse">
@@ -76,8 +87,24 @@ export const EditCourse = ({ GlobalState }) => {
 
             <h1 className="currenth1">Current Courses</h1>
             <section id="container-currentcourse" className="container-currentcourse">
-                <p>{location.state.courses.toString()}</p>
+                {
+                    Object.entries(location.state.taking).length === 0 ? "" : <p>{printing}</p>
+                }
+                
             </section>
+            {tut === 'tut' &&
+                <section id="container-editcoursetutor" className="container-editcoursetutor">
+                <label for="title:">Class Title: </label>
+                <input value={title} onChange={(e) => setTitle(e.target.value)} type="title" placeholder="Enter Course Title" id="title" name="title" />
+                <br></br>
+                <label for="title:">Class Professor: </label>
+                <input value={professor} onChange={(e) => setProfessor(e.target.value)} type="professor" placeholder="Enter Course Professor" id="professor" name="professor" />
+                <br></br>
+                <label for="title:">Class Semester: </label>
+                <input value={semester} onChange={(e) => setSemester(e.target.value)} type="semester" placeholder="Enter Course Semester" id="semester" name="semester" />
+                <br></br>
+                </section>
+            }
         </div>
     );
 }

@@ -8,7 +8,7 @@ class CourseInfo extends Component {
                     <h1>Courses taking:</h1> 
                     <br></br>
                     <p>
-                        {this.props.courses.toString()}
+                    {this.props.taking}
                     </p>
             </section>
         )

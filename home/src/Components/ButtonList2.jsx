@@ -16,7 +16,7 @@ const Button = (props) => {
         fetch('http://localhost:3001/info', { method: 'POST', body: requestData, headers: headers })
         .then((res) => res.json())
         .then((res) => {
-          console.log(res["courses"].toString())
+          console.log(res["taking"].toString())
           
             navigate("/NotYourProfile", {
 
@@ -31,7 +31,7 @@ const Button = (props) => {
                     followers: res["followers"],
                     following: res["following"],
                     follows: true,
-                    courses: res["courses"],
+                    taking: res["taking"],
                     tutor: res["tutor"]
                 }
             });
