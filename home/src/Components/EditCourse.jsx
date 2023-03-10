@@ -10,14 +10,25 @@ export const EditCourse = ({ GlobalState }) => {
     const [semester, setSemester] = useState('');
     const location = useLocation();
     const navigate = useNavigate();
+
+    console.log(JSON.stringify(Object.values(location.state.taking)))
+
+    var printing = "";
+
+    function p (str) {
+        printing+=str.title + "-" + str.professor + "-" + str.semester + ", "
+    }
+    Object.values(location.state.taking).forEach(p)
+    console.log("pritning " + printing)
+
     var tut = (location.state.tutor) ? "tut"  : "";
     const handleAdd = () => {
 
         console.log("adding")
 
         const headers = { "content-type": "application/json" };
-        var add = " " + title + "-" + professor + "-" + semester;
-        const requestData = JSON.stringify({"title": add, "u": location.state.u });
+        //var add = " " + title + "-" + professor + "-" + semester;
+        const requestData = JSON.stringify({"title": title, "prof": professor, "semester": semester, "u": location.state.u });
 
         fetch('http://localhost:3001/addcourse', { method: 'POST', body: requestData, headers: headers })
             .then((res) => res.json())
@@ -59,8 +70,6 @@ export const EditCourse = ({ GlobalState }) => {
 
     }
 
-    console.log(typeof location.state.taking)
-
     return (
         <div className="App EditCourse">
             <h1> Edit Courses </h1>
@@ -80,7 +89,10 @@ export const EditCourse = ({ GlobalState }) => {
 
             <h1 className="currenth1">Current Courses</h1>
             <section id="container-currentcourse" className="container-currentcourse">
-                <p>{location.state.taking.toString()}</p>
+                {
+                    Object.entries(location.state.taking).length === 0 ? "" : <p>{printing}</p>
+                }
+                
             </section>
             {tut === 'tut' &&
                 <section id="container-editcoursetutor" className="container-editcoursetutor">
