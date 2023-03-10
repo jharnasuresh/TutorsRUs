@@ -44,7 +44,7 @@ app.post('/signup', async (req, res) => {
     var userUniqueString = "";
     var active = false;
     var lang = "";
-    var taking = [""];
+    var taking = {};
     const user = {
         email: req.body.email,
         password: req.body
@@ -92,7 +92,7 @@ app.post('/signup', async (req, res) => {
         followers: [""],
         following: [""],
         lang: "",
-        taking: [""]
+        taking: {}
     })
         .then(function (userRecord) {
             console.log("Successfully created new user:", userRecord.uid);
@@ -112,7 +112,7 @@ app.post('/signup', async (req, res) => {
                 followers: [""],
                 following: [""],
                 lang: "",
-                taking: [""]
+                taking: {}
             };
 
             var setDoc = db.collection('users').add(data);
@@ -320,7 +320,7 @@ app.post("/login", async (req, res) => {
 
 app.post("/addcourse", async (req, res) => {
 
-    const login = await db.collection('users').where('username', '==', req.body["u"]).get();
+    const login = await db.collection('users').where('username', '==', req.body.u).get();
     var doc = login.docs[0];
     
     c = doc.get("taking")
@@ -330,7 +330,7 @@ app.post("/addcourse", async (req, res) => {
     console.log("cyiwvfdhbkaj")
     c[req.body.title] = info
 
-    doc.ref.update({ taking: c })
+    await doc.ref.update({ taking: c })
     return res.send(JSON.stringify({ "taking": c }))
 
 
@@ -343,8 +343,23 @@ app.post("/deletecourse", async (req, res) => {
 
     const login = await db.collection('users').where('username', '==', req.body["u"]).get();
     var doc = login.docs[0];
-    console.log("before " + doc.get("taking"))
+    
     c = doc.get("taking")
+    console.log("before " + Object.keys(c) + req.body.title)
+
+    if (!Object.keys(c).includes(req.body.title)) {
+        //course not in list
+        console.log("here")
+        return res.send(JSON.stringify({ "taking": c }))
+    }
+
+    delete c[req.body.title]
+    await doc.ref.update({ taking: c })
+
+
+    console.log(Object.keys(c))
+
+    /*
     if (doc.get("taking").length == 0) {
         console.log("und")
         // empty list
@@ -358,6 +373,7 @@ app.post("/deletecourse", async (req, res) => {
         console.log(c)
         return res.send(JSON.stringify({ "taking": c }))
     }
+    */
     return res.send(JSON.stringify({ "taking": c }))
 
 
