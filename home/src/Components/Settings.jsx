@@ -148,10 +148,6 @@ export const Settings = ({ GlobalState }) => {
                 <label htmlFor="password">Password: </label>
                 <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Password" id="password" name="password" />
                 <br></br>
-                <span style={{ padding: '40px' }}>
-                <label htmlFor="email">Email: </label>
-                <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Email Address" id="email" name="email" />
-                </span>
                 <label htmlFor="lang">Language: </label>
                 <input value={lang} onChange={(e) => setLang(e.target.value)} type="lang" placeholder="Enter Your Primary Language" id="lang" name="lang" />
                 <br></br>
