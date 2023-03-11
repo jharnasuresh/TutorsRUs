@@ -329,7 +329,8 @@ app.post("/addcourse", async (req, res) => {
     c = doc.get("taking")
 
     info = {"title": req.body.title, "professor": req.body.prof, "semester": req.body.semester}
-    c[req.body.title] = info
+    var t = JSON.parse(JSON.stringify(req.body.title).toLowerCase());
+    c[t] = info
 
     await doc.ref.update({ taking: c })
     return res.send(JSON.stringify({ "taking": c }))
@@ -344,13 +345,17 @@ app.post("/deletecourse", async (req, res) => {
     
     c = doc.get("taking")
 
-    if (!Object.keys(c).includes(req.body.title)) {
+    var t = JSON.parse(JSON.stringify(req.body.title).toLowerCase());
+
+    if (!Object.keys(c).includes(t)) {
         //course not in list
         console.log("here")
         return res.send(JSON.stringify({ "taking": c }))
     }
 
-    delete c[req.body.title]
+    
+
+    delete c[t]
     await doc.ref.update({ taking: c })
     return res.send(JSON.stringify({ "taking": c }))
 
@@ -363,8 +368,10 @@ app.post("/addcoursetutor", async (req, res) => {
     
     c = doc.get("taken")
 
+    var t = JSON.parse(JSON.stringify(req.body.title).toLowerCase());
+
     info = {"title": req.body.title, "professor": req.body.prof, "semester": req.body.semester, "grade": req.body.grade}
-    c[req.body.title] = info
+    c[t] = info
 
     await doc.ref.update({ taken: c })
     return res.send(JSON.stringify({ "taken": c }))
@@ -379,13 +386,15 @@ app.post("/deletecoursetutor", async (req, res) => {
     
     c = doc.get("taken")
 
-    if (!Object.keys(c).includes(req.body.title)) {
+    var t = JSON.parse(JSON.stringify(req.body.title).toLowerCase());
+
+    if (!Object.keys(c).includes(t)) {
         //course not in list
         console.log("here")
         return res.send(JSON.stringify({ "taken": c }))
     }
 
-    delete c[req.body.title]
+    delete c[t]
     await doc.ref.update({ taken: c })
     return res.send(JSON.stringify({ "taken": c }))
 
