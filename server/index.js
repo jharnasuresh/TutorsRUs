@@ -46,6 +46,7 @@ app.post('/signup', async (req, res) => {
     var lang = "";
     var taking = {};
     var taken = {};
+    var price = 0;
     const user = {
         email: req.body.email,
         password: req.body
@@ -94,7 +95,8 @@ app.post('/signup', async (req, res) => {
         following: [""],
         lang: "",
         taking: {},
-        taken: {}
+        taken: {},
+        price: 0
     })
         .then(function (userRecord) {
             console.log("Successfully created new user:", userRecord.uid);
@@ -115,7 +117,8 @@ app.post('/signup', async (req, res) => {
                 following: [""],
                 lang: "",
                 taking: {},
-                taken: {}
+                taken: {},
+                price: 0
             };
 
             var setDoc = db.collection('users').add(data);
@@ -276,6 +279,7 @@ app.post("/update", async (req, res) => {
     var pass = doc.get("password")
     var active = doc.get("active")
     var lang = doc.get("lang")
+    var price = doc.get("price")
     if (req.body.fname != "" && req.body.fname !== fname) {
         await doc.ref.update({ FName: req.body.fname });
     }
@@ -294,6 +298,9 @@ app.post("/update", async (req, res) => {
     }
     if (req.body.lang != "" && req.body.lang !== lang) {
         await doc.ref.update({ lang: req.body.lang });
+    }
+    if (req.body.price != "" && Number(req.body.price) != price) {
+        await doc.ref.update({ price: Number(req.body.price) });
     }
 
     const up = await db.collection('users').where('username', '==', user).get();
