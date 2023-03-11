@@ -45,6 +45,8 @@ app.post('/signup', async (req, res) => {
     var active = false;
     var lang = "";
     var taking = {};
+    var taken = {};
+    var price = 0;
     const user = {
         email: req.body.email,
         password: req.body
@@ -92,7 +94,9 @@ app.post('/signup', async (req, res) => {
         followers: [""],
         following: [""],
         lang: "",
-        taking: {}
+        taking: {},
+        taken: {},
+        price: 0
     })
         .then(function (userRecord) {
             console.log("Successfully created new user:", userRecord.uid);
@@ -112,7 +116,9 @@ app.post('/signup', async (req, res) => {
                 followers: [""],
                 following: [""],
                 lang: "",
-                taking: {}
+                taking: {},
+                taken: {},
+                price: 0
             };
 
             var setDoc = db.collection('users').add(data);
@@ -223,7 +229,7 @@ app.post("/info", async (req, res) => {
     console.log("aaa " + doc.get("active"))
     console.log("look here are your followers: " + doc.get("followers"))
 
-    return res.send(JSON.stringify({ "u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), taking: doc.get("taking"), tutor: doc.get("tutor") }))
+    return res.send(JSON.stringify({ "u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), taking: doc.get("taking"), taken: doc.get("taken"), tutor: doc.get("tutor") }))
 
 })
 
@@ -273,6 +279,7 @@ app.post("/update", async (req, res) => {
     var pass = doc.get("password")
     var active = doc.get("active")
     var lang = doc.get("lang")
+    var price = doc.get("price")
     if (req.body.fname != "" && req.body.fname !== fname) {
         await doc.ref.update({ FName: req.body.fname });
     }
@@ -291,6 +298,9 @@ app.post("/update", async (req, res) => {
     }
     if (req.body.lang != "" && req.body.lang !== lang) {
         await doc.ref.update({ lang: req.body.lang });
+    }
+    if (req.body.price != "" && Number(req.body.price) != price) {
+        await doc.ref.update({ price: Number(req.body.price) });
     }
 
     const up = await db.collection('users').where('username', '==', user).get();
@@ -324,11 +334,10 @@ app.post("/addcourse", async (req, res) => {
     var doc = login.docs[0];
     
     c = doc.get("taking")
-    
+
     info = {"title": req.body.title, "professor": req.body.prof, "semester": req.body.semester}
-    
-    console.log("cyiwvfdhbkaj")
-    c[req.body.title] = info
+    var t = JSON.parse(JSON.stringify(req.body.title).toLowerCase());
+    c[t] = info
 
     await doc.ref.update({ taking: c })
     return res.send(JSON.stringify({ "taking": c }))
@@ -338,44 +347,63 @@ app.post("/addcourse", async (req, res) => {
 
 app.post("/deletecourse", async (req, res) => {
 
-    console.log("here!")
-
-
     const login = await db.collection('users').where('username', '==', req.body["u"]).get();
     var doc = login.docs[0];
     
     c = doc.get("taking")
-    console.log("before " + Object.keys(c) + req.body.title)
 
-    if (!Object.keys(c).includes(req.body.title)) {
+    var t = JSON.parse(JSON.stringify(req.body.title).toLowerCase());
+
+    if (!Object.keys(c).includes(t)) {
         //course not in list
         console.log("here")
         return res.send(JSON.stringify({ "taking": c }))
     }
 
-    delete c[req.body.title]
+    
+
+    delete c[t]
     await doc.ref.update({ taking: c })
-
-
-    console.log(Object.keys(c))
-
-    /*
-    if (doc.get("taking").length == 0) {
-        console.log("und")
-        // empty list
-        return res.send(JSON.stringify({ "taking": c }))
-    }
-    if (doc.get("taking").includes(req.body.title)) {
-        // deleting
-        console.log("delete")
-        c.splice(c.indexOf(req.body.title), 1)
-        doc.ref.update({ taking: c })
-        console.log(c)
-        return res.send(JSON.stringify({ "taking": c }))
-    }
-    */
     return res.send(JSON.stringify({ "taking": c }))
 
+})
+
+app.post("/addcoursetutor", async (req, res) => {
+
+    const login = await db.collection('users').where('username', '==', req.body.u).get();
+    var doc = login.docs[0];
+    
+    c = doc.get("taken")
+
+    var t = JSON.parse(JSON.stringify(req.body.title).toLowerCase());
+
+    info = {"title": req.body.title, "professor": req.body.prof, "semester": req.body.semester, "grade": req.body.grade}
+    c[t] = info
+
+    await doc.ref.update({ taken: c })
+    return res.send(JSON.stringify({ "taken": c }))
+
+
+})
+
+app.post("/deletecoursetutor", async (req, res) => {
+
+    const login = await db.collection('users').where('username', '==', req.body["u"]).get();
+    var doc = login.docs[0];
+    
+    c = doc.get("taken")
+
+    var t = JSON.parse(JSON.stringify(req.body.title).toLowerCase());
+
+    if (!Object.keys(c).includes(t)) {
+        //course not in list
+        console.log("here")
+        return res.send(JSON.stringify({ "taken": c }))
+    }
+
+    delete c[t]
+    await doc.ref.update({ taken: c })
+    return res.send(JSON.stringify({ "taken": c }))
 
 })
 

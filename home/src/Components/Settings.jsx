@@ -14,7 +14,8 @@ export const Settings = ({ GlobalState }) => {
     const [email, setEmail] = useState('');
     const [lang, setLang] = useState('');
     const [buttonPopup, setButtonPopup] = useState(false);
-    const [active, setActive] = useState(location.state.active)
+    const [active, setActive] = useState(location.state.active);
+    const [price, setPrice] = useState(0);
     var aButton = (active) ? "Deactivate" : "Activate";
     const { currUser, setCurrUser } = GlobalState;
 
@@ -28,7 +29,7 @@ export const Settings = ({ GlobalState }) => {
         console.log("hi " + Fname)
 
         const headers = { "content-type": "application/json" };
-        const requestData = JSON.stringify({ "oldU": location.state.user, "fname": Fname, "lname": Lname, "user": username, "email": email, "pass": password, "lang": lang });
+        const requestData = JSON.stringify({ "oldU": location.state.user, "fname": Fname, "lname": Lname, "user": username, "email": email, "pass": password, "lang": lang, "price": price });
 
         fetch('http://localhost:3001/update', { method: 'POST', body: requestData, headers: headers })
             .then((res) => res.json())
@@ -47,7 +48,8 @@ export const Settings = ({ GlobalState }) => {
                         taking: res["taking"],
                         followers: res["followers"],
                         following: res["following"],
-                        tutor: res["tutor"]
+                        tutor: location.state.tutor,
+                        price: res["price"]
                     }
                 });
             })
@@ -151,10 +153,20 @@ export const Settings = ({ GlobalState }) => {
                 <label htmlFor="lang">Language: </label>
                 <input value={lang} onChange={(e) => setLang(e.target.value)} type="lang" placeholder="Enter Your Primary Language" id="lang" name="lang" />
                 <br></br>
-                <button type="submit" onClick={() => navigate('/EditCourse', {state: {u: currUser, taking: location.state.taking}})}>Edit Courses</button>
-                <br></br>
+                {
+                    location.state.tutor ? <><label htmlFor="price">Price: </label>
+                    <input value={price} onChange={(e) => setPrice(e.target.value)} type="price" placeholder="Enter Your Hourly Price" id="price" name="price" />
+                     </>: <span></span>
+                }
+            
                 <button type="submit" className="setting-sub" onSubmit={handleSubmit}>Submit Changes</button>
             </form>
+
+            <button type="submit" onClick={() => navigate('/EditCourse', {state: {u: currUser, taking: location.state.taking, tutor: location.state.tutor}})}>Edit Current Courses</button>
+                {
+                    location.state.tutor ? <><button type="submit" onClick={() => navigate('/EditCourseTutor', {state: {u: currUser, taken: location.state.taken, tutor: location.state.tutor}})}>Edit Past Courses</button>
+                    </> : <span></span>
+                }
 
             <button type="submit" onClick={backToProfile}>Back to profile</button>
             {
