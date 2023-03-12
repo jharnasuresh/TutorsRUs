@@ -5,7 +5,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 
 function DrawerNew () {
     const [open, setOpen] = useState(false);
-
+    
     return (
         <div>
             <nav>
@@ -15,7 +15,10 @@ function DrawerNew () {
                 >
                     
                 </ul>
-                <i button type="link-btn" onClick={() => setOpen(!open)} className="fa-solid fa-ellipsis-vertical Menu" > </i>
+
+
+                <button type="link-btn" onClick={() => setOpen(!open)}><i className="fa-solid fa-ellipsis-vertical Menu" > </i> 
+                </button>
                 
                
             </nav>

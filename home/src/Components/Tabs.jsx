@@ -43,11 +43,14 @@ export const Tabs = ({GlobalState}) => {
     })
           
 }
- 
+    var tut = (location.state.tutor) ? "tut"  : "kjd";
     return (
         <div>
             <nav>
                 <div className="img"><img class="img" src = "/Images/IMG_4596.png"/></div>
+                {tut === 'tut' &&
+                    <div className="img2"><img class="img" src = "/Images/verifiedtut.png"/></div>
+                }
                 <ul className="nav-links">
                     <li>
                         {/*<a href="./Start" state={{GlobalState: {GlobalState}, u: {currUser}}} > Home </a>*/}
@@ -60,7 +63,7 @@ export const Tabs = ({GlobalState}) => {
 
                     </li>
                     <li>
-                        <a href="./Login">Log Out</a>
+                        <a href="./Login" onClick={() => navigate('/Login', {tutor: location.state.tutor})}>Log Out</a>
                     </li>
                     <li>
                         <a href="./Help" onClick={() => navigate('/Help', {state: {u: currUser}})}>Help</a>

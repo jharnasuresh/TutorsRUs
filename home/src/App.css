@@ -13,8 +13,12 @@
 /*{ border: 1px solid red; }*/
 .img {
   height: 50px;
-  object-position : top -550px left 100 px
+  object-position : top -550px left 100 px;
 
+}
+.img2 {
+  object-position : top -550px left 300 px;
+  height: 75px;
 }
 
 .auth-form-container, .login-form, .register-form, .pass-form {

@@ -10,7 +10,7 @@ export const EditCourse = ({ GlobalState }) => {
     const [semester, setSemester] = useState('');
     const location = useLocation();
     const navigate = useNavigate();
-    var tut = (location.state.tutor) ? "tut"  : "";
+    
     const handleAdd = () => {
 
         console.log("adding")
@@ -27,12 +27,12 @@ export const EditCourse = ({ GlobalState }) => {
                     state: {
                         u: location.state.u, 
                         courses: res["courses"],
-                        tutor: res["tutor"]
+                        tutor: res["tutor"] , 
                         taking: res["taking"]
                     }
                 });
             })
-
+        
     }
 
     const handleDelete = () => {
@@ -51,7 +51,7 @@ export const EditCourse = ({ GlobalState }) => {
                     state: {
                         u: location.state.u, 
                         courses: res["courses"] ,
-                        tutor: res["tutor"]
+                        tutor: res["tutor"], 
                         taking: res["taking"]
                     }
                 });
@@ -60,7 +60,9 @@ export const EditCourse = ({ GlobalState }) => {
     }
 
     console.log(typeof location.state.taking)
-
+    console.log("TUTOR" + location.state.tutor)
+    var tut = (location.state.tutor) ? "tut"  : "kjd";
+    console.log(tut)
     return (
         <div className="App EditCourse">
             <h1> Edit Courses </h1>
@@ -83,7 +85,9 @@ export const EditCourse = ({ GlobalState }) => {
                 <p>{location.state.taking.toString()}</p>
             </section>
             {tut === 'tut' &&
+                
                 <section id="container-editcoursetutor" className="container-editcoursetutor">
+                <h1 className="container-editcourse">Tutor Courses</h1>
                 <label for="title:">Class Title: </label>
                 <input value={title} onChange={(e) => setTitle(e.target.value)} type="title" placeholder="Enter Course Title" id="title" name="title" />
                 <br></br>
@@ -93,7 +97,10 @@ export const EditCourse = ({ GlobalState }) => {
                 <label for="title:">Class Semester: </label>
                 <input value={semester} onChange={(e) => setSemester(e.target.value)} type="semester" placeholder="Enter Course Semester" id="semester" name="semester" />
                 <br></br>
+                <button type="submit" className="editcourse-add" onClick={handleAdd}>Add Course</button>
+                <button type="submit" className="editcourse-delete" onClick={handleDelete}>Delete Course</button>
                 </section>
+                
             }
         </div>
     );
