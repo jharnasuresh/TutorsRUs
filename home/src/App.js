@@ -14,7 +14,7 @@ import Profile from './Components/Profile';
 import SecurePassReset  from './Components/SecurePassReset';
 import { DrawerNew } from './Components/DrawerNew';
 import { Transcript } from './Components/Transcript';
-
+import { UploadProfile} from './Components/UploadProfile';
 import DragDrop from './Components/DragDrop';
 import {Help} from './Components/Help';
 import EditCourse from './Components/EditCourse';
@@ -57,6 +57,7 @@ return (
         <Route exact path="/EditCourse" element={< EditCourse GlobalState={GlobalState}/>} /> 
         <Route exact path="/EditCourseTutor" element={< EditCourseTutor GlobalState={GlobalState}/>} /> 
         <Route exact path="/NotYourProfile" element={< NotYourProfile GlobalState={GlobalState}/>} /> 
+        <Route exact path="/UploadProfile" element={< UploadProfile GlobalState={GlobalState}/>} /> 
         <Route path="*" element={<Login />} />
         
     </Routes>
