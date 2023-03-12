@@ -49,6 +49,14 @@ export const Profile = ({ GlobalState }) => {
     numFollowing = "3+"
   }
   var tut = (location.state.tutor) ? "tut"  : "kjd";
+
+  var printing = "";
+
+  function p (str) {
+      printing+=str.title + "-" + str.professor + "-" + str.semester + ", "
+  }
+  Object.values(location.state.taking).forEach(p)
+
   return (
     <div className="App Profile">
 
@@ -62,7 +70,7 @@ export const Profile = ({ GlobalState }) => {
       <hr />
       <About user={location.state.u} email={location.state.email} lang={location.state.lang} yours={true}/>
       <br />
-      <CourseInfo taking={location.state.taking} />
+      <CourseInfo taking={printing} />
       <div className='profile-btn'>
         {/*<a href="/Profile">
           <button className="submit" > See Followers </button>
@@ -87,7 +95,7 @@ export const Profile = ({ GlobalState }) => {
 
 
         <button className='submit'>
-          <Link to="/Settings" state={{ user: location.state.u, active: location.state.active, taking: location.state.taking, tutor: location.state.tutor }}>Edit Profile</Link>
+          <Link to="/Settings" state={{ user: location.state.u, active: location.state.active, taking: location.state.taking, taken: location.state.taken, tutor: location.state.tutor }}>Edit Profile</Link>
         </button>
 
       </div>
