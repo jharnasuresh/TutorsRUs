@@ -19,7 +19,7 @@ import DragDrop from './Components/DragDrop';
 import {Help} from './Components/Help';
 import EditCourse from './Components/EditCourse';
 import NotYourProfile from './Components/NotYourProfile';
-
+import EditCourseTutor from './Components/EditCourseTutor';
 
 function App() {
 
@@ -55,6 +55,7 @@ return (
         <Route exact path="/SecurePassReset" element={< SecurePassReset />} />
         <Route exact path="/Help" element={< Help GlobalState={GlobalState}/>} /> 
         <Route exact path="/EditCourse" element={< EditCourse GlobalState={GlobalState}/>} /> 
+        <Route exact path="/EditCourseTutor" element={< EditCourseTutor GlobalState={GlobalState}/>} /> 
         <Route exact path="/NotYourProfile" element={< NotYourProfile GlobalState={GlobalState}/>} /> 
         <Route path="*" element={<Login />} />
         
