@@ -153,6 +153,10 @@ export const Settings = ({ GlobalState }) => {
                 <label htmlFor="lang">Language: </label>
                 <input value={lang} onChange={(e) => setLang(e.target.value)} type="lang" placeholder="Enter Your Primary Language" id="lang" name="lang" />
                 <br></br>
+
+                <button type="submit" onClick={() => navigate('/EditCourse', {state: {u: currUser, taking: location.state.taking, tutor: location.state.tutor}})}>Edit Courses</button>
+                <br></br>
+
                 {
                     location.state.tutor ? <><label htmlFor="price">Price: </label>
                     <input value={price} onChange={(e) => setPrice(e.target.value)} type="price" placeholder="Enter Your Hourly Price" id="price" name="price" />

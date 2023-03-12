@@ -48,6 +48,7 @@ export const Profile = ({ GlobalState }) => {
   if ((location.state.following).length > 3) {
     numFollowing = "3+"
   }
+  var tut = (location.state.tutor) ? "tut"  : "kjd";
 
   var printing = "";
 
@@ -61,7 +62,9 @@ export const Profile = ({ GlobalState }) => {
 
       <div className='activate'><h1 style={{ color: 'red' }}>{a}</h1></div>
 
-
+      {tut === 'tut' &&
+          <div className="img2"><img class="img2" src = "/Images/verifiedtut.png"/></div>
+      }
 
       <Header fname={location.state.fname} lname={location.state.lname} />
       <hr />

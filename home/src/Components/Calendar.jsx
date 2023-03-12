@@ -37,7 +37,7 @@ export default function Calendar() {
       googleCalendarPlugin
     ],
     //Main Key
-    googleCalendarApiKey: "AIzaSyAu5NO41gLKe89SNNSb02tHETq_mQ1NxFg",
+    googleCalendarApiKey: "AIzaSyAqLtsCLQE_VWtwuuUI7DrolyhjPhHBrcs",
     //Personal Key
     // googleCalendarApiKey: "AIzaSyC4wovE09hJkGy7mG4QGlwVzdeu0uLDhro",
     eventSources: [

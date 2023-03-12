@@ -11,6 +11,7 @@ export const EditCourse = ({ GlobalState }) => {
     const location = useLocation();
     const navigate = useNavigate();
 
+
     console.log(JSON.stringify(Object.values(location.state.taking)))
     console.log(location.state.tutor)
 
@@ -38,12 +39,13 @@ export const EditCourse = ({ GlobalState }) => {
                 navigate("/EditCourse", {
                     state: {
                         u: location.state.u, 
-                        tutor: res["tutor"],
+                        courses: res["courses"],
+                        tutor: res["tutor"] , 
                         taking: res["taking"]
                     }
                 });
             })
-
+        
     }
 
     const handleDelete = () => {
@@ -61,7 +63,9 @@ export const EditCourse = ({ GlobalState }) => {
                 navigate("/EditCourse", {
                     state: {
                         u: location.state.u, 
-                        tutor: res["tutor"],
+                        courses: res["courses"] ,
+                        tutor: res["tutor"], 
+
                         taking: res["taking"]
                     }
                 });
@@ -69,8 +73,12 @@ export const EditCourse = ({ GlobalState }) => {
 
     }
 
-    console.log(tut)
 
+    console.log(typeof location.state.taking)
+    console.log("TUTOR" + location.state.tutor)
+    var tut = (location.state.tutor) ? "tut"  : "kjd";
+
+    console.log(tut)
     return (
         <div className="App EditCourse">
             <h1> Edit Courses </h1>
@@ -95,7 +103,24 @@ export const EditCourse = ({ GlobalState }) => {
                 }
                 
             </section>
-            
+            {tut === 'tut' &&
+                
+                <section id="container-editcoursetutor" className="container-editcoursetutor">
+                <h1 className="container-editcourse">Tutor Courses</h1>
+                <label for="title:">Class Title: </label>
+                <input value={title} onChange={(e) => setTitle(e.target.value)} type="title" placeholder="Enter Course Title" id="title" name="title" />
+                <br></br>
+                <label for="title:">Class Professor: </label>
+                <input value={professor} onChange={(e) => setProfessor(e.target.value)} type="professor" placeholder="Enter Course Professor" id="professor" name="professor" />
+                <br></br>
+                <label for="title:">Class Semester: </label>
+                <input value={semester} onChange={(e) => setSemester(e.target.value)} type="semester" placeholder="Enter Course Semester" id="semester" name="semester" />
+                <br></br>
+                <button type="submit" className="editcourse-add" onClick={handleAdd}>Add Course</button>
+                <button type="submit" className="editcourse-delete" onClick={handleDelete}>Delete Course</button>
+                </section>
+                
+            }
         </div>
     );
 }
