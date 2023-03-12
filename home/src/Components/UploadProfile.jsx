@@ -1,56 +1,47 @@
-import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
-import './DragDrop'
-import DragDrop from "./DragDrop";
-import App from '../App';
+
+import Avatar from "@mui/material/Avatar";
+import { useState } from "react";
+/*import { storage } from "./firebase";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+*/
 export const UploadProfile = ({GlobalState}) => {
-    const { currUser, setCurrUser } = GlobalState;
 
-    const location = useLocation();
-    if (currUser === "") {
-        setCurrUser(location.state.u)
-      }
+const { currUser, setCurrUser } = GlobalState;
+  const [image, setImage] = useState(null);
+  const [url, setUrl] = useState(null);
 
-    const [pdfFile, setPdfFile] = useState(null);
-    const [pdfFileError, setPdfFileError] = useState("");
-    const [viewPdf, setViewPdf] = useState(null);
-
-    const fileType = ['application/pdf'];
-    const handlePdfFileChange = (e) => {
-        let selectedFile = e.target.files[0];
-        if (selectedFile) {
-            if (selectedFile && fileType.includes(selectedFile.type)) {
-                let reader = new FileReader();
-                reader.readAsDataURL(selectedFile);
-                reader.onloadend = (e) => {
-                    setPdfFile(e.target.result);
-                    setPdfFileError('');
-                }
-            }
-            else {
-                setPdfFile(null);
-                setPdfFileError('Please select valid pdf file');
-            }
-        } else {
-            console.log("Please select your file")
-        }
+  const handleImageChange = (e) => {
+    if (e.target.files[0]) {
+      setImage(e.target.files[0]);
     }
+  };
 
-    const handlePdfFileSubmit=(e)=>{
-        e.preventDefault();
-        // TODO
-        console.log("here!!!")
-      }
+  const handleSubmit = () => {
+    /*const imageRef = ref(storage, "image");
+    uploadBytes(imageRef, image)
+      .then(() => {
+        getDownloadURL(imageRef)
+          .then((url) => {
+            setUrl(url);
+          })
+          .catch((error) => {
+            console.log(error.message, "error getting the image url");
+          });
+        setImage(null);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });*/
+      console.log("look prof pick uploaded")
+  };
 
-
-return (
+  return (
     <div className="App">
-        <DragDrop user={currUser}/>
-        {}
+      <Avatar src={url} sx={{ width: 150, height: 150 }} />
+      <input type="file" onChange={handleImageChange} />
+      <button onClick={handleSubmit}>Submit</button>
     </div>
-
-
-)
-
+  );
 }
+
 
