@@ -341,7 +341,11 @@ app.post("/addcourse", async (req, res) => {
     c = doc.get("taking")
 
     info = {"title": req.body.title, "professor": req.body.prof, "semester": req.body.semester}
-    var t = JSON.parse(JSON.stringify(req.body.title).toLowerCase());
+
+    // USE THIS WHEN SEARCHING TOO
+    var t = JSON.stringify(req.body.title).toLowerCase();
+    t = JSON.parse(t.replace(/\s+/g, ''));
+    
     c[t] = info
 
     await doc.ref.update({ taking: c })
@@ -357,7 +361,9 @@ app.post("/deletecourse", async (req, res) => {
     
     c = doc.get("taking")
 
-    var t = JSON.parse(JSON.stringify(req.body.title).toLowerCase());
+    // USE THIS WHEN SEARCHING TOO
+    var t = JSON.stringify(req.body.title).toLowerCase();
+    t = JSON.parse(t.replace(/\s+/g, ''));
 
     if (!Object.keys(c).includes(t)) {
         //course not in list
@@ -380,7 +386,8 @@ app.post("/addcoursetutor", async (req, res) => {
     
     c = doc.get("taken")
 
-    var t = JSON.parse(JSON.stringify(req.body.title).toLowerCase());
+    var t = JSON.stringify(req.body.title).toLowerCase();
+    t = JSON.parse(t.replace(/\s+/g, ''));
 
     info = {"title": req.body.title, "professor": req.body.prof, "semester": req.body.semester, "grade": req.body.grade}
     c[t] = info
@@ -398,7 +405,8 @@ app.post("/deletecoursetutor", async (req, res) => {
     
     c = doc.get("taken")
 
-    var t = JSON.parse(JSON.stringify(req.body.title).toLowerCase());
+    var t = JSON.stringify(req.body.title).toLowerCase();
+    t = JSON.parse(t.replace(/\s+/g, ''));
 
     if (!Object.keys(c).includes(t)) {
         //course not in list
