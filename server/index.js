@@ -1,4 +1,9 @@
 //libraries
+
+
+const { storage } = require("./firebase");
+const { ref, uploadBytes, getDownloadURL } = require("firebase/storage");
+
 const { getAuth, sendSignInLinkToEmail, sendEmailVerification } = require('firebase/auth');
 
 const { linkWithCredential, EmailAuthProvider } = require("firebase/auth");
@@ -564,6 +569,45 @@ app.post("/notyourprofile", async (req, res) => {
     const upOld = await db.collection('users').where('username', '==', oldUser).get();
     oldUserDataDoc = upOld.docs[0];
     return res.send(JSON.stringify({ "newFollowers": followers, "newFollowing": following, "u": oldUser, "fname": oldfname, "lname": oldlname, "email": oldemail, "followers": oldfollowers, "active": oldactive, "lang": oldlang, "taking": oldcourse }))
+
+});
+
+
+app.post("/pfp", async (req, res) => {
+    console.log("got in profile picture upload");
+    var u = req.body.username
+    console.log("first potential problem area " + u);
+    const passsec = await db.collection('users').where('username', '==', req.body.username).get();
+    console.log("no problem here!")
+    var doc = passsec.docs[0];
+    var user = doc.get("username")
+
+    const imageRef = ref(storage, "image");
+    uploadBytes(imageRef, image)
+      .then(() => {
+        getDownloadURL(imageRef)
+          .then((url) => {
+            //setUrl(url);
+            console.log("hey june set url here");
+          })
+          .catch((error) => {
+            console.log(error.message, "error getting the image url");
+          });
+        //setImage(null);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+    /*console.log(req.body.username + " " + req.body["password"] + " " + req.body["confirmPassword"])
+    if (req.body["password"] != req.body["confirmPassword"]) {
+        return res.send(JSON.stringify("passwords don't match"))
+    }
+    if (req.body["password"] === req.body["confirmPassword"]) {
+        await doc.ref.update({ password: md5(req.body.password) });
+    }
+    const up = await db.collection('users').where('username', '==', user).get();
+    doc = up.docs[0];*/
+    return res.send(JSON.stringify({ "username": req.body["username"] }))
 
 });
 
