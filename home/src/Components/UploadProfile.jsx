@@ -1,14 +1,14 @@
 
 import Avatar from "@mui/material/Avatar";
 import { useState } from "react";
-/*import { storage } from "./firebase";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-*/
+import { useLocation } from "react-router-dom";
 export const UploadProfile = ({GlobalState}) => {
 
 const { currUser, setCurrUser } = GlobalState;
   const [image, setImage] = useState(null);
   const [url, setUrl] = useState(null);
+
+  const location = useLocation();
 
   const handleImageChange = (e) => {
     if (e.target.files[0]) {
@@ -16,22 +16,17 @@ const { currUser, setCurrUser } = GlobalState;
     }
   };
 
-  const handleSubmit = () => {
-    /*const imageRef = ref(storage, "image");
-    uploadBytes(imageRef, image)
-      .then(() => {
-        getDownloadURL(imageRef)
-          .then((url) => {
-            setUrl(url);
-          })
-          .catch((error) => {
-            console.log(error.message, "error getting the image url");
-          });
-        setImage(null);
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });*/
+  const handleSubmit = (e) => {
+        e.preventDefault();
+        const requestData = JSON.stringify({ "username": location.state.u});
+        console.log("june here's you username: " + location.state.u)
+        const headers = { "content-type": "application/json" };
+        async function getResponse() {
+            const response = await fetch('http://localhost:3001/pfp', { method: 'POST', body: requestData, headers: headers });
+            var r = await response.json();
+        }
+        console.log("going to upload profile")
+        getResponse(); 
       console.log("look prof pick uploaded")
   };
 
