@@ -97,7 +97,8 @@ export const Settings = ({ GlobalState }) => {
                         taking: res["taking"],
                         followers: res["followers"],
                         following: res["following"],
-                        tutor: res["tutor"]
+                        tutor: res["tutor"],
+                        price: res["price"]
                     }
                 });
             })
@@ -125,7 +126,8 @@ export const Settings = ({ GlobalState }) => {
                         taking: res["taking"],
                         followers: res["followers"],
                         following: res["following"],
-                        tutor: res["tutor"]
+                        tutor: res["tutor"],
+                        price: res["price"]
                     }
                 });
             })
