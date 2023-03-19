@@ -34,7 +34,8 @@ const multer = require('multer')
 console.log("library imports work");
 //const users = [] //temporarily storing in array
 
-const cors = require('cors')
+const cors = require('cors');
+const { user } = require("firebase-functions/v1/auth");
 app.use(cors())
 
 
@@ -220,7 +221,38 @@ app.listen(PORT, () => {
     console.log(`Server listening on ${PORT}`);
 });
 
-//app.post("/delete")
+app.post("/searchcoursetitle", async (req, res) => {
+
+    const list = await db.collection('users').where('taken', 'array-contains', req.body["course"]).get();
+    console.log(list.size)
+    users = {};
+    for (user in list.docs) {
+        users[user.get("username")] = {rating: user.get("rating"), price: user.get("price"), taken: user.get("taken"), fName: user.get("FName"), lName: user.get("LName")}
+        
+    }
+    return res.send(JSON.stringify(users))
+
+
+});
+
+app.post("/searchmultiplecourses", async (req, res) => {
+
+    var list = await db.collection('users').where('taken', 'array-contains', req.body["courses"][0]).get();;
+    for (course in req.body["courses"]) {
+        const list2 = await db.collection('users').where('taken', 'array-contains', course).get();
+        list = list.filter(value => list2.includes(value))
+    }
+
+    console.log(list.size)
+    users = {};
+    for (user in list.docs) {
+        users[user.get("username")] = {rating: user.get("rating"), price: user.get("price"), taken: user.get("taken"), fName: user.get("FName"), lName: user.get("LName")}
+        
+    }
+    return res.send(JSON.stringify(users))
+
+
+});
 
 app.post("/info", async (req, res) => {
     console.log("iii " + req.body["username"])
