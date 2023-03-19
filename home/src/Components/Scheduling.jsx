@@ -9,9 +9,12 @@ import styles from "./Calendar.module.scss";
 
 export default function Scheduling() {
 return (
+    /*
     <Datepicker
         controls={['calendar', 'timegrid']}
         touchUi={true}
     />
+    */
+   <></>
 );
 }

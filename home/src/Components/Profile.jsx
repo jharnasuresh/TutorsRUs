@@ -57,6 +57,13 @@ export const Profile = ({ GlobalState }) => {
   }
   Object.values(location.state.taking).forEach(p)
 
+  var printingTaken = "";
+
+  function pTaken (str) {
+      printingTaken+=str.title + "-" + str.professor + "-" + str.semester + ", "
+  }
+  Object.values(location.state.taken).forEach(p)
+
   return (
     <div className="App Profile">
 
@@ -68,9 +75,13 @@ export const Profile = ({ GlobalState }) => {
 
       <Header fname={location.state.fname} lname={location.state.lname} />
       <hr />
-      <About user={location.state.u} email={location.state.email} lang={location.state.lang} yours={true}/>
+      <About user={location.state.u} email={location.state.email} lang={location.state.lang} yours={true} price={location.state.price} tutor={location.state.tutor}/>
       <br />
-      <CourseInfo taking={printing} />
+      <CourseInfo courses={printing} past={false}/>
+      <br />
+      {
+        (location.state.tutor) ? <CourseInfo courses={printingTaken} past={true}/> : <span></span>
+      }
       <div className='profile-btn'>
         {/*<a href="/Profile">
           <button className="submit" > See Followers </button>
