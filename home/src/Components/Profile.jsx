@@ -51,18 +51,25 @@ export const Profile = ({ GlobalState }) => {
   var tut = (location.state.tutor) ? "tut"  : "kjd";
 
   var printing = "";
-
-  function p (str) {
+  if (location.state.taking != undefined) {
+    function p (str) {
       printing+=str.title + "-" + str.professor + "-" + str.semester + ", "
   }
   Object.values(location.state.taking).forEach(p)
+  }
+  
+
+  
 
   var printingTaken = "";
-
-  function pTaken (str) {
+  if (location.state.taken != undefined) {
+    function pTaken (str) {
       printingTaken+=str.title + "-" + str.professor + "-" + str.semester + ", "
   }
-  Object.values(location.state.taken).forEach(p)
+  Object.values(location.state.taken).forEach(pTaken)
+  }
+
+ 
 
   return (
     <div className="App Profile">
