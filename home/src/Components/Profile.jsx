@@ -58,18 +58,16 @@ export const Profile = ({ GlobalState }) => {
   Object.values(location.state.taking).forEach(p)
   }
 
-  
 
   var printingTaken = "";
 
   if (location.state.taken != undefined) {
     function pTaken (str) {
       printingTaken+=str.title + "-" + str.professor + "-" + str.semester + "-" + str.grade  + ", "
+
   }
   Object.values(location.state.taken).forEach(pTaken)
   }
-
-  
 
   return (
     <div className="App Profile">
