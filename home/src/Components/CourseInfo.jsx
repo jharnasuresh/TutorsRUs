@@ -6,7 +6,7 @@ class CourseInfo extends Component {
         return (
             <section id="container-course" className="container-course">
                 {
-                    (this.props.past) ? <h1>Courses Offering</h1>: <h1>Courses taking:</h1> 
+                    (this.props.past) ? <h1>Courses Offering:</h1>: <h1>Courses Taking:</h1> 
                 }
                     <br></br>
                     <p>

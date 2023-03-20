@@ -12,15 +12,19 @@ export const EditCourseTutor = ({ GlobalState }) => {
     const location = useLocation();
     const navigate = useNavigate();
 
-    console.log(JSON.stringify(Object.values(location.state.taken)))
+    //console.log(JSON.stringify(Object.values(location.state.taken)))
     console.log(location.state.tutor)
 
     var printing = "";
 
-    function p (str) {
-        printing+=str.title + "-" + str.professor + "-" + str.semester + "-" + str.grade + ", "
+    if (location.state.taken != undefined) {
+        function p (str) {
+            printing+=str.title + "-" + str.professor + "-" + str.semester + "-" + str.grade + ", "
+        }
+        Object.values(location.state.taken).forEach(p)
     }
-    Object.values(location.state.taken).forEach(p)
+
+    
     console.log("pritning " + printing)
 
     var tut = (location.state.tutor) ? "tut"  : "";
