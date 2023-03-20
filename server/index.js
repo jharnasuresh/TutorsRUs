@@ -1,8 +1,6 @@
 //libraries
 
 
-const { storage } = require("./firebase");
-const { ref, uploadBytes, getDownloadURL } = require("firebase/storage");
 
 const { getAuth, sendSignInLinkToEmail, sendEmailVerification } = require('firebase/auth');
 
@@ -18,8 +16,8 @@ const admin = require("firebase-admin");
 const { db } = require('./firebase.js')
 //const toSendToken = require('./tokenSender.js');
 const bp = require('body-parser')
-app.use(bp.json())
-app.use(bp.urlencoded({ extended: true }))
+app.use(bp.json({limit: '50mb'}));
+app.use(bp.urlencoded({limit: '50mb', extended: true}));
 const bcrypt = require("bcrypt") //packate bcrypt imported
 const PORT = process.env.PORT || 3001;
 require('dotenv').config();
@@ -34,9 +32,15 @@ const multer = require('multer')
 console.log("library imports work");
 //const users = [] //temporarily storing in array
 
-const cors = require('cors');
-const { user } = require("firebase-functions/v1/auth");
-app.use(cors())
+const cors=require("cors");
+const corsOptions ={
+   origin:'*', 
+   credentials:true,            //access-control-allow-credentials:true
+   optionSuccessStatus:200,
+}
+
+app.use(cors(corsOptions)) // Use this after the variable declaration
+
 
 
 
@@ -50,6 +54,7 @@ app.post('/signup', async (req, res) => {
     var userUniqueString = "";
     var active = false;
     var lang = "";
+    var profpic = "";
     var taking = {};
     var taken = {};
     var price = 0;
@@ -100,6 +105,7 @@ app.post('/signup', async (req, res) => {
         followers: [],
         following: [],
         lang: "",
+        profpic: "",
         taking: {},
         taken: {},
         price: 0
@@ -122,6 +128,7 @@ app.post('/signup', async (req, res) => {
                 followers: [],
                 following: [],
                 lang: "",
+                profpic: "",
                 taking: {},
                 taken: {},
                 price: 0
@@ -266,7 +273,8 @@ app.post("/info", async (req, res) => {
     console.log("aaa " + doc.get("active"))
     console.log("look here are your followers: " + doc.get("followers"))
 
-    return res.send(JSON.stringify({ "u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), taking: doc.get("taking"), taken: doc.get("taken"), tutor: doc.get("tutor"), price: doc.get("price") }))
+    return res.send(JSON.stringify({ "u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), "profpic": doc.get("profpic"), taking: doc.get("taking"), taken: doc.get("taken"), tutor: doc.get("tutor"), price: doc.get("price") }))
+
 
 })
 
@@ -279,7 +287,8 @@ app.post("/deltranscript", async (req, res) => {
         login = await db.collection('users').where('username', '==', req.body["username"]).get();
         doc = login.docs[0]
         console.log("no longer tutor " + doc.get("tutor"))
-        return res.send(JSON.stringify({ "u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), taking: doc.get("taking"), tutor: doc.get("tutor"), price: doc.get("price"), taken: doc.get("taken") }))
+        return res.send(JSON.stringify({ "u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), "profpic":doc.get("profpic"), taking: doc.get("taking"), tutor: doc.get("tutor"), price: doc.get("price"), taken: doc.get("taken") }))
+
 
     }
 })
@@ -342,7 +351,8 @@ app.post("/update", async (req, res) => {
 
     const up = await db.collection('users').where('username', '==', user).get();
     doc = up.docs[0];
-    return res.send(JSON.stringify({ "u": doc.get("username"), "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": active, "lang": doc.get("lang"), "taking": doc.get("taking"), "followers": doc.get("followers"), "following": doc.get("following"), "price": doc.get("price"), "taken": doc.get("taken") }))
+    return res.send(JSON.stringify({ "u": doc.get("username"), "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": active, "lang": doc.get("lang"), "profpic": doc.get("profpic"), "taking": doc.get("taking"), "followers": doc.get("followers"), "following": doc.get("following"), "price": doc.get("price"), "taken": doc.get("taken") }))
+
 
 })
 
@@ -581,6 +591,7 @@ app.post("/notyourprofile", async (req, res) => {
     var oldfollowers = oldUserDataDoc.get("followers")
     var oldactive = oldUserDataDoc.get("active")
     var oldlang = oldUserDataDoc.get("lang")
+    var oldPFP = oldUserDataDoc.get("profpic")
     var oldcourse = oldUserDataDoc.get("taking")
 
 
@@ -608,45 +619,38 @@ app.post("/notyourprofile", async (req, res) => {
 
     const upOld = await db.collection('users').where('username', '==', oldUser).get();
     oldUserDataDoc = upOld.docs[0];
-    return res.send(JSON.stringify({ "newFollowers": followers, "newFollowing": following, "u": oldUser, "fname": oldfname, "lname": oldlname, "email": oldemail, "followers": oldfollowers, "active": oldactive, "lang": oldlang, "taking": oldcourse, price:  currentUserDataDoc.get("price")})) // idk if this is the right price
+   return res.send(JSON.stringify({ "newFollowers": followers, "newFollowing": following, "u": oldUser, "fname": oldfname, "lname": oldlname, "email": oldemail, "followers": oldfollowers, "active": oldactive, "lang": oldlang, "taking": oldcourse, price:  currentUserDataDoc.get("price"), "profpic": oldPFP})) // idk if this is the right price
+
 
 });
 
 
-app.post("/pfp", async (req, res) => {
+app.post("/pfpupload", async (req, res) => {
     console.log("got in profile picture upload");
     var u = req.body.username
-    console.log("first potential problem area " + u);
+    console.log("1");
     const passsec = await db.collection('users').where('username', '==', req.body.username).get();
-    console.log("no problem here!")
+    console.log("2")
     var doc = passsec.docs[0];
+    console.log("2")
     var user = doc.get("username")
+    console.log("2")
+    if (req.body["pfpurl"] != doc.get["profpic"]) {
+        await doc.ref.update({ profpic: req.body["pfpurl"] });
+        console.log("3")
+    }
+    
 
-    const imageRef = ref(storage, "image");
-    uploadBytes(imageRef, image)
-      .then(() => {
-        getDownloadURL(imageRef)
-          .then((url) => {
-            //setUrl(url);
-            console.log("hey june set url here");
-          })
-          .catch((error) => {
-            console.log(error.message, "error getting the image url");
-          });
-        //setImage(null);
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-    /*console.log(req.body.username + " " + req.body["password"] + " " + req.body["confirmPassword"])
-    if (req.body["password"] != req.body["confirmPassword"]) {
-        return res.send(JSON.stringify("passwords don't match"))
-    }
-    if (req.body["password"] === req.body["confirmPassword"]) {
-        await doc.ref.update({ password: md5(req.body.password) });
-    }
+    /*
+     * Step 1: New PFP variable
+     * Step 2: Store link in PFP var in database
+     * Step 3: Retrieve link from database
+     */
+    console.log("4")
     const up = await db.collection('users').where('username', '==', user).get();
-    doc = up.docs[0];*/
+    console.log("5")
+    doc = up.docs[0];
+    console.log("6")
     return res.send(JSON.stringify({ "username": req.body["username"] }))
 
 });
