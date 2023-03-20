@@ -3,6 +3,7 @@ import "./Search.css"
 import SearchIcon from '@mui/icons-material/Search';
 
 function Search({GlobalState, placeholder, data}) {
+    const [open, setOpen] = useState(false);
     const [filterData, setFilteredData] = useState([]);
     const handleFilter = (event) => {
         const searchWord = event.target.value
@@ -21,9 +22,9 @@ function Search({GlobalState, placeholder, data}) {
         <div className="App search">
             <div className="searchInputs">
                 <input type="text" placeholder="Search..." /*data={filename}*/ onChange={handleFilter}/>
-                {/*<div className="searchIcon">
-                    DOESNT WORK!! <SearchIcon/>
-                </div>*/}
+                <div className="searchIcon">
+                    <button type="link-btn" onClick={() => setOpen(!open)}><i class="fa-solid fa-magnifying-glass"></i></button>
+                </div>
             </div>
            {/* {setFilteredData.length != 0 && (
              <div className="dataResult">
