@@ -1,6 +1,7 @@
 
 import Avatar from "@mui/material/Avatar";
 import { useState } from "react";
+import './Main.css'
 
 import { Route, useHref, useNavigate, useLocation, Link } from "react-router-dom";
 /*import { storage } from "./firebase";
@@ -11,7 +12,6 @@ export const UploadProfile = ({GlobalState}) => {
 const { currUser, setCurrUser } = GlobalState;
   const [image, setImage] = useState(null);
   const [url, setUrl] = useState(null);
-  const location = useLocation();
 
 
 

@@ -6,14 +6,15 @@ import Popup from './Popup';
 import './Main.css'
 import { Route, useHref, useNavigate, useLocation, Link } from "react-router-dom";
 import Tabs from "./Tabs";
-import { LocationSearching } from '@mui/icons-material';
-
+import { LocationSearching, Schedule } from '@mui/icons-material';
+import Scheduling from './Scheduling';
 export const NotYourProfile = ({GlobalState}) => {
   const location = useLocation();
   const navigate  = useNavigate();
   console.log("ll " + location.state.u)
   const [active, setActive] = useState(location.state.active)
   var numFollowers = (location.state.followers).length + ""
+  var tut = (location.state.tutor) ? "tut"  : "kjd";
   if ((location.state.followers).length > 3) {
     numFollowers = "3+"
   }
@@ -68,7 +69,8 @@ export const NotYourProfile = ({GlobalState}) => {
                     taking: r["taking"],
                     profpic: r["profpic"],
                     followers: r["followers"],
-                    following: r["following"]
+                    following: r["following"],
+                    price: r["price"]
                 }
             });
           }
@@ -79,7 +81,7 @@ export const NotYourProfile = ({GlobalState}) => {
       return;
       
   }
-    
+  
   return (
     
     <div className="App NotYourProfile">
@@ -87,7 +89,13 @@ export const NotYourProfile = ({GlobalState}) => {
       <div className='activate'><h1 style={{color: 'red'}}>{a}</h1></div>
 
       
-
+      {tut === 'tut' &&
+      <a>
+       <div className="img2"><img class="img2" src = "/Images/verifiedtut.png"/></div>
+       <h2> Schedule With Tutor: </h2>
+       <Scheduling/>
+       </a>
+    }
       <Header fname={location.state.fname} lname={location.state.lname} />
       <hr />
       <About user={location.state.u} mail={"mailto:" + email} email={email} yours={false}/>
@@ -95,6 +103,7 @@ export const NotYourProfile = ({GlobalState}) => {
       <div  className='profile-btn'>
       <h3>Followers: {numFollowers}</h3>
       <h3>Following: {numFollowing} </h3>
+      
 
 <button type="submit" onClick={handleSubmit}> {isFollowing} </button>
       </div>
@@ -104,7 +113,7 @@ export const NotYourProfile = ({GlobalState}) => {
       <br/>
 
     </div>
-
+  
     
   );
 }

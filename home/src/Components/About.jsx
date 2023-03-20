@@ -21,6 +21,10 @@ class About extends Component {
                     }
                     <h2>Rating:</h2>
                     <p>0.00</p>
+                    {
+                        (this.props.tutor) ? <><h2>Price:</h2><p>${this.props.price}/hour</p> </>: <span></span>
+                    }
+                    
             </section>
         )
     }

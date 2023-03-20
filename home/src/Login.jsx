@@ -22,6 +22,7 @@ export const Login = ({GlobalState}) => {
         const headers = { "content-type": "application/json" };
 
         async function getResponse() {
+            console.log("hereeeee")
             const response = await fetch('http://localhost:3001/login', { method: 'POST', body: requestData, headers: headers });
             var r = await response.json();
             if (r === "error") {

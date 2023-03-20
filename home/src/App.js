@@ -20,7 +20,7 @@ import {Help} from './Components/Help';
 import EditCourse from './Components/EditCourse';
 import NotYourProfile from './Components/NotYourProfile';
 import EditCourseTutor from './Components/EditCourseTutor';
-
+import TutorEdit  from './Components/tutorEdit';
 function App() {
 
   const [currUser, setCurrUser] = useState("");
@@ -56,6 +56,7 @@ return (
         <Route exact path="/Help" element={< Help GlobalState={GlobalState}/>} /> 
         <Route exact path="/EditCourse" element={< EditCourse GlobalState={GlobalState}/>} /> 
         <Route exact path="/EditCourseTutor" element={< EditCourseTutor GlobalState={GlobalState}/>} /> 
+        <Route exact path="/tutorEdit" element={< TutorEdit GlobalState={GlobalState}/>} /> 
         <Route exact path="/NotYourProfile" element={< NotYourProfile GlobalState={GlobalState}/>} /> 
         <Route exact path="/UploadProfile" element={< UploadProfile GlobalState={GlobalState}/>} /> 
         <Route path="*" element={<Login />} />
