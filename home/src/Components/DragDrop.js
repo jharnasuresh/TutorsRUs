@@ -45,6 +45,7 @@ const DragDrop = (props) => {
                     active: res["active"],
                     lang: res["lang"],
                     taking: res["taking"],
+                    profpic: res["profpic"],
                     followers: res["followers"],
                     following: res["following"],
                     tutor: res["tutor"]

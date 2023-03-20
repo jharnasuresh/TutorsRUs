@@ -10,9 +10,9 @@ export const UploadProfile = ({GlobalState}) => {
 
 const { currUser, setCurrUser } = GlobalState;
   const [image, setImage] = useState(null);
-  const [url, setUrl] = useState(null);
+  //const [url, setUrl] = useState(null);
   const location = useLocation();
-
+  var url = null;
 
 
   const previewFile = () => {
@@ -31,6 +31,10 @@ const { currUser, setCurrUser } = GlobalState;
             const preview = image;
             preview.src = reader.result;
             console.log("in the second image");
+            console.log(reader.result);
+            url = reader.result;
+            console.log("jharna here is the url: ", url)
+            uploadPFPtoDB();
           }
           counter++;
         });
@@ -44,27 +48,26 @@ const { currUser, setCurrUser } = GlobalState;
       reader.readAsDataURL(file);
     }
     else {
-      console.log("nooooo we're in the else")
+      console.log("Please upload an image")
     }
+
   }
 
-
-  const handleSubmit = (e) => {
+  function uploadPFPtoDB() {
       
     
-      /*console.log("june here's pfp url", url);
-        e.preventDefault();
-        const requestData = JSON.stringify({ "username": location.state.u});
-        console.log("june here's you username: " + location.state.u)
-        const headers = { "content-type": "application/json" };
-        async function getResponse() {
-            const response = await fetch('http://localhost:3001/pfp', { method: 'POST', body: requestData, headers: headers });
-            var r = await response.json();
-        }
-        console.log("going to upload profile")
-        getResponse(); 
-      console.log("look prof pick uploaded")*/
-  };
+      console.log("june here's pfp url", url);
+      const requestData = JSON.stringify({ "username": location.state.u, "pfpurl": url});
+      console.log("june here's your username: " + location.state.u)
+      const headers = { "content-type": "application/json" };
+      async function getResponse() {
+        const response = await fetch('http://localhost:3001/pfpupload', { method: 'POST', body: requestData, headers: headers });
+        var r = await response.json();
+      }
+      console.log("going to upload profile")
+      getResponse(); 
+      console.log("look prof pick uploaded")
+  }
 
   return (
     <div className="App">
