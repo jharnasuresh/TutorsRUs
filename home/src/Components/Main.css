@@ -40,13 +40,13 @@
     border-radius: 25px;
     padding: 20px;
     width: 700px;
-    height: 250px;
+    height: 270px;
     margin-left: 800px;
     margin-top: -100px;
 }
 
 #container-course {
-    position: absolute;
+    /*position: absolute;*/
     background-color: white;
     height: -500px;
     border: 2px solid black;
@@ -54,8 +54,8 @@
     padding: 20px;
     width: 700px;
     height: 150px;
-    margin-left: 800px;
-    margin-top: 400px;
+    /*margin-left: 800px;
+    margin-top: 400px;*/
 }
 
 .edit-btn {
