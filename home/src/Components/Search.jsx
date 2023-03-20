@@ -29,23 +29,16 @@ function Search({GlobalState, placeholder, data}) {
         fetch('http://localhost:3001/searchcoursetitle', { method: 'POST', body: requestData, headers: headers })
             .then((res) => res.json())
             .then((res) => {
-                navigate("/Login", {
+                console.log(res)
+                if (res === "none") {
+                    // no tutors
+                }
+                else {
+                    // list tutors
+                }
 
-                    /*state: {
-                        u: res.u,
-                        fname: res["fname"],
-                        lname: res["lname"],
-                        email: res["email"],
-                        active: res["active"],
-                        lang: res["lang"],
-                        taking: res["taking"],
-                        followers: res["followers"],
-                        following: res["following"],
-                        tutor: res["tutor"],
-                        price: res["price"],
-                        taken: res["taken"]
-                    }*/
-                });
+                // this is temp
+                navigate("/Login");
             })
 
     }
@@ -55,20 +48,8 @@ function Search({GlobalState, placeholder, data}) {
             <div className="searchInputs">
                 <input type="text" placeholder="Search..." /*data={filename}*/ onChange={(e) => setSearch(e.target.value)}/>
                 <button onClick={handleSubmit}>Search</button>
-                {/*<div className="searchIcon">
-                    <SearchIcon/>
-    </div>*/}
+                
             </div>
-
-           {/* {setFilteredData.length != 0 && (
-             <div className="dataResult">
-                {filteredData.slice(0, 15).map((value, key) => {
-                    return <a className="dataItem" /* href={value.blah}>
-                        <p>{/*value.blah}</p>
-                    </a>
-                })} 
-            </div> 
-        )} */}
         </div>
     )
 }
