@@ -50,7 +50,8 @@ export const Settings = ({ GlobalState }) => {
                         followers: res["followers"],
                         following: res["following"],
                         tutor: location.state.tutor,
-                        price: res["price"]
+                        price: res["price"],
+                        taken: res["taken"]
                     }
                 });
             })
@@ -98,7 +99,9 @@ export const Settings = ({ GlobalState }) => {
                         taking: res["taking"],
                         followers: res["followers"],
                         following: res["following"],
-                        tutor: res["tutor"]
+                        tutor: res["tutor"],
+                        price: res["price"],
+                        taken: res["taken"]
                     }
                 });
             })
@@ -126,7 +129,9 @@ export const Settings = ({ GlobalState }) => {
                         taking: res["taking"],
                         followers: res["followers"],
                         following: res["following"],
-                        tutor: res["tutor"]
+                        tutor: res["tutor"],
+                        price: res["price"],
+                        taken: res["taken"]
                     }
                 });
             })
@@ -153,9 +158,6 @@ export const Settings = ({ GlobalState }) => {
                 <br></br>
                 <label htmlFor="lang">Language: </label>
                 <input value={lang} onChange={(e) => setLang(e.target.value)} type="lang" placeholder="Enter Your Primary Language" id="lang" name="lang" />
-                <br></br>
-
-                <button type="submit" onClick={() => navigate('/EditCourse', {state: {u: currUser, taking: location.state.taking, tutor: location.state.tutor}})}>Edit Courses</button>
                 <br></br>
 
                 {

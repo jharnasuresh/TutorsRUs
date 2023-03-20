@@ -51,16 +51,29 @@ export const Profile = ({ GlobalState }) => {
   var tut = (location.state.tutor) ? "tut"  : "kjd";
 
   var printing = "";
-
-  function p (str) {
+  if (location.state.taking != undefined) {
+    function p (str) {
       printing+=str.title + "-" + str.professor + "-" + str.semester + ", "
   }
   Object.values(location.state.taking).forEach(p)
+  }
+
+
+  var printingTaken = "";
+
+  if (location.state.taken != undefined) {
+    function pTaken (str) {
+      printingTaken+=str.title + "-" + str.professor + "-" + str.semester + "-" + str.grade  + ", "
+
+  }
+  Object.values(location.state.taken).forEach(pTaken)
+  }
 
   return (
     <div className="App Profile">
 
-      <div className='activate'><h1 style={{ color: 'red' }}>{a}</h1></div>
+      <div className='activate'><h1 style={{ color: 'red', marginTop: '-50px' }}>{a}</h1></div>
+      
 
       {tut === 'tut' &&
           <div className="img2"><img class="img2" src = "/Images/verifiedtut.png"/></div>
@@ -68,9 +81,16 @@ export const Profile = ({ GlobalState }) => {
 
       <Header fname={location.state.fname} lname={location.state.lname} />
       <hr />
-      <About user={location.state.u} email={location.state.email} lang={location.state.lang} yours={true}/>
+      <About user={location.state.u} email={location.state.email} lang={location.state.lang} yours={true} price={location.state.price} tutor={location.state.tutor}/>
       <br />
-      <CourseInfo taking={printing} />
+      <div style={{position: 'absolute', marginLeft: '800px', marginTop: '350px'}}>
+        <CourseInfo courses={printing} past={false}/>
+      </div>
+      
+      <br />
+      {
+        (location.state.tutor) ? <div style={{position: 'absolute', marginLeft: '800px', marginTop: '700px'}}><CourseInfo courses={printingTaken} past={true}/></div> : <span></span>
+      }
       <div className='profile-btn'>
         {/*<a href="/Profile">
           <button className="submit" > See Followers </button>

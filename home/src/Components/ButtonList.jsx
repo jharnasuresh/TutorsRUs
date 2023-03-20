@@ -40,7 +40,8 @@ const Button = (props) => {
                     follows: follows,
                     taking: res["taking"],
                     profpic: res["profpic"],
-                    tutor: res["tutor"]
+                    tutor: res["tutor"],
+                    price: res["price"]
                 }
             });
         })
