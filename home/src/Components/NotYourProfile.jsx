@@ -88,6 +88,8 @@ export const NotYourProfile = ({GlobalState}) => {
                     taking: r["taking"],
                     price: r["price"],
                     tutor: r["tutor"]
+                    profpic: r["profpic"],
+
                 }
             });
           }
