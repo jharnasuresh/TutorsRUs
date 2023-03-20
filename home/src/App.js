@@ -21,6 +21,8 @@ import EditCourse from './Components/EditCourse';
 import NotYourProfile from './Components/NotYourProfile';
 import EditCourseTutor from './Components/EditCourseTutor';
 import TutorEdit  from './Components/tutorEdit';
+import Search from './Components/Search';
+import SearchIcon from '@mui/icons-material/Search';
 function App() {
 
   const [currUser, setCurrUser] = useState("");
@@ -59,6 +61,7 @@ return (
         <Route exact path="/tutorEdit" element={< TutorEdit GlobalState={GlobalState}/>} /> 
         <Route exact path="/NotYourProfile" element={< NotYourProfile GlobalState={GlobalState}/>} /> 
         <Route exact path="/UploadProfile" element={< UploadProfile GlobalState={GlobalState}/>} /> 
+        <Route exact path="/Search" element={< Search GlobalState={GlobalState}/>} /> 
         <Route path="*" element={<Login />} />
         
     </Routes>
