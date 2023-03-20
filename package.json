@@ -23,6 +23,7 @@
   "dependencies": {
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
+    "@fontsource/roboto": "^4.5.8",
     "@fortawesome/fontawesome-svg-core": "^6.3.0",
     "@fortawesome/free-regular-svg-icons": "^6.3.0",
     "@fortawesome/free-solid-svg-icons": "^6.3.0",
@@ -33,8 +34,9 @@
     "@fullcalendar/interaction": "^6.1.4",
     "@fullcalendar/list": "^6.1.4",
     "@fullcalendar/react": "^6.1.4",
-    "@mui/icons-material": "^5.11.9",
-    "@mui/material": "^5.11.10",
+    "@mui/icons-material": "^5.11.11",
+    "@mui/material": "^5.11.13",
+    "@mui/styled-engine-sc": "^5.11.11",
     "@react-pdf-viewer/core": "^2.4.1",
     "@types/crypto-js": "^4.1.1",
     "autoprefixer": "^9.8.8",
@@ -63,7 +65,7 @@
     "react-router-dom": "^6.8.1",
     "reactjs-popup": "^2.0.5",
     "scheduler": "^0.23.0",
-    "styled-components": "^5.3.6",
+    "styled-components": "^5.3.9",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.17"
   },
   "devDependencies": {

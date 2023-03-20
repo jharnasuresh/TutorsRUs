@@ -69,6 +69,8 @@ export const Profile = ({ GlobalState }) => {
   Object.values(location.state.taken).forEach(pTaken)
   }
 
+  console.log("offer " + printingTaken)
+
   return (
     <div className="App Profile">
 
@@ -92,9 +94,6 @@ export const Profile = ({ GlobalState }) => {
         (location.state.tutor) ? <div style={{position: 'absolute', marginLeft: '800px', marginTop: '700px'}}><CourseInfo courses={printingTaken} past={true}/></div> : <span></span>
       }
       <div className='profile-btn'>
-        {/*<a href="/Profile">
-          <button className="submit" > See Followers </button>
-        </a> */}
 
           <a className="popupbutton">
             <button onClick={() => setButtonPopup(true)} className="submit">Followers: {numFollowers}</button>

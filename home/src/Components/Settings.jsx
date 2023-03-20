@@ -15,7 +15,7 @@ export const Settings = ({ GlobalState }) => {
     const [lang, setLang] = useState('');
     const [buttonPopup, setButtonPopup] = useState(false);
     const [active, setActive] = useState(location.state.active);
-    const [price, setPrice] = useState(0);
+    const [price, setPrice] = useState('');
     var aButton = (active) ? "Deactivate" : "Activate";
     const { currUser, setCurrUser } = GlobalState;
 
