@@ -66,6 +66,7 @@ export const NotYourProfile = ({GlobalState}) => {
                     active: r["active"],
                     lang: r["lang"],
                     taking: r["taking"],
+                    profpic: r["profpic"],
                     followers: r["followers"],
                     following: r["following"]
                 }
