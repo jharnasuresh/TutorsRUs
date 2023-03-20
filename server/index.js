@@ -223,8 +223,19 @@ app.listen(PORT, () => {
 
 app.post("/searchcoursetitle", async (req, res) => {
 
-    const list = await db.collection('users').where('taken', 'array-contains', req.body["course"]).get();
-    console.log(list.size)
+    var t = JSON.stringify(req.body.course).toLowerCase();
+    t = JSON.parse(t.replace(/\s+/g, ''));
+
+    console.log("searching for " + t)
+
+    var login = await db.collection('users').where('taken', 'array-contains', {title: req.body.course}).get();
+    var doc = login.docs[0];
+    uu = doc.get("username");
+    var test = doc.get("taken")
+    console.log("mals -> " + JSON.stringify(test))
+
+    const list = await db.collection('users').where('taken', 'array-contains', t).get();
+    //console.log(list)
     users = {};
     for (user in list.docs) {
         users[user.get("username")] = {rating: user.get("rating"), price: user.get("price"), taken: user.get("taken"), fName: user.get("FName"), lName: user.get("LName")}
