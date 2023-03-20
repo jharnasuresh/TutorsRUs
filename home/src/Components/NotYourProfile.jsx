@@ -87,7 +87,7 @@ export const NotYourProfile = ({GlobalState}) => {
                     lang: r["lang"],
                     taking: r["taking"],
                     price: r["price"],
-                    tutor: r["tutor"]
+                    tutor: r["tutor"],
                     profpic: r["profpic"],
 
                 }
