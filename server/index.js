@@ -651,7 +651,7 @@ app.post("/pfpupload", async (req, res) => {
     console.log("5")
     doc = up.docs[0];
     console.log("6")
-    return res.send(JSON.stringify({ "username": req.body["username"] }))
+    return res.send(JSON.stringify({ "u": doc.get("username"), "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "answer1": doc.get("question1"), "answer2": doc.get("question2"), "answer3": doc.get("question3"), "userUniqueString": doc.get("userUniqueString") }))
 
 });
 

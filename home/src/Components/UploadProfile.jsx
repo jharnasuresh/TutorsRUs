@@ -13,6 +13,7 @@ const { currUser, setCurrUser } = GlobalState;
   const [image, setImage] = useState(null);
   //const [url, setUrl] = useState(null);
   const location = useLocation();
+  const navigate = useNavigate();
   var url = null;
 
   const previewFile = () => {
@@ -26,7 +27,7 @@ const { currUser, setCurrUser } = GlobalState;
       () => {
         // convert image file to base64 string
         allImages.forEach((image) => {
-          if (counter == 1) {
+          if (counter === 1) {
 
             const preview = image;
             preview.src = reader.result;
@@ -60,13 +61,31 @@ const { currUser, setCurrUser } = GlobalState;
       const requestData = JSON.stringify({ "username": location.state.u, "pfpurl": url});
       console.log("june here's your username: " + location.state.u)
       const headers = { "content-type": "application/json" };
+      var res;
       async function getResponse() {
         const response = await fetch('http://localhost:3001/pfpupload', { method: 'POST', body: requestData, headers: headers });
-        var r = await response.json();
+        res = await response.json();
       }
       console.log("going to upload profile")
       getResponse(); 
       console.log("look prof pick uploaded")
+      navigate("/Profile", {
+
+        state: {
+            u: location.state.u,
+            fname: res["fname"],
+            lname: res["lname"],
+            email: res["email"],
+            active: res["active"],
+            lang: res["lang"],
+            taking: res["taking"],
+            followers: res["followers"],
+            following: res["following"],
+            tutor: res["tutor"],
+            price: res["price"],
+            taken: res["taken"]
+        }
+    });
   }
 
   return (

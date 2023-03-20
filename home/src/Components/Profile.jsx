@@ -4,6 +4,7 @@ import About from './About';
 import CourseInfo from './CourseInfo';
 import ButtonList from './ButtonList';
 
+import Avatar from "@mui/material/Avatar";
 import ButtonList2 from './ButtonList2';
 import Popup from './Popup';
 import './Main.css'
@@ -81,8 +82,9 @@ export const Profile = ({ GlobalState }) => {
           <div className="img2"><img class="img2" src = "/Images/verifiedtut.png"/></div>
       }
 
-      <Header fname={location.state.fname} lname={location.state.lname} />
-      <hr />
+    <div style={{position: 'absolute', marginLeft: '-430px', marginTop: '50px'}}>
+      <Avatar src={location.state.profpic} sx={{ width: 300, height: 300 }} />
+      </div>
       <About user={location.state.u} email={location.state.email} lang={location.state.lang} yours={true} price={location.state.price} tutor={location.state.tutor}/>
       <br />
       <div style={{position: 'absolute', marginLeft: '800px', marginTop: '350px'}}>
