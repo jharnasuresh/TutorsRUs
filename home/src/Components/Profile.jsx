@@ -31,11 +31,17 @@ export const Profile = ({ GlobalState }) => {
   console.log("followers = " + location.state.followers)
   console.log("following = " + location.state.following)
   const toSendFollowers = [location.state.followers, location.state.u]
+  var hasPFP = true;
 
   const toSendFollowing = [location.state.following, location.state.u]
   var a = (active) ? "" : "Your account is not currently active";
   if (currUser === "") {
     setCurrUser(location.state.u)
+  }
+
+  if (location.state.profpic === "") {
+    hasPFP = false;
+    console.log("---------- doesn't have pfp --------")
   }
   console.log(location.state.lang)
   console.log("tt " + location.state.tutor)
@@ -116,7 +122,7 @@ export const Profile = ({ GlobalState }) => {
 
 
         <button className='submit'>
-          <Link to="/Settings" state={{ user: location.state.u, active: location.state.active, taking: location.state.taking, taken: location.state.taken, tutor: location.state.tutor, profpic: location.state.profpic }}>Edit Profile</Link>
+          <Link to="/Settings" state={{ user: location.state.u, active: location.state.active, taking: location.state.taking, taken: location.state.taken, tutor: location.state.tutor, profpic: location.state.profpic, hasPFP: hasPFP }}>Edit Profile</Link>
         </button>
 
       </div>
