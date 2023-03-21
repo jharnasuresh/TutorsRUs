@@ -8,6 +8,7 @@ function Search({GlobalState, placeholder, data}) {
     const [filterData, setFilteredData] = useState([]);
     const [search, setSearch] = useState('');
     const navigate = useNavigate();
+    const location = useLocation();
     const handleFilter = (event) => {
         const searchWord = event.target.value
         const newFilter = data.filter((value) => {
@@ -21,6 +22,8 @@ function Search({GlobalState, placeholder, data}) {
         }
     }
 
+    console.log(location.state.none)
+
     const handleSubmit = (e) => {
         console.log("searching for " + search)
         const headers = { "content-type": "application/json" };
@@ -32,24 +35,29 @@ function Search({GlobalState, placeholder, data}) {
                 console.log(res)
                 if (res === "none") {
                     // no tutors
+                    console.log("none here")
+                    navigate("/Search", {state: {none: true}});
                 }
                 else {
                     // list tutors
+                    navigate("/Search", {state: {none: false}});
                 }
 
                 // this is temp
-                navigate("/Login");
             })
 
     }
 
     return (
         <div className="App search">
+            
             <div className="searchInputs">
                 <input type="text" placeholder="Search..." /*data={filename}*/ onChange={(e) => setSearch(e.target.value)}/>
                 <button onClick={handleSubmit}>Search</button>
-                
             </div>
+            {
+                location.state.none && <h1 style={{color: 'red'}}>No available tutors</h1>
+            }
         </div>
     )
 }

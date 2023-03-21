@@ -243,7 +243,7 @@ app.post("/searchcoursetitle", async (req, res) => {
         users[u.get("username")] = {rating: u.get("rating"), price: u.get("price"), taken: u.get("taken"), fName: u.get("FName"), lName: u.get("LName")}
         
     }
-    if (users.length == 0) {
+    if (list.size == 0) {
         return res.send(JSON.stringify("none"))
     }
     return res.send(JSON.stringify(users))
@@ -259,7 +259,7 @@ app.post("/searchmultiplecourses", async (req, res) => {
     console.log("searching for " + JSON.stringify(t))
 
     var list = await db.collection('users').where('takenTitles', 'array-contains', req.body.course).get();
-    console.log(list.size)
+    console.log("hi " + list.size)
     var users = {};
     for (i in list.docs) {
         console.log(list.docs[i].get("username"))
@@ -267,7 +267,8 @@ app.post("/searchmultiplecourses", async (req, res) => {
         users[u.get("username")] = {rating: u.get("rating"), price: u.get("price"), taken: u.get("taken"), fName: u.get("FName"), lName: u.get("LName")}
         
     }
-    if (users.length == 0) {
+    if (list.size === 0) {
+        console.log("here")
         return res.send(JSON.stringify("none"))
     }
     return res.send(JSON.stringify(users))
