@@ -632,11 +632,14 @@ app.post("/pfpupload", async (req, res) => {
     const passsec = await db.collection('users').where('username', '==', req.body.username).get();
     console.log("2")
     var doc = passsec.docs[0];
-    console.log("2")
+    console.log("2.2")
     var user = doc.get("username")
-    console.log("2")
-    if (req.body["pfpurl"] != doc.get["profpic"]) {
-        await doc.ref.update({ profpic: req.body["pfpurl"] });
+    var profpic = doc.get("profpic")
+    console.log("2.4")
+    if (req.body["pfpurl"] !== profpic) {
+        console.log("2.75")
+        console.log(req.body.pfpurl)
+        await doc.ref.update({ profpic: req.body.pfpurl });
         console.log("3")
     }
     
@@ -651,7 +654,7 @@ app.post("/pfpupload", async (req, res) => {
     console.log("5")
     doc = up.docs[0];
     console.log("6")
-    return res.send(JSON.stringify({ "u": doc.get("username"), "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "answer1": doc.get("question1"), "answer2": doc.get("question2"), "answer3": doc.get("question3"), "userUniqueString": doc.get("userUniqueString") }))
+    return res.send(JSON.stringify({ "u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), "profpic":doc.get("profpic"), taking: doc.get("taking"), tutor: doc.get("tutor"), price: doc.get("price"), taken: doc.get("taken") }))
 
 });
 
