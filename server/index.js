@@ -638,7 +638,7 @@ app.post("/pfpupload", async (req, res) => {
     console.log("2.4")
     if (req.body["pfpurl"] !== profpic) {
         console.log("2.75")
-        console.log(req.body.pfpurl)
+        //console.log(req.body.pfpurl)
         await doc.ref.update({ profpic: req.body.pfpurl });
         console.log("3")
     }

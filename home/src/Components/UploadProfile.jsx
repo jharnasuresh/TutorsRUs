@@ -17,7 +17,7 @@ const { currUser, setCurrUser } = GlobalState;
   const [newPFP, setNewPFP] = useState(false)
   const location = useLocation();
   const navigate = useNavigate();
-  var url = null;
+  var urlPFP = null;
 
   const handleChange = (file) => {
     console.log("helllloooooo in handle change");
@@ -36,8 +36,8 @@ const { currUser, setCurrUser } = GlobalState;
             preview.src = reader.result;
             console.log("2in the second image2");
             //console.log(reader.result);
-            url = reader.result;
-            console.log("2jharna here is the url:2 ", url)
+            urlPFP = reader.result;
+            //console.log("2jharna here is the url:2 ", url)
             setNewPFP(true);
             uploadPFPtoDB();
           }
@@ -64,7 +64,7 @@ const { currUser, setCurrUser } = GlobalState;
       
     
       //console.log("june here's pfp url", url);
-      const requestData = JSON.stringify({ "username": location.state.u, "pfpurl": url});
+      const requestData = JSON.stringify({ "username": location.state.u, "pfpurl": urlPFP});
       console.log("june here's your username: " + location.state.u)
       const headers = { "content-type": "application/json" };
       var res;
@@ -107,10 +107,10 @@ const { currUser, setCurrUser } = GlobalState;
     </button>
   */}
    {/* <input type="file" onChange={previewFile} /><br />
-     <img src="" height="200" alt="Image preview" />   */}
-    <Avatar src={location.state.profpic} alt="Image preview" sx={{ width: 300, height: 300 }} />
+     <img src="" height="200" alt="Image preview" />   
+    <Avatar src={location.state.profpic} alt="Image preview" sx={{ width: 300, height: 300 }} />*/}
     <FileUploader handleChange={handleChange} name="file" types={fileTypes} />
-    
+    <img src="" height="200" alt="Image preview" />  
    {/*<div className="container">
           <div className="drop-container" 
             onDragOver={dragOver}
