@@ -116,7 +116,7 @@ export const Profile = ({ GlobalState }) => {
 
 
         <button className='submit'>
-          <Link to="/Settings" state={{ user: location.state.u, active: location.state.active, taking: location.state.taking, taken: location.state.taken, tutor: location.state.tutor }}>Edit Profile</Link>
+          <Link to="/Settings" state={{ user: location.state.u, active: location.state.active, taking: location.state.taking, taken: location.state.taken, tutor: location.state.tutor, profpic: location.state.profpic }}>Edit Profile</Link>
         </button>
 
       </div>
