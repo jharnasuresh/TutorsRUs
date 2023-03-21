@@ -12,6 +12,7 @@ export const UploadProfile = ({GlobalState}) => {
 const { currUser, setCurrUser } = GlobalState;
   const [image, setImage] = useState(null);
   //const [url, setUrl] = useState(null);
+  const [newPFP, setNewPFP] = useState(false)
   const location = useLocation();
   const navigate = useNavigate();
   var url = null;
@@ -35,6 +36,7 @@ const { currUser, setCurrUser } = GlobalState;
             console.log(reader.result);
             url = reader.result;
             console.log("jharna here is the url: ", url)
+            setNewPFP(true);
             uploadPFPtoDB();
           }
           counter++;
@@ -62,30 +64,33 @@ const { currUser, setCurrUser } = GlobalState;
       console.log("june here's your username: " + location.state.u)
       const headers = { "content-type": "application/json" };
       var res;
-      async function getResponse() {
-        const response = await fetch('http://localhost:3001/pfpupload', { method: 'POST', body: requestData, headers: headers });
-        res = await response.json();
-      }
+ 
       console.log("going to upload profile")
-      getResponse(); 
       console.log("look prof pick uploaded")
-      navigate("/Profile", {
+        fetch('http://localhost:3001/pfpupload', { method: 'POST', body: requestData, headers: headers })
+        .then((res) => res.json())
+        .then((res) => {
+            console.log("resfname", res["fname"])
+            /*navigate("/Profile", {
 
-        state: {
-            u: location.state.u,
-            fname: res["fname"],
-            lname: res["lname"],
-            email: res["email"],
-            active: res["active"],
-            lang: res["lang"],
-            taking: res["taking"],
-            followers: res["followers"],
-            following: res["following"],
-            tutor: res["tutor"],
-            price: res["price"],
-            taken: res["taken"]
-        }
-    });
+                state: {
+                    u: res.u,
+                    fname: res["fname"],
+                    lname: res["lname"],
+                    email: res["email"],
+                    active: res["active"],
+                    lang: res["lang"],
+                    taking: res["taking"],
+                    followers: res["followers"],
+                    following: res["following"],
+                    tutor: res["tutor"],
+                    profpic: res["profpic"],
+                    price: res["price"],
+                    taken: res["taken"]
+                }
+            });*/
+        })
+
   }
 
   return (
@@ -98,9 +103,9 @@ const { currUser, setCurrUser } = GlobalState;
     </button>
   */}
     <input type="file" onChange={previewFile} /><br />
-    <img src="" height="200" alt="Image preview" /> 
+    {/* <img src="" height="200" alt="Image preview" />   */}
+    <Avatar src={location.state.profpic} sx={{ width: 300, height: 300 }} />
+     
     </div>
   );
-}
-
-
+  }
