@@ -261,25 +261,58 @@ app.post("/searchcoursetitle", async (req, res) => {
 
 app.post("/searchmultiplecourses", async (req, res) => {
 
-    var t = JSON.stringify(req.body.course).toLowerCase();
-    t = JSON.parse(t.replace(/\s+/g, ''));
-
-    console.log("searching for " + JSON.stringify(t))
-
-    var list = await db.collection('users').where('takenTitles', 'array-contains', req.body.course).get();
-    console.log("hi " + list.size)
-    var users = {};
-    for (i in list.docs) {
-        console.log(list.docs[i].get("username"))
-        var u = list.docs[i];
-        users[u.get("username")] = {rating: u.get("rating"), price: u.get("price"), taken: u.get("taken"), fName: u.get("FName"), lName: u.get("LName")}
-        
+    console.log("searching mutliple")
+    var ar = req.body.course.split(", ")
+    var courses = [];
+    let i = 0;
+    while (i < ar.length) {
+        var t = JSON.stringify(ar[i]).toLowerCase();
+        t = JSON.parse(t.replace(/\s+/g, ''));
+        courses.push(t)
+        i++;
     }
-    if (list.size === 0) {
-        console.log("here")
+    
+    
+
+    console.log("searching for ")
+    console.log(courses)
+    var users = [];
+    for (let j = 0; j < courses.length; j++) {
+        console.log(courses[j])
+        var list = await db.collection('users').where('takenTitles', 'array-contains', courses[j]).get();
+        var tempUsers = [];
+        console.log(list.size)
+        for (let k = 0; k < list.size; k++) {
+            tempUsers.push(list.docs[k].get("username"))
+        }
+        console.log(tempUsers)
+        users.push(tempUsers)
+
+    }
+
+    let finalList = users[0]
+    let toRemove = [];
+    for (let a = 0; a < finalList.length; a++) {
+
+        let inAll = true;
+        for (let b = 1; b < users.length; b++) {
+            if (!users[b].includes(finalList[a])) {
+                inAll = false;
+            }
+        }
+        if (!inAll) {
+            toRemove.push(finalList[a])
+        }
+    }
+    for (let c = 0; c < toRemove.length; c++) {
+        finalList.splice(finalList.indexOf(toRemove[c]), 1)
+    }
+
+    if (finalList.length === 0) {
         return res.send(JSON.stringify("none"))
     }
-    return res.send(JSON.stringify(users))
+    
+    return res.send(JSON.stringify(finalList))
 
 
 });
