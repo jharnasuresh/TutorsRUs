@@ -243,11 +243,12 @@ app.post("/searchcoursetitle", async (req, res) => {
 
     var list = await db.collection('users').where('takenTitles', 'array-contains', req.body.course).get();
     console.log(list.size)
-    var users = {};
+    var users = [];
     for (i in list.docs) {
         console.log(list.docs[i].get("username"))
         var u = list.docs[i];
-        users[u.get("username")] = {rating: u.get("rating"), price: u.get("price"), taken: u.get("taken"), fName: u.get("FName"), lName: u.get("LName")}
+        users.push(u.get("username"))
+        //users[u.get("username")] = {rating: u.get("rating"), price: u.get("price"), taken: u.get("taken"), fName: u.get("FName"), lName: u.get("LName")}
         
     }
     if (list.size == 0) {
