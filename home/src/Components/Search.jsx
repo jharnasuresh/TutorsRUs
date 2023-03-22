@@ -5,6 +5,7 @@ import { useLocation, Link, useNavigate } from "react-router-dom";
 
 
 function Search({GlobalState, placeholder, data}) {
+    const [open, setOpen] = useState(false);
     const [filterData, setFilteredData] = useState([]);
     const [search, setSearch] = useState('');
     const navigate = useNavigate();
@@ -52,8 +53,11 @@ function Search({GlobalState, placeholder, data}) {
         <div className="App search">
             
             <div className="searchInputs">
-                <input type="text" placeholder="Search..." /*data={filename}*/ onChange={(e) => setSearch(e.target.value)}/>
-                <button onClick={handleSubmit}>Search</button>
+
+                <input type="text" placeholder="Search..." /*data={filename}*/ onChange={handleFilter}/>
+                <div className="searchIcon">
+                    <button type="link-btn" onClick={() => setOpen(!open)}><i class="fa-solid fa-magnifying-glass"></i></button>
+                </div>
             </div>
             {
                 location.state.none && <h1 style={{color: 'red'}}>No available tutors</h1>

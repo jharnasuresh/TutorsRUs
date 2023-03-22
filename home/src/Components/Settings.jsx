@@ -181,7 +181,7 @@ export const Settings = ({ GlobalState }) => {
                 <button type="submit" onClick={handleDelTranscript}>Delete Transcript</button> 
                 : <button type="submit" onClick={() => navigate('/Transcript', {state: {u: currUser}})}>Get Verified</button> 
             }
-             <button type="submit" onClick={() => navigate('/UploadProfile', {state: {u: currUser}})}>Upload Profile Picture</button> 
+             <button type="submit" onClick={() => navigate('/UploadProfile', {state: {u: currUser, profpic: location.state.profpic}})}>Upload Profile Picture</button> 
 
             <div>
                 <button className='submit' onClick={() => setButtonPopup(true)}>Delete Account</button>

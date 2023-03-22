@@ -22,7 +22,6 @@ import NotYourProfile from './Components/NotYourProfile';
 import EditCourseTutor from './Components/EditCourseTutor';
 import TutorEdit  from './Components/tutorEdit';
 import Search from './Components/Search';
-import SearchIcon from '@mui/icons-material/Search';
 function App() {
 
   const [currUser, setCurrUser] = useState("");
