@@ -31,18 +31,7 @@ export default function Calendar() {
 
     // console.log(arg.event.extendedProps.description);
   };
-  const handleTimeSelection = (info) => {
-    this.setState({
-      start: info.startStr,
-      end: info.endStr,
-      filledIn: true
-    })
-  }
-  const state = {
-    start: '',
-    end: '',
-    filledIn: false
-  }
+  
 
   const setting = {
     plugins: [
@@ -68,25 +57,13 @@ export default function Calendar() {
     ],
     eventClick: handleDateClick,
     initialView: "dayGridMonth",
-    select: handleTimeSelection,
     eventBackgroundColor: '#FF4500',
     headerToolbar: {
       left: "prev,next today",
       center: "title",
       right: "dayGridMonth,listMonth"
     },
-    editable: true,
-    selectable: true,
-    dayMaxEvents: true,
-    AspectRatio: 6,
-    height: 600,
-    events: this.state.practiceTimes,
-    eventTimeFormat: {
-      hour: "numeric",
-      minute: "2-digit",
-      meridiem: "short"
-    },
-    eventContent: renderEventContent, 
+    eventContent: renderEventContent
 
 
 
