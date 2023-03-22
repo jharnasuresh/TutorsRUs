@@ -1,10 +1,33 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Search.css"
 import SearchIcon from '@mui/icons-material/Search';
+import axios from "axios";
+
 
 function Search({GlobalState, placeholder, data}) {
+    const [obj, setObj] = useState({});
+    const [sort, setSort] = useState({sort: "rating", order: "desc"});
+    const [filterGenre, setFilterGenre] = useState([])
+    const [page, setPage] = useState(1);
+    const [search, setSearch] = useState("");
+
+    useEffect(() => {
+        const getAllMovies = async () => {
+            try {
+                const url = `${"hello"}?page=${page}&sort=${sort.sort},${sort.order}
+                    &genre=${filterGenre.toString()}&search=${search}`
+                const {data} = await axios.get(url);
+                setObj(data);
+                console.log(data);
+            } catch(err) {
+                console.log(err);
+            }
+        };
+        getAllMovies();
+    }, [sort, filterGenre, page, search]);
+
+    const [filteredData, setFilteredData] = useState[{}];
     const [open, setOpen] = useState(false);
-    const [filterData, setFilteredData] = useState([]);
     const handleFilter = (event) => {
         const searchWord = event.target.value
         const newFilter = data.filter((value) => {
