@@ -13,6 +13,7 @@ import Tabs from "./Components/Tabs";
 import Profile from './Components/Profile';
 import SecurePassReset  from './Components/SecurePassReset';
 import { DrawerNew } from './Components/DrawerNew';
+import { EditPFP } from './Components/EditPFP';
 import { Transcript } from './Components/Transcript';
 import { UploadProfile} from './Components/UploadProfile';
 import DragDrop from './Components/DragDrop';
@@ -61,6 +62,7 @@ return (
         <Route exact path="/NotYourProfile" element={< NotYourProfile GlobalState={GlobalState}/>} /> 
         <Route exact path="/UploadProfile" element={< UploadProfile GlobalState={GlobalState}/>} /> 
         <Route exact path="/Search" element={< Search GlobalState={GlobalState}/>} /> 
+        <Route exact path="/EditPFP" element={< EditPFP GlobalState={GlobalState}/>} /> 
         <Route path="*" element={<Login />} />
         
     </Routes>
