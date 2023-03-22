@@ -36,7 +36,26 @@ export const NotYourProfile = ({GlobalState}) => {
   
   console.log("followersNYP = " + numFollowers);
   console.log("followingNYP = " + numFollowing);
-  var a = (active) ? "" : "Your account is not currently active";
+  var a = (active) ? "" : "This account is not currently active";
+
+  var printing = "";
+  if (location.state.taking != undefined) {
+    function p (str) {
+      printing+=str.title + "-" + str.professor + "-" + str.semester + ", "
+  }
+  Object.values(location.state.taking).forEach(p)
+  }
+
+
+  var printingTaken = "";
+
+  if (location.state.taken != undefined) {
+    function pTaken (str) {
+      printingTaken+=str.title + "-" + str.professor + "-" + str.semester + "-" + str.grade  + ", "
+
+  }
+  Object.values(location.state.taken).forEach(pTaken)
+  }
 
   const handleSubmit = (e) => {
       console.log("in handle submit of nyp")
@@ -67,9 +86,10 @@ export const NotYourProfile = ({GlobalState}) => {
                     active: r["active"],
                     lang: r["lang"],
                     taking: r["taking"],
-                    followers: r["followers"],
-                    following: r["following"],
-                    price: r["price"]
+                    price: r["price"],
+                    tutor: r["tutor"],
+                    profpic: r["profpic"],
+
                 }
             });
           }
@@ -83,7 +103,7 @@ export const NotYourProfile = ({GlobalState}) => {
   
   return (
     
-    <div className="App NotYourProfile">
+    <div className="App Profile">
 
       <div className='activate'><h1 style={{color: 'red'}}>{a}</h1></div>
 
@@ -95,10 +115,18 @@ export const NotYourProfile = ({GlobalState}) => {
        <Scheduling/>
        </a>
     }
+
       <Header fname={location.state.fname} lname={location.state.lname} />
       <hr />
-      <About user={location.state.u} mail={"mailto:" + email} email={email} yours={false}/>
-      <CourseInfo taking={location.state.taking}/>
+      <About user={location.state.u} mail={"mailto:" + email} email={email} lang={location.state.lang} yours={false} price={location.state.price} tutor={location.state.tutor}/>
+      <br/>
+      <div style={{position: 'absolute', marginLeft: '800px', marginTop: '350px'}}>
+        <CourseInfo courses={printing} past={false}/>
+      </div>
+      <br />
+      {
+        (location.state.tutor) ? <div style={{position: 'absolute', marginLeft: '800px', marginTop: '700px'}}><CourseInfo courses={printingTaken} past={true}/></div> : <span></span>
+      }
       <div  className='profile-btn'>
       <h3>Followers: {numFollowers}</h3>
       <h3>Following: {numFollowing} </h3>

@@ -34,6 +34,7 @@ export const Tabs = ({GlobalState}) => {
                 following: res["following"],
                 active: res["active"],
                 lang: res["lang"],
+                profpic: res["profpic"],
                 taking: res["taking"],
                 taken: res["taken"],
                 followers: res["followers"],
@@ -68,6 +69,9 @@ export const Tabs = ({GlobalState}) => {
                     <li>
                         <a href="./Help" onClick={() => navigate('/Help', {state: {u: currUser}})}>Help</a>
 
+                    </li>
+                    <li>
+                        <a href="./Search" onClick={() => navigate('/Search', {state: {u: currUser, none: false}})}>Search</a>
                     </li>
 
                 </ul>

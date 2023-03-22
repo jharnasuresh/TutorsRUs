@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import './Main.css'
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import About from './About';
@@ -15,10 +15,11 @@ export const Settings = ({ GlobalState }) => {
     const [lang, setLang] = useState('');
     const [buttonPopup, setButtonPopup] = useState(false);
     const [active, setActive] = useState(location.state.active);
-    const [price, setPrice] = useState(0);
+    const [price, setPrice] = useState('');
     var aButton = (active) ? "Deactivate" : "Activate";
     const { currUser, setCurrUser } = GlobalState;
-
+    
+  
     console.log("ttt " + location.state.tutor)
 
 
@@ -46,10 +47,12 @@ export const Settings = ({ GlobalState }) => {
                         active: res["active"],
                         lang: res["lang"],
                         taking: res["taking"],
+                        profpic: res["profpic"],
                         followers: res["followers"],
                         following: res["following"],
                         tutor: location.state.tutor,
-                        price: res["price"]
+                        price: res["price"],
+                        taken: res["taken"]
                     }
                 });
             })
@@ -128,7 +131,8 @@ export const Settings = ({ GlobalState }) => {
                         followers: res["followers"],
                         following: res["following"],
                         tutor: res["tutor"],
-                        price: res["price"]
+                        price: res["price"],
+                        taken: res["taken"]
                     }
                 });
             })
@@ -178,8 +182,14 @@ export const Settings = ({ GlobalState }) => {
                 <button type="submit" onClick={handleDelTranscript}>Delete Transcript</button> 
                 : <button type="submit" onClick={() => navigate('/Transcript', {state: {u: currUser}})}>Get Verified</button> 
             }
-             <button type="submit" onClick={() => navigate('/UploadProfile', {state: {u: currUser}})}>Upload Profile Picture</button> 
-
+             <button type="submit" onClick={() => navigate('/UploadProfile', {state: {u: currUser, profpic: location.state.profpic}})}>Upload Profile Picture</button> 
+             
+            {
+                location.state.hasPFP ? 
+                <button type="submit" onClick={() => navigate('/EditPFP', {state: {u: currUser, profpic: location.state.profpic}})}>Edit Profile Picture</button>  
+                : <span></span>
+        } 
+             
             <div>
                 <button className='submit' onClick={() => setButtonPopup(true)}>Delete Account</button>
                 <Popup trigger={buttonPopup} setTrigger={setButtonPopup} state={{ user: location.state.user, del: "acct" }}>Are you sure you want to delete your account?</Popup>

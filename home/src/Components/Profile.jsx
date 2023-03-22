@@ -4,6 +4,7 @@ import About from './About';
 import CourseInfo from './CourseInfo';
 import ButtonList from './ButtonList';
 
+import Avatar from "@mui/material/Avatar";
 import ButtonList2 from './ButtonList2';
 import Popup from './Popup';
 import './Main.css'
@@ -30,11 +31,17 @@ export const Profile = ({ GlobalState }) => {
   console.log("followers = " + location.state.followers)
   console.log("following = " + location.state.following)
   const toSendFollowers = [location.state.followers, location.state.u]
+  var hasPFP = true;
 
   const toSendFollowing = [location.state.following, location.state.u]
   var a = (active) ? "" : "Your account is not currently active";
   if (currUser === "") {
     setCurrUser(location.state.u)
+  }
+
+  if (location.state.profpic === "") {
+    hasPFP = false;
+    console.log("---------- doesn't have pfp --------")
   }
   console.log(location.state.lang)
   console.log("tt " + location.state.tutor)
@@ -57,42 +64,44 @@ export const Profile = ({ GlobalState }) => {
   }
   Object.values(location.state.taking).forEach(p)
   }
-  
 
-  
 
   var printingTaken = "";
+
   if (location.state.taken != undefined) {
     function pTaken (str) {
-      printingTaken+=str.title + "-" + str.professor + "-" + str.semester + ", "
+      printingTaken+=str.title + "-" + str.professor + "-" + str.semester + "-" + str.grade  + ", "
+
   }
   Object.values(location.state.taken).forEach(pTaken)
   }
 
- 
+  console.log("offer " + printingTaken)
 
   return (
     <div className="App Profile">
 
-      <div className='activate'><h1 style={{ color: 'red' }}>{a}</h1></div>
+      <div className='activate'><h1 style={{ color: 'red', marginTop: '-50px' }}>{a}</h1></div>
+      
 
       {tut === 'tut' &&
           <div className="img2"><img class="img2" src = "/Images/verifiedtut.png"/></div>
       }
 
-      <Header fname={location.state.fname} lname={location.state.lname} />
-      <hr />
+    <div style={{position: 'absolute', marginLeft: '-430px', marginTop: '50px'}}>
+      <Avatar src={location.state.profpic} sx={{ width: 300, height: 300 }} />
+      </div>
       <About user={location.state.u} email={location.state.email} lang={location.state.lang} yours={true} price={location.state.price} tutor={location.state.tutor}/>
       <br />
-      <CourseInfo courses={printing} past={false}/>
+      <div style={{position: 'absolute', marginLeft: '800px', marginTop: '350px'}}>
+        <CourseInfo courses={printing} past={false}/>
+      </div>
+      
       <br />
       {
-        (location.state.tutor) ? <CourseInfo courses={printingTaken} past={true}/> : <span></span>
+        (location.state.tutor) ? <div style={{position: 'absolute', marginLeft: '800px', marginTop: '700px'}}><CourseInfo courses={printingTaken} past={true}/></div> : <span></span>
       }
       <div className='profile-btn'>
-        {/*<a href="/Profile">
-          <button className="submit" > See Followers </button>
-        </a> */}
 
           <a className="popupbutton">
             <button onClick={() => setButtonPopup(true)} className="submit">Followers: {numFollowers}</button>
@@ -113,7 +122,7 @@ export const Profile = ({ GlobalState }) => {
 
 
         <button className='submit'>
-          <Link to="/Settings" state={{ user: location.state.u, active: location.state.active, taking: location.state.taking, taken: location.state.taken, tutor: location.state.tutor }}>Edit Profile</Link>
+          <Link to="/Settings" state={{ user: location.state.u, active: location.state.active, taking: location.state.taking, taken: location.state.taken, tutor: location.state.tutor, profpic: location.state.profpic, hasPFP: hasPFP }}>Edit Profile</Link>
         </button>
 
       </div>

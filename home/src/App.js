@@ -13,6 +13,7 @@ import Tabs from "./Components/Tabs";
 import Profile from './Components/Profile';
 import SecurePassReset  from './Components/SecurePassReset';
 import { DrawerNew } from './Components/DrawerNew';
+import { EditPFP } from './Components/EditPFP';
 import { Transcript } from './Components/Transcript';
 import { UploadProfile} from './Components/UploadProfile';
 import DragDrop from './Components/DragDrop';
@@ -21,6 +22,7 @@ import EditCourse from './Components/EditCourse';
 import NotYourProfile from './Components/NotYourProfile';
 import EditCourseTutor from './Components/EditCourseTutor';
 import TutorEdit  from './Components/tutorEdit';
+import Search from './Components/Search';
 function App() {
 
   const [currUser, setCurrUser] = useState("");
@@ -59,6 +61,8 @@ return (
         <Route exact path="/tutorEdit" element={< TutorEdit GlobalState={GlobalState}/>} /> 
         <Route exact path="/NotYourProfile" element={< NotYourProfile GlobalState={GlobalState}/>} /> 
         <Route exact path="/UploadProfile" element={< UploadProfile GlobalState={GlobalState}/>} /> 
+        <Route exact path="/Search" element={< Search GlobalState={GlobalState}/>} /> 
+        <Route exact path="/EditPFP" element={< EditPFP GlobalState={GlobalState}/>} /> 
         <Route path="*" element={<Login />} />
         
     </Routes>
