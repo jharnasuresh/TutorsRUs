@@ -26,13 +26,16 @@ function Search({GlobalState, placeholder, data}) {
     const [users, setUsers] = useState("");
     const [none, setNone] = useState(false);
 
-
     const handleSubmit = (e) => {
         console.log("searching for " + search)
-        const headers = { "content-type": "application/json" };
-        const requestData = JSON.stringify({ "course": search });
+        
 
-        fetch('http://localhost:3001/searchcoursetitle', { method: 'POST', body: requestData, headers: headers })
+        if (search.includes(",")) {
+            // search for multiple courses
+            console.log(search.split(", "))
+            const headers = { "content-type": "application/json" };
+            const requestData = JSON.stringify({ "course": search });
+            fetch('http://localhost:3001/searchmultiplecourses', { method: 'POST', body: requestData, headers: headers })
             .then((res) => res.json())
             .then((res) => {
                 console.log(res)
@@ -44,6 +47,7 @@ function Search({GlobalState, placeholder, data}) {
                 else {
                     // list tutors
                     setNone(false);
+                    // TO BE FIXED WITH MORE DATA
                     let i = 0;
                     let u = "";
                     while (i < res.length) {
@@ -53,12 +57,42 @@ function Search({GlobalState, placeholder, data}) {
                     }
                     setUsers(u)
                     
-                    //setUsers(u)
                     
                 }
 
-                // this is temp
             })
+        } else {
+            const headers = { "content-type": "application/json" };
+            const requestData = JSON.stringify({ "course": search });
+            fetch('http://localhost:3001/searchcoursetitle', { method: 'POST', body: requestData, headers: headers })
+            .then((res) => res.json())
+            .then((res) => {
+                console.log(res)
+                if (res === "none") {
+                    // no tutors
+                    console.log("none here")
+                    setNone(true)
+                }
+                else {
+                    // list tutors
+                    setNone(false);
+                    // TO BE FIXED WITH MORE DATA
+                    let i = 0;
+                    let u = "";
+                    while (i < res.length) {
+                        console.log(res[i]);
+                        u += res[i] + ", ";
+                        i++;
+                    }
+                    setUsers(u)
+                    
+                    
+                }
+
+            })
+        }
+
+        
 
 
     }
