@@ -67,7 +67,6 @@ const { currUser, setCurrUser } = GlobalState;
       const requestData = JSON.stringify({ "username": location.state.u, "pfpurl": urlPFP});
       console.log("june here's your username: " + location.state.u)
       const headers = { "content-type": "application/json" };
-      var res;
  
       console.log("going to upload profile")
       console.log("look prof pick uploaded")
