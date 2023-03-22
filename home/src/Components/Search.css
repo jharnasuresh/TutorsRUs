@@ -62,9 +62,10 @@ input:focus {
     text-decoration: none;
   }
   
-  a:hover {
+  /*a:hover {
     background-color: lightgrey;
-  }
+    
+  }*/
   
   #clearBtn {
     cursor: pointer;
