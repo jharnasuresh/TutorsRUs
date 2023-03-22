@@ -11,7 +11,7 @@ function Search({GlobalState, placeholder, data}) {
     const [filterGenre, setFilterGenre] = useState([])
     const [page, setPage] = useState(1);
 
-    useEffect(() => {
+    /*useEffect(() => {
         const getAllMovies = async () => {
             try {
                 const url = `${"hello"}?page=${page}&sort=${sort.sort},${sort.order}
@@ -25,7 +25,7 @@ function Search({GlobalState, placeholder, data}) {
         };
         getAllMovies();
     }, [sort, filterGenre, page, search]);
-
+*/
     //const [filteredData, setFilteredData] = useState[{}];
     const [open, setOpen] = useState(false);
     const [filterData, setFilteredData] = useState([]);
