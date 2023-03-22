@@ -57,6 +57,8 @@ app.post('/signup', async (req, res) => {
     var profpic = "";
     var taking = {};
     var taken = {};
+    var takenTitles = [];
+    var takingTitles = [];
     var price = 0;
     const user = {
         email: req.body.email,
@@ -108,6 +110,8 @@ app.post('/signup', async (req, res) => {
         profpic: "",
         taking: {},
         taken: {},
+        takenTitles: [],
+        takingTitles: [],
         price: 0
     })
         .then(function (userRecord) {
@@ -131,6 +135,8 @@ app.post('/signup', async (req, res) => {
                 profpic: "",
                 taking: {},
                 taken: {},
+                takenTitles: [],
+                takingTitles: [],
                 price: 0
             };
 
@@ -230,12 +236,22 @@ app.listen(PORT, () => {
 
 app.post("/searchcoursetitle", async (req, res) => {
 
-    const list = await db.collection('users').where('taken', 'array-contains', req.body["course"]).get();
+    var t = JSON.stringify(req.body.course).toLowerCase();
+    t = JSON.parse(t.replace(/\s+/g, ''));
+
+    console.log("searching for " + JSON.stringify(t))
+
+    var list = await db.collection('users').where('takenTitles', 'array-contains', req.body.course).get();
     console.log(list.size)
-    users = {};
-    for (user in list.docs) {
-        users[user.get("username")] = {rating: user.get("rating"), price: user.get("price"), taken: user.get("taken"), fName: user.get("FName"), lName: user.get("LName")}
+    var users = {};
+    for (i in list.docs) {
+        console.log(list.docs[i].get("username"))
+        var u = list.docs[i];
+        users[u.get("username")] = {rating: u.get("rating"), price: u.get("price"), taken: u.get("taken"), fName: u.get("FName"), lName: u.get("LName")}
         
+    }
+    if (list.size == 0) {
+        return res.send(JSON.stringify("none"))
     }
     return res.send(JSON.stringify(users))
 
@@ -244,17 +260,23 @@ app.post("/searchcoursetitle", async (req, res) => {
 
 app.post("/searchmultiplecourses", async (req, res) => {
 
-    var list = await db.collection('users').where('taken', 'array-contains', req.body["courses"][0]).get();;
-    for (course in req.body["courses"]) {
-        const list2 = await db.collection('users').where('taken', 'array-contains', course).get();
-        list = list.filter(value => list2.includes(value))
-    }
+    var t = JSON.stringify(req.body.course).toLowerCase();
+    t = JSON.parse(t.replace(/\s+/g, ''));
 
-    console.log(list.size)
-    users = {};
-    for (user in list.docs) {
-        users[user.get("username")] = {rating: user.get("rating"), price: user.get("price"), taken: user.get("taken"), fName: user.get("FName"), lName: user.get("LName")}
+    console.log("searching for " + JSON.stringify(t))
+
+    var list = await db.collection('users').where('takenTitles', 'array-contains', req.body.course).get();
+    console.log("hi " + list.size)
+    var users = {};
+    for (i in list.docs) {
+        console.log(list.docs[i].get("username"))
+        var u = list.docs[i];
+        users[u.get("username")] = {rating: u.get("rating"), price: u.get("price"), taken: u.get("taken"), fName: u.get("FName"), lName: u.get("LName")}
         
+    }
+    if (list.size === 0) {
+        console.log("here")
+        return res.send(JSON.stringify("none"))
     }
     return res.send(JSON.stringify(users))
 
@@ -390,6 +412,10 @@ app.post("/addcourse", async (req, res) => {
     
     c[t] = info
 
+    var listTitles = doc.get("takingTitles");
+    listTitles.push(t);
+    await doc.ref.update({takingTitles: listTitles})
+
     await doc.ref.update({ taking: c })
     return res.send(JSON.stringify({ "taking": c }))
 
@@ -413,6 +439,10 @@ app.post("/deletecourse", async (req, res) => {
         return res.send(JSON.stringify({ "taking": c }))
     }
 
+    var listTitles = doc.get("takingTitles");
+    listTitles.splice(listTitles.indexOf(JSON.stringify(t)), 1);
+    await doc.ref.update({takingTitles: listTitles})
+
     
 
     delete c[t]
@@ -433,6 +463,10 @@ app.post("/addcoursetutor", async (req, res) => {
 
     info = {"title": req.body.title, "professor": req.body.prof, "semester": req.body.semester, "grade": req.body.grade}
     c[t] = info
+
+    var listTitles = doc.get("takenTitles");
+    listTitles.push(t);
+    await doc.ref.update({takenTitles: listTitles})
 
     await doc.ref.update({ taken: c })
     return res.send(JSON.stringify({ "taken": c }))
@@ -455,6 +489,10 @@ app.post("/deletecoursetutor", async (req, res) => {
         console.log("here")
         return res.send(JSON.stringify({ "taken": c }))
     }
+
+    var listTitles = doc.get("takenTitles");
+    listTitles.splice(listTitle.indexOf(JSON.stringify(t)), 1);
+    await doc.ref.update({takenTitles: listTitles})
 
     delete c[t]
     await doc.ref.update({ taken: c })
