@@ -23,7 +23,9 @@ function Search({GlobalState, placeholder, data}) {
         }
     }
 
-    console.log(location.state.none)
+    const [users, setUsers] = useState("");
+    const [none, setNone] = useState(false);
+
 
     const handleSubmit = (e) => {
         console.log("searching for " + search)
@@ -37,15 +39,27 @@ function Search({GlobalState, placeholder, data}) {
                 if (res === "none") {
                     // no tutors
                     console.log("none here")
-                    navigate("/Search", {state: {none: true}});
+                    setNone(true)
                 }
                 else {
                     // list tutors
-                    navigate("/Search", {state: {none: false}});
+                    setNone(false);
+                    let i = 0;
+                    let u = "";
+                    while (i < res.length) {
+                        console.log(res[i]);
+                        u += res[i] + ", ";
+                        i++;
+                    }
+                    setUsers(u)
+                    
+                    //setUsers(u)
+                    
                 }
 
                 // this is temp
             })
+
 
     }
 
@@ -54,13 +68,13 @@ function Search({GlobalState, placeholder, data}) {
             
             <div className="searchInputs">
 
-                <input type="text" placeholder="Search..." /*data={filename}*/ onChange={handleFilter}/>
+                <input type="text" placeholder="Search..." onChange={e => setSearch(e.target.value)}/>
                 <div className="searchIcon">
-                    <button type="link-btn" onClick={() => setOpen(!open)}><i class="fa-solid fa-magnifying-glass"></i></button>
+                    <button type="link-btn" onClick={handleSubmit}><i class="fa-solid fa-magnifying-glass"></i></button>
                 </div>
             </div>
             {
-                location.state.none && <h1 style={{color: 'red'}}>No available tutors</h1>
+                none ? <h1 style={{color: 'red'}}>No available tutors</h1> : <p>{users}</p>
             }
         </div>
     )
