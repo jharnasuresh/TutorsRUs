@@ -1,7 +1,5 @@
 //libraries
 
-
-
 const { getAuth, sendSignInLinkToEmail, sendEmailVerification } = require('firebase/auth');
 
 const { linkWithCredential, EmailAuthProvider } = require("firebase/auth");
@@ -40,9 +38,6 @@ const corsOptions ={
 }
 
 app.use(cors(corsOptions)) // Use this after the variable declaration
-
-
-
 
 app.post('/signup', async (req, res) => {
     var username = req.body.user;
@@ -157,8 +152,6 @@ app.post('/signup', async (req, res) => {
             const isValid = false
             sendMail(email, uniqueString)
             res.redirect('back')*/
-
-
 
         })
 
@@ -368,8 +361,6 @@ app.post("/deactivate", async (req, res) => {
 
 })
 
-
-
 app.post("/update", async (req, res) => {
     var u = req.body.oldU
     const login = await db.collection('users').where('username', '==', req.body.oldU).get();
@@ -569,10 +560,6 @@ const verifyUser = (req, res, next) => {
 
 app.get("localhost:3000/confirmationCode", verifyUser)
 
-
-
-
-
 app.post("/resetpass", async (req, res) => {
     console.log("jharna i made it in the reset post")
     console.log("j look")
@@ -614,8 +601,6 @@ app.post("/resetpass", async (req, res) => {
 
 })
 
-
-
 app.post("/securepassreset", async (req, res) => {
     console.log("got in securepassreset");
     var u = req.body.username
@@ -638,7 +623,6 @@ app.post("/securepassreset", async (req, res) => {
 
 });
 
-
 app.post("/notyourprofile", async (req, res) => {
     console.log("in back end of NYP")
     var currUser = req.body["currUser"]
@@ -648,7 +632,6 @@ app.post("/notyourprofile", async (req, res) => {
     var currentUserDataDoc = currentUserData.docs[0];
     var followers = currentUserDataDoc.get("followers")
     var currentUsername = currentUserDataDoc.get("username")
-
 
     var oldUser = req.body["oldUser"]
     console.log("first potential problem area " + oldUser);
@@ -665,8 +648,6 @@ app.post("/notyourprofile", async (req, res) => {
     var oldlang = oldUserDataDoc.get("lang")
     var oldPFP = oldUserDataDoc.get("profpic")
     var oldcourse = oldUserDataDoc.get("taking")
-
-
 
     console.log("the current user is " + currUser + " the old user " + oldUser)
     if (following.includes(currentUsername)) {
@@ -696,7 +677,6 @@ app.post("/notyourprofile", async (req, res) => {
 
 });
 
-
 app.post("/pfpupload", async (req, res) => {
     console.log("got in profile picture upload");
     var u = req.body.username
@@ -715,7 +695,6 @@ app.post("/pfpupload", async (req, res) => {
         console.log("3")
     }
     
-
     /*
      * Step 1: New PFP variable
      * Step 2: Store link in PFP var in database
@@ -743,7 +722,6 @@ const randString = () => {
     }
     return token
 }
-
 
 const sendVerificationMail = (username, email, uniqueString, whichService) => {
     console.log("in send mail")
@@ -784,7 +762,6 @@ const sendVerificationMail = (username, email, uniqueString, whichService) => {
             </div>`
         };
     }
-
 
     transport.sendMail(mailOptions, function (err, info) {
         if (err) {

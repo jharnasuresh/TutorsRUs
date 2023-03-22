@@ -10,6 +10,11 @@ function Search({GlobalState, placeholder, data}) {
     const [sort, setSort] = useState({sort: "rating", order: "desc"});
     const [filterGenre, setFilterGenre] = useState([])
     const [page, setPage] = useState(1);
+    const [open, setOpen] = useState(false);
+    const [filterData, setFilteredData] = useState([]);
+    const [search, setSearch] = useState('');
+    const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
         const getAllMovies = async () => {
@@ -27,11 +32,7 @@ function Search({GlobalState, placeholder, data}) {
     }, [sort, filterGenre, page, search]);
 
     //const [filteredData, setFilteredData] = useState[{}];
-    const [open, setOpen] = useState(false);
-    const [filterData, setFilteredData] = useState([]);
-    const [search, setSearch] = useState('');
-    const navigate = useNavigate();
-    const location = useLocation();
+
     const handleFilter = (event) => {
         const searchWord = event.target.value
         const newFilter = data.filter((value) => {
