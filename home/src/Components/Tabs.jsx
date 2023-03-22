@@ -71,7 +71,7 @@ export const Tabs = ({GlobalState}) => {
 
                     </li>
                     <li>
-                        <a href="./Search" onClick={() => navigate('/Search', {state: {u: currUser}})}>Search</a>
+                        <a href="./Search" onClick={() => navigate('/Search', {state: {u: currUser, none: false}})}>Search</a>
                     </li>
 
                 </ul>
