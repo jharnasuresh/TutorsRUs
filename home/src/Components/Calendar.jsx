@@ -5,6 +5,8 @@ import listPlugin from "@fullcalendar/list";
 import interactionPlugin from "@fullcalendar/interaction"; // needed for dayClick
 import googleCalendarPlugin from "@fullcalendar/google-calendar";
 import styles from "./Calendar.module.scss";
+import { AspectRatio } from "@mui/icons-material";
+import { height } from "@mui/system";
 
 
 export default function Calendar() {
@@ -29,6 +31,8 @@ export default function Calendar() {
 
     // console.log(arg.event.extendedProps.description);
   };
+  
+
   const setting = {
     plugins: [
       dayGridPlugin,
@@ -36,8 +40,9 @@ export default function Calendar() {
       interactionPlugin,
       googleCalendarPlugin
     ],
+
     //Main Key
-    googleCalendarApiKey: "AIzaSyAqLtsCLQE_VWtwuuUI7DrolyhjPhHBrcs",
+    googleCalendarApiKey: "AIzaSyDz4YskXpTe-Pslm1tyQv0_a1dc75-hkwA",
     //Personal Key
     // googleCalendarApiKey: "AIzaSyC4wovE09hJkGy7mG4QGlwVzdeu0uLDhro",
     eventSources: [
@@ -46,23 +51,22 @@ export default function Calendar() {
       // },
       {
         googleCalendarId:
-          "55ee23b93117c9d3d4dad57f20617bccb554fb5ae7305ddadacba47987e0e372@group.calendar.google.com",
+          "tutorsrus62@gmail.com",
         className: styles.calEvents
       }
     ],
     eventClick: handleDateClick,
     initialView: "dayGridMonth",
+    eventBackgroundColor: '#FF4500',
     headerToolbar: {
       left: "prev,next today",
       center: "title",
       right: "dayGridMonth,listMonth"
     },
-    eventTimeFormat: {
-      hour: "numeric",
-      minute: "2-digit",
-      meridiem: "short"
-    },
     eventContent: renderEventContent
+
+
+
   };
   return (
     <>
