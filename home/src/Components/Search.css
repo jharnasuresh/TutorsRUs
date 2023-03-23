@@ -22,12 +22,14 @@
     padding: 15px;
     height: 60px;
     width: 300px;
+    margin-top: -1150px;
+    margin-left: 50px;
 }
 
 .link-btn {
     height: 60px;
     width: 50px;
-    background-color: white;
+    background-color: black;
     display: grid;
     place-items: center;
     margin-top: 8px;
@@ -80,7 +82,7 @@ input:focus {
 
   /*new search stuff 3/22*/
   .wrapper {
-    width: 100%;
+  width: 100%;
 	min-height: 100vh;
 	display: flex;
 	align-items: center;
@@ -88,10 +90,14 @@ input:focus {
   }
 
   .container {
+    margin-left: 200px;
+    margin-right: -200px;
+    margin-bottom: 900px;
+    margin-top: 200px;
     width: 1000px;
     border-radius: 10px;
     box-shadow: var(--box-shadow);
-    display: flex;
+    display: absolute;
     flex-direction: column;
     overflow: hidden;
     background-color: white;

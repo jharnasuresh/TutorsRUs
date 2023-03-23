@@ -3,6 +3,9 @@ import "./Search.css"
 import SearchIcon from '@mui/icons-material/Search';
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import Table from './Table'
+import Sort from './Sort'
+import Genre from './Genre'
 
 
 function Search({ GlobalState, placeholder, data }) {
@@ -17,7 +20,8 @@ function Search({ GlobalState, placeholder, data }) {
     const location = useLocation();
     const [searchBy, setSearchBy] = useState('Courses')
 
-    useEffect(() => {
+
+    /*useEffect(() => {
         const getAllMovies = async () => {
             try {
                 const url = `${"hello"}?page=${page}&sort=${sort.sort},${sort.order}
@@ -31,9 +35,13 @@ function Search({ GlobalState, placeholder, data }) {
         };
         getAllMovies();
     }, [sort, filterGenre, page, search]);
-
+*/
     //const [filteredData, setFilteredData] = useState[{}];
-
+    const [open, setOpen] = useState(false);
+    const [filterData, setFilteredData] = useState([]);
+    const [search, setSearch] = useState('');
+    const navigate = useNavigate();
+    const location = useLocation();
     const handleFilter = (event) => {
         const searchWord = event.target.value
         const newFilter = data.filter((value) => {
@@ -108,8 +116,17 @@ function Search({ GlobalState, placeholder, data }) {
             <div className="wrapper">
                 <div className="container">
                     <div className="body">
-                        <div className="table_container"></div>
-                        <div className="filter_container"></div>
+                        <div className="table_container">
+                            <Table movies = {obj.movies ? obj.movies : []}/>
+                        </div>
+                        <div className="filter_container">
+                            <Sort sort={sort} setSort={(sort)=>setSort(sort)}/>
+                            <Genre
+                                filterGenre={filterGenre}
+                                genres={obj.genres ? obj.genres:[]}
+                                setFilterGenre={(genre) => setFilterGenre(genre)}
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -133,6 +150,7 @@ function Search({ GlobalState, placeholder, data }) {
             <div className="searchInputs">
 
                 <input type="text" placeholder="Search..." onChange={e => setSearch(e.target.value)} />
+
                 <div className="searchIcon">
                     <button type="link-btn" onClick={handleSubmit}><i class="fa-solid fa-magnifying-glass"></i></button>
                 </div>
