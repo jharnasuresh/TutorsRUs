@@ -55,42 +55,21 @@ function Search({ GlobalState, placeholder, data }) {
         setSearchBy(document.getElementsByName("search-by").value)
         console.log("search by: " + searchBy)
 
+        const headers = { "content-type": "application/json" };
+        const requestData = JSON.stringify({ "course": search });
+        var url = "";
+
 
         if (search.includes(",")) {
             // search for multiple courses
             console.log(search.split(", "))
-            const headers = { "content-type": "application/json" };
-            const requestData = JSON.stringify({ "course": search });
-            fetch('http://localhost:3001/searchmultiplecourses', { method: 'POST', body: requestData, headers: headers })
-                .then((res) => res.json())
-                .then((res) => {
-                    console.log(res)
-                    if (res === "none") {
-                        // no tutors
-                        console.log("none here")
-                        setNone(true)
-                    }
-                    else {
-                        // list tutors
-                        setNone(false);
-                        // TO BE FIXED WITH MORE DATA
-                        let i = 0;
-                        let u = "";
-                        while (i < res.length) {
-                            console.log(res[i]);
-                            u += res[i] + ", ";
-                            i++;
-                        }
-                        setUsers(u)
+            url = 'http://localhost:3001/searchmultiplecourses';
 
-
-                    }
-
-                })
         } else {
-            const headers = { "content-type": "application/json" };
-            const requestData = JSON.stringify({ "course": search });
-            fetch('http://localhost:3001/searchcoursetitle', { method: 'POST', body: requestData, headers: headers })
+            url = 'http://localhost:3001/searchcoursetitle';
+        }
+
+        fetch(url, { method: 'POST', body: requestData, headers: headers })
                 .then((res) => res.json())
                 .then((res) => {
                     console.log(res)
@@ -116,7 +95,6 @@ function Search({ GlobalState, placeholder, data }) {
                     }
 
                 })
-        }
 
 
 
@@ -136,16 +114,16 @@ function Search({ GlobalState, placeholder, data }) {
                 </div>
             </div>
     */}
-    <form>
-    <div className="searchby">
-                <label for="courses" style={{padding: '6px 20px'}}>Courses</label>
-                <input type="radio" id="courses" name="search-by" value="Courses" style={{height: '20px', width: '20px', paddingInline: '20px'}}/>
-                <label for="tutor" style={{padding: '6px 20px'}}>Tutor</label>
-                <input type="radio" id="tutor" name="search-by" value="Tutor" style={{height: '20px', width: '20px', padding: '20px'}}/>
-                <label for="professor" style={{padding: '6px 20px'}}>Professor</label>
-                <input type="radio" id="Professor" name="search-by" value="Professor" style={{height: '20px', width: '20px', padding: '20px'}}/>
-                
-            </div>
+    <form onChange={e => setSearchBy(e.target.value)}>
+        <div className="searchby">
+            <label for="courses" style={{padding: '6px 20px'}}>Courses</label>
+            <input type="radio" id="courses" name="search-by" value="Courses" style={{height: '20px', width: '20px', paddingInline: '20px'}}/>
+            <label for="tutor" style={{padding: '6px 20px'}}>Tutor</label>
+            <input type="radio" id="tutor" name="search-by" value="Tutor" style={{height: '20px', width: '20px', padding: '20px'}}/>
+            <label for="professor" style={{padding: '6px 20px'}}>Professor</label>
+            <input type="radio" id="Professor" name="search-by" value="Professor" style={{height: '20px', width: '20px', padding: '20px'}}/>
+            
+        </div>
     </form>
             
 
