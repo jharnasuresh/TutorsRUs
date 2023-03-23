@@ -37,11 +37,6 @@ function Search({ GlobalState, placeholder, data }) {
     }, [sort, filterGenre, page, search]);
 */
     //const [filteredData, setFilteredData] = useState[{}];
-    const [open, setOpen] = useState(false);
-    const [filterData, setFilteredData] = useState([]);
-    const [search, setSearch] = useState('');
-    const navigate = useNavigate();
-    const location = useLocation();
     const handleFilter = (event) => {
         const searchWord = event.target.value
         const newFilter = data.filter((value) => {
@@ -112,7 +107,7 @@ function Search({ GlobalState, placeholder, data }) {
     return (
 
         <div className="App search">
-            {/*
+            
             <div className="wrapper">
                 <div className="container">
                     <div className="body">
@@ -130,15 +125,15 @@ function Search({ GlobalState, placeholder, data }) {
                     </div>
                 </div>
             </div>
-    */}
+    
     <form onChange={e => setSearchBy(e.target.value)}>
         <div className="searchby">
             <label for="courses" style={{padding: '6px 20px'}}>Courses</label>
-            <input type="radio" id="courses" name="search-by" value="Courses" style={{height: '20px', width: '20px', paddingInline: '20px'}}/>
+            <input type="radio" id="courses" name="search-by" value="Courses" style={{height: '20px', width: '20px'}}/>
             <label for="tutor" style={{padding: '6px 20px'}}>Tutor</label>
-            <input type="radio" id="tutor" name="search-by" value="Tutor" style={{height: '20px', width: '20px', padding: '20px'}}/>
+            <input type="radio" id="tutor" name="search-by" value="Tutor" style={{height: '20px', width: '20px'}}/>
             <label for="professor" style={{padding: '6px 20px'}}>Professor</label>
-            <input type="radio" id="Professor" name="search-by" value="Professor" style={{height: '20px', width: '20px', padding: '20px'}}/>
+            <input type="radio" id="Professor" name="search-by" value="Professor" style={{height: '20px', width: '20px'}}/>
             
         </div>
     </form>
