@@ -112,6 +112,30 @@ function Search({ GlobalState, placeholder, data }) {
 
         <div className="App search">
             
+            
+            <div className="searchInputs">
+    <form onChange={e => setSearchBy(e.target.value)}>
+        <div className="searchby">
+            <label for="courses" style={{padding: '6px 20px'}}>Courses</label>
+            <input type="radio" id="courses" name="search-by" value="Courses" style={{height: '20px', width: '20px'}}/>
+            <label for="tutor" style={{padding: '6px 20px'}}>Tutor</label>
+            <input type="radio" id="tutor" name="search-by" value="Tutor" style={{height: '20px', width: '20px'}}/>
+            <label for="professor" style={{padding: '6px 20px'}}>Professor</label>
+            <input type="radio" id="Professor" name="search-by" value="Professor" style={{height: '20px', width: '20px'}}/>
+            
+        </div>
+    </form>
+            
+            
+
+                <input type="text" placeholder="Search..." onChange={e => setSearch(e.target.value)} />
+
+                    <button type="link-btn" onClick={handleSubmit}><i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
+
+            {
+                none ? <h1 style={{ color: 'red' }}>No available tutors</h1> : <p>{users}</p>
+            }
             <div className="wrapper">
                 <div className="container">
                     <div className="body">
@@ -129,30 +153,6 @@ function Search({ GlobalState, placeholder, data }) {
                     </div>
                 </div>
             </div>
-    
-    <form onChange={e => setSearchBy(e.target.value)}>
-        <div className="searchby">
-            <label for="courses" style={{padding: '6px 20px'}}>Courses</label>
-            <input type="radio" id="courses" name="search-by" value="Courses" style={{height: '20px', width: '20px'}}/>
-            <label for="tutor" style={{padding: '6px 20px'}}>Tutor</label>
-            <input type="radio" id="tutor" name="search-by" value="Tutor" style={{height: '20px', width: '20px'}}/>
-            <label for="professor" style={{padding: '6px 20px'}}>Professor</label>
-            <input type="radio" id="Professor" name="search-by" value="Professor" style={{height: '20px', width: '20px'}}/>
-            
-        </div>
-    </form>
-            
-            <div className="searchInputs">
-
-                <input type="text" placeholder="Search..." onChange={e => setSearch(e.target.value)} />
-
-                <div className="searchIcon">
-                    <button type="link-btn" onClick={handleSubmit}><i class="fa-solid fa-magnifying-glass"></i></button>
-                </div>
-            </div>
-            {
-                none ? <h1 style={{ color: 'red' }}>No available tutors</h1> : <p>{users}</p>
-            }
         </div>
     )
 }

@@ -1,14 +1,17 @@
 
 .searchInputs {
+  position: relative;
+  left: -300px;
+}
+/*.searchInputs {
     margin-top: -750px;
     margin-left: -500px;
     display: flex;
 }
 
 .searchby {
-  margin-top: -800px;
+  margin-top: -1950px;
   margin-left: -450px;
-  display: flex;
   font-size: 18px;
 }
 
@@ -25,7 +28,7 @@
     margin-top: -1150px;
     margin-left: 50px;
 }
-
+*/
 .link-btn {
     height: 60px;
     width: 50px;
@@ -93,7 +96,7 @@ input:focus {
     margin-left: 200px;
     margin-right: -200px;
     margin-bottom: 900px;
-    margin-top: 200px;
+    margin-top: 300px;
     width: 1000px;
     border-radius: 10px;
     box-shadow: var(--box-shadow);
