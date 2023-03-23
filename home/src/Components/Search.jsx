@@ -37,11 +37,6 @@ function Search({ GlobalState, placeholder, data }) {
     }, [sort, filterGenre, page, search]);
 */
     //const [filteredData, setFilteredData] = useState[{}];
-    const [open, setOpen] = useState(false);
-    const [filterData, setFilteredData] = useState([]);
-    const [search, setSearch] = useState('');
-    const navigate = useNavigate();
-    const location = useLocation();
     const handleFilter = (event) => {
         const searchWord = event.target.value
         const newFilter = data.filter((value) => {
@@ -64,23 +59,30 @@ function Search({ GlobalState, placeholder, data }) {
         console.log("search by: " + searchBy)
 
         const headers = { "content-type": "application/json" };
-        const requestData = JSON.stringify({ "course": search });
+        const requestData = JSON.stringify({ "data": search });
         var url = "";
 
 
-        if (search.includes(",")) {
-            // search for multiple courses
-            console.log(search.split(", "))
-            url = 'http://localhost:3001/searchmultiplecourses';
-
-        } else {
-            url = 'http://localhost:3001/searchcoursetitle';
+        if (searchBy == "Courses") {
+            if (search.includes(",")) {
+                // search for multiple courses
+                console.log(search.split(", "))
+                url = 'http://localhost:3001/searchmultiplecourses';
+    
+            } else {
+                url = 'http://localhost:3001/searchcoursetitle';
+            }
         }
+        else if (searchBy == "Tutor") {
+            url = 'http://localhost:3001/searchtutorname'
+        }
+        
 
         fetch(url, { method: 'POST', body: requestData, headers: headers })
                 .then((res) => res.json())
                 .then((res) => {
                     console.log(res)
+                    setSearchBy(searchBy)
                     if (res === "none") {
                         // no tutors
                         console.log("none here")
@@ -104,15 +106,36 @@ function Search({ GlobalState, placeholder, data }) {
 
                 })
 
-
-
-
     }
 
     return (
 
         <div className="App search">
-            {/*
+            
+            
+            <div className="searchInputs">
+    <form onChange={e => setSearchBy(e.target.value)}>
+        <div className="searchby">
+            <label for="courses" style={{padding: '6px 20px'}}>Courses</label>
+            <input type="radio" id="courses" name="search-by" value="Courses" style={{height: '20px', width: '20px'}}/>
+            <label for="tutor" style={{padding: '6px 20px'}}>Tutor</label>
+            <input type="radio" id="tutor" name="search-by" value="Tutor" style={{height: '20px', width: '20px'}}/>
+            <label for="professor" style={{padding: '6px 20px'}}>Professor</label>
+            <input type="radio" id="Professor" name="search-by" value="Professor" style={{height: '20px', width: '20px'}}/>
+            
+        </div>
+    </form>
+            
+            
+
+                <input type="text" placeholder="Search..." onChange={e => setSearch(e.target.value)} />
+
+                    <button type="link-btn" onClick={handleSubmit}><i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
+
+            {
+                none ? <h1 style={{ color: 'red' }}>No available tutors</h1> : <p>{users}</p>
+            }
             <div className="wrapper">
                 <div className="container">
                     <div className="body">
@@ -130,34 +153,6 @@ function Search({ GlobalState, placeholder, data }) {
                     </div>
                 </div>
             </div>
-    */}
-    <form onChange={e => setSearchBy(e.target.value)}>
-        <div className="searchby">
-            <label for="courses" style={{padding: '6px 20px'}}>Courses</label>
-            <input type="radio" id="courses" name="search-by" value="Courses" style={{height: '20px', width: '20px', paddingInline: '20px'}}/>
-            <label for="tutor" style={{padding: '6px 20px'}}>Tutor</label>
-            <input type="radio" id="tutor" name="search-by" value="Tutor" style={{height: '20px', width: '20px', padding: '20px'}}/>
-            <label for="professor" style={{padding: '6px 20px'}}>Professor</label>
-            <input type="radio" id="Professor" name="search-by" value="Professor" style={{height: '20px', width: '20px', padding: '20px'}}/>
-            
-        </div>
-    </form>
-            
-
-
-
-
-            <div className="searchInputs">
-
-                <input type="text" placeholder="Search..." onChange={e => setSearch(e.target.value)} />
-
-                <div className="searchIcon">
-                    <button type="link-btn" onClick={handleSubmit}><i class="fa-solid fa-magnifying-glass"></i></button>
-                </div>
-            </div>
-            {
-                none ? <h1 style={{ color: 'red' }}>No available tutors</h1> : <p>{users}</p>
-            }
         </div>
     )
 }
