@@ -262,7 +262,7 @@ app.post("/searchcoursetitle", async (req, res) => {
 app.post("/searchmultiplecourses", async (req, res) => {
 
     console.log("searching mutliple")
-    var ar = req.body.course.split(", ")
+    var ar = req.body.course.split(",")
     var courses = [];
     let i = 0;
     while (i < ar.length) {

@@ -1,8 +1,15 @@
 
 .searchInputs {
-    margin-top: -600px;
-    margin-left: 400px;
+    margin-top: -750px;
+    margin-left: -500px;
     display: flex;
+}
+
+.searchby {
+  margin-top: -800px;
+  margin-left: -450px;
+  display: flex;
+  font-size: 18px;
 }
 
 .search input {
