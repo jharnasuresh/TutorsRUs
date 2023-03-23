@@ -23,6 +23,7 @@ import NotYourProfile from './Components/NotYourProfile';
 import EditCourseTutor from './Components/EditCourseTutor';
 import TutorEdit  from './Components/tutorEdit';
 import Search from './Components/Search';
+import Table from './Components/Table'
 function App() {
 
   const [currUser, setCurrUser] = useState("");
