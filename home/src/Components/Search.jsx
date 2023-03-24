@@ -128,7 +128,7 @@ function Search({ GlobalState, placeholder, data }) {
             
             
 
-                <input type="text" placeholder="Search..." onChange={e => setSearch(e.target.value)} />
+                <input className="searchbar" type="text" placeholder="Search..." onChange={e => setSearch(e.target.value)} />
 
                     <button type="link-btn" onClick={handleSubmit}><i class="fa-solid fa-magnifying-glass"></i></button>
             </div>

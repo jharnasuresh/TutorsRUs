@@ -7,7 +7,7 @@
 	font-weight: bold;
 	box-shadow: var(--box-shadow);
 	margin-top: -100px;
-	margin-left: 10px;
+	margin-left: -200px;
 	background-color: white;
 	border-radius: 4px;
 	
@@ -20,7 +20,7 @@
 	flex: 2;
 	text-align: left;
 	margin-left: -300px;
-	padding-right: 70px;
+	padding-right: 50px;
 }
 
 .genre_tab {
