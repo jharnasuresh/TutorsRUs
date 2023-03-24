@@ -11,6 +11,7 @@ export const Start = ({GlobalState}) => {
   const location = useLocation();
   
   const { currUser, setCurrUser } = GlobalState;
+  setCurrUser(location.state.u)
   console.log(currUser)
 
   if (currUser === "") {

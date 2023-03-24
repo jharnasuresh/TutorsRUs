@@ -18,6 +18,7 @@ export const Settings = ({ GlobalState }) => {
     const [price, setPrice] = useState('');
     var aButton = (active) ? "Deactivate" : "Activate";
     const { currUser, setCurrUser } = GlobalState;
+    setCurrUser(location.state.u)
     
   
     console.log("ttt " + location.state.tutor)
