@@ -19,8 +19,9 @@ function Search({ GlobalState, placeholder, data }) {
     const [search, setSearch] = useState('');
     const navigate = useNavigate();
     const location = useLocation();
-    const [searchBy, setSearchBy] = useState('Courses')
+    const [searchBy, setSearchBy] = useState('courses')
     const { currUser, setCurrUser } = GlobalState;
+    const [showErr, setShowErr] = useState(false);
     setCurrUser(location.state.u)
 
     console.log(location.state.u)
@@ -55,20 +56,26 @@ function Search({ GlobalState, placeholder, data }) {
         }
     }
 
+    const handleChange = (e) => {
+        setSearchBy(e.target.value)
+        setShowErr(false)
+    }
+
     const [users, setUsers] = useState("");
     const [none, setNone] = useState(false);
 
     const handleSubmit = (e) => {
+        setShowErr(false)
         console.log("searching for " + search)
         setSearchBy(document.getElementsByName("search-by").value)
         console.log("search by: " + searchBy)
 
         const headers = { "content-type": "application/json" };
-        const requestData = JSON.stringify({ "data": search });
+        const requestData = JSON.stringify({ "data": search, "currUser": currUser });
         var url = "";
 
 
-        if (searchBy == "Courses") {
+        if (searchBy == "courses") {
             if (search.includes(",")) {
                 // search for multiple courses
                 console.log(search.split(", "))
@@ -78,8 +85,23 @@ function Search({ GlobalState, placeholder, data }) {
                 url = 'http://localhost:3001/searchcoursetitle';
             }
         }
-        else if (searchBy == "Tutor") {
+        else if (searchBy == "tutor") {
+            if (search.includes(",")) {
+                setShowErr(true)
+                setSearchBy(searchBy)
+                setUsers("")
+                return;
+            }
             url = 'http://localhost:3001/searchtutorname'
+        }
+        else { //searchby = prof
+            if (search.includes(",")) {
+                setShowErr(true)
+                setSearchBy(searchBy)
+                setUsers("")
+                return;
+            }
+            url = 'http://localhost:3001/searchprofname'
         }
         
 
@@ -116,15 +138,23 @@ function Search({ GlobalState, placeholder, data }) {
     return (
 
         <div className="App search">
+
+            <br></br>
+
+            {
+                searchBy != 'Courses' ? <span></span> : <h4>*When searching for multiple classes, use a comma to separate each one (ex: CS180, CS182)</h4>
+            }
+
+            
             
             
             <div className="searchInputs">
-    <form onChange={e => setSearchBy(e.target.value)}>
+    <form onChange={e => handleChange(e)}>
         <div className="searchby">
             <label for="courses" style={{padding: '6px 20px'}}>Courses</label>
-            <input type="radio" id="courses" name="search-by" value="Courses" style={{height: '20px', width: '20px'}}/>
+            <input type="radio" id="courses" name="search-by" value="courses" style={{height: '20px', width: '20px'}}/>
             <label for="tutor" style={{padding: '6px 20px'}}>Tutor</label>
-            <input type="radio" id="tutor" name="search-by" value="Tutor" style={{height: '20px', width: '20px'}}/>
+            <input type="radio" id="tutor" name="search-by" value="tutor" style={{height: '20px', width: '20px'}}/>
             <label for="professor" style={{padding: '6px 20px'}}>Professor</label>
             <input type="radio" id="Professor" name="search-by" value="Professor" style={{height: '20px', width: '20px'}}/>
         </div>
@@ -148,7 +178,9 @@ function Search({ GlobalState, placeholder, data }) {
             <label for="ten" style={{padding: '6px 20px'}}>Under $10</label>
             <input type="radio" id="ten" name="search-by" value="Ten" style={{height: '20px', width: '20px'}}/>
         </div>
-
+            {
+                showErr ? <h3 style={{color: 'red'}}>Only search for one {searchBy} at a time.</h3> : <span></span>
+            }
             <div className="wrapper">
                 <div className="container">
                     <div className="body">

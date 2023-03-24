@@ -48,6 +48,42 @@ export const Tabs = ({GlobalState}) => {
           
 }
 
+const toSettings = (e) => {
+
+    e.preventDefault();
+    console.log("tabs2settings " + currUser)
+    const headers = { "content-type": "application/json" };
+    const requestData = JSON.stringify({ "username":  currUser});
+
+    fetch('http://localhost:3001/info', { method: 'POST', body: requestData, headers: headers })
+    .then((res) => res.json())
+    .then((res) => {
+        console.log("aaaa? " + res["active"])
+        console.log("june? " + res["tutor"])
+        navigate("/Settings", {
+        
+            state: {
+                u: res.u,
+                fname: res["fname"],
+                lname: res["lname"], 
+                email: res["email"], 
+                followers: res["followers"],
+                following: res["following"],
+                active: res["active"],
+                lang: res["lang"],
+                profpic: res["profpic"],
+                taking: res["taking"],
+                taken: res["taken"],
+                followers: res["followers"],
+                following: res["following"],
+                tutor: res["tutor"],
+                price: res["price"]
+            }
+        });
+    })
+          
+}
+
     function options() {
         <select>
                    
@@ -88,7 +124,7 @@ export const Tabs = ({GlobalState}) => {
 
                     
                     <li>
-                        <a href="./Settings" onClick={() => navigate('/Settings', {state: {u: currUser, none: false}})}><i class="fa-solid fa-cogs"></i></a>
+                        <a href="./Settings" onClick={toSettings}><i class="fa-solid fa-cogs"></i></a>
                    
                     </li>
 
