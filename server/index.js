@@ -258,9 +258,14 @@ app.post("/searchcoursetitle", async (req, res) => {
         users.push(u.get("username"))
         
     }
-    if (list.size == 0) {
+    if (users.includes(req.body.currUser)) {
+        users.splice(users.indexOf(req.body.currUser), 1)
+
+    }
+    if (users.length == 0) {
         return res.send(JSON.stringify("none"))
     }
+    
     return res.send(JSON.stringify(users))
 
 
@@ -315,9 +320,14 @@ app.post("/searchmultiplecourses", async (req, res) => {
         finalList.splice(finalList.indexOf(toRemove[c]), 1)
     }
 
+    if (finalList.includes(req.body.currUser)) {
+        finalList.splice(finalList.indexOf(req.body.currUser), 1)
+    }
+
     if (finalList.length === 0) {
         return res.send(JSON.stringify("none"))
     }
+    
     
     return res.send(JSON.stringify(finalList))
 
@@ -355,10 +365,42 @@ app.post("/searchtutorname", async (req, res) => {
 
     let finalList = [...new Set(users)]
 
+    if (finalList.includes(req.body.currUser)) {
+        finalList.splice(finalList.indexOf(req.body.currUser), 1)
+    }
     if (finalList.length == 0) {
         return res.send(JSON.stringify("none"))
     }
+    
     return res.send(JSON.stringify(finalList))
+
+
+});
+
+app.post("/searchprofname", async (req, res) => {
+
+    var prof = req.body.data.toLowerCase();
+
+    console.log("searching for " + prof)
+
+    var list = await db.collection('users').where('takenProfs', 'array-contains', prof).get();
+    var users = [];
+    console.log(list.size)
+    console.log(list.size)
+    for (i in list.docs) {
+        console.log(list.docs[i].get("username"))
+        var u = list.docs[i];
+        users.push(u.get("username"))
+    }
+
+    if (users.includes(req.body.currUser)) {
+        users.splice(users.indexOf(req.body.currUser), 1)
+    }
+    if (users.length == 0) {
+        return res.send(JSON.stringify("none"))
+    }
+    
+    return res.send(JSON.stringify(users))
 
 
 });
