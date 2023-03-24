@@ -21,7 +21,7 @@ const Sort = ({sort, setSort}) => {
             className={styles.select}
             defaultValue={sort.sort}
             onChange={onSelectChange}>
-                <option value ="year">Year</option>
+                <option value ="year">Price</option>
                 <option value ="rating">Rating</option>
             </select>
             <button className={styles.arrow_btn} onClick={onArrowChange}>

@@ -13,7 +13,7 @@ const Genre = ({genres, filterGenre, setFilterGenre}) => {
     };
     return (
         <div className={styles.container}>
-            <h1 className={styles.heading}>Filter by Genre</h1>
+            <h1 className={styles.heading}>Filter by:</h1>
             <div className={styles.genre_container}>
                 {genres.map((genre)=> (
                     <div className={styles.genre} key={genre}>
