@@ -539,9 +539,11 @@ app.post("/addcourse", async (req, res) => {
     await doc.ref.update({takingTitles: listTitles})
 
     var listProfs = doc.get("takingProfs");
-    listProfs.push(req.body.prof.toLowerCase());
-    await doc.ref.update({takingProfs: listProfs})
-
+    if (!listProfs.includes(req.body.prof.toLowerCase())){
+        listProfs.push(req.body.prof.toLowerCase());
+        await doc.ref.update({takingProfs: listProfs})
+    }
+    
     await doc.ref.update({ taking: c })
     return res.send(JSON.stringify({ "taking": c }))
 
@@ -570,11 +572,11 @@ app.post("/deletecourse", async (req, res) => {
     await doc.ref.update({takingTitles: listTitles})
 
     var listProfs = doc.get("takingProfs");
-    listProfs.splice(listProfs.indexOf(req.body.prof.toLowerCase()), 1);
-    await doc.ref.update({takingProfs: listProfs})
-
+    if (!listProfs.includes(req.body.prof.toLowerCase())) {
+        listProfs.splice(listProfs.indexOf(req.body.prof.toLowerCase()), 1);
+        await doc.ref.update({takingProfs: listProfs})
+    }
     
-
     delete c[t]
     await doc.ref.update({ taking: c })
     return res.send(JSON.stringify({ "taking": c }))
@@ -599,9 +601,11 @@ app.post("/addcoursetutor", async (req, res) => {
     await doc.ref.update({takenTitles: listTitles})
 
     var listProfs = doc.get("takenProfs");
-    listProfs.push(req.body.prof.toLowerCase());
-    await doc.ref.update({takenProfs: listProfs})
-
+    if (!listProfs.includes(req.body.prof.toLowerCase())) {
+        listProfs.push(req.body.prof.toLowerCase());
+        await doc.ref.update({takenProfs: listProfs})
+    }
+    
     await doc.ref.update({ taken: c })
     return res.send(JSON.stringify({ "taken": c }))
 
@@ -629,9 +633,11 @@ app.post("/deletecoursetutor", async (req, res) => {
     await doc.ref.update({takenTitles: listTitles})
 
     var listProfs = doc.get("takenProfs");
-    listProfs.splice(listProfs.indexOf(req.body.prof.toLowerCase()), 1);
-    await doc.ref.update({takenProfs: listProfs})
-
+    if (!listProfs.includes(req.body.prof.toLowerCase())) {
+        listProfs.splice(listProfs.indexOf(req.body.prof.toLowerCase()), 1);
+        await doc.ref.update({takenProfs: listProfs})
+    }
+    
     delete c[t]
     await doc.ref.update({ taken: c })
     return res.send(JSON.stringify({ "taken": c }))
