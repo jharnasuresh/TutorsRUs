@@ -19,6 +19,8 @@ export const Settings = ({ GlobalState }) => {
     var aButton = (active) ? "Deactivate" : "Activate";
     const { currUser, setCurrUser } = GlobalState;
     setCurrUser(location.state.u)
+
+    console.log("user " + location.state.u  + " " + currUser)
     
   
     console.log("ttt " + location.state.tutor)
@@ -31,7 +33,7 @@ export const Settings = ({ GlobalState }) => {
         console.log("hi " + Fname)
 
         const headers = { "content-type": "application/json" };
-        const requestData = JSON.stringify({ "oldU": location.state.user, "fname": Fname, "lname": Lname, "user": username, "email": email, "pass": password, "lang": lang, "price": price });
+        const requestData = JSON.stringify({ "oldU": location.state.u, "fname": Fname, "lname": Lname, "user": username, "email": email, "pass": password, "lang": lang, "price": price });
 
         fetch('http://localhost:3001/update', { method: 'POST', body: requestData, headers: headers })
             .then((res) => res.json())
@@ -64,7 +66,7 @@ export const Settings = ({ GlobalState }) => {
         e.preventDefault();
 
 
-        const requestData = JSON.stringify({ "username": location.state.user });
+        const requestData = JSON.stringify({ "username": location.state.u });
         const headers = { "content-type": "application/json" };
 
         async function getResponse() {
@@ -81,7 +83,7 @@ export const Settings = ({ GlobalState }) => {
 
     const handleDelTranscript = (e) => {
         e.preventDefault();
-        const requestData = JSON.stringify({ "username": location.state.user });
+        const requestData = JSON.stringify({ "username": location.state.u });
         const headers = { "content-type": "application/json" };
         fetch('http://localhost:3001/deltranscript', { method: 'POST', body: requestData, headers: headers })
             .then((res) => res.json())
@@ -114,7 +116,7 @@ export const Settings = ({ GlobalState }) => {
         e.preventDefault();
         console.log("ppp")
         const headers = { "content-type": "application/json" };
-        const requestData = JSON.stringify({ "username": location.state.user });
+        const requestData = JSON.stringify({ "username": location.state.u });
 
         fetch('http://localhost:3001/info', { method: 'POST', body: requestData, headers: headers })
             .then((res) => res.json())
@@ -196,7 +198,7 @@ export const Settings = ({ GlobalState }) => {
              
             <div>
                 <button className='submit' onClick={() => setButtonPopup(true)}>Delete Account</button>
-                <Popup trigger={buttonPopup} setTrigger={setButtonPopup} state={{ user: location.state.user, del: "acct" }}>Are you sure you want to delete your account?</Popup>
+                <Popup trigger={buttonPopup} setTrigger={setButtonPopup} user={location.state.u} del="acct">Are you sure you want to delete your account?</Popup>
             </div>
             <button className='submit' onClick={handleDeactivate}>{aButton} Account</button>
         </div>
