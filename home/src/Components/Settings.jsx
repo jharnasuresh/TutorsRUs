@@ -140,7 +140,7 @@ export const Settings = ({ GlobalState }) => {
     }
 
     return (
-        <div className="App Profile">
+        <div className="App">
             <h2> Edit Profile </h2>
             <form className="settings" onSubmit={handleSubmit} style={{alignContent: 'center'}}>
                 <span style={{ padding: '40px' }}>
