@@ -363,6 +363,30 @@ app.post("/searchtutorname", async (req, res) => {
 
 });
 
+app.post("/searchprofname", async (req, res) => {
+
+    var prof = req.body.data.toLowerCase();
+
+    console.log("searching for " + prof)
+
+    var list = await db.collection('users').where('takenProfs', 'array-contains', prof).get();
+    var users = [];
+    console.log(list.size)
+    console.log(list.size)
+    for (i in list.docs) {
+        console.log(list.docs[i].get("username"))
+        var u = list.docs[i];
+        users.push(u.get("username"))
+    }
+
+    if (users.length == 0) {
+        return res.send(JSON.stringify("none"))
+    }
+    return res.send(JSON.stringify(users))
+
+
+});
+
 app.post("/info", async (req, res) => {
     console.log("iii " + req.body["username"])
     const login = await db.collection('users').where('username', '==', req.body["username"]).get();

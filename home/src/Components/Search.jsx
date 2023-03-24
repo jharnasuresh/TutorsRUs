@@ -80,6 +80,9 @@ function Search({ GlobalState, placeholder, data }) {
         else if (searchBy == "Tutor") {
             url = 'http://localhost:3001/searchtutorname'
         }
+        else { //searchby = prof
+            url = 'http://localhost:3001/searchprofname'
+        }
         
 
         fetch(url, { method: 'POST', body: requestData, headers: headers })
