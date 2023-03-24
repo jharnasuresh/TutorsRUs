@@ -79,41 +79,46 @@ export const Profile = ({ GlobalState }) => {
   console.log("offer " + printingTaken)
 
   return (
-    <div className="App Profile">
+    <div className="App">
 
       <div className='activate'><h1 style={{ color: 'red', marginTop: '-50px' }}>{a}</h1></div>
       
 
       {tut === 'tut' &&
-          <div className="img2"><img class="img2" src = "/Images/verifiedtut.png"/></div>
+          <div className={"img2"} style ={{position: 'absolute', marginLeft: '500px', marginTop: '-750px', height: '50px'}}><img class="img2" src = "/Images/verifiedtut.png"/></div>
       }
 
-    <div style={{position: 'absolute', marginLeft: '-430px', marginTop: '50px'}}>
+    <div style={{position: 'absolute', marginLeft: '-700px', marginTop: '-350px'}}>
       <Avatar src={location.state.profpic} sx={{ width: 300, height: 300 }} />
-      </div>
+    </div>
+    <div style={{position: 'absolute', marginLeft: '-1775px', marginTop: '-400px'}}>
       <About user={location.state.u} email={location.state.email} lang={location.state.lang} yours={true} price={location.state.price} tutor={location.state.tutor}/>
-      <br />
-      <div style={{position: 'absolute', marginLeft: '800px', marginTop: '350px'}}>
+    </div>
+    <div style={{position: 'absolute', marginLeft: '525px', marginTop: '150px'}}>
         <CourseInfo courses={printing} past={false}/>
-      </div>
+    </div>
       
-      <br />
       {
-        (location.state.tutor) ? <div style={{position: 'absolute', marginLeft: '800px', marginTop: '700px'}}><CourseInfo courses={printingTaken} past={true}/></div> : <span></span>
+        (location.state.tutor) ? <div style={{position: 'absolute', marginLeft: '525px', marginTop: '500px'}}><CourseInfo courses={printingTaken} past={true}/></div> : <span></span>
       }
       <div className='profile-btn'>
 
+
+      <div style={{position: 'absolute', marginLeft: '30px', marginTop: '-1100px'}}>
           <a className="popupbutton">
             <button onClick={() => setButtonPopup(true)} className="submit">Followers: {numFollowers}</button>
           </a>
+      </div>
           <Followers trigger={buttonPopup} setTrigger={setButtonPopup} followers= {location.state.followers} oldUser = {location.state.u}>
             <h3>User's Followers:</h3>
             <ButtonList followers= {location.state.followers} oldUser = {location.state.u} following = {location.state.following}/>
 
           </Followers>
+        <div style={{position: 'absolute', marginLeft: '65px', marginTop: '-300px'}}>
         <a className=".popupbutton2">
           <button onClick={() => setButtonPopup2(true)} className="submit">Following: {numFollowing}</button>
         </a>
+        </div>
         <Following trigger={buttonPopup2} setTrigger={setButtonPopup2}>
           <h3>User is Following:</h3>
           <ButtonList2 following={location.state.following} oldUser = {location.state.u}/>
@@ -121,9 +126,10 @@ export const Profile = ({ GlobalState }) => {
 
 
 
-        <button className='submit'>
+       
+       {/* <button className='submit'>
           <Link to="/Settings" state={{ user: location.state.u, active: location.state.active, taking: location.state.taking, taken: location.state.taken, tutor: location.state.tutor, profpic: location.state.profpic, hasPFP: hasPFP }}>Edit Profile</Link>
-        </button>
+    </button>*/}
 
       </div>
 
