@@ -19,6 +19,10 @@ function Search({ GlobalState, placeholder, data }) {
     const navigate = useNavigate();
     const location = useLocation();
     const [searchBy, setSearchBy] = useState('Courses')
+    const { currUser, setCurrUser } = GlobalState;
+    setCurrUser(location.state.u)
+
+    console.log(location.state.u)
 
 
     /*useEffect(() => {
