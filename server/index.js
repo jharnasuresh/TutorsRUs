@@ -835,5 +835,9 @@ const sendVerificationMail = (username, email, uniqueString, whichService) => {
     });
 }
 
+//EVANS WAS HERE!! 3/24
+require("dotenv").config();
+
+
 
 
