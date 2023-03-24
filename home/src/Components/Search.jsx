@@ -7,6 +7,7 @@ import Table from './Table'
 import Sort from './Sort'
 import Genre from './Genre'
 
+const base_url = process.env.REACT_APP_API_URL;
 
 function Search({ GlobalState, placeholder, data }) {
     const [obj, setObj] = useState({});
@@ -26,10 +27,10 @@ function Search({ GlobalState, placeholder, data }) {
     console.log(location.state.u)
 
 
-    /*useEffect(() => {
+    useEffect(() => {
         const getAllMovies = async () => {
             try {
-                const url = `${"hello"}?page=${page}&sort=${sort.sort},${sort.order}
+                const url = `${base_url}?page=${page}&sort=${sort.sort},${sort.order}
                     &genre=${filterGenre.toString()}&search=${search}`
                 const { data } = await axios.get(url);
                 setObj(data);
@@ -40,7 +41,7 @@ function Search({ GlobalState, placeholder, data }) {
         };
         getAllMovies();
     }, [sort, filterGenre, page, search]);
-*/
+
     //const [filteredData, setFilteredData] = useState[{}];
     const handleFilter = (event) => {
         const searchWord = event.target.value
@@ -155,21 +156,28 @@ function Search({ GlobalState, placeholder, data }) {
             <label for="tutor" style={{padding: '6px 20px'}}>Tutor</label>
             <input type="radio" id="tutor" name="search-by" value="tutor" style={{height: '20px', width: '20px'}}/>
             <label for="professor" style={{padding: '6px 20px'}}>Professor</label>
-            <input type="radio" id="Professor" name="search-by" value="professor" style={{height: '20px', width: '20px'}}/>
-            
+            <input type="radio" id="Professor" name="search-by" value="Professor" style={{height: '20px', width: '20px'}}/>
         </div>
     </form>
-            
-            
-
-                <input className="searchbar" type="text" placeholder="Search..." onChange={e => setSearch(e.target.value)} />
-
-                    <button type="link-btn" onClick={handleSubmit}><i class="fa-solid fa-magnifying-glass"></i></button>
-            </div>
+   
+            <input className="searchbar" type="text" placeholder="Search..." onChange={e => setSearch(e.target.value)} />
+            <button type="link-btn" onClick={handleSubmit}><i class="fa-solid fa-magnifying-glass"></i></button>
+    </div>
 
             {
                 none ? <h1 style={{ color: 'red' }}>No available tutors</h1> : <p>{users}</p>
             }
+
+        <div className="priceSort"> 
+            <label for="thirty" style={{padding: '6px 20px'}}>Under $30</label>
+            <input type="radio" id="thirty" name="search-by" value="Thirty" style={{height: '20px', width: '20px'}}/>
+            <br/>
+            <label for="twenty" style={{padding: '6px 20px'}}>Under $20</label>
+            <input type="radio" id="twenty" name="search-by" value="Twenty" style={{height: '20px', width: '20px'}}/>
+            <br/>
+            <label for="ten" style={{padding: '6px 20px'}}>Under $10</label>
+            <input type="radio" id="ten" name="search-by" value="Ten" style={{height: '20px', width: '20px'}}/>
+        </div>
             {
                 showErr ? <h3 style={{color: 'red'}}>Only search for one {searchBy} at a time.</h3> : <span></span>
             }
@@ -184,6 +192,7 @@ function Search({ GlobalState, placeholder, data }) {
                             <Genre
                                 filterGenre={filterGenre}
                                 genres={obj.genres ? obj.genres:[]}
+                                //obj.genres ? obj.genres:[]
                                 setFilterGenre={(genre) => setFilterGenre(genre)}
                             />
                         </div>

@@ -7,7 +7,7 @@
 	font-weight: bold;
 	box-shadow: var(--box-shadow);
 	margin-top: -100px;
-	margin-left: -200px;
+	margin-left: -100px;
 	background-color: white;
 	border-radius: 4px;
 	
@@ -19,8 +19,8 @@
 	color: var(--black);
 	flex: 2;
 	text-align: left;
-	margin-left: -300px;
-	padding-right: 50px;
+	margin-left: 50px;
+	
 }
 
 .genre_tab {
@@ -28,15 +28,14 @@
 	font-weight: 600;
 	color: var(--black);
 	flex: 1;
-	padding-right: 100px;
+	margin-left: 400px;
 }
 
 .rating_tab {
 	font-size: 16px;
 	font-weight: 600;
 	color: var(--black);
-	flex: 1;
-	padding-right: 100px;
+	margin-left: 250px;
 }
 
 .movie {

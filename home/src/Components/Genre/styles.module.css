@@ -1,13 +1,15 @@
 .container {
+	position: absolute;
 	margin: 10px;
-	align-items: flex-start;
-	padding: 10px 20px;
+	text-align: left;
+	padding: 5px 5px;
 	padding-right: 150px;
+	padding-bottom: 200px;
 	box-shadow: var(--box-shadow);
-	background-color: white;
+	background-color:  white;
 	border-radius: 4px;
-	margin-right: -700px;
-	margin-top: -65px;
+	margin-left: 100px;
+	margin-top: -105px;
 }
 
 .heading {
