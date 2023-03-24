@@ -112,6 +112,9 @@ app.post('/signup', async (req, res) => {
         taken: {},
         takenTitles: [],
         takingTitles: [],
+        takenProfs: [],
+        takingProfs: [],
+        tutor: false,
         price: 0
     })
         .then(function (userRecord) {
@@ -137,8 +140,11 @@ app.post('/signup', async (req, res) => {
                 profpic: "",
                 taking: {},
                 taken: {},
+                tutor: false,
                 takenTitles: [],
                 takingTitles: [],
+                takenProfs: [],
+                takingProfs: [],
                 price: 0
             };
 
@@ -369,7 +375,7 @@ app.post("/info", async (req, res) => {
     console.log("aaa " + doc.get("active"))
     console.log("look here are your followers: " + doc.get("followers"))
 
-    return res.send(JSON.stringify({ "u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), "profpic": doc.get("profpic"), taking: doc.get("taking"), taken: doc.get("taken"), tutor: doc.get("tutor"), price: doc.get("price") }))
+    return res.send(JSON.stringify({ "u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), "profpic": doc.get("profpic"), "taking": doc.get("taking"), "taken": doc.get("taken"), "tutor": doc.get("tutor"), "price": doc.get("price") }))
 
 
 })
@@ -490,6 +496,10 @@ app.post("/addcourse", async (req, res) => {
     listTitles.push(t);
     await doc.ref.update({takingTitles: listTitles})
 
+    var listProfs = doc.get("takingProfs");
+    listProfs.push(req.body.prof.toLowerCase());
+    await doc.ref.update({takingProfs: listProfs})
+
     await doc.ref.update({ taking: c })
     return res.send(JSON.stringify({ "taking": c }))
 
@@ -517,6 +527,10 @@ app.post("/deletecourse", async (req, res) => {
     listTitles.splice(listTitles.indexOf(JSON.stringify(t)), 1);
     await doc.ref.update({takingTitles: listTitles})
 
+    var listProfs = doc.get("takingProfs");
+    listProfs.splice(listProfs.indexOf(req.body.prof.toLowerCase()), 1);
+    await doc.ref.update({takingProfs: listProfs})
+
     
 
     delete c[t]
@@ -541,6 +555,10 @@ app.post("/addcoursetutor", async (req, res) => {
     var listTitles = doc.get("takenTitles");
     listTitles.push(t);
     await doc.ref.update({takenTitles: listTitles})
+
+    var listProfs = doc.get("takenProfs");
+    listProfs.push(req.body.prof.toLowerCase());
+    await doc.ref.update({takenProfs: listProfs})
 
     await doc.ref.update({ taken: c })
     return res.send(JSON.stringify({ "taken": c }))
@@ -567,6 +585,10 @@ app.post("/deletecoursetutor", async (req, res) => {
     var listTitles = doc.get("takenTitles");
     listTitles.splice(listTitle.indexOf(JSON.stringify(t)), 1);
     await doc.ref.update({takenTitles: listTitles})
+
+    var listProfs = doc.get("takenProfs");
+    listProfs.splice(listProfs.indexOf(req.body.prof.toLowerCase()), 1);
+    await doc.ref.update({takenProfs: listProfs})
 
     delete c[t]
     await doc.ref.update({ taken: c })
