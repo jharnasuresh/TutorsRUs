@@ -140,32 +140,35 @@ export const Settings = ({ GlobalState }) => {
     }
 
     return (
-        <div className="App Profile">
+        <div className="App">
             <h2> Edit Profile </h2>
-            <form className="settings" onSubmit={handleSubmit}>
+            <form className="settings" onSubmit={handleSubmit} style={{alignContent: 'center'}}>
                 <span style={{ padding: '40px' }}>
                     <label htmlFor="Fname">First Name: </label>
                     <input value={Fname} onChange={(e) => setFName(e.target.value)} type="Fname" placeholder="Enter Your First Name" id="Fname" name="Fname" />
                 </span>
+                <span style={{ padding: '40px' }}>
                 <label htmlFor="Lname">Last Name: </label>
                 <input value={Lname} onChange={(e) => setLName(e.target.value)} type="LName" placeholder="Enter Your Last Name" id="LName" name="LName" />
-                <br></br>
-                <span style={{ padding: '40px' }}>
-                    <label htmlFor="username">Username: </label>
-                    <input value={username} onChange={(e) => setUsername(e.target.value)} type="username" placeholder="Username" id="username" name="username" />
                 </span>
-                <label htmlFor="password">Password: </label>
-                <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Password" id="password" name="password" />
-                <br></br>
-                <label htmlFor="lang">Language: </label>
-                <input value={lang} onChange={(e) => setLang(e.target.value)} type="lang" placeholder="Enter Your Primary Language" id="lang" name="lang" />
+                <label htmlFor="username">Username: </label>
+                <input value={username} onChange={(e) => setUsername(e.target.value)} type="username" placeholder="Username" id="username" name="username" />
                 <br></br>
 
+                <span style={{ padding: '40px' }}>
+                <label htmlFor="password">Password: </label>
+                <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Password" id="password" name="password" />
+                </span>
+                <span style={{ padding: '40px' }}>
+                <label htmlFor="lang">Language: </label>
+                <input value={lang} onChange={(e) => setLang(e.target.value)} type="lang" placeholder="Enter Your Primary Language" id="lang" name="lang" />
+                </span>
                 {
-                    location.state.tutor ? <><label htmlFor="price">Price: </label>
+                    location.state.tutor ? <><span style={{ padding: '40px' }}><label htmlFor="price">Price: </label>
                     <input value={price} onChange={(e) => setPrice(e.target.value)} type="price" placeholder="Enter Your Hourly Price" id="price" name="price" />
-                     </>: <span></span>
+                    </span></>: <span></span>
                 }
+
             
                 <button type="submit" className="setting-sub" onSubmit={handleSubmit}>Submit Changes</button>
             </form>

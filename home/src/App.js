@@ -12,7 +12,7 @@ import {Settings} from "./Components/Settings"
 import Tabs from "./Components/Tabs";
 import Profile from './Components/Profile';
 import SecurePassReset  from './Components/SecurePassReset';
-import { DrawerNew } from './Components/DrawerNew';
+import  DrawerNew  from './Components/DrawerNew';
 import { EditPFP } from './Components/EditPFP';
 import { Transcript } from './Components/Transcript';
 import { UploadProfile} from './Components/UploadProfile';
@@ -35,7 +35,7 @@ function App() {
   console.log("setting??" + currUser)
 
   const GlobalState = { currUser, setCurrUser}
-
+  const [buttonPopup, setButtonPopup] = useState(false);
   const [currentForm, setCurrentForm] = useState('login');
   const toggleForm = (formName) => {
     setCurrentForm(formName);
@@ -43,7 +43,8 @@ function App() {
 return (
     <div>  
     <Tabs GlobalState={GlobalState}/>
-
+    
+                 
     <Routes>
 
         <Route exact path="/Login" element={< Login GlobalState={GlobalState}/>} /> 

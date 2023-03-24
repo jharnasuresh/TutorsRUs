@@ -1,8 +1,18 @@
 
 .searchInputs {
-    margin-top: -600px;
-    margin-left: 400px;
+  position: relative;
+  left: -300px;
+}
+/*.searchInputs {
+    margin-top: -750px;
+    margin-left: -500px;
     display: flex;
+}
+
+.searchby {
+  margin-top: -1950px;
+  margin-left: -450px;
+  font-size: 18px;
 }
 
 .search input {
@@ -18,11 +28,10 @@
     margin-top: -1150px;
     margin-left: 50px;
 }
-
+*/
 .link-btn {
-    height: 60px;
-    width: 50px;
-    background-color: black;
+    height: 100%;
+    width: 100%;
     display: grid;
     place-items: center;
     margin-top: 8px;
@@ -86,7 +95,7 @@ input:focus {
     margin-left: 200px;
     margin-right: -200px;
     margin-bottom: 900px;
-    margin-top: 200px;
+    margin-top: 300px;
     width: 1000px;
     border-radius: 10px;
     box-shadow: var(--box-shadow);

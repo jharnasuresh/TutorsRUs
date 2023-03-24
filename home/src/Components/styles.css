@@ -24,21 +24,18 @@ nav {
 }
 
 
-nav .nav-links {
+nav .nav-links  {
     display: flex;
     justify-content: space-around;
-    width: 30%;
-
-}
-
-nav .nav-links {
+    width: 50%;
     font-size: 18px;
     font-weight: 700;
-    
+
 }
 
+
 nav .nav-links a:hover{
-    border-bottom: 1px #88caff;
+    background-color: #88caff;
     
 }
 

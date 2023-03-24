@@ -64,9 +64,6 @@
     margin-right: 500px;
 }
 
-.App {
-    flex-direction: column;
-}
 
 .follow-btn {
     position: absolute;
@@ -212,6 +209,7 @@
 }
 
 .popup-inner2 {
+    border:0;
     position: absolute;
     padding: 32px;
     width: 100%;
@@ -222,6 +220,7 @@
 }
 
 .popup-inner2 .close-btn2 {
+    border:0;
     position: absolute;
     top: 16px;
     right: 16px;

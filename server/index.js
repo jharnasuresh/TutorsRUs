@@ -123,6 +123,8 @@ app.post('/signup', async (req, res) => {
                 password: md5(req.body["pass"]),
                 FName: req.body["firstName"],
                 LName: req.body["lastName"],
+                FNameLower: req.body["firstName"].toLowerCase(),
+                LNameLower: req.body["lastName"].toLowerCase(),
                 username: req.body["user"],
                 answer1: "",
                 answer2: "",
@@ -236,19 +238,18 @@ app.listen(PORT, () => {
 
 app.post("/searchcoursetitle", async (req, res) => {
 
-    var t = JSON.stringify(req.body.course).toLowerCase();
+    var t = JSON.stringify(req.body.data).toLowerCase();
     t = JSON.parse(t.replace(/\s+/g, ''));
 
     console.log("searching for " + JSON.stringify(t))
 
-    var list = await db.collection('users').where('takenTitles', 'array-contains', req.body.course).get();
+    var list = await db.collection('users').where('takenTitles', 'array-contains', req.body.data).get();
     console.log(list.size)
     var users = [];
     for (i in list.docs) {
         console.log(list.docs[i].get("username"))
         var u = list.docs[i];
         users.push(u.get("username"))
-        //users[u.get("username")] = {rating: u.get("rating"), price: u.get("price"), taken: u.get("taken"), fName: u.get("FName"), lName: u.get("LName")}
         
     }
     if (list.size == 0) {
@@ -262,7 +263,7 @@ app.post("/searchcoursetitle", async (req, res) => {
 app.post("/searchmultiplecourses", async (req, res) => {
 
     console.log("searching mutliple")
-    var ar = req.body.course.split(", ")
+    var ar = req.body.data.split(",")
     var courses = [];
     let i = 0;
     while (i < ar.length) {
@@ -312,6 +313,45 @@ app.post("/searchmultiplecourses", async (req, res) => {
         return res.send(JSON.stringify("none"))
     }
     
+    return res.send(JSON.stringify(finalList))
+
+
+});
+
+app.post("/searchtutorname", async (req, res) => {
+
+    var fname = req.body.data.toLowerCase();
+    var lname = "";
+    if (fname.includes(" ")) {
+        var ar = fname.split(" ");
+        fname = JSON.parse(ar[0])
+        lname = JSON.parse(ar[1])
+    }
+
+    console.log("searching for " + fname.toUpperCase() + " " + lname)
+
+    var list = await db.collection('users').where('FNameLower', '==', fname).get();
+    var users = [];
+    console.log(list.size)
+    for (i in list.docs) {
+        console.log(list.docs[i].get("username"))
+        var u = list.docs[i];
+        users.push(u.get("username"))
+    }
+    if (lname != "") {
+        list = await db.collection('users').where('LNameLower', '==', lname).get();
+        for (i in list.docs) {
+            console.log(list.docs[i].get("username"))
+            var u = list.docs[i];
+            users.push(u.get("username"))
+        }
+    }
+
+    let finalList = [...new Set(users)]
+
+    if (finalList.length == 0) {
+        return res.send(JSON.stringify("none"))
+    }
     return res.send(JSON.stringify(finalList))
 
 
