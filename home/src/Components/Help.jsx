@@ -11,7 +11,7 @@ export const Help = ({GlobalState}) => {
     const location = useLocation();
 
     const { currUser, setCurrUser } = GlobalState;
-    console.log(currUser)
+    setCurrUser(location.state.u)
 
     if (currUser === "") {
         setCurrUser(location.state.u)

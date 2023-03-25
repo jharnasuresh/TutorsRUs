@@ -18,6 +18,9 @@ export const Settings = ({ GlobalState }) => {
     const [price, setPrice] = useState('');
     var aButton = (active) ? "Deactivate" : "Activate";
     const { currUser, setCurrUser } = GlobalState;
+    setCurrUser(location.state.u)
+
+    console.log("user " + location.state.u  + " " + currUser)
     
   
     console.log("ttt " + location.state.tutor)
@@ -30,7 +33,7 @@ export const Settings = ({ GlobalState }) => {
         console.log("hi " + Fname)
 
         const headers = { "content-type": "application/json" };
-        const requestData = JSON.stringify({ "oldU": location.state.user, "fname": Fname, "lname": Lname, "user": username, "email": email, "pass": password, "lang": lang, "price": price });
+        const requestData = JSON.stringify({ "oldU": location.state.u, "fname": Fname, "lname": Lname, "user": username, "email": email, "pass": password, "lang": lang, "price": price });
 
         fetch('http://localhost:3001/update', { method: 'POST', body: requestData, headers: headers })
             .then((res) => res.json())
@@ -63,7 +66,7 @@ export const Settings = ({ GlobalState }) => {
         e.preventDefault();
 
 
-        const requestData = JSON.stringify({ "username": location.state.user });
+        const requestData = JSON.stringify({ "username": location.state.u });
         const headers = { "content-type": "application/json" };
 
         async function getResponse() {
@@ -80,7 +83,7 @@ export const Settings = ({ GlobalState }) => {
 
     const handleDelTranscript = (e) => {
         e.preventDefault();
-        const requestData = JSON.stringify({ "username": location.state.user });
+        const requestData = JSON.stringify({ "username": location.state.u });
         const headers = { "content-type": "application/json" };
         fetch('http://localhost:3001/deltranscript', { method: 'POST', body: requestData, headers: headers })
             .then((res) => res.json())
@@ -113,7 +116,7 @@ export const Settings = ({ GlobalState }) => {
         e.preventDefault();
         console.log("ppp")
         const headers = { "content-type": "application/json" };
-        const requestData = JSON.stringify({ "username": location.state.user });
+        const requestData = JSON.stringify({ "username": location.state.u });
 
         fetch('http://localhost:3001/info', { method: 'POST', body: requestData, headers: headers })
             .then((res) => res.json())
@@ -140,32 +143,35 @@ export const Settings = ({ GlobalState }) => {
     }
 
     return (
-        <div className="App Profile">
+        <div className="App">
             <h2> Edit Profile </h2>
-            <form className="settings" onSubmit={handleSubmit}>
+            <form className="settings" onSubmit={handleSubmit} style={{alignContent: 'center'}}>
                 <span style={{ padding: '40px' }}>
                     <label htmlFor="Fname">First Name: </label>
                     <input value={Fname} onChange={(e) => setFName(e.target.value)} type="Fname" placeholder="Enter Your First Name" id="Fname" name="Fname" />
                 </span>
+                <span style={{ padding: '40px' }}>
                 <label htmlFor="Lname">Last Name: </label>
                 <input value={Lname} onChange={(e) => setLName(e.target.value)} type="LName" placeholder="Enter Your Last Name" id="LName" name="LName" />
-                <br></br>
-                <span style={{ padding: '40px' }}>
-                    <label htmlFor="username">Username: </label>
-                    <input value={username} onChange={(e) => setUsername(e.target.value)} type="username" placeholder="Username" id="username" name="username" />
                 </span>
-                <label htmlFor="password">Password: </label>
-                <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Password" id="password" name="password" />
-                <br></br>
-                <label htmlFor="lang">Language: </label>
-                <input value={lang} onChange={(e) => setLang(e.target.value)} type="lang" placeholder="Enter Your Primary Language" id="lang" name="lang" />
+                <label htmlFor="username">Username: </label>
+                <input value={username} onChange={(e) => setUsername(e.target.value)} type="username" placeholder="Username" id="username" name="username" />
                 <br></br>
 
+                <span style={{ padding: '40px' }}>
+                <label htmlFor="password">Password: </label>
+                <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Password" id="password" name="password" />
+                </span>
+                <span style={{ padding: '40px' }}>
+                <label htmlFor="lang">Language: </label>
+                <input value={lang} onChange={(e) => setLang(e.target.value)} type="lang" placeholder="Enter Your Primary Language" id="lang" name="lang" />
+                </span>
                 {
-                    location.state.tutor ? <><label htmlFor="price">Price: </label>
+                    location.state.tutor ? <><span style={{ padding: '40px' }}><label htmlFor="price">Price: </label>
                     <input value={price} onChange={(e) => setPrice(e.target.value)} type="price" placeholder="Enter Your Hourly Price" id="price" name="price" />
-                     </>: <span></span>
+                    </span></>: <span></span>
                 }
+
             
                 <button type="submit" className="setting-sub" onSubmit={handleSubmit}>Submit Changes</button>
             </form>
@@ -192,7 +198,7 @@ export const Settings = ({ GlobalState }) => {
              
             <div>
                 <button className='submit' onClick={() => setButtonPopup(true)}>Delete Account</button>
-                <Popup trigger={buttonPopup} setTrigger={setButtonPopup} state={{ user: location.state.user, del: "acct" }}>Are you sure you want to delete your account?</Popup>
+                <Popup trigger={buttonPopup} setTrigger={setButtonPopup} user={location.state.u} del="acct">Are you sure you want to delete your account?</Popup>
             </div>
             <button className='submit' onClick={handleDeactivate}>{aButton} Account</button>
         </div>

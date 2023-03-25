@@ -1,26 +1,58 @@
 
 .searchInputs {
-    margin-top: -600px;
-    margin-left: 400px;
+  position: relative;
+  left: -300px;
+}
+
+.searchby {
+  margin-top: 50px;
+  margin-left: 50px;
+  position: absolute;
+  text-align: left;
+  background-color: rgb(185, 185, 185);
+  border-radius: 10px;
+  padding: 5px;
+}
+
+.searchbar {
+  margin-left: 450px;
+  margin-top: 50px;
+}
+
+.priceSort {
+  position: absolute;
+  text-align: left;
+  margin-bottom: 850px;
+  margin-left: 800px;
+}
+/*.searchInputs {
+    margin-top: -750px;
+    margin-left: -500px;
     display: flex;
+}
+
+.searchby {
+  margin-top: -1950px;
+  margin-left: -450px;
+  font-size: 18px;
 }
 
 .search input {
     background-color: white;
-    border: 0;
+   /* border: 0;
     border-radius: 2px;
     border-top-right-radius: 0px;
     border-bottom-right-radius: 0px;
     font-size: 18px;
-    padding: 15px;
     height: 60px;
     width: 300px;
+    margin-top: -1150px;
+    margin-left: 100px;
 }
-
+*/
 .link-btn {
-    height: 60px;
-    width: 50px;
-    background-color: white;
+    height: 100%;
+    width: 100%;
     display: grid;
     place-items: center;
     margin-top: 8px;
@@ -70,3 +102,41 @@ input:focus {
   #clearBtn {
     cursor: pointer;
   }  
+
+  /*new search stuff 3/22*/
+  .wrapper {
+  width: 100%;
+	min-height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+  }
+
+  .container {
+    margin-left: 100px;
+    margin-right: 400px;
+    margin-bottom: 900px;
+    margin-top: 10px;
+    width: 900px;
+    border-radius: 10px;
+    box-shadow: var(--box-shadow);
+    display: absolute;
+    flex-direction: column;
+    overflow: hidden;
+    background-color: white;
+  }
+
+  .body {
+    height: 500px;
+    display: flex;
+  }
+
+  .table_container {
+    flex: 3;
+    position: relative;
+  }
+  
+  .filter_container {
+    flex: 1;
+  }
+  

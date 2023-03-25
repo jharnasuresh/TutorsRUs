@@ -1,0 +1,38 @@
+.container {
+	position: absolute;
+	margin: 10px;
+	text-align: left;
+	padding: 5px 5px;
+	padding-right: 150px;
+	padding-bottom: 200px;
+	box-shadow: var(--box-shadow);
+	background-color:  white;
+	border-radius: 4px;
+	margin-left: 100px;
+	margin-top: -105px;
+}
+
+.heading {
+	margin: 0;
+	font-size: 16px;
+	margin: 10px;
+	text-align: center;
+}
+
+.genre_container {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+
+.genre {
+	min-width: 90px;
+	display: flex;
+	align-items: center;
+	margin: 2px 0;
+}
+
+.genre_label {
+	margin: 0;
+	margin-left: 5px;
+}
