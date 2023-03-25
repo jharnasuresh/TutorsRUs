@@ -17,6 +17,7 @@ export const Settings = ({ GlobalState }) => {
     const [active, setActive] = useState(location.state.active);
     const [price, setPrice] = useState('');
     var aButton = (active) ? "Deactivate" : "Activate";
+    var hasPFP = true;
     const { currUser, setCurrUser } = GlobalState;
     setCurrUser(location.state.u)
 
@@ -27,6 +28,11 @@ export const Settings = ({ GlobalState }) => {
 
 
     console.log("aesawda " + location.state.active)
+
+    if (location.state.profpic === "") {
+        hasPFP = false;
+        console.log("---------- doesn't have pfp --------")
+      }
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -191,7 +197,7 @@ export const Settings = ({ GlobalState }) => {
              <button type="submit" onClick={() => navigate('/UploadProfile', {state: {u: currUser, profpic: location.state.profpic}})}>Upload Profile Picture</button> 
              
             {
-                location.state.hasPFP ? 
+                hasPFP ? 
                 <button type="submit" onClick={() => navigate('/EditPFP', {state: {u: currUser, profpic: location.state.profpic}})}>Edit Profile Picture</button>  
                 : <span></span>
         } 
