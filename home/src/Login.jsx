@@ -36,7 +36,7 @@ export const Login = ({GlobalState}) => {
             }
             else {
                 console.log("u " + user +", fname " + r["fname"])
-                navigate("/Start", {state: {u: user}});
+                navigate("/Start", {state: {u: user, isLoggedIn: true}});
             }
 
         }

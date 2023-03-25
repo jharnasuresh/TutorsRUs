@@ -1,5 +1,5 @@
 import React from "react";
-import {useState} from "react"
+import {useEffect, useState} from "react"
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import  DrawerNew  from './DrawerNew';
 import './styles.css'
@@ -11,7 +11,51 @@ export const Tabs = ({GlobalState}) => {
     const navigate = useNavigate();
     const { currUser, setCurrUser } = GlobalState;
     const [buttonPopup, setButtonPopup] = useState(false);
+    const[loggedIn, setLoggedIn] = useState(true);
     console.log("tabs " + currUser)
+
+
+
+  const checkForInactivity = () => {
+    const expireTime = localStorage.getItem("expireTime");
+
+    if (expireTime < Date.now()) {
+        console.log("Lig out!")
+        setLoggedIn(false);
+    }
+  }
+
+  const updateExpireTime = () => {
+    const expireTime = Date.now() + 5000;
+
+    localStorage.setItem("expireTime", expireTime);
+  }
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+        checkForInactivity();
+    }, 5000)
+
+    return () => clearInterval(interval);
+  },[]);
+
+  useEffect(() => {
+    updateExpireTime();
+
+    window.addEventListener("click", updateExpireTime);
+    window.addEventListener("keypress", updateExpireTime);
+    window.addEventListener("scroll", updateExpireTime);
+    window.addEventListener("mousemove", updateExpireTime);
+
+
+    return () => {
+        window.addEventListener("click", updateExpireTime);
+        window.addEventListener("keypress", updateExpireTime);
+        window.addEventListener("scroll", updateExpireTime);
+        window.addEventListener("mousemove", updateExpireTime); 
+    }
+  }, []);
+
   const backToProfile = (e) => {
 
     e.preventDefault();
@@ -103,7 +147,9 @@ const toSettings = (e) => {
                 <div className="img"><img class="img" src = "/Images/IMG_4596.png"/></div>
                 
                 <ul className="nav-links">
-                    
+                    <li>
+                        Logged in: {loggedIn.toString()}
+                    </li>
                     <li>
                         {/*<a href="./Start" state={{GlobalState: {GlobalState}, u: {currUser}}} > Home </a>*/}
                         <a href="./Start" onClick={() => navigate('/Start', {state: {u: currUser}})} > <i class="fa-solid fa-home"></i> </a>
