@@ -17,7 +17,7 @@ export const Start = ({GlobalState}) => {
   const { currUser, setCurrUser } = GlobalState;
   setCurrUser(location.state.u)
   console.log(currUser)
-
+  var counter = 0;
   if (currUser === "") {
     setCurrUser(location.state.u)
   }
@@ -38,9 +38,11 @@ export const Start = ({GlobalState}) => {
       });
     }
 
-    if (warningTime < Date.now()) {
+    if (warningTime < Date.now() && counter == 0) {
       console.log("Warning!")
       warningPOP = true;
+      alert("10 seconds before you logout!");
+      counter++;
       
       
   }
@@ -100,10 +102,7 @@ export const Start = ({GlobalState}) => {
         <Calendar />
       </a>
 
-          <AutologoutWarning trigger={warningPOP} setTrigger={warningPOP}>
-            <h3>You will be logged out in {localStorage.getItem("expireTime")} seconds</h3>
-           
-          </AutologoutWarning>
+         
       </div>
 
       
