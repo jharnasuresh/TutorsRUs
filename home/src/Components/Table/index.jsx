@@ -50,7 +50,11 @@ const Table = ({tutors}) => {
         {
             Object.keys(tutors).map((tutor) => (
                 <>
-                <div>
+                <div style={{textAlign: 'left', alignItems: 'left'}}>
+                    <div style={{float: 'left', margin: '0px 0px 0px 100px' }}>
+                    <img src = "/Images/Profile_Icon.png" alt = "" width="100px" height="100px" textAlign='left'/>
+                    </div>
+                 
                 <p>Username: {tutor}</p>
                 <button  onClick={() => handleSubmit(tutor)}>{tutor}</button>
                 <p>First Name: {tutors[tutor].fname}</p>

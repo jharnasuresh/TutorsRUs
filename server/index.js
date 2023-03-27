@@ -248,7 +248,7 @@ app.post("/searchcoursetitle", async (req, res) => {
     t = JSON.parse(t.replace(/\s+/g, ''));
 
     console.log("searching for " + JSON.stringify(t))
-    console.log("f " + req.body.filter + " s: " + req.body.sort + " l: " + req.body.lang)
+    console.log("f " + req.body.filter + " l: " + req.body.lang)
 
     var list;
     var price;
@@ -274,6 +274,9 @@ app.post("/searchcoursetitle", async (req, res) => {
     else if (req.body.filter == 'priceHigh') {
         list = await db.collection('users').orderBy('price', 'desc').where('takenTitles', 'array-contains', req.body.data).get();
     }
+    else if (req.body.filter === 'ratingLow') {
+        list = await db.collection('users').orderBy('rating', 'asc').where('takenTitles', 'array-contains', req.body.data).get();
+    }
     else {
         list = await db.collection('users').where('takenTitles', 'array-contains', req.body.data).get();
     }
@@ -285,7 +288,7 @@ app.post("/searchcoursetitle", async (req, res) => {
         console.log(list.docs[i].get("username"))
         var u = list.docs[i];
         //users.push(u.get("username"))
-        users[u.get("username")] = { fname: u.get('FName') }
+        users[u.get("username")] = { fname: u.get('FName'), lname: u.get('LName'), price: u.get('price'), rating: u.get('rating'), lang: u.get('lang') }
 
     }
     if (Object.keys(users).includes(req.body.currUser)) {
@@ -387,7 +390,7 @@ app.post("/searchmultiplecourses", async (req, res) => {
         var us = await db.collection('users').where('username', '==', finalList[u]).get();
         var user = us.docs[0]
         console.log(" find " + finalList[u] + " " + user.get("FName"))
-        data[finalList[u]] = { fname: user.get("FName") }
+        data[finalList[u]] = { fname: user.get("FName"), lname: u.get('LName'), price: u.get('price'), rating: u.get('rating'), lang: u.get('lang') }
     }
 
     return res.send(JSON.stringify(data))
@@ -480,7 +483,7 @@ app.post("/searchtutorname", async (req, res) => {
         var us = await db.collection('users').where('username', '==', finalList[u]).get();
         var user = us.docs[0]
         console.log(" find " + finalList[u] + " " + user.get("FName"))
-        data[finalList[u]] = { fname: user.get("FName") }
+        data[finalList[u]] = { fname: user.get("FName"), lname: u.get('LName'), price: u.get('price'), rating: u.get('rating'), lang: u.get('lang') }
     }
 
     return res.send(JSON.stringify(data))
@@ -512,7 +515,7 @@ app.post("/searchprofname", async (req, res) => {
         console.log("hereee4")
         list = await db.collection('users').where('lang', '=', JSON.parse(JSON.stringify(req.body.lang).toLowerCase())).where('takenProfs', 'array-contains', prof).get();
     }
-    else if (req.body.sort !== '') {
+    else if (req.body.filter !== '') {
 
     }
     else {
@@ -523,7 +526,7 @@ app.post("/searchprofname", async (req, res) => {
         console.log(list.docs[i].get("username"))
         var u = list.docs[i];
         //users.push(u.get("username"))
-        users[u.get("username")] = { fname: u.get('FName') }
+        users[u.get("username")] = { fname: u.get('FName'), lname: u.get('LName'), price: u.get('price'), rating: u.get('rating'), lang: u.get('lang') }
 
     }
     if (Object.keys(users).includes(req.body.currUser)) {
