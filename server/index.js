@@ -250,7 +250,37 @@ app.post("/searchcoursetitle", async (req, res) => {
     console.log("searching for " + JSON.stringify(t))
     console.log("f " + req.body.filter + " s: " + req.body.sort + " l: " + req.body.lang)
 
-    var list = await db.collection('users').where('takenTitles', 'array-contains', req.body.data).get();
+    var list;
+    if (req.body.filter !== '') {
+        var price;
+        if (req.body.filter === 'Thirty') {
+            console.log("hereee1")
+            price = 30
+            list = await db.collection('users').where('price', '<=', price).where('takenTitles', 'array-contains', req.body.data).get();
+        } else if (req.body.filter === 'Twenty') {
+            console.log("hereee2")
+            price = 20
+            list = await db.collection('users').where('price', '<=', price).where('takenTitles', 'array-contains', req.body.data).get();
+        } else if (req.body.filter === 'Ten') {
+            console.log("hereee3")
+            price = 10
+            list = await db.collection('users').where('price', '<=', price).where('takenTitles', 'array-contains', req.body.data).get();
+        } else {
+            console.log("hereee4")
+            list = await db.collection('users').where('language', '=', JSON.parse(JSON.stringify(req.body.filter).toLowerCase())).where('takenTitles', 'array-contains', req.body.data).get();
+        }
+        console.log("hereee")
+        
+        
+    }
+    else if (req.body.sort !== '') {
+        
+    }
+    else {
+        list = await db.collection('users').where('takenTitles', 'array-contains', req.body.data).get();
+    }
+
+    
     console.log(list.size)
     var users = {};
     for (i in list.docs) {
@@ -510,8 +540,8 @@ app.post("/update", async (req, res) => {
     if (req.body.pass != "" && md5(req.body.pass) !== pass) {
         await doc.ref.update({ password: md5(req.body.pass) });
     }
-    if (req.body.lang != "" && req.body.lang !== lang) {
-        await doc.ref.update({ lang: req.body.lang });
+    if (req.body.lang != "" && lang !== JSON.parse(JSON.stringify(req.body.lang).toLowerCase())) {
+        await doc.ref.update({ lang: JSON.parse(JSON.stringify(req.body.lang).toLowerCase()) });
     }
     if (req.body.price != "" && Number(req.body.price) != price) {
         await doc.ref.update({ price: Number(req.body.price) });
