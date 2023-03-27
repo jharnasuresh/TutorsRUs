@@ -75,7 +75,7 @@ function Search({ GlobalState, placeholder, data }) {
         var url = "";
 
 
-        if (searchBy == "courses") {
+        if (searchBy === "courses") {
             if (search.includes(",")) {
                 // search for multiple courses
                 console.log(search.split(", "))
@@ -85,7 +85,7 @@ function Search({ GlobalState, placeholder, data }) {
                 url = 'http://localhost:3001/searchcoursetitle';
             }
         }
-        else if (searchBy == "tutor") {
+        else if (searchBy === "tutor") {
             if (search.includes(",")) {
                 setShowErr(true)
                 setSearchBy(searchBy)
@@ -142,7 +142,7 @@ function Search({ GlobalState, placeholder, data }) {
             <br></br>
 
             {
-                searchBy != 'Courses' ? <span></span> : <h4>*When searching for multiple classes, use a comma to separate each one (ex: CS180, CS182)</h4>
+                searchBy !== 'Courses' ? <span></span> : <h4>*When searching for multiple classes, use a comma to separate each one (ex: CS180, CS182)</h4>
             }
 
             
