@@ -33,7 +33,7 @@ const Table = ({tutors}) => {
                         lang: res["lang"],
                         followers: res["followers"],
                         following: res["following"],
-                        follows: true, // need to fix this
+                        follows: false, // need to fix this
                         taking: res["taking"],
                         profpic: res["profpic"],
                         tutor: res["tutor"],

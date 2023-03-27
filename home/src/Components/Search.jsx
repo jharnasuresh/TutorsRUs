@@ -29,37 +29,6 @@ function Search({ GlobalState, placeholder, data }) {
 
     console.log(location.state.u)
 
-    /*
-
-    useEffect(() => {
-        const getAllMovies = async () => {
-            try {
-                const url = `${base_url}?page=${page}&sort=${sort.sort},${sort.order}
-                    &genre=${filterGenre.toString()}&search=${search}`
-                const { data } = await axios.get(url);
-                setObj(data);
-                console.log(data);
-            } catch (err) {
-                console.log(err);
-            }
-        };
-        getAllMovies();
-    }, [sort, filterGenre, page, search]);
-
-    //const [filteredData, setFilteredData] = useState[{}];
-    const handleFilter = (event) => {
-        const searchWord = event.target.value
-        const newFilter = data.filter((value) => {
-            return value.title.toLowerCase().includes(searchWord.toLowerCase);
-        });
-        if (searchWord === "") {
-            setFilteredData([])
-        }
-        else {
-            setFilteredData(newFilter);
-        }
-    }
-    */
 
     const handleChange = (e) => {
         setSearchBy(e.target.value)
@@ -74,9 +43,10 @@ function Search({ GlobalState, placeholder, data }) {
         console.log("searching for " + search)
         setSearchBy(document.getElementsByName("search-by").value)
         console.log("search by: " + searchBy)
+        console.log("lang = " + lang)
 
         const headers = { "content-type": "application/json" };
-        const requestData = JSON.stringify({ "data": search, "currUser": currUser });
+        const requestData = JSON.stringify({ "data": search, "currUser": currUser, "filter": filter, "sort": sort, "lang": lang });
         var url = "";
 
 
@@ -198,23 +168,22 @@ function Search({ GlobalState, placeholder, data }) {
                                 <label for="ten" style={{ paddingLeft: '5px' }}>Under $10</label>
                                 <br />
                                 <input type="radio" id="ten" name="filter-by" value="Language" style={{ height: '20px', width: '20px' }} />
-                                <label for="ten" style={{ paddingLeft: '5px' }}>Primary Language</label>
-                                <input style={{ borderStyle: 'solid', }} type="text" placeholder="Search..." onChange={e => setFilter(e.target.value)} />
-                                <button type="link-btn" onClick={handleSubmit}>Search</button>
+                                <label for="language" style={{ paddingLeft: '5px' }}>Primary Language</label>
+                                <input style={{ borderStyle: 'solid', }} type="text" placeholder="Search..." onChange={e => setLang(e.target.value)} />
                             </form>
                             <h3>Sort By:</h3>
-                            <form onChange={(e) => setFilter(e.target.value)}>
-                                <input type="radio" id="thirty" name="filter-by" value="Thirty" style={{ height: '20px', width: '20px' }} />
-                                <label for="thirty" style={{ paddingLeft: '5px' }}>Price: Low to High</label>
+                            <form onChange={(e) => setSort(e.target.value)}>
+                                <input type="radio" id="priceLow" name="sort-by" value="priceLow" style={{ height: '20px', width: '20px' }} />
+                                <label for="priceLow" style={{ paddingLeft: '5px' }}>Price: Low to High</label>
                                 <br />
-                                <input type="radio" id="twenty" name="filter-by" value="Twenty" style={{ height: '20px', width: '20px' }} />
-                                <label for="twenty" style={{ paddingLeft: '5px' }}>Price: High to Low</label>
+                                <input type="radio" id="priceHigh" name="sort-by" value="priceHigh" style={{ height: '20px', width: '20px' }} />
+                                <label for="priceHigh" style={{ paddingLeft: '5px' }}>Price: High to Low</label>
                                 <br />
-                                <input type="radio" id="ten" name="filter-by" value="Ten" style={{ height: '20px', width: '20px' }} />
-                                <label for="ten" style={{ paddingLeft: '5px' }}>Rating: Low to High</label>
+                                <input type="radio" id="ratingLow" name="sort-by" value="ratingLow" style={{ height: '20px', width: '20px' }} />
+                                <label for="ratingLow" style={{ paddingLeft: '5px' }}>Rating: Low to High</label>
                                 <br />
-                                <input type="radio" id="ten" name="filter-by" value="Language" style={{ height: '20px', width: '20px' }} />
-                                <label for="ten" style={{ paddingLeft: '5px' }}>Rating: High to Low</label>
+                                <input type="radio" id="ratingHigh" name="sort-by" value="ratingHigh" style={{ height: '20px', width: '20px' }} />
+                                <label for="ratingHigh" style={{ paddingLeft: '5px' }}>Rating: High to Low</label>
                                 
                             </form>
 

@@ -248,6 +248,7 @@ app.post("/searchcoursetitle", async (req, res) => {
     t = JSON.parse(t.replace(/\s+/g, ''));
 
     console.log("searching for " + JSON.stringify(t))
+    console.log("f " + req.body.filter + " s: " + req.body.sort + " l: " + req.body.lang)
 
     var list = await db.collection('users').where('takenTitles', 'array-contains', req.body.data).get();
     console.log(list.size)
