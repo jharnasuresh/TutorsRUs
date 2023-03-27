@@ -39,7 +39,7 @@ function Search({ GlobalState, placeholder, data }) {
     const handleSubmit = (e) => {
         setShowErr(false)
         setSearchBy(document.getElementsByName("search-by").value)
-        setFilter(document.getElementsByName('filter-by').value)
+        //setFilter(document.getElementsByName('filter-by').value)
         console.log("filter " + filter + " lang: " + lang)
 
         const headers = { "content-type": "application/json" };
@@ -91,15 +91,7 @@ function Search({ GlobalState, placeholder, data }) {
                 else {
                     // list tutors
                     setNone(false);
-                    // TO BE FIXED WITH MORE DATA
-                    let i = 0;
-                    let u = "";
-                    while (i < res.length) {
-                        console.log(res[i]);
-                        u += res[i] + ", ";
-                        i++;
-                    }
-                    setUsers(u)
+
                     setTutors(res)
 
 
@@ -153,21 +145,10 @@ function Search({ GlobalState, placeholder, data }) {
                             <Table tutors={tutors} />
                         </div>
                         <div className="filter_container">
-                            <h3>Filter By:</h3>
+
                             <form onChange={(e) => setFilter(e.target.value)}>
-                                <input type="radio" id="thirty" name="filter-by" value="Thirty" style={{ height: '20px', width: '20px' }} />
-                                <label for="thirty" style={{ paddingLeft: '5px' }}>Under $30</label>
-                                <br />
-                                <input type="radio" id="twenty" name="filter-by" value="Twenty" style={{ height: '20px', width: '20px' }} />
-                                <label for="twenty" style={{ paddingLeft: '5px' }}>Under $20</label>
-                                <br />
-                                <input type="radio" id="ten" name="filter-by" value="Ten" style={{ height: '20px', width: '20px' }} />
-                                <label for="ten" style={{ paddingLeft: '5px' }}>Under $10</label>
-                                <br />
-                                <input type="radio" id="ten" name="filter-by" value="Language" style={{ height: '20px', width: '20px' }} />
-                                <label for="language" style={{ paddingLeft: '5px' }}>Primary Language</label>
-                                <input style={{ borderStyle: 'solid', }} type="text" placeholder="Search..." onChange={(e) => setLang(e.target.value)} />
-                            <h3>Sort By:</h3>
+
+                                <h3>Sort By:</h3>
                                 <input type="radio" id="priceLow" name="filter-by" value="priceLow" style={{ height: '20px', width: '20px' }} />
                                 <label for="priceLow" style={{ paddingLeft: '5px' }}>Price: Low to High</label>
                                 <br />
@@ -179,8 +160,22 @@ function Search({ GlobalState, placeholder, data }) {
                                 <br />
                                 <input type="radio" id="ratingHigh" name="filter-by" value="ratingHigh" style={{ height: '20px', width: '20px' }} />
                                 <label for="ratingHigh" style={{ paddingLeft: '5px' }}>Rating: High to Low</label>
-                                
+                                <h3>Filter By:</h3>
+                                <input type="radio" id="thirty" name="filter-by" value="Thirty" style={{ height: '20px', width: '20px' }} />
+                                <label for="thirty" style={{ paddingLeft: '5px' }}>Under $30</label>
+                                <br />
+                                <input type="radio" id="twenty" name="filter-by" value="Twenty" style={{ height: '20px', width: '20px' }} />
+                                <label for="twenty" style={{ paddingLeft: '5px' }}>Under $20</label>
+                                <br />
+                                <input type="radio" id="ten" name="filter-by" value="Ten" style={{ height: '20px', width: '20px' }} />
+                                <label for="ten" style={{ paddingLeft: '5px' }}>Under $10</label>
+                                <br />
+                                <input type="radio" id="ten" name="filter-by" value="Language" style={{ height: '20px', width: '20px' }} />
+                                <label for="language" style={{ paddingLeft: '5px' }}>Primary Language</label>
+
+
                             </form>
+                            <input style={{ borderStyle: 'solid', }} type="text" placeholder="Search..." onChange={(e) => setLang(e.target.value)} />
 
                         </div>
                     </div>
