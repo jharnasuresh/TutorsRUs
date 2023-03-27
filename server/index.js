@@ -251,21 +251,26 @@ app.post("/searchcoursetitle", async (req, res) => {
 
     var list = await db.collection('users').where('takenTitles', 'array-contains', req.body.data).get();
     console.log(list.size)
-    var users = [];
+    var users = {};
     for (i in list.docs) {
         console.log(list.docs[i].get("username"))
         var u = list.docs[i];
-        users.push(u.get("username"))
+        //users.push(u.get("username"))
+        users[u.get("username")] = {fname: u.get('FName')}
         
     }
-    if (users.includes(req.body.currUser)) {
-        users.splice(users.indexOf(req.body.currUser), 1)
+    if (Object.keys(users).includes(req.body.currUser)) {
+        delete users[req.body.currUser]
 
     }
-    if (users.length == 0) {
+
+    if (Object.keys(users).length == 0) {
         return res.send(JSON.stringify("none"))
+
     }
-    
+
+    console.log(users)
+       
     return res.send(JSON.stringify(users))
 
 

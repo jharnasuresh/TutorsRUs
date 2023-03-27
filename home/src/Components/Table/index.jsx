@@ -1,35 +1,64 @@
 import styles from "./styles.module.css";
+import React, { useEffect, useState } from "react";
 
-const Table = ({movies}) => {
+import { useLocation, Link, useNavigate } from "react-router-dom";
+
+
+const Table = ({tutors}) => {
+
+    const location = useLocation();
+    const navigate = useNavigate();
+    const [selectedU, setSelectedU] = useState('')
+    
+    const handleSubmit = (props) => {
+        console.log("clicked " + props)
+    
+        
+        const headers = { "content-type": "application/json" };
+            const requestData = JSON.stringify({ "username":  props});
+        
+            fetch('http://localhost:3001/info', { method: 'POST', body: requestData, headers: headers })
+            .then((res) => res.json())
+            .then((res) => {
+              
+                navigate("/NotYourProfile", {
+                  
+                    state: {
+                        oldU: selectedU,
+                        u: res.u,
+                        fname: res["fname"],
+                        lname: res["lname"], 
+                        email: res["email"], 
+                        active: res["active"],
+                        lang: res["lang"],
+                        followers: res["followers"],
+                        following: res["following"],
+                        follows: true, // need to fix this
+                        taking: res["taking"],
+                        profpic: res["profpic"],
+                        tutor: res["tutor"],
+                        price: res["price"]
+                    }
+                });
+            })
+            
+    
+        
+      }
     return (
-        <div className={styles.container}>
-            <div className={styles.heading}>
-                <p className={styles.title_tab}>Name</p>
-                <p className={styles.genre_tab}>Class</p>
-                <p className={styles.rating_tab}>Rating</p>
-            </div>
-            {movies.map((movie) => (    
-                <div className={styles.movie} key={movie._id}>
-                    <div className={styles.title_container}>
-                        {/* profile picture */}
-                        <p className={styles.movie_title}>
-                            {movie.name}({movie.year})
-                        </p>
+        <div>
+        {
+            Object.keys(tutors).map((tutor) => (
+                <>
+                <div style={{borderStyle: 'solid', padding: '10px'}}>
+                <p>Username: {tutor}</p>
+                <button  onClick={() => handleSubmit(tutor)}>{tutor}</button>
+                <p>First Name: {tutors[tutor].fname}</p>
                 </div>
-                <div className={styles.genre_container}>
-                    {movie.genre.map((genre, index)=>(
-                        <p key = {genre} className = {styles.movie_genre}>
-                            {genre}
-                            {index !== movie.genre.length - 1 && "/"}
-                        </p>
-                    ))}
-                </div>
-                <div className={styles.rating_container}>
-                    <img src = "home/public/Images/star.png" alt ="star" classname={styles.star_img}/>
-                    <p className={styles.movie_rating}>{movie.rating}</p>
-                </div>
-            </div>
-        ))}
+                <br/>
+                </>
+            ))
+        }
         </div>
     );
 };
