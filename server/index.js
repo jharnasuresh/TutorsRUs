@@ -251,30 +251,28 @@ app.post("/searchcoursetitle", async (req, res) => {
     console.log("f " + req.body.filter + " s: " + req.body.sort + " l: " + req.body.lang)
 
     var list;
-    if (req.body.filter !== '') {
-        var price;
-        if (req.body.filter === 'Thirty') {
-            console.log("hereee1")
-            price = 30
-            list = await db.collection('users').where('price', '<=', price).where('takenTitles', 'array-contains', req.body.data).get();
-        } else if (req.body.filter === 'Twenty') {
-            console.log("hereee2")
-            price = 20
-            list = await db.collection('users').where('price', '<=', price).where('takenTitles', 'array-contains', req.body.data).get();
-        } else if (req.body.filter === 'Ten') {
-            console.log("hereee3")
-            price = 10
-            list = await db.collection('users').where('price', '<=', price).where('takenTitles', 'array-contains', req.body.data).get();
-        } else {
-            console.log("hereee4")
-            list = await db.collection('users').where('lang', '=', JSON.parse(JSON.stringify(req.body.lang).toLowerCase())).where('takenTitles', 'array-contains', req.body.data).get();
-        }
-        console.log("hereee")
-
-
+    var price;
+    if (req.body.filter === 'Thirty') {
+        console.log("hereee1")
+        price = 30
+        list = await db.collection('users').where('price', '<=', price).where('takenTitles', 'array-contains', req.body.data).get();
+    } else if (req.body.filter === 'Twenty') {
+        console.log("hereee2")
+        price = 20
+        list = await db.collection('users').where('price', '<=', price).where('takenTitles', 'array-contains', req.body.data).get();
+    } else if (req.body.filter === 'Ten') {
+        console.log("hereee3")
+        price = 10
+        list = await db.collection('users').where('price', '<=', price).where('takenTitles', 'array-contains', req.body.data).get();
+    } else if (req.body.filter === 'Language') {
+        console.log("hereee4")
+        list = await db.collection('users').where('lang', '=', JSON.parse(JSON.stringify(req.body.lang).toLowerCase())).where('takenTitles', 'array-contains', req.body.data).get();
     }
-    else if (req.body.sort !== '') {
-
+    else if (req.body.filter == 'priceLow') {
+        list = await db.collection('users').orderBy('price', 'asc').where('takenTitles', 'array-contains', req.body.data).get();
+    }
+    else if (req.body.filter == 'priceHigh') {
+        list = await db.collection('users').orderBy('price', 'desc').where('takenTitles', 'array-contains', req.body.data).get();
     }
     else {
         list = await db.collection('users').where('takenTitles', 'array-contains', req.body.data).get();
@@ -328,26 +326,22 @@ app.post("/searchmultiplecourses", async (req, res) => {
     for (let j = 0; j < courses.length; j++) {
         console.log(courses[j])
         var list;
-        if (req.body.filter !== '') {
-            var price;
-            if (req.body.filter === 'Thirty') {
-                console.log("hereee1")
-                price = 30
-                list = await db.collection('users').where('price', '<=', price).where('takenTitles', 'array-contains', courses[j]).get();
-            } else if (req.body.filter === 'Twenty') {
-                console.log("hereee2")
-                price = 20
-                list = await db.collection('users').where('price', '<=', price).where('takenTitles', 'array-contains', courses[j]).get();
-            } else if (req.body.filter === 'Ten') {
-                console.log("hereee3")
-                price = 10
-                list = await db.collection('users').where('price', '<=', price).where('takenTitles', 'array-contains', courses[j]).get();
-            } else {
-                console.log("hereee4")
-                list = await db.collection('users').where('lang', '=', JSON.parse(JSON.stringify(req.body.lang).toLowerCase())).where('takenTitles', 'array-contains', courses[j]).get();
-            }
-            console.log("hereee")
-
+        var price;
+        if (req.body.filter === 'Thirty') {
+            console.log("hereee1")
+            price = 30
+            list = await db.collection('users').where('price', '<=', price).where('takenTitles', 'array-contains', courses[j]).get();
+        } else if (req.body.filter === 'Twenty') {
+            console.log("hereee2")
+            price = 20
+            list = await db.collection('users').where('price', '<=', price).where('takenTitles', 'array-contains', courses[j]).get();
+        } else if (req.body.filter === 'Ten') {
+            console.log("hereee3")
+            price = 10
+            list = await db.collection('users').where('price', '<=', price).where('takenTitles', 'array-contains', courses[j]).get();
+        } else if (req.body.filter === 'Language') {
+            console.log("hereee4")
+            list = await db.collection('users').where('lang', '=', JSON.parse(JSON.stringify(req.body.lang).toLowerCase())).where('takenTitles', 'array-contains', courses[j]).get();
         }
         else {
             list = await db.collection('users').where('takenTitles', 'array-contains', courses[j]).get();
@@ -402,7 +396,7 @@ app.post("/searchmultiplecourses", async (req, res) => {
 });
 
 app.post("/searchtutorname", async (req, res) => {
-console.log("seraching name")
+    console.log("seraching name")
     var fname = req.body.data.toLowerCase();
     var lname = "";
     if (fname.includes(" ")) {
@@ -411,29 +405,24 @@ console.log("seraching name")
         lname = ar[1]
     }
     var list;
-    if (req.body.filter !== '') {
-        var price;
-        if (req.body.filter === 'Thirty') {
-            console.log("hereee1")
-            price = 30
-            list = await db.collection('users').where('price', '<=', price).where('FNameLower', '==', fname).get();
-        } else if (req.body.filter === 'Twenty') {
-            console.log("hereee2")
-            price = 20
-            list = await db.collection('users').where('price', '<=', price).where('FNameLower', '==', fname).get();
-        } else if (req.body.filter === 'Ten') {
-            console.log("hereee3")
-            price = 10
-            list = await db.collection('users').where('price', '<=', price).where('FNameLower', '==', fname).get();
-        } else {
-            console.log("hereee4")
-            list = await db.collection('users').where('lang', '=', JSON.parse(JSON.stringify(req.body.lang).toLowerCase())).where('FNameLower', '==', fname).get();
-        }
-        console.log("hereee")
-
+    var price;
+    if (req.body.filter === 'Thirty') {
+        console.log("hereee1")
+        price = 30
+        list = await db.collection('users').where('price', '<=', price).where('FNameLower', '==', fname).get();
+    } else if (req.body.filter === 'Twenty') {
+        console.log("hereee2")
+        price = 20
+        list = await db.collection('users').where('price', '<=', price).where('FNameLower', '==', fname).get();
+    } else if (req.body.filter === 'Ten') {
+        console.log("hereee3")
+        price = 10
+        list = await db.collection('users').where('price', '<=', price).where('FNameLower', '==', fname).get();
+    } else if (req.body.filter === 'Language') {
+        console.log("hereee4")
+        list = await db.collection('users').where('lang', '=', JSON.parse(JSON.stringify(req.body.lang).toLowerCase())).where('FNameLower', '==', fname).get();
     }
     else {
-
         list = await db.collection('users').where('FNameLower', '==', fname).get();
     }
     var users = [];
@@ -445,32 +434,28 @@ console.log("seraching name")
     }
 
     if (lname != "") {
-        if (req.body.filter !== '') {
-            var price;
-            if (req.body.filter === 'Thirty') {
-                console.log("hereee1")
-                price = 30
-                list = await db.collection('users').where('price', '<=', price).where('LNameLower', '==', lname).get();
-            } else if (req.body.filter === 'Twenty') {
-                console.log("hereee2")
-                price = 20
-                list = await db.collection('users').where('price', '<=', price).where('LNameLower', '==', lname).get();
-            } else if (req.body.filter === 'Ten') {
-                console.log("hereee3")
-                price = 10
-                list = await db.collection('users').where('price', '<=', price).where('LNameLower', '==', lname).get();
-            } else {
-                console.log("hereee4")
-                list = await db.collection('users').where('lang', '=', JSON.parse(JSON.stringify(req.body.lang).toLowerCase())).where('LNameLower', '==', lname).get();
-            }
-            console.log("hereee")
-    
+        var price;
+        if (req.body.filter === 'Thirty') {
+            console.log("hereee1")
+            price = 30
+            list = await db.collection('users').where('price', '<=', price).where('LNameLower', '==', lname).get();
+        } else if (req.body.filter === 'Twenty') {
+            console.log("hereee2")
+            price = 20
+            list = await db.collection('users').where('price', '<=', price).where('LNameLower', '==', lname).get();
+        } else if (req.body.filter === 'Ten') {
+            console.log("hereee3")
+            price = 10
+            list = await db.collection('users').where('price', '<=', price).where('LNameLower', '==', lname).get();
+        } else if (req.body.filter === 'Language') {
+            console.log("hereee4")
+            list = await db.collection('users').where('lang', '=', JSON.parse(JSON.stringify(req.body.lang).toLowerCase())).where('LNameLower', '==', lname).get();
         }
         else if (req.body.sort !== '') {
-    
+
         }
         else {
-    
+
             list = await db.collection('users').where('LNameLower', '==', lname).get();
         }
         console.log("ll " + list.size)
@@ -510,27 +495,22 @@ app.post("/searchprofname", async (req, res) => {
     console.log("searching for " + prof)
 
     var list;
-    if (req.body.filter !== '') {
-        var price;
-        if (req.body.filter === 'Thirty') {
-            console.log("hereee1")
-            price = 30
-            list = await db.collection('users').where('price', '<=', price).where('takenProfs', 'array-contains', prof).get();
-        } else if (req.body.filter === 'Twenty') {
-            console.log("hereee2")
-            price = 20
-            list = await db.collection('users').where('price', '<=', price).where('takenProfs', 'array-contains', prof).get();
-        } else if (req.body.filter === 'Ten') {
-            console.log("hereee3")
-            price = 10
-            list = await db.collection('users').where('price', '<=', price).where('takenProfs', 'array-contains', prof).get();
-        } else {
-            console.log("hereee4")
-            list = await db.collection('users').where('lang', '=', JSON.parse(JSON.stringify(req.body.lang).toLowerCase())).where('takenProfs', 'array-contains', prof).get();
-        }
-        console.log("hereee")
-
-
+    var price;
+    if (req.body.filter === 'Thirty') {
+        console.log("hereee1")
+        price = 30
+        list = await db.collection('users').where('price', '<=', price).where('takenProfs', 'array-contains', prof).get();
+    } else if (req.body.filter === 'Twenty') {
+        console.log("hereee2")
+        price = 20
+        list = await db.collection('users').where('price', '<=', price).where('takenProfs', 'array-contains', prof).get();
+    } else if (req.body.filter === 'Ten') {
+        console.log("hereee3")
+        price = 10
+        list = await db.collection('users').where('price', '<=', price).where('takenProfs', 'array-contains', prof).get();
+    } else if (req.body.filter === 'Language') {
+        console.log("hereee4")
+        list = await db.collection('users').where('lang', '=', JSON.parse(JSON.stringify(req.body.lang).toLowerCase())).where('takenProfs', 'array-contains', prof).get();
     }
     else if (req.body.sort !== '') {
 
