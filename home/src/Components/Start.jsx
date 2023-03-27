@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { useHref, useNavigate, useLocation } from "react-router-dom";
 import { Login } from "../Login";
 import { Register } from "../Register";
@@ -7,6 +7,9 @@ import Profile from "./Profile"
 import "./styles.css"
 import Tabs from "./Tabs";
 import Calendar from "./Calendar";
+import Scheduling from "./Scheduling";
+import GoogleEventComponent from "./GoogleComponent";
+import { signInToGoogle, initClient,getSignedInUserEmail, signOutFromGoogle , publishTheCalenderEvent } from './Scheduling';
 export const Start = ({GlobalState}) => {
   const location = useLocation();
   
@@ -29,12 +32,17 @@ export const Start = ({GlobalState}) => {
         
     }
 
+  
+
     return (
-
+      <div>
+      <>
       <a href='https://calendar.google.com/calendar/u/0/r'><button>Link To your Calendar!</button>
-        <Calendar />
       </a>
-
+      <GoogleEventComponent/>
+      </>
+      <Calendar />
+      </div>
     )
 
 }

@@ -17,8 +17,9 @@
 
 }
 .img2 {
-  object-position : top -200px left 100px;
-  height: 550px;
+  object-position : top -15px left 0px;
+  width: 50%;
+  height: auto;
 }
 
 .auth-form-container, .login-form, .register-form, .pass-form {

@@ -7,7 +7,6 @@ import './Main.css'
 import { Route, useHref, useNavigate, useLocation, Link } from "react-router-dom";
 import Tabs from "./Tabs";
 import { LocationSearching, Schedule } from '@mui/icons-material';
-import Scheduling from './Scheduling';
 export const NotYourProfile = ({GlobalState}) => {
   const location = useLocation();
   const navigate  = useNavigate();
@@ -112,7 +111,7 @@ export const NotYourProfile = ({GlobalState}) => {
       <a>
        <div className="img2"><img class="img2" src = "/Images/verifiedtut.png"/></div>
        <h2> Schedule With Tutor: </h2>
-       <Scheduling/>
+       {/*<Scheduling/>*/}
        </a>
     }
 
