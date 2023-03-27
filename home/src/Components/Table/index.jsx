@@ -50,7 +50,7 @@ const Table = ({tutors}) => {
         {
             Object.keys(tutors).map((tutor) => (
                 <>
-                <div style={{borderStyle: 'solid', padding: '10px'}}>
+                <div>
                 <p>Username: {tutor}</p>
                 <button  onClick={() => handleSubmit(tutor)}>{tutor}</button>
                 <p>First Name: {tutors[tutor].fname}</p>

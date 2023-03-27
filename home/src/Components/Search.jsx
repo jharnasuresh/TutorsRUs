@@ -12,7 +12,6 @@ const base_url = process.env.REACT_APP_API_URL;
 function Search({ GlobalState, placeholder, data }) {
     const [obj, setObj] = useState({});
     const [sort, setSort] = useState('');
-    const [filterGenre, setFilterGenre] = useState([])
     const [page, setPage] = useState(1);
     const [open, setOpen] = useState(false);
     const [filterData, setFilteredData] = useState([]);
