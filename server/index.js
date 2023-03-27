@@ -333,8 +333,15 @@ app.post("/searchmultiplecourses", async (req, res) => {
         return res.send(JSON.stringify("none"))
     }
     
+    var data = {};
+    for (u in finalList) {
+        var us = await db.collection('users').where('username', '==', finalList[u]).get();
+        var user = us.docs[0]
+        console.log(" find " + finalList[u] + " " + user.get("FName"))
+        data[finalList[u]] = {fname: user.get("FName")}
+    }
     
-    return res.send(JSON.stringify(finalList))
+    return res.send(JSON.stringify(data))
 
 
 });
@@ -376,8 +383,16 @@ app.post("/searchtutorname", async (req, res) => {
     if (finalList.length == 0) {
         return res.send(JSON.stringify("none"))
     }
+
+    var data = {};
+    for (u in finalList) {
+        var us = await db.collection('users').where('username', '==', finalList[u]).get();
+        var user = us.docs[0]
+        console.log(" find " + finalList[u] + " " + user.get("FName"))
+        data[finalList[u]] = {fname: user.get("FName")}
+    }
     
-    return res.send(JSON.stringify(finalList))
+    return res.send(JSON.stringify(data))
 
 
 });
@@ -389,21 +404,24 @@ app.post("/searchprofname", async (req, res) => {
     console.log("searching for " + prof)
 
     var list = await db.collection('users').where('takenProfs', 'array-contains', prof).get();
-    var users = [];
-    console.log(list.size)
-    console.log(list.size)
+    var users = {};
     for (i in list.docs) {
         console.log(list.docs[i].get("username"))
         var u = list.docs[i];
-        users.push(u.get("username"))
+        //users.push(u.get("username"))
+        users[u.get("username")] = {fname: u.get('FName')}
+        
+    }
+    if (Object.keys(users).includes(req.body.currUser)) {
+        delete users[req.body.currUser]
+
     }
 
-    if (users.includes(req.body.currUser)) {
-        users.splice(users.indexOf(req.body.currUser), 1)
-    }
-    if (users.length == 0) {
+    if (Object.keys(users).length == 0) {
         return res.send(JSON.stringify("none"))
+
     }
+
     
     return res.send(JSON.stringify(users))
 
