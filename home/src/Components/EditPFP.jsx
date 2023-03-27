@@ -1,166 +1,172 @@
-
 import Avatar from "@mui/material/Avatar";
-import { useState } from "react";
-import './Main.css'
+import React, { useState, useCallback } from 'react';
 import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 import { FileUploader } from "react-drag-drop-files";
 
 import { Route, useHref, useNavigate, useLocation, Link } from "react-router-dom";
+import { PreviewRounded } from "@mui/icons-material";
 export const EditPFP = ({GlobalState}) => {
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [imageSrc, setImageSrc] = useState(null);
+  const [crop, setCrop] = useState({ unit: '%', width: 30, aspect: 1 / 1 });
 
-    const fileTypes = ["JPG", "PNG", "GIF"];
-    const [src, setSrc] = useState(null);
-    const [crop, setCrop] = useState({ aspect: 16 / 9 });
+
+
+  const fileTypes = ["JPG", "PNG", "GIF"];
+  const { currUser, setCurrUser } = GlobalState;
     const [image, setImage] = useState(null);
-    const [output, setOutput] = useState(null);
-
+    //const [url, setUrl] = useState(null);
     const [newPFP, setNewPFP] = useState(false)
     const location = useLocation();
-    var urlPFP = null;
     const navigate = useNavigate();
-    
-    const selectImage = (file) => {
-          console.log("helllloooooo in handle change");
-          //console.log(file);
-          const allImages = document.querySelectorAll("img");
-          const reader = new FileReader();
-          var counter = 0;
-          reader.addEventListener(
-            "load",
-            () => {
-              // convert image file to base64 string
-              allImages.forEach((image) => {
-                if (counter === 1) {
-      
-                  const preview = image;
-                  preview.src = reader.result;
-                  console.log("2in the second image2");
-                  //console.log(reader.result);
-                  urlPFP = reader.result;
-                  //console.log("2jharna here is the url:2 ", url)
-                  setNewPFP(true);
-                  uploadPFPtoDB();
-                  setSrc(urlPFP);
-                  setImage(urlPFP)
-                }
-                counter++;
-              });
-              
-            },
-            false
-          );
-        
-          if (file) {
-            console.log("in the if file")
-            console.log(file);
-            reader.readAsDataURL(file);
-          }
-          else {
-            console.log("Please upload an image")
-          }
-      
-    };
-    
+    var urlPFP = null;
 
-    function uploadPFPtoDB() {
-      
-    
-        //console.log("june here's pfp url", url);
-        const requestData = JSON.stringify({ "username": location.state.u, "pfpurl": urlPFP});
-        console.log("june here's your username: " + location.state.u)
-        const headers = { "content-type": "application/json" };
-   
-        console.log("going to upload profile")
-        console.log("look prof pick uploaded")
-          fetch('http://localhost:3001/pfpupload', { method: 'POST', body: requestData, headers: headers })
-          .then((res) => res.json())
-          .then((res) => {
-              console.log("resfname", res["fname"])
-              /*navigate("/Profile", {
-  
-                  state: {
-                      u: res.u,
-                      fname: res["fname"],
-                      lname: res["lname"],
-                      email: res["email"],
-                      active: res["active"],
-                      lang: res["lang"],
-                      taking: res["taking"],
-                      followers: res["followers"],
-                      following: res["following"],
-                      tutor: res["tutor"],
-                      profpic: res["profpic"],
-                      price: res["price"],
-                      taken: res["taken"]
-                  }
-              });*/
-          })
-  
+  const onSelectFile = (file) => {
+    console.log("EDITPFP: onSelectFile")
+    const allImages = document.querySelectorAll("img");
+    console.log("allImages dec")
+    const reader = new FileReader();
+    console.log("reader init")
+    var counter = 0;
+    var preview;
+    console.log("before event listener")
+    reader.addEventListener(
+      "load",
+      () => {
+        // convert image file to base64 string
+        console.log("before foreach");
+        counter = 0;
+        allImages.forEach((image) => {
+          if (counter === 1) {
+            console.log("in if");
+            preview = image;
+            console.log("set preview as image");
+            preview.src = reader.result;
+            console.log("set reader.result");
+            //console.log(reader.result);
+            urlPFP = reader.result;
+            console.log("set urlPFP")
+            //setImageSrc(reader.result)
+            //console.log("2jharna here is the url:2 ", url)
+            setNewPFP(true);
+            console.log("before upload")
+            uploadPFPtoDB();
+          }
+          else if (counter == 2) {
+            preview = image;
+            preview.src = reader.result;
+            setImageSrc(image);
+          }
+          counter++;
+        });
+        
+      },
+      false
+    );
+
+    if (file) {
+      console.log("in the if file")
+      console.log(file);
+      reader.readAsDataURL(file);
+    }
+    else {
+      console.log("Please upload an image")
     }
 
-    const cropImageNow = () => {
+  };
+
+  const onImageLoaded = (image) => {
+    setCrop({ unit: '%', width: 30, aspect: 1 / 1, height: image.naturalHeight / 3 });
+  };
+
+  const onCropComplete = useCallback((crop) => {
+    makeClientCrop(crop);
+  }, []);
+
+  
+
+  const makeClientCrop = async (crop) => {
+    if (imageSrc && crop.width && crop.height) {
+      const croppedImageUrl = await getCroppedImg(imageSrc, crop);
+      const img = new Image();
+      img.src = croppedImageUrl;
+      img.onload = () => {
+        // Set the cropped image as the source of an image element
+        const preview = document.getElementById('cropped-image-preview');
+        preview.src = croppedImageUrl;
+      };
+      console.log(croppedImageUrl);
+      // You can upload the cropped image here
+    }
+  };
+
+  const getCroppedImg = (imageSrc, crop) => {
+    return new Promise((resolve, reject) => {
+      var image = document.getElementById('cropped-image-preview');
       const canvas = document.createElement('canvas');
-      console.log(image);
       const scaleX = image.naturalWidth / image.width;
       const scaleY = image.naturalHeight / image.height;
-      canvas.width = crop.width;
-      canvas.height = crop.height;
+      canvas.width = crop.width * scaleX;
+      canvas.height = crop.height * scaleY;
       const ctx = canvas.getContext('2d');
-    
-      const pixelRatio = window.devicePixelRatio;
-      canvas.width = crop.width * pixelRatio;
-      canvas.height = crop.height * pixelRatio;
-      ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
-      ctx.imageSmoothingQuality = 'high';
-    
       ctx.drawImage(
-        urlPFP,
+        image,
         crop.x * scaleX,
         crop.y * scaleY,
         crop.width * scaleX,
         crop.height * scaleY,
         0,
         0,
-        crop.width,
-        crop.height,
+        crop.width * scaleX,
+        crop.height * scaleY
       );
-        
-      // Converting to base64
-      const base64Image = canvas.toDataURL('image/jpeg');
-      setOutput(base64Image);
-    };
-    
-    return (
-      <div className="App">
-        <center>
-       <input
-          type="file"
-          accept="image/*"
-          onChange={(e) => {
-            console.log("jharna suresh")
-            selectImage(e.target.files[0]);
-          }}
-        />
+      canvas.toBlob((blob) => {
+        resolve(URL.createObjectURL(blob));
+      }, 'image/jpeg');
+    });
+  };
 
-    <Avatar src={location.state.profpic} alt="Image preview" sx={{ width: 300, height: 300 }} />
-    <img src={location.state.profpic} height="200" alt="Image preview" />  
-          <br />
-          <br />
-          <div>
-            {src && (
-              <div>
-                <ReactCrop src={src} onImageLoaded={setImage}
-                  crop={crop} onChange={setCrop} />
-                <br />
-                <button onClick={cropImageNow}>Crop</button>
-                <br />
-                <br />
-              </div>
-            )}
-          </div>
-          <div>{output && <img src={output} />}</div>
-        </center>
-      </div>
-    );
-  }
+  function uploadPFPtoDB() {
+      
+    
+    //console.log("june here's pfp url", url);
+    const requestData = JSON.stringify({ "username": location.state.u, "pfpurl": urlPFP});
+    console.log("june here's your username: " + location.state.u)
+    const headers = { "content-type": "application/json" };
+
+    console.log("going to upload profile")
+    console.log("look prof pick uploaded")
+      fetch('http://localhost:3001/pfpupload', { method: 'POST', body: requestData, headers: headers })
+      .then((res) => res.json())
+      .then((res) => {
+          console.log("resfname", res["fname"])
+          
+      })
+
+}
+
+  return (
+    <div>
+      <Avatar src={location.state.profpic} alt="Image preview" sx={{ width: 300, height: 300 }} />
+    
+      <FileUploader handleChange={onSelectFile} name="file" types={fileTypes} />
+    {imageSrc && (
+      <ReactCrop
+        src={imageSrc}
+        crop={crop}
+        onImageLoaded={onImageLoaded}
+        onComplete={onCropComplete}
+        onChange={(c) => setCrop(c)}
+      />
+    )}
+    {imageSrc && (
+      console.log("JUNE ITS TRYING TO CROP"),
+      <img src="" height="200" alt="Image preview" />,
+      <button onClick={() => makeClientCrop(crop)}>Crop Image</button>
+    )}
+
+    {/*<img id="cropped-image-preview" alt="Cropped Image Preview" />*/}
+  </div>
+  );
+};

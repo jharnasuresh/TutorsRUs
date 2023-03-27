@@ -1,11 +1,12 @@
 .container {
-	margin-top: -100px;
-	padding-left: 50px;
+	margin-top: -185px;
+	padding-left: 190px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	box-shadow: var(--box-shadow);
-	margin-right: -100px;
+	margin-left: -350px;
+	position: absolute;
 }
 
 .sort_by {

@@ -7,10 +7,12 @@ function Popup(props) {
     const navigate = useNavigate();
     const location = useLocation();
 
+    console.log("pop up user " + props.user)
+
     const handleSubmit = (e) => {
         e.preventDefault();
         
-        const requestData = JSON.stringify({ "username":  location.state.user});
+        const requestData = JSON.stringify({ "username":  props.user});
         const headers = { "content-type": "application/json" };
         console.log("uuu " + location.state.user)
     

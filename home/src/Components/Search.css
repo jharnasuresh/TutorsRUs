@@ -5,15 +5,25 @@
 }
 
 .searchby {
-  margin-left: 1100px;
-  margin-top: 140px;
+  margin-top: 50px;
+  margin-left: 50px;
   position: absolute;
   text-align: left;
+  background-color: rgb(185, 185, 185);
+  border-radius: 10px;
+  padding: 5px;
 }
 
 .searchbar {
-  margin-left: 600px;
+  margin-left: 450px;
   margin-top: 50px;
+}
+
+.priceSort {
+  position: absolute;
+  text-align: left;
+  margin-bottom: 850px;
+  margin-left: 800px;
 }
 /*.searchInputs {
     margin-top: -750px;
@@ -104,10 +114,10 @@ input:focus {
 
   .container {
     margin-left: 100px;
-    margin-right: 100px;
+    margin-right: 400px;
     margin-bottom: 900px;
     margin-top: 10px;
-    width: 1700px;
+    width: 900px;
     border-radius: 10px;
     box-shadow: var(--box-shadow);
     display: absolute;
