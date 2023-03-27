@@ -77,12 +77,21 @@ export const Profile = ({ GlobalState }) => {
   }
 
   console.log("offer " + printingTaken)
+  const toggle = (e) => {
+    e.preventDefault();
+    console.log("TUT: " + tut );
+    if(tut === 'tut') {
+      tut = "";
+    } else {
+      tut = 'tut';
+    }
 
+  }
   return (
     <div className="App">
 
       <div className='activate'><h1 style={{ color: 'red', marginTop: '-50px' }}>{a}</h1></div>
-      
+     {/* <button onClick={toggle}>Press</button>*/}
 
       {tut === 'tut' &&
           <div className={"img2"} style ={{position: 'absolute', marginLeft: '500px', marginTop: '-750px', height: '50px'}}><img class="img2" src = "/Images/verifiedtut.png"/></div>
