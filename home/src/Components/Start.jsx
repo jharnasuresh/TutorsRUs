@@ -102,17 +102,11 @@ export const Start = ({GlobalState}) => {
   
 
     return (
-      <div>
-      <>
     <div>
-      <a href='https://calendar.google.com/calendar/u/0/r'><button>Link To your Calendar!</button>
-      </a>
-      <GoogleEventComponent/>
-      </>
-      <Calendar />
-      </div>
 
-         
+      <a href='https://calendar.google.com/calendar/u/0/r'><button>Link To your Calendar!</button></a>
+      <GoogleEventComponent/>
+      <Calendar />
       </div>
 
       
