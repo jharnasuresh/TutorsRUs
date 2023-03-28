@@ -93,7 +93,7 @@ export const Profile = ({ GlobalState }) => {
       
 
       {tutor === false &&
-          <div className={"img2"} style ={{position: 'absolute', marginLeft: '500px', marginTop: '-750px', height: '50px'}}><img class="img2" src = "/Images/verifiedtut.png"/></div>
+          <div className={"img2"} style ={{position: 'absolute', marginLeft: '500px', marginTop: '-780px', height: '50px'}}><img class="img2" src = "/Images/verifiedtut.png"/></div>
       }
 
     <div style={{position: 'absolute', marginLeft: '-700px', marginTop: '-350px'}}>
@@ -109,7 +109,7 @@ export const Profile = ({ GlobalState }) => {
       {
         (!tutor) ? <div style={{position: 'absolute', marginLeft: '525px', marginTop: '500px'}}><CourseInfo courses={printingTaken} past={true}/></div> : <span></span>
       }
-      <div className='profile-btn'>
+      <div className='ur-profile-btn'>
 
 
       <div style={{position: 'absolute', marginLeft: '30px', marginTop: '-1100px'}}>

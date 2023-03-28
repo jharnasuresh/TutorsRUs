@@ -137,8 +137,14 @@
 
 .profile-btn {
     position: absolute;
-    bottom: 2em;
-    left: 10em;
+    bottom: 20em;
+    left: 16em;
+}
+
+.ur-profile-btn {
+    position: absolute;
+    bottom: 5em;
+    left: 15em;
 }
 
 .popup-inner .close-btn {

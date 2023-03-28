@@ -142,7 +142,7 @@ function Search({ GlobalState, placeholder, data }) {
                 <div className="container-search">
                     <div className="body">
                         <div className="table_container">
-                            <Table tutors={tutors} />
+                            <Table tutors={tutors} currU={currUser}/>
                         </div>
                         <div className="filter_container">
 
