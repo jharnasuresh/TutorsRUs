@@ -147,9 +147,7 @@ const toSettings = (e) => {
                 <div className="img"><img class="img" src = "/Images/IMG_4596.png"/></div>
                 
                 <ul className="nav-links">
-                    <li>
-                        Logged in: {loggedIn.toString()}
-                    </li>
+                    
                     <li>
                         {/*<a href="./Start" state={{GlobalState: {GlobalState}, u: {currUser}}} > Home </a>*/}
                         <a href="./Start" onClick={() => navigate('/Start', {state: {u: currUser}})} > <i class="fa-solid fa-home"></i> </a>
