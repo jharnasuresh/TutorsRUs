@@ -5,7 +5,7 @@
 }
 
 .searchby {
-  margin-top: 50px;
+  margin-top: 20px;
   margin-left: 50px;
   position: absolute;
   text-align: left;
@@ -16,7 +16,7 @@
 
 .searchbar {
   margin-left: 450px;
-  margin-top: 50px;
+  margin-top: 10px;
 }
 
 .priceSort {
@@ -25,31 +25,7 @@
   margin-bottom: 850px;
   margin-left: 800px;
 }
-/*.searchInputs {
-    margin-top: -750px;
-    margin-left: -500px;
-    display: flex;
-}
 
-.searchby {
-  margin-top: -1950px;
-  margin-left: -450px;
-  font-size: 18px;
-}
-
-.search input {
-    background-color: white;
-   /* border: 0;
-    border-radius: 2px;
-    border-top-right-radius: 0px;
-    border-bottom-right-radius: 0px;
-    font-size: 18px;
-    height: 60px;
-    width: 300px;
-    margin-top: -1150px;
-    margin-left: 100px;
-}
-*/
 .link-btn {
     height: 100%;
     width: 100%;
@@ -94,10 +70,6 @@ input:focus {
     text-decoration: none;
   }
   
-  /*a:hover {
-    background-color: lightgrey;
-    
-  }*/
   
   #clearBtn {
     cursor: pointer;
@@ -134,9 +106,23 @@ input:focus {
   .table_container {
     flex: 3;
     position: relative;
+    width: 1000px;
+    align-items: left;
   }
   
   .filter_container {
-    flex: 1;
+    position: absolute;
+    margin: 10px;
+    text-align: left;
+    padding: 20px;
+    padding-right: 150px;
+    padding-bottom: 200px;
+    box-shadow: var(--box-shadow);
+    background-color:  white;
+    border-radius: 4px;
+    margin-left: 1000px;
+    margin-top: -130px;
+    width: 350px;
   }
+
   

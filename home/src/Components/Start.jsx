@@ -37,15 +37,15 @@ export const Start = ({GlobalState}) => {
         console.log("Log out!")
 
 
-        navigate("/Login", {
-          tutor: location.state.tutor
-      });
+        //navigate("/Login", {
+         // tutor: location.state.tutor
+      //});
     }
 
     if (warningTime < Date.now() && counter == 0) {
       console.log("Warning!")
       warningPOP = true;
-      alert("10 seconds before you logout!");
+      //alert("10 seconds before you logout!");
       counter++;
       
       
@@ -107,7 +107,6 @@ export const Start = ({GlobalState}) => {
       <a href='https://calendar.google.com/calendar/u/0/r'><button>Link To your Calendar!</button></a>
       <GoogleEventComponent/>
       <Calendar />
-      </div>
 
       
     )
