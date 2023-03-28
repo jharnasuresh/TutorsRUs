@@ -288,7 +288,7 @@ app.post("/searchcoursetitle", async (req, res) => {
         console.log(list.docs[i].get("username"))
         var u = list.docs[i];
         //users.push(u.get("username"))
-        users[u.get("username")] = { fname: u.get('FName'), lname: u.get('LName'), price: u.get('price'), rating: u.get('rating'), lang: u.get('lang') }
+        users[u.get("username")] = { fname: u.get('FName'), lname: u.get('LName'), price: u.get('price'), rating: u.get('rating'), lang: u.get('lang'), taken: u.get("takenTitles") }
 
     }
     if (Object.keys(users).includes(req.body.currUser)) {
@@ -390,7 +390,7 @@ app.post("/searchmultiplecourses", async (req, res) => {
         var us = await db.collection('users').where('username', '==', finalList[u]).get();
         var user = us.docs[0]
         console.log(" find " + finalList[u] + " " + user.get("FName"))
-        data[finalList[u]] = { fname: user.get("FName"), lname: u.get('LName'), price: u.get('price'), rating: u.get('rating'), lang: u.get('lang') }
+        data[finalList[u]] = { fname: user.get("FName"), lname: u.get('LName'), price: u.get('price'), rating: u.get('rating'), lang: u.get('lang'), taken: u.get("takenTitles") }
     }
 
     return res.send(JSON.stringify(data))
@@ -483,7 +483,7 @@ app.post("/searchtutorname", async (req, res) => {
         var us = await db.collection('users').where('username', '==', finalList[u]).get();
         var user = us.docs[0]
         console.log(" find " + finalList[u] + " " + user.get("FName"))
-        data[finalList[u]] = { fname: user.get("FName"), lname: u.get('LName'), price: u.get('price'), rating: u.get('rating'), lang: u.get('lang') }
+        data[finalList[u]] = { fname: user.get("FName"), lname: u.get('LName'), price: u.get('price'), rating: u.get('rating'), lang: u.get('lang'), taken: u.get("takenTitles") }
     }
 
     return res.send(JSON.stringify(data))
@@ -526,7 +526,7 @@ app.post("/searchprofname", async (req, res) => {
         console.log(list.docs[i].get("username"))
         var u = list.docs[i];
         //users.push(u.get("username"))
-        users[u.get("username")] = { fname: u.get('FName'), lname: u.get('LName'), price: u.get('price'), rating: u.get('rating'), lang: u.get('lang') }
+        users[u.get("username")] = { fname: u.get('FName'), lname: u.get('LName'), price: u.get('price'), rating: u.get('rating'), lang: u.get('lang'), taken: u.get("takenTitles") }
 
     }
     if (Object.keys(users).includes(req.body.currUser)) {
@@ -557,7 +557,12 @@ app.post("/info", async (req, res) => {
     console.log("aaa " + doc.get("active"))
     console.log("look here are your followers: " + doc.get("followers"))
 
-    return res.send(JSON.stringify({ "u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), "profpic": doc.get("profpic"), "taking": doc.get("taking"), "taken": doc.get("taken"), "tutor": doc.get("tutor"), "price": doc.get("price") }))
+    var follows = false;
+    if (req.body.currUser !== undefined && doc.get("followers").includes(req.body.currUser)) {
+        follows = true;
+    }
+
+    return res.send(JSON.stringify({ "u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), "profpic": doc.get("profpic"), "taking": doc.get("taking"), "taken": doc.get("taken"), "tutor": doc.get("tutor"), "price": doc.get("price"), "follows": follows }))
 
 
 })
@@ -901,6 +906,7 @@ app.post("/notyourprofile", async (req, res) => {
 
 
     var oldUser = req.body["oldUser"]
+    console.log("the current user is " + currUser + " the old user " + oldUser)
     console.log("first potential problem area " + oldUser);
     const oldUserData = await db.collection('users').where('username', '==', oldUser).get();
     console.log("no problem here!")
