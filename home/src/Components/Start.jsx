@@ -37,15 +37,15 @@ export const Start = ({GlobalState}) => {
         console.log("Log out!")
 
 
-        navigate("/Login", {
-          tutor: location.state.tutor
-      });
+        //navigate("/Login", {
+         // tutor: location.state.tutor
+      //});
     }
 
     if (warningTime < Date.now() && counter == 0) {
       console.log("Warning!")
       warningPOP = true;
-      alert("10 seconds before you logout!");
+      //alert("10 seconds before you logout!");
       counter++;
       
       
