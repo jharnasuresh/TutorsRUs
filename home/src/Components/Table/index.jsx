@@ -46,18 +46,24 @@ const Table = ({tutors}) => {
         
       }
     return (
-        <div>
+        <div style={{marginTop: '50px'}}>
         {
             Object.keys(tutors).map((tutor) => (
                 <>
-                <div style={{textAlign: 'left', alignItems: 'left'}}>
-                    <div style={{float: 'left', margin: '0px 0px 0px 100px' }}>
+                <div style={{textAlign: 'left', height: '130px'}}>
+                    <div style={{float: 'left', margin: '10px 10px 10px 100px' }}>
                     <img src = "/Images/Profile_Icon.png" alt = "" width="100px" height="100px" textAlign='left'/>
                     </div>
                  
-                <p>Username: {tutor}</p>
-                <button  onClick={() => handleSubmit(tutor)}>{tutor}</button>
-                <p>First Name: {tutors[tutor].fname}</p>
+                <button className="linked" onClick={() => handleSubmit(tutor)}>{tutor}</button>
+                <br />
+                <span style={{textAlign: 'left', fontWeight: 'bold'}}>{tutors[tutor].fname} {tutors[tutor].lname}</span>
+                <span style={{float: 'right', padding: '0px 50px 0px 0px'}}>Price: ${tutors[tutor].price}/hour</span>
+                <br />
+                <span style={{textAlign: 'left'}}>Courses: {[...tutors[tutor].taken] + ","}</span>
+                {
+                }
+                <span style={{float: 'right', padding: '0px 50px 0px 0px'}}>Rating: {tutors[tutor].rating != undefined ? tutors[tutor].rating : '0.0'}/5</span>
                 </div>
                 <br/>
                 </>

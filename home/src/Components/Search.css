@@ -84,10 +84,10 @@ input:focus {
 	justify-content: center;
   }
 
-  .container {
+  .container-search {
     margin-left: 100px;
     margin-right: 400px;
-    margin-bottom: 900px;
+    margin-bottom: 700px;
     margin-top: 10px;
     width: 900px;
     border-radius: 10px;
@@ -99,7 +99,7 @@ input:focus {
   }
 
   .body {
-    height: 500px;
+    height: 700px;
     display: flex;
   }
 
@@ -120,9 +120,19 @@ input:focus {
     box-shadow: var(--box-shadow);
     background-color:  white;
     border-radius: 4px;
-    margin-left: 1000px;
-    margin-top: -130px;
+    margin-left: 940px;
+    margin-top: -10px;
     width: 350px;
   }
+
+  .linked {
+    background: none!important;
+    padding: 0!important;
+    /*optional*/
+    font-family: arial, sans-serif;
+    /*input has OS specific font-family*/
+    text-decoration: underline;
+    cursor: pointer;
+    }
 
   

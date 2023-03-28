@@ -139,7 +139,7 @@ function Search({ GlobalState, placeholder, data }) {
                 showErr ? <h3 style={{ color: 'red' }}>Only search for one {searchBy} at a time.</h3> : <span></span>
             }
             <div className="wrapper">
-                <div className="container">
+                <div className="container-search">
                     <div className="body">
                         <div className="table_container">
                             <Table tutors={tutors} />
