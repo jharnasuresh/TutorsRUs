@@ -4,10 +4,11 @@ import About from './About';
 import CourseInfo from './CourseInfo';
 import Popup from './Popup';
 import './Main.css'
+import Avatar from "@mui/material/Avatar";
+
 import { Route, useHref, useNavigate, useLocation, Link } from "react-router-dom";
 import Tabs from "./Tabs";
 import { LocationSearching, Schedule } from '@mui/icons-material';
-import Scheduling from './Scheduling';
 export const NotYourProfile = ({GlobalState}) => {
   const location = useLocation();
   const navigate  = useNavigate();
@@ -15,6 +16,7 @@ export const NotYourProfile = ({GlobalState}) => {
   const [active, setActive] = useState(location.state.active)
   var numFollowers = (location.state.followers).length + ""
   var tut = (location.state.tutor) ? "tut"  : "kjd";
+  console.log(tut)
   if ((location.state.followers).length > 3) {
     numFollowers = "3+"
   }
@@ -109,30 +111,39 @@ export const NotYourProfile = ({GlobalState}) => {
 
       
       {tut === 'tut' &&
-      <a>
-       <div className="img2"><img class="img2" src = "/Images/verifiedtut.png"/></div>
-       <h2> Schedule With Tutor: </h2>
-       <Scheduling/>
-       </a>
+      
+      <div className={"img2"} style ={{position: 'absolute', marginLeft: '500px', marginTop: '-780px', height: '50px'}}><img class="img2" src = "/Images/verifiedtut.png"/></div>
+
     }
 
-      <Header fname={location.state.fname} lname={location.state.lname} />
-      <hr />
+<div style={{position: 'absolute', marginLeft: '-700px', marginTop: '-350px'}}>
+      <Avatar src={location.state.profpic} sx={{ width: 300, height: 300 }} />
+    </div>      
+    <hr />
+    <div style={{position: 'absolute', marginLeft: '-1775px', marginTop: '-400px'}}>
+    <About user={location.state.u} mail={"mailto:" + email} email={email} lang={location.state.lang} yours={false} price={location.state.price} tutor={location.state.tutor}/>    
       <About user={location.state.u} mail={"mailto:" + email} email={email} lang={location.state.lang} yours={false} price={location.state.price} tutor={location.state.tutor}/>
+    <About user={location.state.u} mail={"mailto:" + email} email={email} lang={location.state.lang} yours={false} price={location.state.price} tutor={location.state.tutor}/>    
+    </div>
+      
       <br/>
-      <div style={{position: 'absolute', marginLeft: '800px', marginTop: '350px'}}>
+      <div style={{position: 'absolute', marginLeft: '525px', marginTop: '150px'}}>
         <CourseInfo courses={printing} past={false}/>
       </div>
       <br />
       {
-        (location.state.tutor) ? <div style={{position: 'absolute', marginLeft: '800px', marginTop: '700px'}}><CourseInfo courses={printingTaken} past={true}/></div> : <span></span>
+        (location.state.tutor) ? <div style={{position: 'absolute', marginLeft: '525px', marginTop: '500px'}}><CourseInfo courses={printingTaken} past={true}/></div> : <span></span>
       }
       <div  className='profile-btn'>
       <h3>Followers: {numFollowers}</h3>
       <h3>Following: {numFollowing} </h3>
       
+      
 
 <button type="submit" onClick={handleSubmit}> {isFollowing} </button>
+{
+        tut === 'tut' && <h2>Scehdule with Tutor:</h2>
+      }
       </div>
       
       

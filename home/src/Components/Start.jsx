@@ -1,5 +1,5 @@
+import React, { useState, useEffect } from "react"
 
-import {useEffect, useState} from "react"
 import { useHref, useNavigate, useLocation } from "react-router-dom";
 import { Login } from "../Login";
 import { Register } from "../Register";
@@ -10,6 +10,9 @@ import "./styles.css"
 import AutologoutWarning from './AutologoutWarning'
 import Tabs from "./Tabs";
 import Calendar from "./Calendar";
+import Scheduling from "./Scheduling";
+import GoogleEventComponent from "./GoogleComponent";
+import { signInToGoogle, initClient,getSignedInUserEmail, signOutFromGoogle , publishTheCalenderEvent } from './Scheduling';
 export const Start = ({GlobalState}) => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -33,15 +36,15 @@ export const Start = ({GlobalState}) => {
         console.log("Log out!")
 
 
-        navigate("/Login", {
-          tutor: location.state.tutor
-      });
+        //navigate("/Login", {
+         // tutor: location.state.tutor
+      //});
     }
 
     if (warningTime < Date.now() && counter == 0) {
       console.log("Warning!")
       warningPOP = true;
-      alert("10 seconds before you logout!");
+      //alert("10 seconds before you logout!");
       counter++;
       
       
@@ -95,12 +98,15 @@ export const Start = ({GlobalState}) => {
         
     }
 
+  
+
     return (
 
     <div>
       <a href='https://calendar.google.com/calendar/u/0/r'><button>Link To your Calendar!</button>
-        <Calendar />
       </a>
+      <GoogleEventComponent/>
+      <Calendar />
 
          
       </div>

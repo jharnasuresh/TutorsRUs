@@ -18,6 +18,7 @@ import { LocationSearching } from '@mui/icons-material';
 export const Profile = ({ GlobalState }) => {
   console.log("in profile now")
   const [buttonPopup, setButtonPopup] = useState(false);
+  const [tutor, setTutor] = useState(false);
   const [buttonPopup2, setButtonPopup2] = useState(false);
   const { currUser, setCurrUser } = GlobalState;
 
@@ -55,8 +56,9 @@ export const Profile = ({ GlobalState }) => {
   if ((location.state.following).length > 3) {
     numFollowing = "3+"
   }
-  var tut = (location.state.tutor) ? "tut"  : "kjd";
-
+  if(location.state.tutor) {
+     //setTutor(true);
+  }
   var printing = "";
   if (location.state.taking != undefined) {
     function p (str) {
@@ -77,15 +79,21 @@ export const Profile = ({ GlobalState }) => {
   }
 
   console.log("offer " + printingTaken)
-
+  const toggle = (e) => {
+    if(tutor) {
+      setTutor(false);
+    } else {
+      setTutor(true);
+    }
+  }
   return (
     <div className="App">
-
+      <button onClick={toggle}>Press</button>
       <div className='activate'><h1 style={{ color: 'red', marginTop: '-50px' }}>{a}</h1></div>
       
 
-      {tut === 'tut' &&
-          <div className={"img2"} style ={{position: 'absolute', marginLeft: '500px', marginTop: '-750px', height: '50px'}}><img class="img2" src = "/Images/verifiedtut.png"/></div>
+      {tutor === false &&
+          <div className={"img2"} style ={{position: 'absolute', marginLeft: '500px', marginTop: '-780px', height: '50px'}}><img class="img2" src = "/Images/verifiedtut.png"/></div>
       }
 
     <div style={{position: 'absolute', marginLeft: '-700px', marginTop: '-350px'}}>
@@ -99,9 +107,9 @@ export const Profile = ({ GlobalState }) => {
     </div>
       
       {
-        (location.state.tutor) ? <div style={{position: 'absolute', marginLeft: '525px', marginTop: '500px'}}><CourseInfo courses={printingTaken} past={true}/></div> : <span></span>
+        (!tutor) ? <div style={{position: 'absolute', marginLeft: '525px', marginTop: '500px'}}><CourseInfo courses={printingTaken} past={true}/></div> : <span></span>
       }
-      <div className='profile-btn'>
+      <div className='ur-profile-btn'>
 
 
       <div style={{position: 'absolute', marginLeft: '30px', marginTop: '-1100px'}}>

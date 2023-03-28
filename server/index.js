@@ -16,8 +16,8 @@ const admin = require("firebase-admin");
 const { db } = require('./firebase.js')
 //const toSendToken = require('./tokenSender.js');
 const bp = require('body-parser')
-app.use(bp.json({limit: '50mb'}));
-app.use(bp.urlencoded({limit: '50mb', extended: true}));
+app.use(bp.json({ limit: '50mb' }));
+app.use(bp.urlencoded({ limit: '50mb', extended: true }));
 const bcrypt = require("bcrypt") //packate bcrypt imported
 const PORT = process.env.PORT || 3001;
 require('dotenv').config();
@@ -32,11 +32,11 @@ const multer = require('multer')
 console.log("library imports work");
 //const users = [] //temporarily storing in array
 
-const cors=require("cors");
-const corsOptions ={
-   origin:'*', 
-   credentials:true,            //access-control-allow-credentials:true
-   optionSuccessStatus:200,
+const cors = require("cors");
+const corsOptions = {
+    origin: '*',
+    credentials: true,            //access-control-allow-credentials:true
+    optionSuccessStatus: 200,
 }
 
 app.use(cors(corsOptions)) // Use this after the variable declaration
@@ -248,24 +248,61 @@ app.post("/searchcoursetitle", async (req, res) => {
     t = JSON.parse(t.replace(/\s+/g, ''));
 
     console.log("searching for " + JSON.stringify(t))
+    console.log("f " + req.body.filter + " l: " + req.body.lang)
 
-    var list = await db.collection('users').where('takenTitles', 'array-contains', req.body.data).get();
+    var list;
+    var price;
+    if (req.body.filter === 'Thirty') {
+        console.log("hereee1")
+        price = 30
+        list = await db.collection('users').where('price', '<=', price).where('takenTitles', 'array-contains', req.body.data).get();
+    } else if (req.body.filter === 'Twenty') {
+        console.log("hereee2")
+        price = 20
+        list = await db.collection('users').where('price', '<=', price).where('takenTitles', 'array-contains', req.body.data).get();
+    } else if (req.body.filter === 'Ten') {
+        console.log("hereee3")
+        price = 10
+        list = await db.collection('users').where('price', '<=', price).where('takenTitles', 'array-contains', req.body.data).get();
+    } else if (req.body.filter === 'Language') {
+        console.log("hereee4")
+        list = await db.collection('users').where('lang', '=', JSON.parse(JSON.stringify(req.body.lang).toLowerCase())).where('takenTitles', 'array-contains', req.body.data).get();
+    }
+    else if (req.body.filter == 'priceLow') {
+        list = await db.collection('users').orderBy('price', 'asc').where('takenTitles', 'array-contains', req.body.data).get();
+    }
+    else if (req.body.filter == 'priceHigh') {
+        list = await db.collection('users').orderBy('price', 'desc').where('takenTitles', 'array-contains', req.body.data).get();
+    }
+    else if (req.body.filter === 'ratingLow') {
+        list = await db.collection('users').orderBy('rating', 'asc').where('takenTitles', 'array-contains', req.body.data).get();
+    }
+    else {
+        list = await db.collection('users').where('takenTitles', 'array-contains', req.body.data).get();
+    }
+
+
     console.log(list.size)
-    var users = [];
+    var users = {};
     for (i in list.docs) {
         console.log(list.docs[i].get("username"))
         var u = list.docs[i];
-        users.push(u.get("username"))
-        
-    }
-    if (users.includes(req.body.currUser)) {
-        users.splice(users.indexOf(req.body.currUser), 1)
+        //users.push(u.get("username"))
+        users[u.get("username")] = { fname: u.get('FName'), lname: u.get('LName'), price: u.get('price'), rating: u.get('rating'), lang: u.get('lang'), taken: u.get("takenTitles") }
 
     }
-    if (users.length == 0) {
-        return res.send(JSON.stringify("none"))
+    if (Object.keys(users).includes(req.body.currUser)) {
+        delete users[req.body.currUser]
+
     }
-    
+
+    if (Object.keys(users).length == 0) {
+        return res.send(JSON.stringify("none"))
+
+    }
+
+    console.log(users)
+
     return res.send(JSON.stringify(users))
 
 
@@ -283,15 +320,35 @@ app.post("/searchmultiplecourses", async (req, res) => {
         courses.push(t)
         i++;
     }
-    
-    
+
+
 
     console.log("searching for ")
     console.log(courses)
     var users = [];
     for (let j = 0; j < courses.length; j++) {
         console.log(courses[j])
-        var list = await db.collection('users').where('takenTitles', 'array-contains', courses[j]).get();
+        var list;
+        var price;
+        if (req.body.filter === 'Thirty') {
+            console.log("hereee1")
+            price = 30
+            list = await db.collection('users').where('price', '<=', price).where('takenTitles', 'array-contains', courses[j]).get();
+        } else if (req.body.filter === 'Twenty') {
+            console.log("hereee2")
+            price = 20
+            list = await db.collection('users').where('price', '<=', price).where('takenTitles', 'array-contains', courses[j]).get();
+        } else if (req.body.filter === 'Ten') {
+            console.log("hereee3")
+            price = 10
+            list = await db.collection('users').where('price', '<=', price).where('takenTitles', 'array-contains', courses[j]).get();
+        } else if (req.body.filter === 'Language') {
+            console.log("hereee4")
+            list = await db.collection('users').where('lang', '=', JSON.parse(JSON.stringify(req.body.lang).toLowerCase())).where('takenTitles', 'array-contains', courses[j]).get();
+        }
+        else {
+            list = await db.collection('users').where('takenTitles', 'array-contains', courses[j]).get();
+        }
         var tempUsers = [];
         console.log(list.size)
         for (let k = 0; k < list.size; k++) {
@@ -327,35 +384,84 @@ app.post("/searchmultiplecourses", async (req, res) => {
     if (finalList.length === 0) {
         return res.send(JSON.stringify("none"))
     }
-    
-    
-    return res.send(JSON.stringify(finalList))
+
+    var data = {};
+    for (u in finalList) {
+        var us = await db.collection('users').where('username', '==', finalList[u]).get();
+        var user = us.docs[0]
+        console.log(" find " + finalList[u] + " " + user.get("FName"))
+        data[finalList[u]] = { fname: user.get("FName"), lname: u.get('LName'), price: u.get('price'), rating: u.get('rating'), lang: u.get('lang'), taken: u.get("takenTitles") }
+    }
+
+    return res.send(JSON.stringify(data))
 
 
 });
 
 app.post("/searchtutorname", async (req, res) => {
-
+    console.log("seraching name")
     var fname = req.body.data.toLowerCase();
     var lname = "";
     if (fname.includes(" ")) {
         var ar = fname.split(" ");
-        fname = JSON.parse(ar[0])
-        lname = JSON.parse(ar[1])
+        fname = ar[0]
+        lname = ar[1]
     }
-
-    console.log("searching for " + fname.toUpperCase() + " " + lname)
-
-    var list = await db.collection('users').where('FNameLower', '==', fname).get();
+    var list;
+    var price;
+    if (req.body.filter === 'Thirty') {
+        console.log("hereee1")
+        price = 30
+        list = await db.collection('users').where('price', '<=', price).where('FNameLower', '==', fname).get();
+    } else if (req.body.filter === 'Twenty') {
+        console.log("hereee2")
+        price = 20
+        list = await db.collection('users').where('price', '<=', price).where('FNameLower', '==', fname).get();
+    } else if (req.body.filter === 'Ten') {
+        console.log("hereee3")
+        price = 10
+        list = await db.collection('users').where('price', '<=', price).where('FNameLower', '==', fname).get();
+    } else if (req.body.filter === 'Language') {
+        console.log("hereee4")
+        list = await db.collection('users').where('lang', '=', JSON.parse(JSON.stringify(req.body.lang).toLowerCase())).where('FNameLower', '==', fname).get();
+    }
+    else {
+        list = await db.collection('users').where('FNameLower', '==', fname).get();
+    }
     var users = [];
-    console.log(list.size)
+    console.log("ll " + list.size)
     for (i in list.docs) {
         console.log(list.docs[i].get("username"))
         var u = list.docs[i];
         users.push(u.get("username"))
     }
+
     if (lname != "") {
-        list = await db.collection('users').where('LNameLower', '==', lname).get();
+        var price;
+        if (req.body.filter === 'Thirty') {
+            console.log("hereee1")
+            price = 30
+            list = await db.collection('users').where('price', '<=', price).where('LNameLower', '==', lname).get();
+        } else if (req.body.filter === 'Twenty') {
+            console.log("hereee2")
+            price = 20
+            list = await db.collection('users').where('price', '<=', price).where('LNameLower', '==', lname).get();
+        } else if (req.body.filter === 'Ten') {
+            console.log("hereee3")
+            price = 10
+            list = await db.collection('users').where('price', '<=', price).where('LNameLower', '==', lname).get();
+        } else if (req.body.filter === 'Language') {
+            console.log("hereee4")
+            list = await db.collection('users').where('lang', '=', JSON.parse(JSON.stringify(req.body.lang).toLowerCase())).where('LNameLower', '==', lname).get();
+        }
+        else if (req.body.sort !== '') {
+
+        }
+        else {
+
+            list = await db.collection('users').where('LNameLower', '==', lname).get();
+        }
+        console.log("ll " + list.size)
         for (i in list.docs) {
             console.log(list.docs[i].get("username"))
             var u = list.docs[i];
@@ -371,8 +477,16 @@ app.post("/searchtutorname", async (req, res) => {
     if (finalList.length == 0) {
         return res.send(JSON.stringify("none"))
     }
-    
-    return res.send(JSON.stringify(finalList))
+
+    var data = {};
+    for (u in finalList) {
+        var us = await db.collection('users').where('username', '==', finalList[u]).get();
+        var user = us.docs[0]
+        console.log(" find " + finalList[u] + " " + user.get("FName"))
+        data[finalList[u]] = { fname: user.get("FName"), lname: u.get('LName'), price: u.get('price'), rating: u.get('rating'), lang: u.get('lang'), taken: u.get("takenTitles") }
+    }
+
+    return res.send(JSON.stringify(data))
 
 
 });
@@ -383,23 +497,49 @@ app.post("/searchprofname", async (req, res) => {
 
     console.log("searching for " + prof)
 
-    var list = await db.collection('users').where('takenProfs', 'array-contains', prof).get();
-    var users = [];
-    console.log(list.size)
-    console.log(list.size)
+    var list;
+    var price;
+    if (req.body.filter === 'Thirty') {
+        console.log("hereee1")
+        price = 30
+        list = await db.collection('users').where('price', '<=', price).where('takenProfs', 'array-contains', prof).get();
+    } else if (req.body.filter === 'Twenty') {
+        console.log("hereee2")
+        price = 20
+        list = await db.collection('users').where('price', '<=', price).where('takenProfs', 'array-contains', prof).get();
+    } else if (req.body.filter === 'Ten') {
+        console.log("hereee3")
+        price = 10
+        list = await db.collection('users').where('price', '<=', price).where('takenProfs', 'array-contains', prof).get();
+    } else if (req.body.filter === 'Language') {
+        console.log("hereee4")
+        list = await db.collection('users').where('lang', '=', JSON.parse(JSON.stringify(req.body.lang).toLowerCase())).where('takenProfs', 'array-contains', prof).get();
+    }
+    else if (req.body.filter !== '') {
+
+    }
+    else {
+        list = await db.collection('users').where('takenProfs', 'array-contains', prof).get();
+    }
+    var users = {};
     for (i in list.docs) {
         console.log(list.docs[i].get("username"))
         var u = list.docs[i];
-        users.push(u.get("username"))
+        //users.push(u.get("username"))
+        users[u.get("username")] = { fname: u.get('FName'), lname: u.get('LName'), price: u.get('price'), rating: u.get('rating'), lang: u.get('lang'), taken: u.get("takenTitles") }
+
+    }
+    if (Object.keys(users).includes(req.body.currUser)) {
+        delete users[req.body.currUser]
+
     }
 
-    if (users.includes(req.body.currUser)) {
-        users.splice(users.indexOf(req.body.currUser), 1)
-    }
-    if (users.length == 0) {
+    if (Object.keys(users).length == 0) {
         return res.send(JSON.stringify("none"))
+
     }
-    
+
+
     return res.send(JSON.stringify(users))
 
 
@@ -417,7 +557,12 @@ app.post("/info", async (req, res) => {
     console.log("aaa " + doc.get("active"))
     console.log("look here are your followers: " + doc.get("followers"))
 
-    return res.send(JSON.stringify({ "u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), "profpic": doc.get("profpic"), "taking": doc.get("taking"), "taken": doc.get("taken"), "tutor": doc.get("tutor"), "price": doc.get("price") }))
+    var follows = false;
+    if (req.body.currUser !== undefined && doc.get("followers").includes(req.body.currUser)) {
+        follows = true;
+    }
+
+    return res.send(JSON.stringify({ "u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), "profpic": doc.get("profpic"), "taking": doc.get("taking"), "taken": doc.get("taken"), "tutor": doc.get("tutor"), "price": doc.get("price"), "follows": follows }))
 
 
 })
@@ -431,7 +576,7 @@ app.post("/deltranscript", async (req, res) => {
         login = await db.collection('users').where('username', '==', req.body["username"]).get();
         doc = login.docs[0]
         console.log("no longer tutor " + doc.get("tutor"))
-        return res.send(JSON.stringify({ "u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), "profpic":doc.get("profpic"), taking: doc.get("taking"), tutor: doc.get("tutor"), price: doc.get("price"), taken: doc.get("taken") }))
+        return res.send(JSON.stringify({ "u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), "profpic": doc.get("profpic"), taking: doc.get("taking"), tutor: doc.get("tutor"), price: doc.get("price"), taken: doc.get("taken") }))
 
 
     }
@@ -486,8 +631,8 @@ app.post("/update", async (req, res) => {
     if (req.body.pass != "" && md5(req.body.pass) !== pass) {
         await doc.ref.update({ password: md5(req.body.pass) });
     }
-    if (req.body.lang != "" && req.body.lang !== lang) {
-        await doc.ref.update({ lang: req.body.lang });
+    if (req.body.lang != "" && lang !== JSON.parse(JSON.stringify(req.body.lang).toLowerCase())) {
+        await doc.ref.update({ lang: JSON.parse(JSON.stringify(req.body.lang).toLowerCase()) });
     }
     if (req.body.price != "" && Number(req.body.price) != price) {
         await doc.ref.update({ price: Number(req.body.price) });
@@ -523,27 +668,27 @@ app.post("/addcourse", async (req, res) => {
 
     const login = await db.collection('users').where('username', '==', req.body.u).get();
     var doc = login.docs[0];
-    
+
     c = doc.get("taking")
 
-    info = {"title": req.body.title, "professor": req.body.prof, "semester": req.body.semester}
+    info = { "title": req.body.title, "professor": req.body.prof, "semester": req.body.semester }
 
     // USE THIS WHEN SEARCHING TOO
     var t = JSON.stringify(req.body.title).toLowerCase();
     t = JSON.parse(t.replace(/\s+/g, ''));
-    
+
     c[t] = info
 
     var listTitles = doc.get("takingTitles");
     listTitles.push(t);
-    await doc.ref.update({takingTitles: listTitles})
+    await doc.ref.update({ takingTitles: listTitles })
 
     var listProfs = doc.get("takingProfs");
-    if (!listProfs.includes(req.body.prof.toLowerCase())){
+    if (!listProfs.includes(req.body.prof.toLowerCase())) {
         listProfs.push(req.body.prof.toLowerCase());
-        await doc.ref.update({takingProfs: listProfs})
+        await doc.ref.update({ takingProfs: listProfs })
     }
-    
+
     await doc.ref.update({ taking: c })
     return res.send(JSON.stringify({ "taking": c }))
 
@@ -554,7 +699,7 @@ app.post("/deletecourse", async (req, res) => {
 
     const login = await db.collection('users').where('username', '==', req.body["u"]).get();
     var doc = login.docs[0];
-    
+
     c = doc.get("taking")
 
     // USE THIS WHEN SEARCHING TOO
@@ -569,14 +714,14 @@ app.post("/deletecourse", async (req, res) => {
 
     var listTitles = doc.get("takingTitles");
     listTitles.splice(listTitles.indexOf(JSON.stringify(t)), 1);
-    await doc.ref.update({takingTitles: listTitles})
+    await doc.ref.update({ takingTitles: listTitles })
 
     var listProfs = doc.get("takingProfs");
     if (!listProfs.includes(req.body.prof.toLowerCase())) {
         listProfs.splice(listProfs.indexOf(req.body.prof.toLowerCase()), 1);
-        await doc.ref.update({takingProfs: listProfs})
+        await doc.ref.update({ takingProfs: listProfs })
     }
-    
+
     delete c[t]
     await doc.ref.update({ taking: c })
     return res.send(JSON.stringify({ "taking": c }))
@@ -587,25 +732,25 @@ app.post("/addcoursetutor", async (req, res) => {
 
     const login = await db.collection('users').where('username', '==', req.body.u).get();
     var doc = login.docs[0];
-    
+
     c = doc.get("taken")
 
     var t = JSON.stringify(req.body.title).toLowerCase();
     t = JSON.parse(t.replace(/\s+/g, ''));
 
-    info = {"title": req.body.title, "professor": req.body.prof, "semester": req.body.semester, "grade": req.body.grade}
+    info = { "title": req.body.title, "professor": req.body.prof, "semester": req.body.semester, "grade": req.body.grade }
     c[t] = info
 
     var listTitles = doc.get("takenTitles");
     listTitles.push(t);
-    await doc.ref.update({takenTitles: listTitles})
+    await doc.ref.update({ takenTitles: listTitles })
 
     var listProfs = doc.get("takenProfs");
     if (!listProfs.includes(req.body.prof.toLowerCase())) {
         listProfs.push(req.body.prof.toLowerCase());
-        await doc.ref.update({takenProfs: listProfs})
+        await doc.ref.update({ takenProfs: listProfs })
     }
-    
+
     await doc.ref.update({ taken: c })
     return res.send(JSON.stringify({ "taken": c }))
 
@@ -616,7 +761,7 @@ app.post("/deletecoursetutor", async (req, res) => {
 
     const login = await db.collection('users').where('username', '==', req.body["u"]).get();
     var doc = login.docs[0];
-    
+
     c = doc.get("taken")
 
     var t = JSON.stringify(req.body.title).toLowerCase();
@@ -630,14 +775,14 @@ app.post("/deletecoursetutor", async (req, res) => {
 
     var listTitles = doc.get("takenTitles");
     listTitles.splice(listTitle.indexOf(JSON.stringify(t)), 1);
-    await doc.ref.update({takenTitles: listTitles})
+    await doc.ref.update({ takenTitles: listTitles })
 
     var listProfs = doc.get("takenProfs");
     if (!listProfs.includes(req.body.prof.toLowerCase())) {
         listProfs.splice(listProfs.indexOf(req.body.prof.toLowerCase()), 1);
-        await doc.ref.update({takenProfs: listProfs})
+        await doc.ref.update({ takenProfs: listProfs })
     }
-    
+
     delete c[t]
     await doc.ref.update({ taken: c })
     return res.send(JSON.stringify({ "taken": c }))
@@ -761,6 +906,7 @@ app.post("/notyourprofile", async (req, res) => {
 
 
     var oldUser = req.body["oldUser"]
+    console.log("the current user is " + currUser + " the old user " + oldUser)
     console.log("first potential problem area " + oldUser);
     const oldUserData = await db.collection('users').where('username', '==', oldUser).get();
     console.log("no problem here!")
@@ -801,7 +947,7 @@ app.post("/notyourprofile", async (req, res) => {
 
     const upOld = await db.collection('users').where('username', '==', oldUser).get();
     oldUserDataDoc = upOld.docs[0];
-   return res.send(JSON.stringify({ "newFollowers": followers, "newFollowing": following, "u": oldUser, "fname": oldfname, "lname": oldlname, "email": oldemail, "followers": oldfollowers, "active": oldactive, "lang": oldlang, "taking": oldcourse, price:  currentUserDataDoc.get("price"), "profpic": oldPFP})) // idk if this is the right price
+    return res.send(JSON.stringify({ "newFollowers": followers, "newFollowing": following, "u": oldUser, "fname": oldfname, "lname": oldlname, "email": oldemail, "followers": oldfollowers, "active": oldactive, "lang": oldlang, "taking": oldcourse, price: currentUserDataDoc.get("price"), "profpic": oldPFP })) // idk if this is the right price
 
 
 });
@@ -824,7 +970,7 @@ app.post("/pfpupload", async (req, res) => {
         await doc.ref.update({ profpic: req.body.pfpurl });
         console.log("3")
     }
-    
+
 
     /*
      * Step 1: New PFP variable
@@ -836,7 +982,7 @@ app.post("/pfpupload", async (req, res) => {
     console.log("5")
     doc = up.docs[0];
     console.log("6")
-    return res.send(JSON.stringify({ "u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), "profpic":doc.get("profpic"), taking: doc.get("taking"), tutor: doc.get("tutor"), price: doc.get("price"), taken: doc.get("taken") }))
+    return res.send(JSON.stringify({ "u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), "profpic": doc.get("profpic"), taking: doc.get("taking"), tutor: doc.get("tutor"), price: doc.get("price"), taken: doc.get("taken") }))
 
 });
 
