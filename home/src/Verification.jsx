@@ -79,7 +79,8 @@ export const Verification = ({GlobalState}) => {
                     following: res["following"],
                     tutor: res["tutor"],
                     price: res["price"],
-                    taken: res["taken"]
+                    taken: res["taken"],
+                    rating: res["rating"]
                 }
             });
         })

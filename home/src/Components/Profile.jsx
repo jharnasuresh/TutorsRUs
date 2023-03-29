@@ -100,7 +100,7 @@ export const Profile = ({ GlobalState }) => {
       <Avatar src={location.state.profpic} sx={{ width: 300, height: 300 }} />
     </div>
     <div style={{position: 'absolute', marginLeft: '-1775px', marginTop: '-400px'}}>
-      <About user={location.state.u} email={location.state.email} lang={location.state.lang} yours={true} price={location.state.price} tutor={location.state.tutor}/>
+      <About user={location.state.u} email={location.state.email} lang={location.state.lang} yours={true} price={location.state.price} tutor={location.state.tutor} rating={location.state.rating}/>
     </div>
     <div style={{position: 'absolute', marginLeft: '525px', marginTop: '150px'}}>
         <CourseInfo courses={printing} past={false}/>
