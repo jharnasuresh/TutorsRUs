@@ -279,6 +279,9 @@ app.post("/searchcoursetitle", async (req, res) => {
     else if (req.body.filter === 'ratingLow') {
         list = await db.collection('users').orderBy('rating', 'asc').where('takenTitles', 'array-contains', req.body.data).get();
     }
+    else if (req.body.filter === 'ratingHigh') {
+        list = await db.collection('users').orderBy('rating', 'desc').where('takenTitles', 'array-contains', req.body.data).get();
+    }
     else {
         list = await db.collection('users').where('takenTitles', 'array-contains', req.body.data).get();
     }
@@ -347,6 +350,18 @@ app.post("/searchmultiplecourses", async (req, res) => {
         } else if (req.body.filter === 'Language') {
             console.log("hereee4")
             list = await db.collection('users').where('lang', '=', JSON.parse(JSON.stringify(req.body.lang).toLowerCase())).where('takenTitles', 'array-contains', courses[j]).get();
+        }
+        else if (req.body.filter == 'priceLow') {
+            list = await db.collection('users').orderBy('price', 'asc').where('takenTitles', 'array-contains', courses[j]).get();
+        }
+        else if (req.body.filter == 'priceHigh') {
+            list = await db.collection('users').orderBy('price', 'desc').where('takenTitles', 'array-contains', courses[j]).get();
+        }
+        else if (req.body.filter === 'ratingLow') {
+            list = await db.collection('users').orderBy('rating', 'asc').where('takenTitles', 'array-contains', courses[j]).get();
+        }
+        else if (req.body.filter === 'ratingHigh') {
+            list = await db.collection('users').orderBy('rating', 'desc').where('takenTitles', 'array-contains', courses[j]).get();
         }
         else {
             list = await db.collection('users').where('takenTitles', 'array-contains', courses[j]).get();
@@ -428,6 +443,18 @@ app.post("/searchtutorname", async (req, res) => {
         console.log("hereee4")
         list = await db.collection('users').where('lang', '==', JSON.parse(JSON.stringify(req.body.lang).toLowerCase())).where('FNameLower', '==', fname).get();
     }
+    else if (req.body.filter == 'priceLow') {
+        list = await db.collection('users').orderBy('price', 'asc').where('FNameLower', '==', fname).get();
+    }
+    else if (req.body.filter == 'priceHigh') {
+        list = await db.collection('users').orderBy('price', 'desc').where('FNameLower', '==', fname).get();
+    }
+    else if (req.body.filter === 'ratingLow') {
+        list = await db.collection('users').orderBy('rating', 'asc').where('FNameLower', '==', fname).get();
+    }
+    else if (req.body.filter === 'ratingHigh') {
+        list = await db.collection('users').orderBy('rating', 'desc').where('FNameLower', '==', fname).get();
+    }
     else {
         list = await db.collection('users').where('FNameLower', '==', fname).get();
     }
@@ -455,10 +482,19 @@ app.post("/searchtutorname", async (req, res) => {
             list = await db.collection('users').where('price', '<=', price).where('LNameLower', '==', lname).get();
         } else if (req.body.filter === 'Language') {
             console.log("hereee4")
-            list = await db.collection('users').where('lang', '=', JSON.parse(JSON.stringify(req.body.lang).toLowerCase())).where('LNameLower', '==', lname).get();
+            list = await db.collection('users').where('lang', '==', JSON.parse(JSON.stringify(req.body.lang).toLowerCase())).where('LNameLower', '==', lname).get();
         }
-        else if (req.body.sort !== '') {
-
+        else if (req.body.filter == 'priceLow') {
+            list = await db.collection('users').orderBy('price', 'asc').where('LNameLower', '==', lname).get();
+        }
+        else if (req.body.filter == 'priceHigh') {
+            list = await db.collection('users').orderBy('price', 'desc').where('LNameLower', '==', lname).get();
+        }
+        else if (req.body.filter === 'ratingLow') {
+            list = await db.collection('users').orderBy('rating', 'asc').where('LNameLower', '==', lname).get();
+        }
+        else if (req.body.filter === 'ratingHigh') {
+            list = await db.collection('users').orderBy('rating', 'desc').where('LNameLower', '==', lname).get();
         }
         else {
 
@@ -515,10 +551,19 @@ app.post("/searchprofname", async (req, res) => {
         list = await db.collection('users').where('price', '<=', price).where('takenProfs', 'array-contains', prof).get();
     } else if (req.body.filter === 'Language') {
         console.log("hereee4")
-        list = await db.collection('users').where('lang', '=', JSON.parse(JSON.stringify(req.body.lang).toLowerCase())).where('takenProfs', 'array-contains', prof).get();
+        list = await db.collection('users').where('lang', '==', JSON.parse(JSON.stringify(req.body.lang).toLowerCase())).where('takenProfs', 'array-contains', prof).get();
     }
-    else if (req.body.filter !== '') {
-
+    else if (req.body.filter == 'priceLow') {
+        list = await db.collection('users').orderBy('price', 'asc').where('takenProfs', 'array-contains', prof).get();
+    }
+    else if (req.body.filter == 'priceHigh') {
+        list = await db.collection('users').orderBy('price', 'desc').where('takenProfs', 'array-contains', prof).get();
+    }
+    else if (req.body.filter === 'ratingLow') {
+        list = await db.collection('users').orderBy('rating', 'asc').where('takenProfs', 'array-contains', prof).get();
+    }
+    else if (req.body.filter === 'ratingHigh') {
+        list = await db.collection('users').orderBy('rating', 'desc').where('takenProfs', 'array-contains', prof).get();
     }
     else {
         list = await db.collection('users').where('takenProfs', 'array-contains', prof).get();
@@ -548,7 +593,7 @@ app.post("/searchprofname", async (req, res) => {
 });
 
 app.post("/info", async (req, res) => {
-    console.log("iii " + req.body["username"])
+    console.log("iii " + req.body["username"] + " otehr " + req.body.currU)
     const login = await db.collection('users').where('username', '==', req.body["username"]).get();
     if (login.empty) {
         return res.send("error")
@@ -560,7 +605,7 @@ app.post("/info", async (req, res) => {
     console.log("look here are your followers: " + doc.get("followers"))
 
     var follows = false;
-    if (req.body.currUser !== undefined && doc.get("followers").includes(req.body.currUser)) {
+    if (req.body.currU !== undefined && doc.get("followers").includes(req.body.currU)) {
         follows = true;
     }
 
@@ -949,7 +994,7 @@ app.post("/notyourprofile", async (req, res) => {
 
     const upOld = await db.collection('users').where('username', '==', oldUser).get();
     oldUserDataDoc = upOld.docs[0];
-    return res.send(JSON.stringify({ "rating": currentUserDataDoc.get("rating"), "newFollowers": followers, "newFollowing": following, "u": oldUser, "fname": oldfname, "lname": oldlname, "email": oldemail, "followers": oldfollowers, "active": oldactive, "lang": oldlang, "taking": oldcourse, price: currentUserDataDoc.get("price"), "profpic": oldPFP })) // idk if this is the right price
+    return res.send(JSON.stringify({ "rating": currentUserDataDoc.get("rating"), "newFollowers": followers, "newFollowing": following, "u": oldUser, "fname": oldfname, "lname": oldlname, "email": oldemail, "followers": oldfollowers, "active": oldactive, "lang": oldlang, "taking": oldcourse, price: oldUserDataDoc.get("price"), "profpic": oldPFP, "tutor": oldUserDataDoc.get("tutor") })) // idk if this is the right price
 
 
 });
