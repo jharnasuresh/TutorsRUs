@@ -230,7 +230,7 @@ app.post("/parse", upload.single("file"), async (req, res) => {
         login = await db.collection('users').where('username', '==', req.body.user).get();
         doc = login.docs[0];
         console.log("tutor now " + doc.get("tutor"))
-        return res.send(JSON.stringify({ "u": doc.get("username"), "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), taking: doc.get("taking"), tutor: doc.get("tutor"), price: doc.get("price"), taken: doc.get("taken") }))
+        return res.send(JSON.stringify({ "rating": doc.get("rating"), "u": doc.get("username"), "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), taking: doc.get("taking"), tutor: doc.get("tutor"), price: doc.get("price"), taken: doc.get("taken") }))
 
     }
     else {
@@ -392,7 +392,7 @@ app.post("/searchmultiplecourses", async (req, res) => {
         var us = await db.collection('users').where('username', '==', finalList[u]).get();
         var user = us.docs[0]
         console.log(" find " + finalList[u] + " " + user.get("FName"))
-        data[finalList[u]] = { fname: user.get("FName"), lname: u.get('LName'), price: u.get('price'), rating: u.get('rating'), lang: u.get('lang'), taken: u.get("takenTitles") }
+        data[finalList[u]] = { fname: user.get("FName"), lname: user.get('LName'), price: user.get('price'), rating: user.get('rating'), lang: user.get('lang'), taken: user.get("takenTitles") }
     }
 
     return res.send(JSON.stringify(data))
@@ -426,7 +426,7 @@ app.post("/searchtutorname", async (req, res) => {
         list = await db.collection('users').where('price', '<=', price).where('FNameLower', '==', fname).get();
     } else if (req.body.filter === 'Language') {
         console.log("hereee4")
-        list = await db.collection('users').where('lang', '=', JSON.parse(JSON.stringify(req.body.lang).toLowerCase())).where('FNameLower', '==', fname).get();
+        list = await db.collection('users').where('lang', '==', JSON.parse(JSON.stringify(req.body.lang).toLowerCase())).where('FNameLower', '==', fname).get();
     }
     else {
         list = await db.collection('users').where('FNameLower', '==', fname).get();
@@ -564,7 +564,7 @@ app.post("/info", async (req, res) => {
         follows = true;
     }
 
-    return res.send(JSON.stringify({ "u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), "profpic": doc.get("profpic"), "taking": doc.get("taking"), "taken": doc.get("taken"), "tutor": doc.get("tutor"), "price": doc.get("price"), "follows": follows }))
+    return res.send(JSON.stringify({ "u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), "profpic": doc.get("profpic"), "taking": doc.get("taking"), "taken": doc.get("taken"), "tutor": doc.get("tutor"), "price": doc.get("price"), "follows": follows, "rating": doc.get("rating") }))
 
 
 })
@@ -578,7 +578,7 @@ app.post("/deltranscript", async (req, res) => {
         login = await db.collection('users').where('username', '==', req.body["username"]).get();
         doc = login.docs[0]
         console.log("no longer tutor " + doc.get("tutor"))
-        return res.send(JSON.stringify({ "u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), "profpic": doc.get("profpic"), taking: doc.get("taking"), tutor: doc.get("tutor"), price: doc.get("price"), taken: doc.get("taken") }))
+        return res.send(JSON.stringify({ "rating": doc.get("rating"), "u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), "profpic": doc.get("profpic"), taking: doc.get("taking"), tutor: doc.get("tutor"), price: doc.get("price"), taken: doc.get("taken") }))
 
 
     }
@@ -642,7 +642,7 @@ app.post("/update", async (req, res) => {
 
     const up = await db.collection('users').where('username', '==', user).get();
     doc = up.docs[0];
-    return res.send(JSON.stringify({ "u": doc.get("username"), "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": active, "lang": doc.get("lang"), "profpic": doc.get("profpic"), "taking": doc.get("taking"), "followers": doc.get("followers"), "following": doc.get("following"), "price": doc.get("price"), "taken": doc.get("taken") }))
+    return res.send(JSON.stringify({ "rating": doc.get("rating"), "u": doc.get("username"), "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": active, "lang": doc.get("lang"), "profpic": doc.get("profpic"), "taking": doc.get("taking"), "followers": doc.get("followers"), "following": doc.get("following"), "price": doc.get("price"), "taken": doc.get("taken") }))
 
 
 })
@@ -949,7 +949,7 @@ app.post("/notyourprofile", async (req, res) => {
 
     const upOld = await db.collection('users').where('username', '==', oldUser).get();
     oldUserDataDoc = upOld.docs[0];
-    return res.send(JSON.stringify({ "newFollowers": followers, "newFollowing": following, "u": oldUser, "fname": oldfname, "lname": oldlname, "email": oldemail, "followers": oldfollowers, "active": oldactive, "lang": oldlang, "taking": oldcourse, price: currentUserDataDoc.get("price"), "profpic": oldPFP })) // idk if this is the right price
+    return res.send(JSON.stringify({ "rating": currentUserDataDoc.get("rating"), "newFollowers": followers, "newFollowing": following, "u": oldUser, "fname": oldfname, "lname": oldlname, "email": oldemail, "followers": oldfollowers, "active": oldactive, "lang": oldlang, "taking": oldcourse, price: currentUserDataDoc.get("price"), "profpic": oldPFP })) // idk if this is the right price
 
 
 });
@@ -984,7 +984,7 @@ app.post("/pfpupload", async (req, res) => {
     console.log("5")
     doc = up.docs[0];
     console.log("6")
-    return res.send(JSON.stringify({ "u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), "profpic": doc.get("profpic"), taking: doc.get("taking"), tutor: doc.get("tutor"), price: doc.get("price"), taken: doc.get("taken") }))
+    return res.send(JSON.stringify({ "rating": doc.get("rating"), "u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), "profpic": doc.get("profpic"), taking: doc.get("taking"), tutor: doc.get("tutor"), price: doc.get("price"), taken: doc.get("taken") }))
 
 });
 
