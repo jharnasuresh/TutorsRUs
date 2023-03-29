@@ -55,7 +55,7 @@ const Table = (props) => {
                 <>
                 <div style={{textAlign: 'left', height: '130px'}}>
                     <div style={{float: 'left', margin: '10px 10px 10px 100px' }}>
-                    <img src = "/Images/Profile_Icon.png" alt = "" width="100px" height="100px" textAlign='left'/>
+                    <img src = "/Images/avatar_img.png" alt = "" width="110px" height="100px" textAlign='left'/>
                     </div>
                  
                 <button className="linked" onClick={() => handleSubmit(tutor)}>{tutor}</button>

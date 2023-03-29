@@ -17,14 +17,15 @@ import { LocationSearching } from '@mui/icons-material';
 
 export const Profile = ({ GlobalState }) => {
   console.log("in profile now")
+  const location = useLocation();
+  const navigate = useNavigate();
   const [buttonPopup, setButtonPopup] = useState(false);
-  const [tutor, setTutor] = useState(false);
+  const [tutor, setTutor] = useState(location.state.tutor);
   const [buttonPopup2, setButtonPopup2] = useState(false);
   const { currUser, setCurrUser } = GlobalState;
 
 
-  const location = useLocation();
-  const navigate = useNavigate();
+
   console.log("ll " + location.state.u)
   const [active, setActive] = useState(location.state.active)
   const [followers, setFollowers] = useState(location.state.followers)
@@ -46,6 +47,8 @@ export const Profile = ({ GlobalState }) => {
   }
   console.log(location.state.lang)
   console.log("tt " + location.state.tutor)
+
+  //setTutor(location.state.tutor)
 
 
   var numFollowers = (location.state.followers).length + ""
@@ -88,13 +91,15 @@ export const Profile = ({ GlobalState }) => {
   }
   return (
     <div className="App">
-      <button onClick={toggle}>Press</button>
+      
       <div className='activate'><h1 style={{ color: 'red', marginTop: '-50px' }}>{a}</h1></div>
       
 
-      {tutor === false &&
-          <div className={"img2"} style ={{position: 'absolute', marginLeft: '500px', marginTop: '-780px', height: '50px'}}><img class="img2" src = "/Images/verifiedtut.png"/></div>
+      {tutor === true &&
+          <><div className={"img2"} style ={{position: 'absolute', marginLeft: '500px', marginTop: '-780px', height: '50px'}}><img class="img2" src = "/Images/verifiedtut.png"/></div>
+          </>
       }
+      {location.state.tutor && <button style ={{position: 'absolute', marginLeft: '1050px', marginTop: '-680px', height: '50px'}}onClick={toggle}>Toggle Accounts</button>}
 
     <div style={{position: 'absolute', marginLeft: '-700px', marginTop: '-350px'}}>
       <Avatar src={location.state.profpic} sx={{ width: 300, height: 300 }} />
@@ -107,7 +112,7 @@ export const Profile = ({ GlobalState }) => {
     </div>
       
       {
-        (!tutor) ? <div style={{position: 'absolute', marginLeft: '525px', marginTop: '500px'}}><CourseInfo courses={printingTaken} past={true}/></div> : <span></span>
+        (tutor) ? <div style={{position: 'absolute', marginLeft: '525px', marginTop: '500px'}}><CourseInfo courses={printingTaken} past={true}/></div> : <span></span>
       }
       <div className='ur-profile-btn'>
 
