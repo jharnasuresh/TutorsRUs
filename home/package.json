@@ -13,6 +13,7 @@
     "bootstrap": "^5.2.3",
     "dayjs": "^1.11.7",
     "mime": "^3.0.0",
+    "moment": "^2.29.4",
     "node-sass": "^7.0.3",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.2",

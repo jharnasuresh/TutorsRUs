@@ -60,6 +60,7 @@ app.post('/signup', async (req, res) => {
     var takenTitles = [];
     var takingTitles = [];
     var price = 0;
+    var rating = 0;
     const user = {
         email: req.body.email,
         password: req.body
@@ -115,7 +116,8 @@ app.post('/signup', async (req, res) => {
         takenProfs: [],
         takingProfs: [],
         tutor: false,
-        price: 0
+        price: 0,
+        rating: 0
     })
         .then(function (userRecord) {
             console.log("Successfully created new user:", userRecord.uid);
@@ -402,6 +404,7 @@ app.post("/searchtutorname", async (req, res) => {
     console.log("seraching name")
     var fname = req.body.data.toLowerCase();
     var lname = "";
+    console.log("jharna look tutor");
     if (fname.includes(" ")) {
         var ar = fname.split(" ");
         fname = ar[0]
@@ -483,7 +486,7 @@ app.post("/searchtutorname", async (req, res) => {
         var us = await db.collection('users').where('username', '==', finalList[u]).get();
         var user = us.docs[0]
         console.log(" find " + finalList[u] + " " + user.get("FName"))
-        data[finalList[u]] = { fname: user.get("FName"), lname: u.get('LName'), price: u.get('price'), rating: u.get('rating'), lang: u.get('lang'), taken: u.get("takenTitles") }
+        data[finalList[u]] = { fname: user.get("FName"), lname: user.get('LName'), price: user.get('price'), rating: user.get('rating'), lang: user.get('lang'), taken: user.get('takenTitles') }
     }
 
     return res.send(JSON.stringify(data))
@@ -494,7 +497,6 @@ app.post("/searchtutorname", async (req, res) => {
 app.post("/searchprofname", async (req, res) => {
 
     var prof = req.body.data.toLowerCase();
-
     console.log("searching for " + prof)
 
     var list;
