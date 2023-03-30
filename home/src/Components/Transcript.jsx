@@ -45,6 +45,8 @@ export const Transcript = ({GlobalState}) => {
 
 return (
     <div className="App">
+        <h1 style={{width: '1000px'}}>*After uploading your transcript and becoming a tutor, you must create a Calendly account using the same username as your TutorsRUs account!</h1>
+        <br/>
         <DragDrop user={currUser}/>
     
         {/*
