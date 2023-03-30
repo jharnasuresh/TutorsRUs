@@ -5,10 +5,11 @@ import CourseInfo from './CourseInfo';
 import Popup from './Popup';
 import './Main.css'
 import Avatar from "@mui/material/Avatar";
-
+import { InlineWidget } from 'react-calendly';
 import { Route, useHref, useNavigate, useLocation, Link } from "react-router-dom";
 import Tabs from "./Tabs";
 import { LocationSearching, Schedule } from '@mui/icons-material';
+import CalendlyPopup from "./CalendlyPopup.jsx"
 export const NotYourProfile = ({GlobalState}) => {
   const location = useLocation();
   const navigate  = useNavigate();
@@ -140,8 +141,16 @@ export const NotYourProfile = ({GlobalState}) => {
 
 <button type="submit" onClick={handleSubmit}> {isFollowing} </button>
 {
-        tut === 'tut' && <h2>Scehdule with Tutor:</h2>
-      }
+        
+      tut === 'tut' && 
+      <div>
+        <h2>Scehdule with Tutor:</h2>
+        <div className="inline-widget">
+          <InlineWidget url="https://calendly.com/tutorsrus62" />
+        </div>
+        </div>
+}
+
       </div>
       
       

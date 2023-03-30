@@ -1,7 +1,7 @@
 import React from 'react';
 import { PopupWidget } from 'react-calendly';
 
-const PopupComponent = () => {
+const PopupComponent = (user) => {
   return (
     <div className="popup-widget">
       <PopupWidget
