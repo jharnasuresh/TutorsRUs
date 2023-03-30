@@ -147,7 +147,8 @@ app.post('/signup', async (req, res) => {
                 takingTitles: [],
                 takenProfs: [],
                 takingProfs: [],
-                price: 0
+                price: 0,
+                rating: 0
             };
 
             var setDoc = db.collection('users').add(data);

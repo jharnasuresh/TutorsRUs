@@ -141,16 +141,35 @@ export const EditPFP = ({GlobalState}) => {
       .then((res) => res.json())
       .then((res) => {
           console.log("resfname", res["fname"])
-          
+          navigate("/Profile", {
+
+            state: {
+                u: res.u,
+                fname: res["fname"],
+                lname: res["lname"],
+                email: res["email"],
+                active: res["active"],
+                lang: res["lang"],
+                taking: res["taking"],
+                followers: res["followers"],
+                following: res["following"],
+                tutor: res["tutor"],
+                profpic: res["profpic"],
+                price: res["price"],
+                taken: res["taken"],
+                rating: res["rating"]
+            }
+        });
       })
 
 }
 
   return (
-    <div>
-      <Avatar src={location.state.profpic} alt="Image preview" sx={{ width: 300, height: 300 }} />
-    
+    <div className="App">
+     
       <FileUploader handleChange={onSelectFile} name="file" types={fileTypes} />
+      <h1> Current Profile Picture: </h1>
+      <Avatar src={location.state.profpic} alt="Image preview" sx={{ width: 300, height: 300 }} />
     {imageSrc && (
       <ReactCrop
         src={imageSrc}
@@ -160,11 +179,12 @@ export const EditPFP = ({GlobalState}) => {
         onChange={(c) => setCrop(c)}
       />
     )}
-    {imageSrc && (
-      console.log("JUNE ITS TRYING TO CROP"),
-      <img src="" height="200" alt="Image preview" />,
-      <button onClick={() => makeClientCrop(crop)}>Crop Image</button>
-    )}
+     {/*{imageSrc && (
+      console.log("JUNE ITS TRYING TO CROP")
+
+       <img src="" height="200" alt="Image preview" />,
+      <button onClick={() => makeClientCrop(crop)}>Crop Image</button> 
+    )}*/}
 
     {/*<img id="cropped-image-preview" alt="Cropped Image Preview" />*/}
   </div>
