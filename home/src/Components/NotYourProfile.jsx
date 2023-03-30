@@ -121,9 +121,7 @@ export const NotYourProfile = ({GlobalState}) => {
     </div>      
     <hr />
     <div style={{position: 'absolute', marginLeft: '-1775px', marginTop: '-400px'}}>
-    <About user={location.state.u} mail={"mailto:" + email} email={email} lang={location.state.lang} yours={false} price={location.state.price} tutor={location.state.tutor}/>    
-      <About user={location.state.u} mail={"mailto:" + email} email={email} lang={location.state.lang} yours={false} price={location.state.price} tutor={location.state.tutor}/>
-    <About user={location.state.u} mail={"mailto:" + email} email={email} lang={location.state.lang} yours={false} price={location.state.price} tutor={location.state.tutor}/>    
+    <About user={location.state.u} mail={"mailto:" + email} email={email} lang={location.state.lang} yours={false} price={location.state.price} tutor={location.state.tutor} rating={location.state.rating}/>    
     </div>
       
       <br/>

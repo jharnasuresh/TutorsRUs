@@ -40,7 +40,8 @@ const Table = (props) => {
                         profpic: res["profpic"],
                         tutor: res["tutor"],
                         price: res["price"],
-                        tutor: res["tutor"]
+                        tutor: res["tutor"],
+                        rating: res["rating"]
                     }
                 });
             })
