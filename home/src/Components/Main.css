@@ -137,8 +137,10 @@
 
 .profile-btn {
     position: absolute;
-    bottom: 20em;
-    left: 16em;
+    bottom: 8em;
+    left: 8em;
+
+    margin-bottom: 0;
 }
 
 .ur-profile-btn {
