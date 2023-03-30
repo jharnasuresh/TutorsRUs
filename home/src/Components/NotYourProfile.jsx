@@ -40,7 +40,7 @@ export const NotYourProfile = ({GlobalState}) => {
   console.log("followersNYP = " + numFollowers);
   console.log("followingNYP = " + numFollowing);
   var a = (active) ? "" : "This account is not currently active";
-
+  var urlTut = "https://calendly.com/" + location.state.u;
   var printing = "";
   if (location.state.taking != undefined) {
     function p (str) {
@@ -133,7 +133,7 @@ export const NotYourProfile = ({GlobalState}) => {
       {
         (location.state.tutor) ? <div style={{position: 'absolute', marginLeft: '525px', marginTop: '500px'}}><CourseInfo courses={printingTaken} past={true}/></div> : <span></span>
       }
-      <div  className='profile-btn'>
+      <div  className='profile-btn'  >
       <h3>Followers: {numFollowers}</h3>
       <h3>Following: {numFollowing} </h3>
       
@@ -143,10 +143,11 @@ export const NotYourProfile = ({GlobalState}) => {
 {
         
       tut === 'tut' && 
-      <div>
+      <div style = {{height: '300px'}}>
         <h2>Scehdule with Tutor:</h2>
         <div className="inline-widget">
-          <InlineWidget url="https://calendly.com/tutorsrus62" />
+
+          <InlineWidget url={urlTut} />
         </div>
         </div>
 }
