@@ -13,6 +13,7 @@ import Calendar from "./Calendar";
 import Scheduling from "./Scheduling";
 import GoogleEventComponent from "./GoogleComponent";
 import { signInToGoogle, initClient,getSignedInUserEmail, signOutFromGoogle , publishTheCalenderEvent } from './Scheduling';
+import Calendly from './Calendly';
 export const Start = ({GlobalState}) => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -103,9 +104,10 @@ export const Start = ({GlobalState}) => {
     return (
 
     <div>
+      <Calendly/>
       <a href='https://calendar.google.com/calendar/u/0/r'><button>Link To your Calendar!</button>
       </a>
-      <GoogleEventComponent/>
+      
       <Calendar />
 
          
