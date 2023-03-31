@@ -81,7 +81,7 @@ export const EditCourse = ({ GlobalState }) => {
     console.log(tut)
     return (
         <div className="App EditCourse">
-            <h1> Edit Courses </h1>
+            <h1 className='editcourseh1'> Edit Courses </h1>
             <section id="container-editcourse" className="container-editcourse">
                 <label for="title:">Class Title: </label>
                 <input value={title} onChange={(e) => setTitle(e.target.value)} type="title" placeholder="Enter Course Title" id="title" name="title" />
