@@ -39,7 +39,18 @@ const corsOptions = {
     optionSuccessStatus: 200,
 }
 
+
+
 app.use(cors(corsOptions)) // Use this after the variable declaration
+
+const todos = [];
+// Get all todos
+app.get("/todos", (req, res) => {
+    return res.status(200).json({
+    data: todos,
+    error: null,
+    });
+});
 
 
 
@@ -247,6 +258,8 @@ app.listen(PORT, () => {
 
 app.post("/searchcoursetitle", async (req, res) => {
 
+    console.log(req.body)
+
     var t = JSON.stringify(req.body.data).toLowerCase();
     t = JSON.parse(t.replace(/\s+/g, ''));
 
@@ -307,7 +320,7 @@ app.post("/searchcoursetitle", async (req, res) => {
 
     }
 
-    console.log(users)
+    console.log("sending " + users)
 
     return res.send(JSON.stringify(users))
 
@@ -1098,6 +1111,8 @@ const sendVerificationMail = (username, email, uniqueString, whichService) => {
         }
     });
 }
+
+
 
 //EVANS WAS HERE!! 3/24
 require("dotenv").config();

@@ -5,10 +5,11 @@ import CourseInfo from './CourseInfo';
 import Popup from './Popup';
 import './Main.css'
 import Avatar from "@mui/material/Avatar";
-
+import { InlineWidget } from 'react-calendly';
 import { Route, useHref, useNavigate, useLocation, Link } from "react-router-dom";
 import Tabs from "./Tabs";
 import { LocationSearching, Schedule } from '@mui/icons-material';
+import CalendlyPopup from "./CalendlyPopup.jsx"
 export const NotYourProfile = ({GlobalState}) => {
   const location = useLocation();
   const navigate  = useNavigate();
@@ -39,7 +40,7 @@ export const NotYourProfile = ({GlobalState}) => {
   console.log("followersNYP = " + numFollowers);
   console.log("followingNYP = " + numFollowing);
   var a = (active) ? "" : "This account is not currently active";
-
+  var urlTut = "https://calendly.com/" + location.state.u;
   var printing = "";
   if (location.state.taking != undefined) {
     function p (str) {
@@ -121,9 +122,7 @@ export const NotYourProfile = ({GlobalState}) => {
     </div>      
     <hr />
     <div style={{position: 'absolute', marginLeft: '-1775px', marginTop: '-400px'}}>
-    <About user={location.state.u} mail={"mailto:" + email} email={email} lang={location.state.lang} yours={false} price={location.state.price} tutor={location.state.tutor}/>    
-      <About user={location.state.u} mail={"mailto:" + email} email={email} lang={location.state.lang} yours={false} price={location.state.price} tutor={location.state.tutor}/>
-    <About user={location.state.u} mail={"mailto:" + email} email={email} lang={location.state.lang} yours={false} price={location.state.price} tutor={location.state.tutor}/>    
+    <About user={location.state.u} mail={"mailto:" + email} email={email} lang={location.state.lang} yours={false} price={location.state.price} tutor={location.state.tutor} rating={location.state.rating}/>    
     </div>
       
       <br/>
@@ -134,7 +133,7 @@ export const NotYourProfile = ({GlobalState}) => {
       {
         (location.state.tutor) ? <div style={{position: 'absolute', marginLeft: '525px', marginTop: '500px'}}><CourseInfo courses={printingTaken} past={true}/></div> : <span></span>
       }
-      <div  className='profile-btn'>
+      <div  className='profile-btn'  >
       <h3>Followers: {numFollowers}</h3>
       <h3>Following: {numFollowing} </h3>
       
@@ -142,8 +141,17 @@ export const NotYourProfile = ({GlobalState}) => {
 
 <button type="submit" onClick={handleSubmit}> {isFollowing} </button>
 {
-        tut === 'tut' && <h2>Scehdule with Tutor:</h2>
-      }
+        
+      tut === 'tut' && 
+      <div style = {{height: '300px'}}>
+        <h2>Scehdule with Tutor:</h2>
+        <div className="inline-widget">
+
+          <InlineWidget url={urlTut} />
+        </div>
+        </div>
+}
+
       </div>
       
       
