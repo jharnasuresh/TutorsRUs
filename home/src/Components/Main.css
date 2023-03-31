@@ -8,6 +8,18 @@
     margin-left: 80px;
 }
 
+.editcourse-add {
+    position: absolute;
+    margin-left: -500px;
+    margin-top: 300px;
+}
+
+.editcourse-delete {
+    position: absolute;
+    margin-left: -500px;
+    margin-top: 450px;
+}
+
 #profileid {
     position: absolute;
     padding-left: 50px;
@@ -46,7 +58,6 @@
 }
 
 #container-course {
-    /*position: absolute;*/
     background-color: white;
     height: -500px;
     border: 2px solid black;
@@ -54,8 +65,6 @@
     padding: 20px;
     width: 700px;
     height: 150px;
-    /*margin-left: 800px;
-    margin-top: 400px;*/
 }
 
 .edit-btn {
@@ -171,37 +180,40 @@
     border: 2px solid black;
     border-radius: 10px;
     background-color: rgba(255, 255, 255, 0.365);
+    position: absolute;
+    margin-left: -500px;
+    margin-top: -200px;
 
-}
-
-#container-editcoursetutor {
-    padding: 15rem;
-    border: 2px solid black;
-    border-radius: 10px;
-    background-color: rgba(255, 255, 255, 0.365);
-
-}
-
-.EditCourse h1 {
-    padding: 10px;
-    text-align: center;
 }
 
 
 #container-currentcourse {
     position: absolute;
     padding: 10rem;
-    margin-left: 900px;
-    margin-bottom: 150px;
+    margin-left: 700px;
+    margin-top: -200px;
     border: 2px solid black;
     border-radius: 10px;
     background-color: rgba(255, 255, 255, 0.365);
+    width: 500px;
 }
 
 .currenth1 {
     position: absolute;
-    margin-bottom: 600px;
-    margin-left: 900px;
+    margin-top: -700px;
+    margin-left: 700px;
+}
+
+.editcourseh1 {
+    position: absolute;
+    margin-top: -700px;
+    margin-left: -500px;
+}
+
+.editcourseh1tutor {
+    position: absolute;
+    margin-top: -700px;
+    margin-left: -500px;
 }
 
 .popup2 {
