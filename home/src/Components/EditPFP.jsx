@@ -141,7 +141,7 @@ export const EditPFP = ({GlobalState}) => {
       .then((res) => res.json())
       .then((res) => {
           console.log("resfname", res["fname"])
-          navigate("/Profile", {
+          /*navigate("/Profile", {
 
             state: {
                 u: res.u,
@@ -159,7 +159,7 @@ export const EditPFP = ({GlobalState}) => {
                 taken: res["taken"],
                 rating: res["rating"]
             }
-        });
+        });*/
       })
 
 }
@@ -179,14 +179,17 @@ export const EditPFP = ({GlobalState}) => {
         onChange={(c) => setCrop(c)}
       />
     )}
-     {/*{imageSrc && (
-      console.log("JUNE ITS TRYING TO CROP")
-
-       <img src="" height="200" alt="Image preview" />,
-      <button onClick={() => makeClientCrop(crop)}>Crop Image</button> 
-    )}*/}
-
-    {/*<img id="cropped-image-preview" alt="Cropped Image Preview" />*/}
+     {imageSrc && (
+            <div>
+              <ReactCrop src={imageSrc} onImageLoaded={setImage}
+                crop={crop} onChange={setCrop} />
+              <br />
+              <button onClick={onImageLoaded}>Crop</button>
+              <br />
+              <br />
+            </div>
+          )}
+     <img src="" height="200" alt="Image preview" />  
   </div>
   );
 };
