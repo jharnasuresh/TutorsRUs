@@ -140,6 +140,7 @@ export const NotYourProfile = ({GlobalState}) => {
       
 
 <button type="submit" onClick={handleSubmit}> {isFollowing} </button>
+<button>Rate This User</button>
 {
         
       tut === 'tut' && 
