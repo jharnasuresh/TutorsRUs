@@ -24,6 +24,7 @@ import EditCourseTutor from './Components/EditCourseTutor';
 import TutorEdit  from './Components/tutorEdit';
 import Search from './Components/Search';
 import Table from './Components/Table'
+import Discussion from './Components/Discussion'
 function App() {
 
   const [currUser, setCurrUser] = useState("");
@@ -65,6 +66,7 @@ return (
         <Route exact path="/UploadProfile" element={< UploadProfile GlobalState={GlobalState}/>} /> 
         <Route exact path="/Search" element={< Search GlobalState={GlobalState}/>} /> 
         <Route exact path="/EditPFP" element={< EditPFP GlobalState={GlobalState}/>} /> 
+        <Route exact path="/Discussion" element={<Discussion GlobalState={GlobalState}/>}/>
         <Route path="*" element={<Login />} />
         
     </Routes>
