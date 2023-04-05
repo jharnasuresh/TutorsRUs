@@ -80,7 +80,8 @@ export const Verification = ({GlobalState}) => {
                     tutor: res["tutor"],
                     price: res["price"],
                     taken: res["taken"],
-                    rating: res["rating"]
+                    studentRating: res["stuentRating"],
+                    tutorRating: res["tutorRating"]
                 }
             });
         })

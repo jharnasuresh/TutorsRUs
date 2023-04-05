@@ -28,8 +28,9 @@ export const Tabs = ({GlobalState}) => {
     fetch('http://localhost:3001/info', { method: 'POST', body: requestData, headers: headers })
     .then((res) => res.json())
     .then((res) => {
-        console.log("aaaa? " + res["active"])
-        console.log("june? " + res["followers"])
+        //console.log("aaaa? " + res["active"])
+        //console.log("june? " + res["followers"])
+        console.log("r = " + res["studentRating"])
         navigate("/Profile", {
         
             state: {
@@ -48,7 +49,8 @@ export const Tabs = ({GlobalState}) => {
                 following: res["following"],
                 tutor: res["tutor"],
                 price: res["price"],
-                rating: res["rating"]
+                studentRating: res["studentRating"],
+                tutorRating: res["tutorRating"]
             }
         });
     })

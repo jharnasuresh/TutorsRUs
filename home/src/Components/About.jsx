@@ -20,9 +20,12 @@ class About extends Component {
                         (this.props.yours) ? <p>{this.props.email}</p> : <a href={this.props.mail}>{this.props.email}</a>
                     }
                     <h2>Rating:</h2>
-                    <p>{this.props.rating}/5.0 </p>
+                    <p>{this.props.studentRating}/5.0 </p>
                     {
-                        (this.props.tutor) ? <><h2>Price:</h2><p>${this.props.price}/hour</p> </>: <span></span>
+                        (this.props.tutor) ? <><h2>Price:</h2><p>${this.props.price}/hour</p> 
+                        <h2>Tutor Rating:</h2><p>${this.props.tutorRating}</p>
+                        </>
+                        : <span></span>
                     }
                     
             </section>

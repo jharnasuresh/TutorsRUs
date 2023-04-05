@@ -24,14 +24,18 @@ export const Profile = ({ GlobalState }) => {
   const [buttonPopup2, setButtonPopup2] = useState(false);
   const { currUser, setCurrUser } = GlobalState;
 
+  console.log("rate = " + location.state.studentRating)
 
 
-  console.log("ll " + location.state.u)
+
+  //console.log("ll " + location.state.u)
   const [active, setActive] = useState(location.state.active)
   const [followers, setFollowers] = useState(location.state.followers)
+  /*
   console.log("avtive = " + location.state.active)
   console.log("followers = " + location.state.followers)
   console.log("following = " + location.state.following)
+  */
   const toSendFollowers = [location.state.followers, location.state.u]
   var hasPFP = true;
 
@@ -45,8 +49,8 @@ export const Profile = ({ GlobalState }) => {
     hasPFP = false;
     console.log("---------- doesn't have pfp --------")
   }
-  console.log(location.state.lang)
-  console.log("tt " + location.state.tutor)
+  //console.log(location.state.lang)
+  //console.log("tt " + location.state.tutor)
 
   //setTutor(location.state.tutor)
 
@@ -81,7 +85,7 @@ export const Profile = ({ GlobalState }) => {
   Object.values(location.state.taken).forEach(pTaken)
   }
 
-  console.log("offer " + printingTaken)
+  //console.log("offer " + printingTaken)
   const toggle = (e) => {
     if(tutor) {
       setTutor(false);
@@ -105,7 +109,7 @@ export const Profile = ({ GlobalState }) => {
       <Avatar src={location.state.profpic} sx={{ width: 300, height: 300 }} />
     </div>
     <div style={{position: 'absolute', marginLeft: '-1775px', marginTop: '-400px'}}>
-      <About user={location.state.u} email={location.state.email} lang={location.state.lang} yours={true} price={location.state.price} tutor={tutor} rating={location.state.rating}/>
+      <About user={location.state.u} email={location.state.email} lang={location.state.lang} yours={true} price={location.state.price} tutor={tutor} studentRating={location.state.studentRating} tutorRating={location.state.tutorRating}/>
     </div>
     <div style={{position: 'absolute', marginLeft: '525px', marginTop: '150px'}}>
         <CourseInfo courses={printing} past={false}/>

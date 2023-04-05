@@ -41,7 +41,8 @@ const Table = (props) => {
                         tutor: res["tutor"],
                         price: res["price"],
                         tutor: res["tutor"],
-                        rating: res["rating"]
+                        studentRating: res["stuentRating"],
+                    tutorRating: res["tutorRating"]
                     }
                 });
             })
@@ -67,7 +68,7 @@ const Table = (props) => {
                 <span style={{textAlign: 'left'}}>Courses: {[...props.tutors[tutor].taken] + ","}</span>
                 {
                 }
-                <span style={{float: 'right', padding: '0px 50px 0px 0px'}}>Rating: {props.tutors[tutor].rating != undefined ? props.tutors[tutor].rating : '0.0'}/5</span>
+                <span style={{float: 'right', padding: '0px 50px 0px 0px'}}>Rating: {props.tutors[tutor].tutorRating != undefined ? props.tutors[tutor].tutorRating : '0.0'}/5</span>
                 </div>
                 <br/>
                 </>

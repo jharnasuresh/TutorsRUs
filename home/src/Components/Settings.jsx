@@ -62,7 +62,8 @@ export const Settings = ({ GlobalState }) => {
                         tutor: location.state.tutor,
                         price: res["price"],
                         taken: res["taken"],
-                        rating: res["rating"]
+                        studentRating: res["stuentRating"],
+                        tutorRating: res["tutorRating"]
                     }
                 });
             })
@@ -113,7 +114,8 @@ export const Settings = ({ GlobalState }) => {
                         tutor: res["tutor"],
                         price: res["price"],
                         taken: res["taken"],
-                        rating: res["rating"]
+                        studentRating: res["stuentRating"],
+                        tutorRating: res["tutorRating"]
                     }
                 });
             })
@@ -144,7 +146,8 @@ export const Settings = ({ GlobalState }) => {
                         tutor: res["tutor"],
                         price: res["price"],
                         taken: res["taken"],
-                        rating: res["rating"]
+                        studentRating: res["stuentRating"],
+                        tutorRating: res["tutorRating"]
                     }
                 });
             })
