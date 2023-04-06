@@ -16,12 +16,13 @@ class About extends Component {
                     <h2>Primary Language:</h2> 
                     <p>{ this.props.lang === "" ? "English" : this.props.lang} </p>
                     <h2>Email:</h2> 
-                    {/* fix so user cant click on a mailto link on their own page, only other peoples*/}
                     {
                         (this.props.yours) ? <p>{this.props.email}</p> : <a href={this.props.mail}>{this.props.email}</a>
                     }
                     <h2>Rating:</h2>
-                    <p>{this.props.studentRating}/5.0 </p>
+                    {
+                        this.props.follows ? <p>{this.props.studentRating}/5.0 </p> : <p></p>
+                    }
                     {
                         (this.props.tutor) ? <><h2>Price:</h2><p>${this.props.price}/hour</p> 
                         <h2>Tutor Rating:</h2><p>{this.props.tutorRating}/5.0</p>

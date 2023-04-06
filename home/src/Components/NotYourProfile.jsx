@@ -16,11 +16,11 @@ export const NotYourProfile = ({GlobalState}) => {
 
   const location = useLocation();
   const navigate  = useNavigate();
-  console.log("ll " + location.state.studentRating)
+  //console.log("ll " + location.state.studentRating)
   const [active, setActive] = useState(location.state.active)
   var numFollowers = (location.state.followers).length + ""
   var tut = (location.state.tutor) ? "tut"  : "kjd";
-  console.log(tut)
+  //console.log(tut)
   if ((location.state.followers).length > 3) {
     numFollowers = "3+"
   }
@@ -38,10 +38,11 @@ export const NotYourProfile = ({GlobalState}) => {
   if ((location.state.following).length > 3) {
     numFollowing = "3+"
   }
-  console.log("avtiveNYP = " + location.state.active)
+  //console.log("avtiveNYP = " + location.state.active)
   
-  console.log("followersNYP = " + numFollowers);
-  console.log("followingNYP = " + numFollowing);
+  //console.log("followersNYP = " + numFollowers);
+  //console.log("followingNYP = " + numFollowing);
+  console.log(location.state.studentRating)
   var a = (active) ? "" : "This account is not currently active";
   var urlTut = "https://calendly.com/" + location.state.u;
   var printing = "";
@@ -126,7 +127,7 @@ export const NotYourProfile = ({GlobalState}) => {
     </div>      
     <hr />
     <div style={{position: 'absolute', marginLeft: '-1775px', marginTop: '-400px'}}>
-    <About user={location.state.u} mail={"mailto:" + email} email={email} lang={location.state.lang} yours={false} price={location.state.price} tutor={location.state.tutor} studentRating={location.state.studentRating} tutorRating={location.state.tutorRating}/>    
+    <About user={location.state.u} mail={"mailto:" + email} email={email} lang={location.state.lang} yours={false} price={location.state.price} tutor={location.state.tutor} studentRating={location.state.studentRating} tutorRating={location.state.tutorRating} follows={location.state.follows}/>    
     </div>
       
       <br/>
@@ -144,7 +145,7 @@ export const NotYourProfile = ({GlobalState}) => {
       
 
 <button type="submit" onClick={handleSubmit}> {isFollowing} </button>
-<button onClick={() => navigate("/Rating", {state: {currU: location.state.oldU, otherU:location.state.u }})}>Rate This User</button>
+<button onClick={() => navigate("/Rating", {state: {currU: location.state.oldU, otherU:location.state.u, tutor: location.state.tutor }})}>Rate This User</button>
 {
         
       tut === 'tut' && 

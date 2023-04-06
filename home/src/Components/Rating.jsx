@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Route, useHref, useNavigate, useLocation, Link } from "react-router-dom";
 import './Main.css'
 
@@ -10,7 +10,16 @@ export const Rating = (props) => {
     const [rating2, setRating2] = useState(1);
     const [rating3, setRating3] = useState(1);
 
-    console.log(account)
+    console.log(location.state.tutor)
+
+    
+        useEffect(()=> {
+            if (!location.state.tutor) {
+            setAccount("student")
+        }
+        })
+        
+    
 
     var q1 = "";
     if (account === "student") {
@@ -119,6 +128,10 @@ export const Rating = (props) => {
     }
     return (
         <div style={{ justifyContent: 'start' }} className="App">
+
+            {
+                location.state.tutor ?
+                <>
             <div style={{ padding: '50px' }}>
 
 
@@ -128,6 +141,9 @@ export const Rating = (props) => {
                     <button onClick={(e) => setAccount("tutor") && navigate('/Rating')}>Tutor</button>
                 </div>
             </div>
+            </> : <><br/> <h2>Rate this user as a student</h2><br/></>
+            }
+            
 
 
             {account != "" &&
