@@ -6,6 +6,7 @@ import  './Main.css'
 }*/
 
 class About extends Component {
+
     
     render() {
         
@@ -23,7 +24,7 @@ class About extends Component {
                     <p>{this.props.studentRating}/5.0 </p>
                     {
                         (this.props.tutor) ? <><h2>Price:</h2><p>${this.props.price}/hour</p> 
-                        <h2>Tutor Rating:</h2><p>${this.props.tutorRating}</p>
+                        <h2>Tutor Rating:</h2><p>{this.props.tutorRating}/5.0</p>
                         </>
                         : <span></span>
                     }

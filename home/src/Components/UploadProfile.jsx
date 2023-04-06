@@ -90,7 +90,7 @@ const { currUser, setCurrUser } = GlobalState;
                     profpic: res["profpic"],
                     price: res["price"],
                     taken: res["taken"],
-                    studentRating: res["stuentRating"],
+                    studentRating: res["studentRating"],
                     tutorRating: res["tutorRating"]
                 }
             });

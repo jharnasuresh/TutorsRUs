@@ -6,9 +6,9 @@ export const Rating = (props) => {
     const location = useLocation();
     const navigate = useNavigate();
     const [account, setAccount] = useState("");
-    const [rating1, setRating1] = useState();
-    const [rating2, setRating2] = useState();
-    const [rating3, setRating3] = useState();
+    const [rating1, setRating1] = useState(1);
+    const [rating2, setRating2] = useState(1);
+    const [rating3, setRating3] = useState(1);
 
     console.log(account)
 
@@ -41,17 +41,50 @@ export const Rating = (props) => {
     const handleSubmit = (e) => {
 
         console.log("r1 = " + rating1 + " r2 = " + rating2 + " r3 = " + rating3)
-        console.log(location.state.currU)
+        console.log(location.state.otherU)
 
 
         async function getResponse() {
 
             const headers = { "content-type": "application/json" };
-        const requestData = JSON.stringify({ "username":  location.state.currU, "account": account, "rating1": rating1, "rating2": rating2, "rating3": rating3});
+        const requestData = JSON.stringify({ "username":  location.state.otherU, "account": account, "rating1": rating1, "rating2": rating2, "rating3": rating3});
 
             fetch('http://localhost:3001/rating', { method: 'POST', body: requestData, headers: headers })
         .then((res) => res.json())
         .then((res) => {
+
+            const rData = JSON.stringify({ "username":  location.state.otherU});
+    
+        fetch('http://localhost:3001/info', { method: 'POST', body: rData, headers: headers })
+        .then((res) => res.json())
+        .then((res) => {
+
+            console.log(location.state.currU + " " + location.state.otherU)
+          
+            navigate("/NotYourProfile", {
+              
+                state: {
+                    oldU: location.state.currU,
+                    u: location.state.otherU,
+                    fname: res["fname"],
+                    lname: res["lname"], 
+                    email: res["email"], 
+                    active: res["active"],
+                    lang: res["lang"],
+                    followers: res["followers"],
+                    following: res["following"],
+                    follows: true, //FIX
+                    taking: res["taking"],
+                    profpic: res["profpic"],
+                    tutor: res["tutor"],
+                    price: res["price"],
+                    studentRating: res["studentRating"],
+                    tutorRating: res["tutorRating"]
+                }
+            });
+        })
+/*
+            console.log(res["studentRating"])
 
             navigate("/NotYourProfile", {
               
@@ -70,10 +103,10 @@ export const Rating = (props) => {
                     profpic: res["profpic"],
                     tutor: res["tutor"],
                     price: res["price"],
-                    studentRating: res["stuentRating"],
+                    studentRating: res["studentRating"],
                     tutorRating: res["tutorRating"]
                 }
-            });
+            });*/
         })
 
         }

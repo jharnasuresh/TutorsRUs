@@ -41,8 +41,8 @@ const Table = (props) => {
                         tutor: res["tutor"],
                         price: res["price"],
                         tutor: res["tutor"],
-                        studentRating: res["stuentRating"],
-                    tutorRating: res["tutorRating"]
+                        studentRating: res["studentRating"],
+                        tutorRating: res["tutorRating"]
                     }
                 });
             })

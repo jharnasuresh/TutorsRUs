@@ -637,6 +637,8 @@ app.post("/info", async (req, res) => {
 })
 
 app.post("/rating", async (req, res) => {
+
+    console.log(req.body.account + " " + req.body.username) 
     const login = await db.collection('users').where('username', '==', req.body["username"]).get();
     if (login.empty) {
         return res.send("error")
@@ -647,30 +649,33 @@ app.post("/rating", async (req, res) => {
     if (req.body.account === "tutor") {
         currRating = doc.get("tutorRating")
     } 
-    else if (req.body.accounnt === "student") {
+    else if (req.body.account === "student") {
         currRating = doc.get("studentRating")
     }
 
     
     console.log("old rating = " + currRating)
-
+    var rate = Math.round(((JSON.parse(req.body.rating1) + JSON.parse(req.body.rating2) + JSON.parse(req.body.rating3)) / 3) * 10) / 10
     if (currRating > 0) {
-        currRating = Math.round(((currRating + JSON.parse(req.body.rating1) + JSON.parse(req.body.rating2) + JSON.parse(req.body.rating3)) / 4) * 10) / 10
+        currRating = Math.round(((currRating + rate) / 2) * 10) / 10
 
     } else {
-        currRating = Math.round(((JSON.parse(req.body.rating1) + JSON.parse(req.body.rating2) + JSON.parse(req.body.rating3)) / 3) * 10) / 10
+        currRating = rate
 
     }
     console.log("new rating = " + currRating)
 
+    
     if (req.body.account === "tutor") {
         await doc.ref.update({ tutorRating: currRating });
     } 
-    else if (req.body.accounnt === "student") {
+    else if (req.body.account === "student") {
         await doc.ref.update({ studentRating: currRating });
     }
 
-    return res.send(JSON.stringify({ "u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), "profpic": doc.get("profpic"), "taking": doc.get("taking"), "taken": doc.get("taken"), "tutor": doc.get("tutor"), "price": doc.get("price"),  "studentRating": doc.get("studentRating"), "tutorRating": doc.get("tutorRating"), }))
+    console.log("done = " + await doc.get("studentRating"))
+
+    return res.send(JSON.stringify({ "u": req.body.username }))
 
 
 })
