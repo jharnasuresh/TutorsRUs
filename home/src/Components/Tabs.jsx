@@ -123,22 +123,24 @@ const toSettings = (e) => {
 
                     </li>
                     <li>
-                        <a href="./Help" onClick={() => navigate('/Help', {state: {u: currUser}})}><i class="fa-solid fa-question-circle"></i></a>
-
+                        <a href="./Discussion" onClick={() => navigate('/Discussion', {u: currUser})}><i class="fa-solid fa-message"></i></a>
                     </li>
                     <li>
                         <a href="./Search" onClick={() => navigate('/Search', {state: {u: currUser, none: false}})}><i class="fa-solid fa-magnifying-glass"></i></a>
                     </li>
-
-                    
                     <li>
                         <a href="./Settings" onClick={toSettings}><i class="fa-solid fa-cogs"></i></a>
                    
                     </li>
+                    <li>
+                        <a href="./Help" onClick={() => navigate('/Help', {state: {u: currUser}})}><i class="fa-solid fa-question-circle"></i></a>
 
+                    </li>
+                   
                     <li>
                         <a href="./Login" onClick={() => navigate('/Login', {tutor: location.state.tutor})}><i class="fa-solid fa-sign-out"></i></a>
                     </li>
+                    
                 </ul>
                 {/*<button onClick={() => setButtonPopup(true)}><i className="fa-solid fa-ellipsis-vertical" > </i> 
                 </button> */}
