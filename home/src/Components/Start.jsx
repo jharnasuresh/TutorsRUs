@@ -54,8 +54,8 @@ export const Start = ({GlobalState}) => {
 
   const updateExpireTime = () => {
 
-    const expireTime = Date.now() + 120000;
-    const warningTime = Date.now() + 60000;
+    const expireTime = Date.now() + 10000;
+    const warningTime = Date.now() + 2000;
     localStorage.setItem("expireTime", expireTime);
     localStorage.setItem("warningTime", warningTime);
   }
@@ -63,7 +63,7 @@ export const Start = ({GlobalState}) => {
   useEffect(() => {
     const interval = setInterval(() => {
         checkForInactivity();
-    }, 12000)
+    }, 10000)
 
     return () => clearInterval(interval);
   },[]);

@@ -41,7 +41,9 @@ const Button = (props) => {
                     taking: res["taking"],
                     profpic: res["profpic"],
                     tutor: res["tutor"],
-                    price: res["price"]
+                    price: res["price"],
+                    studentRating: res["studentRating"],
+                    tutorRating: res["tutorRating"]
                 }
             });
         })

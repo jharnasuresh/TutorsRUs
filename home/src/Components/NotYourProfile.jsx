@@ -11,9 +11,12 @@ import Tabs from "./Tabs";
 import { LocationSearching, Schedule } from '@mui/icons-material';
 import CalendlyPopup from "./CalendlyPopup.jsx"
 export const NotYourProfile = ({GlobalState}) => {
+
+  //NOTE oldU = currently logged in user, u = user who's profile you are viewing
+
   const location = useLocation();
   const navigate  = useNavigate();
-  console.log("ll " + location.state.u)
+  console.log("ll " + location.state.studentRating)
   const [active, setActive] = useState(location.state.active)
   var numFollowers = (location.state.followers).length + ""
   var tut = (location.state.tutor) ? "tut"  : "kjd";
@@ -92,7 +95,8 @@ export const NotYourProfile = ({GlobalState}) => {
                     price: r["price"],
                     tutor: r["tutor"],
                     profpic: r["profpic"],
-                    rating: r["rating"]
+                    studentRating: r["studentRating"],
+                    tutorRating: r["tutorRating"]
                 }
             });
           }
@@ -122,11 +126,11 @@ export const NotYourProfile = ({GlobalState}) => {
     </div>      
     <hr />
     <div style={{position: 'absolute', marginLeft: '-1775px', marginTop: '-400px'}}>
-    <About user={location.state.u} mail={"mailto:" + email} email={email} lang={location.state.lang} yours={false} price={location.state.price} tutor={location.state.tutor} rating={location.state.rating}/>    
+    <About user={location.state.u} mail={"mailto:" + email} email={email} lang={location.state.lang} yours={false} price={location.state.price} tutor={location.state.tutor} studentRating={location.state.studentRating} tutorRating={location.state.tutorRating}/>    
     </div>
       
       <br/>
-      <div style={{position: 'absolute', marginLeft: '525px', marginTop: '150px'}}>
+      <div style={{position: 'absolute', marginLeft: '525px', marginTop: '170px'}}>
         <CourseInfo courses={printing} past={false}/>
       </div>
       <br />
@@ -140,6 +144,7 @@ export const NotYourProfile = ({GlobalState}) => {
       
 
 <button type="submit" onClick={handleSubmit}> {isFollowing} </button>
+<button onClick={() => navigate("/Rating", {state: {currU: location.state.oldU, otherU:location.state.u }})}>Rate This User</button>
 {
         
       tut === 'tut' && 

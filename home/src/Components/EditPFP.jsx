@@ -157,7 +157,8 @@ export const EditPFP = ({GlobalState}) => {
                 profpic: res["profpic"],
                 price: res["price"],
                 taken: res["taken"],
-                rating: res["rating"]
+                studentRating: res["studentRating"],
+                    tutorRating: res["tutorRating"]
             }
         });*/
       })

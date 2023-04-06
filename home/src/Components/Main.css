@@ -8,6 +8,19 @@
     margin-left: 80px;
 }
 
+#rating1 {
+    width: 50px;
+    font-size: 20px;
+}
+#rating2 {
+    width: 50px;
+    font-size: 20px;
+}
+#rating3 {
+    width: 50px;
+    font-size: 20px;
+}
+
 .editcourse-add {
     position: absolute;
     margin-left: -500px;
@@ -52,7 +65,7 @@
     border-radius: 25px;
     padding: 20px;
     width: 700px;
-    height: 270px;
+    height: 300px;
     margin-left: 800px;
     margin-top: -100px;
 }
