@@ -235,28 +235,23 @@ app.post("/parse", upload.single("file"), async (req, res) => {
         body: { user }
     } = req;
 
-    var login = await db.collection('users').where('username', '==', req.body.user).get();
-    console.log(file)
-    if (!login.empty) {
-        var doc = login.docs[0];
-        console.log("2")
-        await doc.ref.update({ transcript: file })
-        console.log("3")
-        await doc.ref.update({ tutor: true })
-        console.log("4")
 
-        login = await db.collection('users').where('username', '==', req.body.user).get();
-        console.log("5")
-        doc = login.docs[0];
-        console.log("6")
-        console.log("tutor now " + doc.get("tutor"))
-        return res.send(JSON.stringify({ "studentRating": doc.get("studentRating"), "tutorRating": doc.get("tutorRating"), "u": doc.get("username"), "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), taking: doc.get("taking"), tutor: doc.get("tutor"), price: doc.get("price"), taken: doc.get("taken") }))
 
-    }
-    else {
-        return res.send(JSON.stringify("error"))
+var login = await db.collection('users').where('username', '==', req.body.user).get();
+if (!login.empty) {
+    const info = {
+        username: req.body.user, 
+        transcript: file
     }
 
+    const r = await db.collection('transcripts').doc(req.body.user).set(info);
+    var doc = login.docs[0];
+    await doc.ref.update({ tutor: true })
+    console.log("2")
+    return res.send(JSON.stringify({ "studentRating": doc.get("studentRating"), "tutorRating": doc.get("tutorRating"), "u": doc.get("username"), "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), taking: doc.get("taking"), tutor: doc.get("tutor"), price: doc.get("price"), taken: doc.get("taken") }))
+
+}
+return res.send(JSON.stringify("error"))
 
 });
 
@@ -685,11 +680,11 @@ app.post("/deltranscript", async (req, res) => {
     if (!login.empty) {
         var doc = login.docs[0]
         //await doc.ref.update({ transcript: null });
-        await doc.ref.update({ transcript: FieldValue.delete() });
         await doc.ref.update({ tutor: false });
         login = await db.collection('users').where('username', '==', req.body["username"]).get();
         doc = login.docs[0]
         console.log("no longer tutor " + doc.get("tutor"))
+        var t = await db.collection("transcripts").doc(req.body["username"]).delete();
         return res.send(JSON.stringify({ "studentRating": doc.get("studentRating"), "tutorRating": doc.get("tutorRating"), "u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), "profpic": doc.get("profpic"), taking: doc.get("taking"), tutor: doc.get("tutor"), price: doc.get("price"), taken: doc.get("taken") }))
 
 
