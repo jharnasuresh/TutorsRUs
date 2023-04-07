@@ -12,8 +12,8 @@ export const Discussion = ({GlobalState}) => {
 
     return (
         
-        <div classNames = "Discussion">
-            <p1>hey dawgs</p1>
+        <div classNames = "Discussion App">
+            <button type="submit" /*onClick={}*/>Create New Discussion Board</button>        
         </div>
         
        
