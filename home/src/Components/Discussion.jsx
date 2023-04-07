@@ -1,9 +1,13 @@
 import React, {useState} from "react"
+import CreateDiscussion from './CreateDiscussion'
+import { useLocation, Link, useNavigate } from "react-router-dom";
 
 export const Discussion = ({GlobalState}) => {
+    const navigate = useNavigate();
+    //setCurrUser(location.state.u)
     //const location = useLocation();
 
-    //const { currUser, setCurrUser } = GlobalState;
+    const { currUser, setCurrUser } = GlobalState;
    // setCurrUser(location.state.u)
 
     /*if (currUser === "") {
@@ -13,7 +17,7 @@ export const Discussion = ({GlobalState}) => {
     return (
         
         <div classNames = "Discussion App">
-            <button type="submit" /*onClick={}*/>Create New Discussion Board</button>        
+            <button type="submit" onClick={() => navigate('/CreateDiscussion', {state: {u: currUser}})}>Create New Discussion Board</button>        
         </div>
         
        

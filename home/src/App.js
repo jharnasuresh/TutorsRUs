@@ -25,8 +25,8 @@ import TutorEdit  from './Components/tutorEdit';
 import Search from './Components/Search';
 import Table from './Components/Table'
 import { Rating } from './Components/Rating';
-
 import Discussion from './Components/Discussion'
+import CreateDiscussion from './Components/CreateDiscussion'
 function App() {
 
   const [currUser, setCurrUser] = useState("");
@@ -70,6 +70,7 @@ return (
         <Route exact path="/EditPFP" element={< EditPFP GlobalState={GlobalState}/>} /> 
         <Route exact path="/Rating" element={< Rating GlobalState={GlobalState}/>} /> 
         <Route exact path="/Discussion" element={<Discussion GlobalState={GlobalState}/>}/>
+        <Route exact path="/CreateDiscussion" element={<CreateDiscussion GlobalState={GlobalState}/>}/>
         <Route path="*" element={<Login />} />
         
     </Routes>
