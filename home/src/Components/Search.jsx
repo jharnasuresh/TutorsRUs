@@ -4,6 +4,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Table from './Table'
+import TableBoards from "./TableBoards";
 import Sort from './Sort'
 import Genre from './Genre'
 
@@ -21,6 +22,7 @@ function Search({ GlobalState, placeholder, data }) {
     const { currUser, setCurrUser } = GlobalState;
     const [showErr, setShowErr] = useState(false);
     const [tutors, setTutors] = useState([]);
+    const [boards, setBoards] = useState([]);
     const [filter, setFilter] = useState("")
     const [lang, setLang] = useState('')
     setCurrUser(location.state.u)
@@ -31,6 +33,10 @@ function Search({ GlobalState, placeholder, data }) {
     const handleChange = (e) => {
         setSearchBy(e.target.value)
         setShowErr(false)
+        setNone(false)
+        setTutors([])
+        setBoards([])
+        return;
     }
 
     const [users, setUsers] = useState("");
@@ -66,7 +72,7 @@ function Search({ GlobalState, placeholder, data }) {
             }
             url = 'http://localhost:3001/searchtutorname'
         }
-        else { //searchby = prof
+        else if (searchBy === "professor") { //searchby = prof
             if (search.includes(",")) {
                 setShowErr(true)
                 setSearchBy(searchBy)
@@ -74,13 +80,21 @@ function Search({ GlobalState, placeholder, data }) {
                 return;
             }
             url = 'http://localhost:3001/searchprofname'
+        } else { //search by boards
+            if (search.includes(",")) {
+                setShowErr(true)
+                setSearchBy(searchBy)
+                setUsers("")
+                return;
+            }
+            url = 'http://localhost:3001/searchboards'
         }
 
 
         fetch(url, { method: 'POST', body: requestData, headers: headers })
             .then((res) => res.json())
             .then((res) => {
-                console.log(res)
+                console.log("res " + res)
                 setSearchBy(searchBy)
                 if (res === "none") {
                     // no tutors
@@ -92,7 +106,14 @@ function Search({ GlobalState, placeholder, data }) {
                     // list tutors
                     setNone(false);
 
-                    setTutors(res)
+                    if (searchBy === 'board') {
+                        console.log(res)
+                        setBoards(res)
+                    } else {
+                        setTutors(res)
+                    }
+
+                    
 
 
                 }
@@ -122,7 +143,9 @@ function Search({ GlobalState, placeholder, data }) {
                         <label for="tutor" style={{ padding: '6px 20px' }}>Tutor</label>
                         <input type="radio" id="tutor" name="search-by" value="tutor" style={{ height: '20px', width: '20px' }} />
                         <label for="professor" style={{ padding: '6px 20px' }}>Professor</label>
-                        <input type="radio" id="Professor" name="search-by" value="Professor" style={{ height: '20px', width: '20px' }} />
+                        <input type="radio" id="professor" name="search-by" value="professor" style={{ height: '20px', width: '20px' }} />
+                        <label for="board" style={{ padding: '6px 20px' }}>Boards</label>
+                        <input type="radio" id="board" name="search-by" value="board" style={{ height: '20px', width: '20px' }} />
                     </div>
                 </form>
 
@@ -131,7 +154,11 @@ function Search({ GlobalState, placeholder, data }) {
             </div>
 
             {
-                none ? <h1 style={{ color: 'red' }}>No available tutors</h1> : <span></span>
+                none ? 
+                <>{console.log(searchBy + " ftycgdhubs")}
+                { searchBy === "board" ? <h1 style={{ color: 'red' }}>No available boards</h1> : <h1 style={{ color: 'red' }}>No available tutors</h1> }
+                </>
+                : <span></span>
             }
 
 
@@ -141,9 +168,20 @@ function Search({ GlobalState, placeholder, data }) {
             <div className="wrapper">
                 <div className="container-search">
                     <div className="body">
-                        <div className="table_container">
+                        {
+                            searchBy === 'board' ?
+                             <>
+                             <div className="table_container">
+                            <TableBoards names={boards} currU={currUser}/>
+                        </div>
+                            </> :
+                            <>
+                            <div className="table_container">
                             <Table tutors={tutors} currU={currUser}/>
                         </div>
+                            </>
+                        }
+                        
                         <div className="filter_container">
 
                             <form onChange={(e) => setFilter(e.target.value)}>

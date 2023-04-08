@@ -1,8 +1,14 @@
 import React, {useState} from "react"
 import './CreateDiscussion.css'
+import { useLocation, Link, useNavigate } from "react-router-dom";
+
 export const CreateDiscussion = ({GlobalState}) => {
     const [name, setName] = useState('');
     const [className, setClassName] = useState('');
+    const navigate = useNavigate();
+    const location = useLocation();
+    const { currUser, setCurrUser } = GlobalState;
+    setCurrUser(location.state.u)
     return (
         <div class="App">
         <div classNames = "CreateDiscussion App">

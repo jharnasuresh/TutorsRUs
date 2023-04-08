@@ -4,19 +4,14 @@ import { useLocation, Link, useNavigate } from "react-router-dom";
 
 export const Discussion = ({GlobalState}) => {
     const navigate = useNavigate();
-    //setCurrUser(location.state.u)
-    //const location = useLocation();
-
+    const location = useLocation();
     const { currUser, setCurrUser } = GlobalState;
-   // setCurrUser(location.state.u)
+    setCurrUser(location.state.u)
 
-    /*if (currUser === "") {
-        setCurrUser(location.state.u)
-    }*/
 
     return (
         
-        <div classNames = "Discussion App">
+        <div style={{ justifyContent: 'start' }} class = "App Discussion">
             <button type="submit" onClick={() => navigate('/CreateDiscussion', {state: {u: currUser}})}>Create New Discussion Board</button>        
         </div>
         
