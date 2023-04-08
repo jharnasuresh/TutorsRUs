@@ -123,7 +123,7 @@ const toSettings = (e) => {
 
                     </li>
                     <li>
-                        <a href="./Discussion" onClick={() => navigate('/Discussion', {u: currUser})}><i class="fa-solid fa-message"></i></a>
+                        <a href="./Discussion" onClick={() => navigate('/Discussion', {state: {u: currUser}})}><i class="fa-solid fa-message"></i></a>
                     </li>
                     <li>
                         <a href="./Search" onClick={() => navigate('/Search', {state: {u: currUser, none: false}})}><i class="fa-solid fa-magnifying-glass"></i></a>
