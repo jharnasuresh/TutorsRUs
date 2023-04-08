@@ -630,8 +630,8 @@ app.post("/searchboards", async (req, res) => {
     return res.send(JSON.stringify(boards))
     */
 
-    var b = ['cs180 help', 'cs182 besties']
-    //var b = "none"
+    //var b = ['cs180 help', 'cs182 besties']
+    var b = "none"
     return res.send(JSON.stringify(b))
 
 

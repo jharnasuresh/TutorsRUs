@@ -67,7 +67,7 @@ function Search({ GlobalState, placeholder, data }) {
             if (search.includes(",")) {
                 setShowErr(true)
                 setSearchBy(searchBy)
-                setUsers("")
+                setTutors([])
                 return;
             }
             url = 'http://localhost:3001/searchtutorname'
@@ -76,7 +76,7 @@ function Search({ GlobalState, placeholder, data }) {
             if (search.includes(",")) {
                 setShowErr(true)
                 setSearchBy(searchBy)
-                setUsers("")
+                setTutors([])
                 return;
             }
             url = 'http://localhost:3001/searchprofname'
@@ -84,7 +84,7 @@ function Search({ GlobalState, placeholder, data }) {
             if (search.includes(",")) {
                 setShowErr(true)
                 setSearchBy(searchBy)
-                setUsers("")
+                setBoards([])
                 return;
             }
             url = 'http://localhost:3001/searchboards'
@@ -101,6 +101,7 @@ function Search({ GlobalState, placeholder, data }) {
                     console.log("none here")
                     setNone(true)
                     setTutors([])
+                    setBoards([])
                 }
                 else {
                     // list tutors
@@ -156,7 +157,7 @@ function Search({ GlobalState, placeholder, data }) {
             {
                 none ? 
                 <>{console.log(searchBy + " ftycgdhubs")}
-                { searchBy === "board" ? <h1 style={{ color: 'red' }}>No available boards</h1> : <h1 style={{ color: 'red' }}>No available tutors</h1> }
+                { searchBy === "board" ? <h1 style={{ color: 'red' }}>No available boards. Create a new one on the Discussion Boards tab!</h1> : <h1 style={{ color: 'red' }}>No available tutors</h1> }
                 </>
                 : <span></span>
             }
