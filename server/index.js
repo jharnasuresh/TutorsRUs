@@ -630,12 +630,16 @@ app.post("/searchboards", async (req, res) => {
     return res.send(JSON.stringify(boards))
     */
 
-    //var b = ['cs180 help', 'cs182 besties']
-    var b = "none"
+    var b = ['cs180 help', 'cs182 besties']
+    //var b = "none"
     return res.send(JSON.stringify(b))
 
 
 });
+
+app.post("/joinboard", async (req, res) => {
+    
+})
 
 app.post("/info", async (req, res) => {
     console.log("iii " + req.body["username"] + " otehr " + req.body.currU)
