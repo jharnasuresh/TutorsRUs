@@ -17,6 +17,7 @@ export const Discussion = ({GlobalState}) => {
     return (
         
         <div classNames = "Discussion App">
+            console.log("helllloo");
             <button type="submit" onClick={() => navigate('/CreateDiscussion', {state: {u: currUser}})}>Create New Discussion Board</button>        
         </div>
         

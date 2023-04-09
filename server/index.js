@@ -14,6 +14,7 @@ app.use(express.urlencoded({ extended: false }));
 const admin = require("firebase-admin");
 
 const { db } = require('./firebase.js')
+const{ doc, setDoc } = require ("firebase/firestore"); 
 //const toSendToken = require('./tokenSender.js');
 const bp = require('body-parser')
 app.use(bp.json({ limit: '50mb' }));
@@ -33,6 +34,7 @@ console.log("library imports work");
 //const users = [] //temporarily storing in array
 
 const cors = require("cors");
+const { Replay10 } = require('@mui/icons-material');
 const corsOptions = {
     origin: '*',
     credentials: true,            //access-control-allow-credentials:true
@@ -1093,6 +1095,29 @@ app.post("/pfpupload", async (req, res) => {
     console.log("6")
     return res.send(JSON.stringify({ "studentRating": doc.get("studentRating"), "tutorRating": doc.get("tutorRating"), "u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), "profpic": doc.get("profpic"), taking: doc.get("taking"), tutor: doc.get("tutor"), price: doc.get("price"), taken: doc.get("taken") }))
 
+});
+
+
+app.post("/createdisc", async (req, res) => {
+    console.log("------------hello--------------")
+    console.log("before set doc");
+    /*await setDoc(doc(db, "boards", req.body.name), {
+        name: req.body.name,
+        class: req.body.className
+      });
+      
+      console.log("after set doc");
+*/
+
+
+      var data = {
+        name: req.body.name,
+        class: req.body.className
+    };
+
+    var setDoc = db.collection('boards').add(data);
+    console.log("at the end of post");
+    return res.send(JSON.stringify({"returnedName": req.body.name, "returnedClass": req.body.className }))
 });
 
 function md5(string) {
