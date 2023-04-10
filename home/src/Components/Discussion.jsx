@@ -1,7 +1,6 @@
 
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import './Discuss.css'
-import React, {useState} from "react"
 import CreateDiscussion from './CreateDiscussion'
 import { useLocation, Link, useNavigate } from "react-router-dom";
 {/*class Discussion extends Component {
@@ -33,10 +32,11 @@ export const Discussion = ({GlobalState}) => {
 
     return (
         
-        <div style={{ justifyContent: 'start' }} class = "App Discussion">
+        
+        <div className = "App">
+                <div style={{ justifyContent: 'start' }} class = "App Discussion">
             <button type="submit" onClick={() => navigate('/CreateDiscussion', {state: {u: currUser}})}>Create New Discussion Board</button>        
         </div>
-        <div className = "App">
                 <div className = "panel panel-default">
                     <div className= "panel=body">
                     Hello I'm a post
@@ -52,9 +52,7 @@ export const Discussion = ({GlobalState}) => {
         )
         
        
-
-    )
     
 
-}
+};
 export default Discussion;
