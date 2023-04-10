@@ -614,12 +614,10 @@ app.post("/searchprofname", async (req, res) => {
 
 app.post("/searchboards", async (req, res) => {
 
-    /* THIS IS THE ACTIAL CODE, BELOW IS FOR TESTING 
-
     var course = req.body.data.toLowerCase();
     console.log('board search for ' + course)
 
-    var list = await db.collection('boards').where('course', '==', course).get();
+    var list = await db.collection('boards').where('class', '==', course).get();
     if (list.empty) {
         return res.send(JSON.stringify("none"))
     }
@@ -630,17 +628,19 @@ app.post("/searchboards", async (req, res) => {
     }
 
     return res.send(JSON.stringify(boards))
-    */
-
-    var b = ['cs180 help', 'cs182 besties']
-    //var b = "none"
-    return res.send(JSON.stringify(b))
-
-
+    
 });
 
 app.post("/joinboard", async (req, res) => {
-    
+    console.log("here " + req.body.board + " " + req.body.username)
+    var list = await db.collection('users').where('username', '==', req.body.username).get();
+    if (!list.empty) {
+        var user = list.docs[0]
+        var boards = user.get("boards")
+        boards.push(req.body.board);
+        await user.ref.update({ boards: boards }); 
+    }
+    return res.send(JSON.stringify(req.body.username))
 })
 
 app.post("/info", async (req, res) => {
@@ -792,6 +792,7 @@ app.post("/login", async (req, res) => {
     console.log("user: " + req.body["username"])
 
     const login = await db.collection('users').where('username', '==', req.body["username"]).where('password', '==', md5(req.body["pass"])).get();
+    console.log("done")
     if (!login.empty) {
         var doc = login.docs[0];
         console.log("a " + doc.get("password"))
@@ -803,7 +804,7 @@ app.post("/login", async (req, res) => {
         console.log("error")
         // not in databse, send error
     }
-    //console.log("none " + md5(req.body["pass"]) + " " + )
+    console.log("none " + md5(req.body["pass"]) + " ")
     return res.send(JSON.stringify("error"))
 })
 
@@ -1129,27 +1130,24 @@ app.post("/pfpupload", async (req, res) => {
 
 });
 
+app.post("/getboards", async (req, res) => {
+    var list = await db.collection('users').where("username", '==', req.body.username).get();
+    if (!list.empty) {
+        //var boards =
+        console.log("sending")
+        return res.send(JSON.stringify({boards: list.docs[0].get("boards")}))
+    }
+})
+
 
 app.post("/createdisc", async (req, res) => {
     console.log("------------hello--------------")
     console.log("before set doc " + req.body.name + " " + req.body.course);
-    /*
-    await setDoc(doc(db, "boards", req.body.name), {
-        name: req.body.name,
-        class: req.body.className
-      });
-      */
-
-      
-
-
-
       var data = {
         name: req.body.name,
         class: req.body.course
     };
-    const r = await db.collection('boards').doc(req.body.course).set(data);
-    //var setDoc = db.collection('boards').add(data);
+    const r = await db.collection('boards').doc(req.body.name).set(data);
     console.log("at the end of post");
     return res.send(JSON.stringify({"returnedName": req.body.name, "returnedClass": req.body.course }))
 });

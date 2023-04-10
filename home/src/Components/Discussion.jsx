@@ -29,9 +29,20 @@ export const Discussion = ({GlobalState}) => {
     const { currUser, setCurrUser } = GlobalState;
     setCurrUser(location.state.u)
 
+    console.log(location.state.boards)
+
 
     return (
         <div className = "App">
+            {
+                location.state.boards.map((b) => (
+                    <div style={{width: '100px', height: '100px', textAlign: 'center', border: 'solid'}}>
+                        <h2>{b}</h2>
+                        
+                    </div>
+                )
+                )
+            }
                 <div style={{ justifyContent: 'start' }} class = "Discussion">
             <button type="submit" onClick={() => navigate('/CreateDiscussion', {state: {u: currUser}})}>Create New Discussion Board</button>        
         </div>
