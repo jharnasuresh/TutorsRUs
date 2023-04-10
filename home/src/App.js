@@ -26,7 +26,8 @@ import Search from './Components/Search';
 import Table from './Components/Table'
 import { Rating } from './Components/Rating';
 import Discussion from './Components/Discussion'
-import CreateDiscussion from './Components/CreateDiscussion'
+import {CreateDiscussion} from './Components/CreateDiscussion';
+
 function App() {
 
   const [currUser, setCurrUser] = useState("");

@@ -30,9 +30,7 @@ export const Discussion = ({GlobalState}) => {
     setCurrUser(location.state.u)
 
 
-    return (
-        
-        
+    return {
         <div className = "App">
                 <div style={{ justifyContent: 'start' }} class = "App Discussion">
             <button type="submit" onClick={() => navigate('/CreateDiscussion', {state: {u: currUser}})}>Create New Discussion Board</button>        
