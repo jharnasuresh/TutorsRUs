@@ -1128,24 +1128,26 @@ app.post("/pfpupload", async (req, res) => {
 
 app.post("/createdisc", async (req, res) => {
     console.log("------------hello--------------")
-    console.log("before set doc");
-    /*await setDoc(doc(db, "boards", req.body.name), {
+    console.log("before set doc " + req.body.name + " " + req.body.course);
+    /*
+    await setDoc(doc(db, "boards", req.body.name), {
         name: req.body.name,
         class: req.body.className
       });
+      */
+
       
-      console.log("after set doc");
-*/
+
 
 
       var data = {
         name: req.body.name,
-        class: req.body.className
+        class: req.body.course
     };
-
-    var setDoc = db.collection('boards').add(data);
+    const r = await db.collection('boards').doc(req.body.course).set(data);
+    //var setDoc = db.collection('boards').add(data);
     console.log("at the end of post");
-    return res.send(JSON.stringify({"returnedName": req.body.name, "returnedClass": req.body.className }))
+    return res.send(JSON.stringify({"returnedName": req.body.name, "returnedClass": req.body.course }))
 });
 
 function md5(string) {
