@@ -632,12 +632,16 @@ app.post("/searchboards", async (req, res) => {
     return res.send(JSON.stringify(boards))
     */
 
-    //var b = ['cs180 help', 'cs182 besties']
-    var b = "none"
+    var b = ['cs180 help', 'cs182 besties']
+    //var b = "none"
     return res.send(JSON.stringify(b))
 
 
 });
+
+app.post("/joinboard", async (req, res) => {
+    
+})
 
 app.post("/info", async (req, res) => {
     console.log("iii " + req.body["username"] + " otehr " + req.body.currU)
@@ -1128,24 +1132,26 @@ app.post("/pfpupload", async (req, res) => {
 
 app.post("/createdisc", async (req, res) => {
     console.log("------------hello--------------")
-    console.log("before set doc");
-    /*await setDoc(doc(db, "boards", req.body.name), {
+    console.log("before set doc " + req.body.name + " " + req.body.course);
+    /*
+    await setDoc(doc(db, "boards", req.body.name), {
         name: req.body.name,
         class: req.body.className
       });
+      */
+
       
-      console.log("after set doc");
-*/
+
 
 
       var data = {
         name: req.body.name,
-        class: req.body.className
+        class: req.body.course
     };
-
-    var setDoc = db.collection('boards').add(data);
+    const r = await db.collection('boards').doc(req.body.course).set(data);
+    //var setDoc = db.collection('boards').add(data);
     console.log("at the end of post");
-    return res.send(JSON.stringify({"returnedName": req.body.name, "returnedClass": req.body.className }))
+    return res.send(JSON.stringify({"returnedName": req.body.name, "returnedClass": req.body.course }))
 });
 
 function md5(string) {

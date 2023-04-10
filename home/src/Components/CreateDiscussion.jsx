@@ -41,8 +41,8 @@ export const CreateDiscussion = ({GlobalState}) => {
 
     return (
         <div class="App">
-        <div classNames = "CreateDiscussion App">
-                <form className="createDisc" /*onSubmit={handleSubmit}*/ style={{alignContent: 'center'}}>
+        <div class="createDisc">
+                <form  /*onSubmit={handleSubmit}*/ >
                         <h2 div="h2">Create a New Discussion Board!</h2>
                         <label htmlFor="name">Discussion Board Name: </label>
                         <input value={name} onChange={(e) => setName(e.target.value)} type="name" placeholder="Enter Your Name:" id="name" name="name" />
@@ -50,8 +50,9 @@ export const CreateDiscussion = ({GlobalState}) => {
                         <label htmlFor="className">Class Name: </label>
                         <input value={className} onChange={(e) => setClassName(e.target.value)} type="className" placeholder="Enter Your Class Name" id="className" name="className" />
                         
-                        <button type="submit" onSubmit={handleSubmit}  > Submit </button>
+                        
                 </form>
+                <button onClick={handleSubmit} > Submit </button>
         </div>
         </div>
     )

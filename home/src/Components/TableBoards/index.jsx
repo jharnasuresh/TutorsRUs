@@ -25,26 +25,10 @@ const TableBoards = (props) => {
             .then((res) => res.json())
             .then((res) => {
               
-                navigate("/NotYourProfile", {
+                navigate("/Discussion", {
                   
                     state: {
-                        oldU: currU,
-                        u: res.u,
-                        fname: res["fname"],
-                        lname: res["lname"], 
-                        email: res["email"], 
-                        active: res["active"],
-                        lang: res["lang"],
-                        followers: res["followers"],
-                        following: res["following"],
-                        follows: res["follows"], // need to fix this
-                        taking: res["taking"],
-                        profpic: res["profpic"],
-                        tutor: res["tutor"],
-                        price: res["price"],
-                        tutor: res["tutor"],
-                        studentRating: res["studentRating"],
-                        tutorRating: res["tutorRating"]
+                        
                     }
                 });
             })
@@ -53,16 +37,14 @@ const TableBoards = (props) => {
         
       }
     return (
-        <div style={{marginTop: '50px'}}>
+        <div style={{margin: '30px'}}>
         {
             props.names.map((name) => (
                 <>
                 <div style={{textAlign: 'left', height: '120px', borderStyle: 'solid'}}>
-                 
                 <br />
-                <span></span>
-                <h2 style={{float: 'left', marginLeft: '10px'}}>{name}</h2>
-                <button style={{float: 'right'}} onClick={() => handleSubmit(name)}>Join</button>
+                <span style={{fontSize: '1.5em', float: 'left', marginLeft: '20px', fontWeight: 'bold', marginTop: '20px'}}>{name}</span>
+                <button style={{float: 'right'}} onClick={() => handleSubmit(name)}>Join Here!</button>
                 </div>
                 <br/>
                 </>
