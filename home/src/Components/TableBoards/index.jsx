@@ -4,12 +4,14 @@ import React, { useEffect, useState } from "react";
 import { useLocation, Link, useNavigate } from "react-router-dom";
 
 
-const Table = (props) => {
+const TableBoards = (props) => {
 
     const location = useLocation();
     const navigate = useNavigate();
     const [selectedU, setSelectedU] = useState('')
     const currU = props.currU
+
+    console.log(props.names instanceof Array)
     
     const handleSubmit = (props) => {
         setSelectedU(props)
@@ -53,20 +55,14 @@ const Table = (props) => {
     return (
         <div style={{marginTop: '50px'}}>
         {
-            Object.keys(props.tutors).map((tutor) => (
+            props.names.map((name) => (
                 <>
-                <div style={{textAlign: 'left', height: '130px'}}>
-                    <div style={{float: 'left', margin: '10px 10px 10px 100px' }}>
-                    <img src = "/Images/avatar_img.png" alt = "" width="110px" height="100px" textAlign='left'/>
-                    </div>
+                <div style={{textAlign: 'left', height: '120px', borderStyle: 'solid'}}>
                  
-                <button className="linked" onClick={() => handleSubmit(tutor)}>{tutor}</button>
                 <br />
-                <span style={{textAlign: 'left', fontWeight: 'bold'}}>{props.tutors[tutor].fname} {props.tutors[tutor].lname}</span>
-                <span style={{float: 'right', padding: '0px 50px 0px 0px'}}>Price: ${props.tutors[tutor].price}/hour</span>
-                <br />
-                <span style={{textAlign: 'left'}}>Courses: {[...props.tutors[tutor].taken] + ","}</span>
-                <span style={{float: 'right', padding: '0px 50px 0px 0px'}}>Rating: {props.tutors[tutor].tutorRating != undefined ? props.tutors[tutor].tutorRating : '0.0'}/5</span>
+                <span></span>
+                <h2 style={{float: 'left', marginLeft: '10px'}}>{name}</h2>
+                <button style={{float: 'right'}} onClick={() => handleSubmit(name)}>Join</button>
                 </div>
                 <br/>
                 </>
@@ -75,4 +71,4 @@ const Table = (props) => {
         </div>
     );
 };
-export default Table;
+export default TableBoards;

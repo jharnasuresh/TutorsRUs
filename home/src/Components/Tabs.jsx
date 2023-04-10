@@ -28,8 +28,9 @@ export const Tabs = ({GlobalState}) => {
     fetch('http://localhost:3001/info', { method: 'POST', body: requestData, headers: headers })
     .then((res) => res.json())
     .then((res) => {
-        console.log("aaaa? " + res["active"])
-        console.log("june? " + res["followers"])
+        //console.log("aaaa? " + res["active"])
+        //console.log("june? " + res["followers"])
+        console.log("r = " + res["studentRating"])
         navigate("/Profile", {
         
             state: {
@@ -48,7 +49,8 @@ export const Tabs = ({GlobalState}) => {
                 following: res["following"],
                 tutor: res["tutor"],
                 price: res["price"],
-                rating: res["rating"]
+                studentRating: res["studentRating"],
+                tutorRating: res["tutorRating"]
             }
         });
     })
@@ -121,7 +123,7 @@ const toSettings = (e) => {
 
                     </li>
                     <li>
-                        <a href="./Discussion" onClick={() => navigate('/Discussion', {u: currUser})}><i class="fa-solid fa-message"></i></a>
+                        <a href="./Discussion" onClick={() => navigate('/Discussion', {state: {u: currUser}})}><i class="fa-solid fa-message"></i></a>
                     </li>
                     <li>
                         <a href="./Search" onClick={() => navigate('/Search', {state: {u: currUser, none: false}})}><i class="fa-solid fa-magnifying-glass"></i></a>
