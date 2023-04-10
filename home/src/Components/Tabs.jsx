@@ -93,6 +93,27 @@ const toSettings = (e) => {
           
 }
 
+const toBoards = (e) => {
+    e.preventDefault();
+    //console.log("tabs2settings " + currUser)
+    const headers = { "content-type": "application/json" };
+    const requestData = JSON.stringify({ "username":  currUser});
+
+    fetch('http://localhost:3001/getboards', { method: 'POST', body: requestData, headers: headers })
+    .then((res) => res.json())
+    .then((res) => {
+        //console.log("aaaa? " + res["active"])
+        //console.log("june? " + res["tutor"])
+        navigate("/Discussion", {
+        
+            state: {
+                u: currUser,
+                boards: res.boards
+            }
+        });
+    })
+}
+
     function options() {
         <select>
                    
@@ -123,7 +144,7 @@ const toSettings = (e) => {
 
                     </li>
                     <li>
-                        <a href="./Discussion" onClick={() => navigate('/Discussion', {state: {u: currUser}})}><i class="fa-solid fa-message"></i></a>
+                        <a href="./Discussion" onClick={toBoards}><i class="fa-solid fa-message"></i></a>
                     </li>
                     <li>
                         <a href="./Search" onClick={() => navigate('/Search', {state: {u: currUser, none: false}})}><i class="fa-solid fa-magnifying-glass"></i></a>

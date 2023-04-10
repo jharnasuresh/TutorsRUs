@@ -19,18 +19,13 @@ const TableBoards = (props) => {
     
         
         const headers = { "content-type": "application/json" };
-            const requestData = JSON.stringify({ "username":  props, "currU": currU});
+            const requestData = JSON.stringify({ username:  currU, board: props});
         
-            fetch('http://localhost:3001/info', { method: 'POST', body: requestData, headers: headers })
+            fetch('http://localhost:3001/joinboard', { method: 'POST', body: requestData, headers: headers })
             .then((res) => res.json())
             .then((res) => {
               
-                navigate("/Discussion", {
-                  
-                    state: {
-                        
-                    }
-                });
+                navigate('/Start', {state: {u: currU}})
             })
             
     
