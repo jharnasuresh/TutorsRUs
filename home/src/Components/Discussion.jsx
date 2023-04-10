@@ -1,24 +1,22 @@
-import React, {useState} from "react"
-
-export const Discussion = ({GlobalState}) => {
-    //const location = useLocation();
-
-    //const { currUser, setCurrUser } = GlobalState;
-   // setCurrUser(location.state.u)
-
-    /*if (currUser === "") {
-        setCurrUser(location.state.u)
-    }*/
-
-    return (
-        
-        <div classNames = "Discussion">
-            <p1>hey dawgs</p1>
-        </div>
-        
-       
-
-    )
-    
+import React, {Component} from 'react';
+import './Discuss.css'
+class Discussion extends Component {
+    render() {
+        return (
+            <div className = "App">
+                <div className = "panel panel-default">
+                    <div className= "panel=body">
+                    Hello I'm a post
+                    </div>
+                </div>
+                <div className = "panel panel-default post-editor">
+                    <div className = "panel-body">
+                        <textarea className = "form-control post-editor-input" />
+                        <button className = "btn btn-sccess post-editor-button">Post</button>
+                    </div>
+                </div>
+            </div>
+        )
+    }
 }
-export default Discussion
+export default Discussion;
