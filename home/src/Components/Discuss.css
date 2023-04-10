@@ -1,0 +1,23 @@
+.App {
+    position: relative;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: initial;
+    color: black;
+    flex-direction: column;
+    background-image: linear-gradient(69deg, #F8C8DC,  #DFD6EA, #89CFF0);
+  
+  }
+.post-editor {
+    float: middle;
+}
+.post-editor-button {
+    float: middle;
+    margin-top: 1em;
+}
+@media(max-width: 900px) {
+    .post-editor {
+        margin: 1em;
+    }
+}

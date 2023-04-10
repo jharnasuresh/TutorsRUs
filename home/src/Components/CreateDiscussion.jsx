@@ -7,6 +7,12 @@ import { Route, useHref, useNavigate, useLocation, Link } from "react-router-dom
 export const CreateDiscussion = ({GlobalState}) => {
     const [name, setName] = useState('');
     const [className, setClassName] = useState('');
+
+    const navigate = useNavigate();
+    const location = useLocation();
+    const { currUser, setCurrUser } = GlobalState;
+    setCurrUser(location.state.u)
+    
     console.log("JHARNA LOOK");
     console.log(name)
     console.log(className);
@@ -31,6 +37,7 @@ export const CreateDiscussion = ({GlobalState}) => {
         return;
         
     }
+
 
     return (
         <div class="App">

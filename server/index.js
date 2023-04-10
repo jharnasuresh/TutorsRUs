@@ -247,6 +247,7 @@ if (!login.empty) {
     }
 
     const r = await db.collection('transcripts').doc(req.body.user).set(info);
+    
     var doc = login.docs[0];
     await doc.ref.update({ tutor: true })
     console.log("2")
@@ -607,6 +608,33 @@ app.post("/searchprofname", async (req, res) => {
 
 
     return res.send(JSON.stringify(users))
+
+
+});
+
+app.post("/searchboards", async (req, res) => {
+
+    /* THIS IS THE ACTIAL CODE, BELOW IS FOR TESTING 
+
+    var course = req.body.data.toLowerCase();
+    console.log('board search for ' + course)
+
+    var list = await db.collection('boards').where('course', '==', course).get();
+    if (list.empty) {
+        return res.send(JSON.stringify("none"))
+    }
+
+    var boards = [];
+    for (var i = 0; i < list.size; i++) {
+        boards.push(list.docs[i].get('name'))
+    }
+
+    return res.send(JSON.stringify(boards))
+    */
+
+    //var b = ['cs180 help', 'cs182 besties']
+    var b = "none"
+    return res.send(JSON.stringify(b))
 
 
 });

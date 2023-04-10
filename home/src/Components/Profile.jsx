@@ -111,7 +111,7 @@ export const Profile = ({ GlobalState }) => {
     <div style={{position: 'absolute', marginLeft: '-1775px', marginTop: '-400px'}}>
       <About user={location.state.u} email={location.state.email} lang={location.state.lang} yours={true} price={location.state.price} tutor={tutor} studentRating={location.state.studentRating} tutorRating={location.state.tutorRating}/>
     </div>
-    <div style={{position: 'absolute', marginLeft: '525px', marginTop: '150px'}}>
+    <div style={{position: 'absolute', marginLeft: '525px', marginTop: '170px'}}>
         <CourseInfo courses={printing} past={false}/>
     </div>
       
