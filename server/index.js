@@ -1147,6 +1147,11 @@ app.post("/createdisc", async (req, res) => {
         name: req.body.name,
         class: req.body.course
     };
+    var list = await db.collection('boards').where('name', '==', req.body.name).get();
+    if (!list.empty) {
+        console.log("here")
+        return res.send(JSON.stringify("error"))
+    }
     const r = await db.collection('boards').doc(req.body.name).set(data);
     console.log("at the end of post");
     return res.send(JSON.stringify({"returnedName": req.body.name, "returnedClass": req.body.course }))
