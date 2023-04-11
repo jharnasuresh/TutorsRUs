@@ -37,7 +37,7 @@ export const Discussion = ({GlobalState}) => {
             {
                 location.state.boards.map((b) => (
                     <div style={{width: '100px', height: '100px', textAlign: 'center', border: 'solid'}}>
-                        <h2>{b}</h2>
+                        <button className="linked" onClick={(e) => {console.log("clicked")}}>{b}</button>
                         
                     </div>
                 )
