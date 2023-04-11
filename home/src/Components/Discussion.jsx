@@ -31,13 +31,49 @@ export const Discussion = ({GlobalState}) => {
 
     console.log(location.state.boards)
 
+    const leaveBoard = (b) => {
+        console.log('leaving')
+        const headers = { "content-type": "application/json" };
+    const requestData = JSON.stringify({ "user":  currUser, board: b});
+        fetch('http://localhost:3001/leaveboard', { method: 'POST', body: requestData, headers: headers })
+    .then((res) => res.json())
+    .then((res) => {
+        //console.log("aaaa? " + res["active"])
+        //console.log("june? " + res["followers"])
+        console.log("r = " + res["studentRating"])
+        navigate("/Profile", {
+        
+            state: {
+                u: res.u,
+                fname: res["fname"],
+                lname: res["lname"], 
+                email: res["email"], 
+                followers: res["followers"],
+                following: res["following"],
+                active: res["active"],
+                lang: res["lang"],
+                profpic: res["profpic"],
+                taking: res["taking"],
+                taken: res["taken"],
+                followers: res["followers"],
+                following: res["following"],
+                tutor: res["tutor"],
+                price: res["price"],
+                studentRating: res["studentRating"],
+                tutorRating: res["tutorRating"]
+            }
+        });
+    })
+    }
+
 
     return (
         <div className = "App">
             {
                 location.state.boards.map((b) => (
-                    <div style={{width: '100px', height: '100px', textAlign: 'center', border: 'solid'}}>
+                    <div style={{width: '150px', height: '150px', textAlign: 'center', border: 'solid'}}>
                         <button className="linked" onClick={(e) => {console.log("clicked")}}>{b}</button>
+                        <button onClick={(e) => {leaveBoard(b)}}>Leave</button>
                         
                     </div>
                 )
