@@ -1137,7 +1137,8 @@ app.post("/getboards", async (req, res) => {
         console.log("sending")
         return res.send(JSON.stringify({boards: list.docs[0].get("boards")}))
     }
-})
+});
+
 
 
 app.post("/createdisc", async (req, res) => {
@@ -1156,6 +1157,24 @@ app.post("/createdisc", async (req, res) => {
     console.log("at the end of post");
     return res.send(JSON.stringify({"returnedName": req.body.name, "returnedClass": req.body.course }))
 });
+
+app.post('/leaveboard', async (req, res) => {
+    console.log("leaving")
+    var list = await db.collection('users').where('username', '==', req.body.user).get();
+    var u = list.docs[0]
+    var boards = u.get('boards')
+    boards.splice(boards.indexOf(req.body.board), 1);
+    await u.ref.update({boards: boards});
+    var list = await db.collection('users').where('username', '==', req.body.user).get();
+    var doc = list.docs[0]
+    var follows = false;
+    if (req.body.currU !== undefined && doc.get("followers").includes(req.body.currU)) {
+        follows = true;
+    }
+    return res.send(JSON.stringify({ "u": req.body.user, "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), "profpic": doc.get("profpic"), "taking": doc.get("taking"), "taken": doc.get("taken"), "tutor": doc.get("tutor"), "price": doc.get("price"), "follows": follows, "studentRating": doc.get("studentRating"), "tutorRating": doc.get("tutorRating"), }))
+
+})
+
 
 function md5(string) {
     return crypto.createHash('md5').update(string).digest('hex');
