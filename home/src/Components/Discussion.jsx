@@ -38,8 +38,6 @@ export const Discussion = ({GlobalState}) => {
         fetch('http://localhost:3001/leaveboard', { method: 'POST', body: requestData, headers: headers })
     .then((res) => res.json())
     .then((res) => {
-        //console.log("aaaa? " + res["active"])
-        //console.log("june? " + res["followers"])
         console.log("r = " + res["studentRating"])
         navigate("/Profile", {
         
@@ -66,13 +64,39 @@ export const Discussion = ({GlobalState}) => {
     })
     }
 
+    const toBoard = (b) => {
+        navigate("/Board", {
+        
+            state: {
+                u: location.state.u,
+            }
+        });
+
+        /*
+        console.log('to board')
+        const headers = { "content-type": "application/json" };
+    const requestData = JSON.stringify({ "user":  currUser, board: b});
+        fetch('http://localhost:3001/visitboard', { method: 'POST', body: requestData, headers: headers })
+    .then((res) => res.json())
+    .then((res) => {
+        console.log("r = " + res["studentRating"])
+        navigate("/Board", {
+        
+            state: {
+                u: res.u,
+            }
+        });
+    })
+    */
+    }
+
 
     return (
         <div className = "App">
             {
                 location.state.boards.map((b) => (
                     <div style={{width: '150px', height: '150px', textAlign: 'center', border: 'solid'}}>
-                        <button className="linked" onClick={(e) => {console.log("clicked")}}>{b}</button>
+                        <button className="linked" onClick={(e) => {toBoard(b)}}>{b}</button>
                         <button onClick={(e) => {leaveBoard(b)}}>Leave</button>
                         
                     </div>
@@ -82,17 +106,7 @@ export const Discussion = ({GlobalState}) => {
                 <div style={{ justifyContent: 'start' }} class = "Discussion">
             <button type="submit" onClick={() => navigate('/CreateDiscussion', {state: {u: currUser}})}>Create New Discussion Board</button>        
         </div>
-                <div className = "panel panel-default">
-                    <div className= "panel=body">
-                    Hello I'm a post
-                    </div>
-                </div>
-                <div className = "panel panel-default post-editor">
-                    <div className = "panel-body">
-                        <textarea className = "form-control post-editor-input" />
-                        <button className = "btn btn-sccess post-editor-button">Post</button>
-                    </div>
-                </div>
+                
             </div>
         )
         
