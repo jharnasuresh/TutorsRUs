@@ -54,8 +54,8 @@ export const Start = ({GlobalState}) => {
 
   const updateExpireTime = () => {
 
-    const expireTime = Date.now() + 10000;
-    const warningTime = Date.now() + 2000;
+    const expireTime = Date.now() + 2000000;
+    const warningTime = Date.now() + 2000000;
     localStorage.setItem("expireTime", expireTime);
     localStorage.setItem("warningTime", warningTime);
   }
