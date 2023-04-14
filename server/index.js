@@ -637,6 +637,9 @@ app.post("/joinboard", async (req, res) => {
     if (!list.empty) {
         var user = list.docs[0]
         var boards = user.get("boards")
+        if (boards.includes(req.body.board)) {
+            return res.send(JSON.stringify(req.body.username))
+        }
         boards.push(req.body.board);
         await user.ref.update({ boards: boards }); 
     }
