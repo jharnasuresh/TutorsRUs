@@ -1,11 +1,11 @@
 
 import React, {Component, useState} from 'react';
-import CreateDiscussion from './CreateDiscussion'
+import Discuss from './Discuss.css'
 import { useLocation, Link, useNavigate } from "react-router-dom";
+import Post from './Post';
+import DisplayBoard from './DisplayBoard';
 
-
-
-export const Board = ({GlobalState}) => {
+export const Board = ({GlobalState, props}) => {
     const navigate = useNavigate();
     const location = useLocation();
     const { currUser, setCurrUser } = GlobalState;
@@ -15,20 +15,7 @@ export const Board = ({GlobalState}) => {
 
 
     return (
-        <div className = "App">
-            
-                <div className = "panel panel-default">
-                    <div className= "panel=body">
-                    Hello I'm a post
-                    </div>
-                </div>
-                <div className = "panel panel-default post-editor">
-                    <div className = "panel-body">
-                        <textarea className = "form-control post-editor-input" />
-                        <button className = "btn btn-sccess post-editor-button">Post</button>
-                    </div>
-                </div>
-            </div>
+        <DisplayBoard />
         )
         
        
