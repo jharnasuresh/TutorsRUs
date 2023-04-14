@@ -20,7 +20,11 @@ export const Help = ({GlobalState}) => {
     return (
 
         
-        <div classNames = "">
+        <div classNames = "App">
+             <div style={{padding: "20px", fontFamily: "Bowlby One", color: "rgb(96, 44, 145)"}}>
+                        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Bowlby+One" />
+                        <h1>Need Help Navigating?</h1>
+            </div>
             <img class="imgHelp" src = "/Images/Help1.png"/>
             <br></br>
             <img class="imgHelp" src = "/Images/Help2.png"/>
