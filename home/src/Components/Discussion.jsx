@@ -3,6 +3,7 @@ import React, {Component, useState} from 'react';
 import './Discuss.css'
 import CreateDiscussion from './CreateDiscussion'
 import { useLocation, Link, useNavigate } from "react-router-dom";
+import { blue } from 'tailwindcss/colors';
 {/*class Discussion extends Component {
     render() {
         return (
@@ -92,14 +93,21 @@ export const Discussion = ({GlobalState}) => {
 
 
     return (
+        
         <div className = "App">
             {
+                
                 location.state.boards.map((b) => (
-                    <div style={{width: '150px', height: '150px', textAlign: 'center', border: 'solid'}}>
+                    <div style={{padding: "20px", fontFamily: "Bowlby One", color: "rgb(96, 44, 145)"}}>
+                        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Bowlby+One" />
+                        <h1>Your Discussion Boards!</h1>
+  
+                    <div style={{width: '600px', height: '100px', textAlign: 'center', border: 'solid', backgroundColor: 'white', color: 'gray', borderRadius: '10px', padding: '5px', marginTop: "20px"}}>
                         <button className="linked" onClick={(e) => {toBoard(b)}}>{b}</button>
                         <button onClick={(e) => {leaveBoard(b)}}>Leave</button>
-                        
                     </div>
+                    </div>
+                    
                 )
                 )
             }
