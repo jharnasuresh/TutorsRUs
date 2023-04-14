@@ -126,7 +126,10 @@ function Search({ GlobalState, placeholder, data }) {
     return (
 
         <div className="App search">
-
+         <div style={{padding: "20px", fontFamily: "Bowlby One", color: "rgb(96, 44, 145)"}}>
+                        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Bowlby+One" />
+                        <h1>Search Page</h1>
+            </div>
             <br></br>
 
             {
