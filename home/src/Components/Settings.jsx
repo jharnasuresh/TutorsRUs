@@ -156,63 +156,77 @@ export const Settings = ({ GlobalState }) => {
 
     return (
         <div className="App">
-            <h2> Edit Profile </h2>
+            <div style={{padding: "20px", fontFamily: "Bowlby One", color: "rgb(96, 44, 145)"}}>
+                        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Bowlby+One" />
+                        <h1>Edit Profile</h1>
+            </div>
             <form className="settings" onSubmit={handleSubmit} style={{alignContent: 'center'}}>
-                <span style={{ padding: '40px' }}>
+                <span style={{ flexDirection: "column", display: "flex", width: "300px", marginLeft: "-300px"}}>
                     <label htmlFor="Fname">First Name: </label>
                     <input value={Fname} onChange={(e) => setFName(e.target.value)} type="Fname" placeholder="Enter Your First Name" id="Fname" name="Fname" />
                 </span>
-                <span style={{ padding: '40px' }}>
+                <span style={{flexDirection: "column", display: "flex", width: "300px", marginLeft: "-300px"}}>
                 <label htmlFor="Lname">Last Name: </label>
                 <input value={Lname} onChange={(e) => setLName(e.target.value)} type="LName" placeholder="Enter Your Last Name" id="LName" name="LName" />
                 </span>
+                <span style={{flexDirection: "column", display: "flex", width: "300px", marginLeft: "-300px"}}>
                 <label htmlFor="username">Username: </label>
                 <input value={username} onChange={(e) => setUsername(e.target.value)} type="username" placeholder="Username" id="username" name="username" />
-                <br></br>
-
-                <span style={{ padding: '40px' }}>
+                </span>
+                <span style={{flexDirection: "column", display: "flex", width: "300px", marginLeft: "-300px"}}>
                 <label htmlFor="password">Password: </label>
                 <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Password" id="password" name="password" />
                 </span>
-                <span style={{ padding: '40px' }}>
+                <span style={{flexDirection: "column", display: "flex", width: "300px", marginLeft: "-300px"}}>
                 <label htmlFor="lang">Language: </label>
                 <input value={lang} onChange={(e) => setLang(e.target.value)} type="lang" placeholder="Enter Your Primary Language" id="lang" name="lang" />
                 </span>
                 {
-                    location.state.tutor ? <><span style={{ padding: '40px' }}><label htmlFor="price">Price: </label>
+                    location.state.tutor ? <><span style={{flexDirection: "column", display: "flex", width: "300px", marginLeft: "-300px"}}><label htmlFor="price">Price: </label>
                     <input value={price} onChange={(e) => setPrice(e.target.value)} type="price" placeholder="Enter Your Hourly Price" id="price" name="price" />
                     </span></>: <span></span>
                 }
 
-            
+                <span style={{flexDirection: "column", display: "flex", width: "300px", marginLeft: "-300px"}}>
                 <button type="submit" className="setting-sub" onSubmit={handleSubmit}>Submit Changes</button>
+                </span>
             </form>
-
+            <span style={{flexDirection: "column", display: "flex", marginLeft: "300px", marginTop: "-560px", paddingLeft: "100px"}}>
             <button type="submit" onClick={() => navigate('/EditCourse', {state: {u: currUser, taking: location.state.taking, tutor: location.state.tutor}})}>Edit Current Courses</button>
+            </span>
                 {
-                    location.state.tutor ? <><button type="submit" onClick={() => navigate('/EditCourseTutor', {state: {u: currUser, taken: location.state.taken, tutor: location.state.tutor}})}>Edit Past Courses</button>
-                    </> : <span></span>
+        
+                    location.state.tutor ? <><span style={{flexDirection: "column", display: "flex", marginLeft: "300px", paddingLeft: "100px"}}><button type="submit" onClick={() => navigate('/EditCourseTutor', {state: {u: currUser, taken: location.state.taken, tutor: location.state.tutor}})}>Edit Past Courses</button>
+                    </span></>: <span></span>
                 }
-
-            <button type="submit" onClick={backToProfile}>Back to profile</button>
+        
             {
                 location.state.tutor ? 
-                <button type="submit" onClick={handleDelTranscript}>Delete Transcript</button> 
-                : <button type="submit" onClick={() => navigate('/Transcript', {state: {u: currUser}})}>Get Verified</button> 
+                <span style={{flexDirection: "column", display: "flex", marginLeft: "300px", paddingLeft: "100px"}}><button type="submit" onClick={handleDelTranscript}>Delete Transcript</button> </span>
+                :  <span style={{flexDirection: "column", display: "flex", marginLeft: "300px", paddingLeft: "100px"}}><button type="submit" onClick={() => navigate('/Transcript', {state: {u: currUser}})}>Get Verified</button> </span>
             }
+            <span style={{flexDirection: "column", display: "flex", marginLeft: "300px", paddingLeft: "100px"}}>
              <button type="submit" onClick={() => navigate('/UploadProfile', {state: {u: currUser, profpic: location.state.profpic}})}>Upload Profile Picture</button> 
-             
+             </span>
             {
                 hasPFP ? 
-                <button type="submit" onClick={() => navigate('/EditPFP', {state: {u: currUser, profpic: location.state.profpic}})}>Edit Profile Picture</button>  
-                : <span></span>
+                <><span style={{flexDirection: "column", display: "flex", marginLeft: "300px", paddingLeft: "100px"}}><button type="submit" onClick={() => navigate('/EditPFP', {state: {u: currUser, profpic: location.state.profpic}})}>Edit Profile Picture</button>  
+                </span></>: <span></span>
         } 
              
             <div>
+            <span style={{flexDirection: "column", display: "flex", marginLeft: "300px", paddingLeft: "100px"}}>
+            <button type="submit" onClick={backToProfile}>Back to profile</button>
+            </span>
+            <span style={{flexDirection: "column", display: "flex", width: "250px", marginLeft: "50px", marginTop: "80px"}}>
                 <button className='submit' onClick={() => setButtonPopup(true)}>Delete Account</button>
                 <Popup trigger={buttonPopup} setTrigger={setButtonPopup} user={location.state.u} del="acct">Are you sure you want to delete your account?</Popup>
+            </span>
             </div>
+            <span style={{flexDirection: "column", display: "flex", marginLeft: "300px", marginTop: "-81px"}}>
             <button className='submit' onClick={handleDeactivate}>{aButton} Account</button>
+            </span>
+            
         </div>
     );
 }
