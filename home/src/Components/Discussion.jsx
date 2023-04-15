@@ -66,12 +66,23 @@ export const Discussion = ({GlobalState}) => {
     }
 
     const toBoard = (b) => {
+        console.log('to board')
+        const headers = { "content-type": "application/json" };
+    const requestData = JSON.stringify({ "user":  currUser, board: b});
+        fetch('http://localhost:3001/getposts', { method: 'POST', body: requestData, headers: headers })
+    .then((res) => res.json())
+    .then((res) => {
+        //console.log("r = " + res["studentRating"])
         navigate("/Board", {
         
             state: {
-                u: location.state.u,
+                u: currUser,
+                posts: res.posts, 
+                board: b
             }
         });
+    })
+        
 
         /*
         console.log('to board')

@@ -646,6 +646,37 @@ app.post("/joinboard", async (req, res) => {
     return res.send(JSON.stringify(req.body.username))
 })
 
+app.post('/getposts', async (req, res) => {
+    console.log("getting")
+    var d = await db.collection('posts').where('board', '==', req.body.board).get();
+    var posts = [];
+    console.log(d.docs.length)
+    for (var i = 0; i < d.docs.length; i++) {
+        var data = [d.docs[i].get('text'), d.docs[i].get('user')]
+        posts.push(data);
+    }
+    return res.send(JSON.stringify({posts: posts}))
+})
+
+app.post('/addpost', async (req, res) => {
+    var data = {
+        board: req.body.board,
+        text: req.body.text,
+        user: req.body.user
+    };
+    const r = await db.collection('posts').doc().set(data);
+    console.log("getting")
+    var d = await db.collection('posts').where('board', '==', req.body.board).get();
+    var posts = [];
+    console.log(d.docs.length)
+    for (var i = 0; i < d.docs.length; i++) {
+        var data = [d.docs[i].get('text'), d.docs[i].get('user')]
+        posts.push(data);
+    }
+    return res.send(JSON.stringify({posts: posts}))
+
+})
+
 app.post("/info", async (req, res) => {
     console.log("iii " + req.body["username"] + " otehr " + req.body.currU)
     const login = await db.collection('users').where('username', '==', req.body["username"]).get();
