@@ -132,7 +132,8 @@ app.post('/signup', async (req, res) => {
         tutor: false,
         price: 0,
         studentRating: 0,
-        tutorRating: 0
+        tutorRating: 0,
+        boards: []
     })
         .then(function (userRecord) {
             console.log("Successfully created new user:", userRecord.uid);
@@ -164,7 +165,8 @@ app.post('/signup', async (req, res) => {
                 takingProfs: [],
                 price: 0,
                 studentRating: 0,
-                tutorRating: 0
+                tutorRating: 0,
+                boards: []
             };
 
             var setDoc = db.collection('users').add(data);
