@@ -41,18 +41,22 @@ export const Board = ({GlobalState}) => {
     return (
         
         <div className = "App">
-
-{
+             <div style={{padding: "20px", fontFamily: "Bowlby One", color: "rgb(96, 44, 145)"}}>
+                        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Bowlby+One" />
+                        <h1>{location.state.board} Board</h1>
+            </div>
+            {
     
-    location.state.posts.map((post) => (
-       
+            location.state.posts.map((post) => (
+            
 
-        <div style={{width: '600px', height: '100px', textAlign: 'center', border: 'solid', backgroundColor: 'white', color: 'gray', borderRadius: '10px', padding: '5px', marginTop: "20px"}}>
-            <p>{post[0]} - {post[1]}</p>
-        </div>
-       
-        
-    )
+                <div style={{width: '600px', height: '100px', textAlign: 'center', border: 'solid', backgroundColor: 'white', color: 'gray', borderRadius: '10px', padding: '5px', marginTop: "20px"}}>
+                    <p>{post[0]} - {post[1]}</p>
+
+                </div>
+            
+                
+            )
     )
 }
              
