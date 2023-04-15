@@ -637,10 +637,44 @@ app.post("/joinboard", async (req, res) => {
     if (!list.empty) {
         var user = list.docs[0]
         var boards = user.get("boards")
+        if (boards.includes(req.body.board)) {
+            return res.send(JSON.stringify(req.body.username))
+        }
         boards.push(req.body.board);
         await user.ref.update({ boards: boards }); 
     }
     return res.send(JSON.stringify(req.body.username))
+})
+
+app.post('/getposts', async (req, res) => {
+    console.log("getting")
+    var d = await db.collection('posts').where('board', '==', req.body.board).get();
+    var posts = [];
+    console.log(d.docs.length)
+    for (var i = 0; i < d.docs.length; i++) {
+        var data = [d.docs[i].get('text'), d.docs[i].get('user')]
+        posts.push(data);
+    }
+    return res.send(JSON.stringify({posts: posts}))
+})
+
+app.post('/addpost', async (req, res) => {
+    var data = {
+        board: req.body.board,
+        text: req.body.text,
+        user: req.body.user
+    };
+    const r = await db.collection('posts').doc().set(data);
+    console.log("getting")
+    var d = await db.collection('posts').where('board', '==', req.body.board).get();
+    var posts = [];
+    console.log(d.docs.length)
+    for (var i = 0; i < d.docs.length; i++) {
+        var data = [d.docs[i].get('text'), d.docs[i].get('user')]
+        posts.push(data);
+    }
+    return res.send(JSON.stringify({posts: posts}))
+
 })
 
 app.post("/info", async (req, res) => {

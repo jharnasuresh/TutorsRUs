@@ -108,15 +108,15 @@ export const Profile = ({ GlobalState }) => {
     <div style={{position: 'absolute', marginLeft: '-700px', marginTop: '100px'}}>
       <Avatar src={location.state.profpic} sx={{ width: 300, height: 300 }} />
     </div>
-    <div style={{position: 'absolute', marginLeft: '-1775px', marginTop: '-400px'}}>
+    <div style={{position: 'absolute', marginLeft: '-1775px', marginTop: '200px'}}>
       <About user={location.state.u} email={location.state.email} lang={location.state.lang} yours={true} price={location.state.price} tutor={tutor} studentRating={location.state.studentRating} tutorRating={location.state.tutorRating}/>
     </div>
-    <div style={{position: 'absolute', marginLeft: '525px', marginTop: '170px'}}>
+    <div style={{position: 'absolute', marginLeft: '525px', marginTop: '420px'}}>
         <CourseInfo courses={printing} past={false}/>
     </div>
       
       {
-        (tutor) ? <div style={{position: 'absolute', marginLeft: '525px', marginTop: '500px'}}><CourseInfo courses={printingTaken} past={true}/></div> : <span></span>
+        (tutor) ? <div style={{position: 'absolute', marginLeft: '525px', marginTop: '600px'}}><CourseInfo courses={printingTaken} past={true}/></div> : <span></span>
       }
       <div className='ur-profile-btn'>
 

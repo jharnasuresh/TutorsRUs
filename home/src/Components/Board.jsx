@@ -1,21 +1,68 @@
 
 import React, {Component, useState} from 'react';
-import Discuss from './Discuss.css'
+import './Discuss.css'
+import CreateDiscussion from './CreateDiscussion'
 import { useLocation, Link, useNavigate } from "react-router-dom";
-import Post from './Post';
-import DisplayBoard from './DisplayBoard';
+//import { blue } from 'tailwindcss/colors';
 
-export const Board = ({GlobalState, props}) => {
+
+
+export const Board = ({GlobalState}) => {
     const navigate = useNavigate();
     const location = useLocation();
     const { currUser, setCurrUser } = GlobalState;
-    setCurrUser(location.state.u)
+    console.log(location.state.posts)
+    const [text, setText] = useState('')
+    //setCurrUser(location.state.u)
 
     //console.log(location.state.boards)
 
+    
+    const addPost = () => {
+        console.log('leaving ' + text + " " + location.state.b)
+        const headers = { "content-type": "application/json" };
+    const requestData = JSON.stringify({ "user":  currUser, board: location.state.board, text: text, user: currUser});
+        fetch('http://localhost:3001/addpost', { method: 'POST', body: requestData, headers: headers })
+    .then((res) => res.json())
+    .then((res) => {
+        console.log("r = " + res["studentRating"])
+        navigate("/Board", {
+        
+            state: {
+                u: currUser,
+                posts: res.posts, 
+                board: location.state.board
+            }
+        });
+    })
+    }
+
 
     return (
-        <DisplayBoard />
+        
+        <div className = "App">
+
+{
+    
+    location.state.posts.map((post) => (
+       
+
+        <div style={{width: '600px', height: '100px', textAlign: 'center', border: 'solid', backgroundColor: 'white', color: 'gray', borderRadius: '10px', padding: '5px', marginTop: "20px"}}>
+            <p>{post[0]} - {post[1]}</p>
+        </div>
+       
+        
+    )
+    )
+}
+             
+                
+
+                <div>
+                <input value={text} onChange={(e) => setText(e.target.value)} type="text" placeholder="Type here..." id="text" name="text" />
+                    <button onClick={addPost}>Post</button>
+                </div>
+            </div>
         )
         
        
