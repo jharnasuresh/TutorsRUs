@@ -654,7 +654,7 @@ app.post('/getposts', async (req, res) => {
     var posts = [];
     console.log(d.docs.length)
     for (var i = 0; i < d.docs.length; i++) {
-        var data = [d.docs[i].get('text'), d.docs[i].get('user')]
+        var data = [d.docs[i].get('text'), d.docs[i].get('user'), d.docs[i].get('link')]
         posts.push(data);
     }
     return res.send(JSON.stringify({posts: posts}))
@@ -664,7 +664,8 @@ app.post('/addpost', async (req, res) => {
     var data = {
         board: req.body.board,
         text: req.body.text,
-        user: req.body.user
+        user: req.body.user,
+        link: req.body.link
     };
     const r = await db.collection('posts').doc().set(data);
     console.log("getting")
@@ -672,7 +673,7 @@ app.post('/addpost', async (req, res) => {
     var posts = [];
     console.log(d.docs.length)
     for (var i = 0; i < d.docs.length; i++) {
-        var data = [d.docs[i].get('text'), d.docs[i].get('user')]
+        var data = [d.docs[i].get('text'), d.docs[i].get('user'), d.docs[i].get('link')]
         posts.push(data);
     }
     return res.send(JSON.stringify({posts: posts}))

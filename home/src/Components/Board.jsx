@@ -23,7 +23,7 @@ export const Board = ({ GlobalState }) => {
     const addPost = () => {
         console.log('leaving ' + text + " " + location.state.b)
         const headers = { "content-type": "application/json" };
-        const requestData = JSON.stringify({ "user": currUser, board: location.state.board, text: text, user: currUser });
+        const requestData = JSON.stringify({ "user": currUser, board: location.state.board, text: text, user: currUser, link: link });
         fetch('http://localhost:3001/addpost', { method: 'POST', body: requestData, headers: headers })
             .then((res) => res.json())
             .then((res) => {
@@ -56,7 +56,17 @@ export const Board = ({ GlobalState }) => {
             {
     
                 location.state.posts.map((post) => (
-                        <p>{post[0]} - {post[1]}</p>
+                    <>
+                    <div style={{border: 'solid'}}>
+                        <br/>
+                    {
+                        post[2] ? <a href={post[0]}>{post[0]}</a> : <p>{post[0]}</p>
+                    }
+                        <p>Posted by {post[1]}</p>
+                        <br/>
+                        </div>
+                        <br/>
+                        </>
 
                     
                 
@@ -70,9 +80,16 @@ export const Board = ({ GlobalState }) => {
                         <h1>{location.state.board} Board</h1>
 
             </div>
+            <br/>
+            {
+                link && <p>Paste your link below!</p>
+            }
                 <div>
-                <input value={text} onChange={(e) => setText(e.target.value)} type="text" placeholder="Type here..." id="text" name="text" />
-                    <button onClick={addPost}>Post</button>
+                <input style={{width: '400px'}} value={text} onChange={(e) => setText(e.target.value)} type="text" placeholder="Type here..." id="text" name="text" />
+                <button onClick={addPost}>Post</button>
+                <br/>
+                <button onClick={() => {setLink(!link)}}>Upload Link</button>
+                <button>Upload PDF</button>
                 </div>
             </div>
         )
