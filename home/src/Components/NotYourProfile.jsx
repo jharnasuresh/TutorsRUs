@@ -150,11 +150,18 @@ export const NotYourProfile = ({GlobalState}) => {
         
       tut === 'tut' && 
       <div style = {{height: '300px'}}>
-        <h2>Scehdule with Tutor:</h2>
+        <h2>Schedule with Tutor:</h2>
         <div className="inline-widget">
 
           <InlineWidget url={urlTut} />
         </div>
+        <h2>Pay your Tutor!</h2>
+        <a> 
+          Venmo: 
+        </a>
+        <a>
+          
+        </a>
         </div>
 }
 
