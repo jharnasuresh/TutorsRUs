@@ -41,11 +41,15 @@ export const Transcript = ({GlobalState}) => {
         // TODO
         console.log("here!!!")
       }
-
+    
+    
 
 return (
     <div className="App">
         <h1 style={{width: '1000px'}}>*After uploading your transcript and becoming a tutor, you must create a Calendly account using the same username as your TutorsRUs account!</h1>
+        <h2> In order to receive payment you must go to the settings page to update your preferences</h2>
+
+
         <br/>
         <DragDrop user={currUser}/>
     
