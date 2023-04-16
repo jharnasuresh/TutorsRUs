@@ -25,6 +25,35 @@ export const Board = ({ GlobalState }) => {
 
     //console.log(location.state.boards)
 
+    const upVotePost = () => {
+        const headers = { "content-type": "application/json" };
+        const requestData = JSON.stringify({ user: currUser, post: lookAtPost})
+        fetch('http://localhost:3001/upvotepost', { method: 'POST', body: requestData, headers: headers })
+        .then((res) => res.json())
+        .then((res) => {
+            console.log("checked " + res);
+        })
+    }
+    
+    const downVotePost = () => {
+        const headers = { "content-type": "application/json" };
+        const requestData = JSON.stringify({ user: currUser, post: lookAtPost})
+        fetch('http://localhost:3001/downvotepost', { method: 'POST', body: requestData, headers: headers })
+        .then((res) => res.json())
+        .then((res) => {
+            console.log("checked " + res);
+        })
+    }
+
+    const reportPost = () => {
+        /*const headers = { "content-type": "application/json" };
+        const requestData = JSON.stringify({ user: u, post: lookAtPost})
+        fetch('http://localhost:3001/reportpost', { method: 'POST', body: requestData, headers: headers })
+        .then((res) => res.json())
+        .then((res) => {
+            console.log("checked " + res);
+        })*/
+    }
 
     const addPost = () => {
         console.log('leaving ' + text + " " + location.state.b)
@@ -194,14 +223,14 @@ export const Board = ({ GlobalState }) => {
                         <nav>
                         <li>
 
-                            <a href="./Help" onClick={() => navigate('/Help', {state: {u: currUser}})}><i class="fa-solid fa-thumbs-up"></i></a>
+                            <a href="" onClick={upVotePost}><i class="fa-solid fa-thumbs-up"></i></a>
                         </li>
                         <li>
 
-                        <a href="./Help" onClick={() => navigate('/Help', {state: {u: currUser}})}><i class="fa-solid fa-thumbs-down"></i></a>
+                        <a href="" onClick={downVotePost}><i class="fa-solid fa-thumbs-down"></i></a>
                         </li>
                         <li>
-                            <a href="./Help" onClick={() => navigate('/Help', {state: {u: currUser}})}><i class="fa-solid fa-warning"></i></a>
+                            <a href="./Help" onClick={reportPost}><i class="fa-solid fa-warning"></i></a>
                         </li>
                         </nav>
                 </div>
