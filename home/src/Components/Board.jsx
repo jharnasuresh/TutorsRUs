@@ -20,6 +20,7 @@ export const Board = ({ GlobalState }) => {
     const [validU, setValidU] = useState(false)
     const words = ['oreo'];
     const [wordErr, setWordErr] = useState(false)
+    const [lookAtPost, setLookAtPost] = useState(location.state.posts[0]);
     setCurrUser(location.state.u)
 
     //console.log(location.state.boards)
@@ -147,7 +148,9 @@ export const Board = ({ GlobalState }) => {
                         <div style={{padding: "10px", fontFamily: "Bowlby One", color: "rgb(96, 44, 145)", size: '2'}}>
                             <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Bowlby+One" />
                             <h1>Older Posts</h1>
+
                         </div>
+                        
             {
     
                 location.state.posts.map((post) => (
@@ -158,11 +161,11 @@ export const Board = ({ GlobalState }) => {
                     <div style={{border: 'solid'}}>
                         <br/>
                     {
-                        post[2] ? <a href={post[0]}>{post[0]}</a> : tagIfNeeded(post[0])
+                        <button className="link-btn" style={{textAlign: 'left'}} onClick={(e) => setLookAtPost(post)} > {post[0]}</button> 
                     }
                     {
                         post[3] === 'true' ? <p>Posted by Anonymous</p> : <p>Posted by {post[1]}</p>
-                    }
+                    } 
                         
                         <br/>
                         </div>
@@ -173,12 +176,36 @@ export const Board = ({ GlobalState }) => {
                 
                     
                 ))
+                
+                
             }
              </div>
             
-             <div style={{width: '800px', height: '600px', textAlign: 'left', border: 'solid', backgroundColor: 'white', color: 'black', borderRadius: '10px', padding: '5px', marginTop: "-600px", marginLeft: "500px" }}>
-             <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Bowlby+One" />
-                        <h1>{location.state.board} Board</h1>
+             <div style={{width: '800px', height: '600px', textAlign: 'left', border: 'solid', backgroundColor: 'white', color: 'black', borderRadius: '10px', padding: '5px', marginTop: "-600px", marginLeft: "500px", textAlign:'left' }}>
+             
+             <div style={{border: 'solid'}}>
+                <div style={{padding: "10px", fontFamily: "Bowlby One", color: "rgb(96, 44, 145)", size: '2', textAlign: 'left'}}>
+                    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Bowlby+One" />
+                       
+                        <h1>{lookAtPost[0]}</h1>
+                        {
+                            lookAtPost[3] === 'true' ? <p>Posted by: Anonymous</p> : <p>Posted by: {lookAtPost[1]}</p>
+                        }
+                </div>
+            </div>
+
+            <div style={{border: 'solid'}}>
+            <div style={{padding: "10px", fontFamily: "Georgia", color: "rgb(96, 44, 145)", size: '0', textAlign: 'left', fontSize: '8px', textAlignLast: 'left'}}>
+                    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Bowlby+One" />
+                       
+                <h1> Compose a Reply: </h1>
+                <input style={{width: '400px'}} value={text} onChange={(e) => setText(e.target.value)} type="text" placeholder="Type here..." id="text" name="text" />
+                <button onClick={addPost}>Post</button>
+
+                </div>
+            </div>
+
+        
 
             </div>
             <br/>
@@ -195,6 +222,7 @@ export const Board = ({ GlobalState }) => {
                 validU && <p>That account does not exist</p>
             }
                 <div>
+                    
                 <input style={{width: '400px'}} value={text} onChange={(e) => setText(e.target.value)} type="text" placeholder="Type here..." id="text" name="text" />
                 <button onClick={addPost}>Post</button>
                 <br/>
