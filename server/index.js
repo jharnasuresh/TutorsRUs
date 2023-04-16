@@ -200,6 +200,60 @@ app.post('/signup', async (req, res) => {
 
 });
 
+app.post("/upvotepost", async(req,res) => {
+    const postData = await db.collection('posts').where('text', '==', req.body.post[0]).get();
+    console.log("no problem here!")
+    var postDataDoc = postData.docs[0];
+    var upvotes= postDataDoc.get("upvotes")
+
+
+
+    console.log("the current user is " + req.body.user)
+    if (upvotes.includes(req.body.user)) {
+        console.log("we already liked");
+    }
+    else {
+        console.log("we are linking right now")
+        upvotes.push(req.body.user);
+    }
+
+
+    await postDataDoc.ref.update({ upvotes: upvotes });
+
+    const upCurr = await db.collection('posts').where('text', '==', req.body.post[0]).get();
+    postDataDoc = upCurr.docs[0];
+    return res.send(JSON.stringify({user: req.body.user})) // idk if this is the right price
+
+
+});
+
+
+app.post("/downvotepost", async(req,res) => {
+    const postData = await db.collection('posts').where('text', '==', req.body.post[0]).get();
+    console.log("no problem here!")
+    var postDataDoc = postData.docs[0];
+    var downvotes= postDataDoc.get("downvotes")
+
+
+
+    console.log("the current user is " + req.body.user)
+    if (downvotes.includes(req.body.user)) {
+        console.log("we already liked");
+    }
+    else {
+        console.log("we are linking right now")
+        downvotes.push(req.body.user);
+    }
+
+
+    await postDataDoc.ref.update({ downvotes: downvotes });
+
+    const upCurr = await db.collection('posts').where('text', '==', req.body.post[0]).get();
+    postDataDoc = upCurr.docs[0];
+    return res.send(JSON.stringify({user: req.body.user})) // idk if this is the right price
+
+
+});
 
 app.post("/verify", async (req, res) => {
     console.log("jharna im in verify post function in index.js")
@@ -666,7 +720,9 @@ app.post('/addpost', async (req, res) => {
         text: req.body.text,
         user: req.body.user,
         link: req.body.link,
-        anon: req.body.anon
+        anon: req.body.anon,
+        upvotes: [],
+        downvotes: []
     };
     const r = await db.collection('posts').doc().set(data);
     console.log("getting")
