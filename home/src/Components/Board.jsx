@@ -140,11 +140,11 @@ export const Board = ({ GlobalState }) => {
 
         
         <div className = "App">
-             <div style={{padding: "20px", fontFamily: "Bowlby One", color: "rgb(96, 44, 145)", marginTop: "-300px"}}>
+             <div style={{padding: "20px", fontFamily: "Bowlby One", color: "rgb(96, 44, 145)", marginTop: "50px"}}>
                         <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Bowlby+One" />
                         <h1>{location.state.board} Board</h1>
             </div>
-            <div style={{width: '400px', height: '600px', textAlign: 'left', border: 'solid', backgroundColor: 'white', color: 'black', borderRadius: '10px', padding: '5px', marginTop: "20px", marginLeft: "-900px" }}>
+            <div style={{width: '400px', height: '1000px', textAlign: 'left', border: 'solid', backgroundColor: 'white', color: 'black', borderRadius: '10px', padding: '5px', marginTop: "50px", marginLeft: "-900px" }}>
                         <div style={{padding: "10px", fontFamily: "Bowlby One", color: "rgb(96, 44, 145)", size: '2'}}>
                             <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Bowlby+One" />
                             <h1>Older Posts</h1>
@@ -158,7 +158,7 @@ export const Board = ({ GlobalState }) => {
                     {
                         console.log(post[3])
                     }
-                    <div style={{border: 'solid'}}>
+                    <div style={{border: 'solid', backgroundColor: "#F8C8DC"}}>
                         <br/>
                     {
                         <button className="link-btn" style={{textAlign: 'left'}} onClick={(e) => setLookAtPost(post)} > {post[0]}</button> 
@@ -181,9 +181,9 @@ export const Board = ({ GlobalState }) => {
             }
              </div>
             
-             <div style={{width: '800px', height: '600px', textAlign: 'left', border: 'solid', backgroundColor: 'white', color: 'black', borderRadius: '10px', padding: '5px', marginTop: "-600px", marginLeft: "500px", textAlign:'left' }}>
+             <div style={{width: '800px', height: '1000px', textAlign: 'left', border: 'solid', backgroundColor: 'white', color: 'black', borderRadius: '10px', padding: '5px', marginTop: "-1000px", marginLeft: "500px", textAlign:'left' }}>
              
-             <div style={{border: 'solid'}}>
+             <div style={{border: 'solid', backgroundColor: "#F8C8DC"}}>
                 <div style={{padding: "10px", fontFamily: "Bowlby One", color: "rgb(96, 44, 145)", size: '2', textAlign: 'left'}}>
                     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Bowlby+One" />
                        
@@ -191,6 +191,19 @@ export const Board = ({ GlobalState }) => {
                         {
                             lookAtPost[3] === 'true' ? <p>Posted by: Anonymous</p> : <p>Posted by: {lookAtPost[1]}</p>
                         }
+                        <nav>
+                        <li>
+
+                            <a href="./Help" onClick={() => navigate('/Help', {state: {u: currUser}})}><i class="fa-solid fa-thumbs-up"></i></a>
+                        </li>
+                        <li>
+
+                        <a href="./Help" onClick={() => navigate('/Help', {state: {u: currUser}})}><i class="fa-solid fa-thumbs-down"></i></a>
+                        </li>
+                        <li>
+                            <a href="./Help" onClick={() => navigate('/Help', {state: {u: currUser}})}><i class="fa-solid fa-warning"></i></a>
+                        </li>
+                        </nav>
                 </div>
             </div>
 
