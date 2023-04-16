@@ -16,6 +16,7 @@ export const Settings = ({ GlobalState }) => {
     const [buttonPopup, setButtonPopup] = useState(false);
     const [active, setActive] = useState(location.state.active);
     const [price, setPrice] = useState('');
+    const [venmo, setVenmo] = useState('');
     var aButton = (active) ? "Deactivate" : "Activate";
     var hasPFP = true;
     const { currUser, setCurrUser } = GlobalState;
@@ -39,7 +40,7 @@ export const Settings = ({ GlobalState }) => {
         console.log("hi " + Fname)
 
         const headers = { "content-type": "application/json" };
-        const requestData = JSON.stringify({ "oldU": location.state.u, "fname": Fname, "lname": Lname, "user": username, "email": email, "pass": password, "lang": lang, "price": price });
+        const requestData = JSON.stringify({ "oldU": location.state.u, "fname": Fname, "lname": Lname, "user": username, "email": email, "pass": password, "lang": lang, "price": price, "venmo": venmo });
 
         fetch('http://localhost:3001/update', { method: 'POST', body: requestData, headers: headers })
             .then((res) => res.json())
@@ -63,7 +64,8 @@ export const Settings = ({ GlobalState }) => {
                         price: res["price"],
                         taken: res["taken"],
                         studentRating: res["stuestudentRatingntRating"],
-                        tutorRating: res["tutorRating"]
+                        tutorRating: res["tutorRating"],
+                        venmo: res["venmo"]
                     }
                 });
             })
@@ -115,7 +117,8 @@ export const Settings = ({ GlobalState }) => {
                         price: res["price"],
                         taken: res["taken"],
                         studentRating: res["studentRating"],
-                        tutorRating: res["tutorRating"]
+                        tutorRating: res["tutorRating"],
+                        venmo: res["venmo"]
                     }
                 });
             })
@@ -147,7 +150,8 @@ export const Settings = ({ GlobalState }) => {
                         price: res["price"],
                         taken: res["taken"],
                         studentRating: res["studentRating"],
-                        tutorRating: res["tutorRating"]
+                        tutorRating: res["tutorRating"],
+                        venmo: res["venmo"]
                     }
                 });
             })
@@ -184,6 +188,13 @@ export const Settings = ({ GlobalState }) => {
                 {
                     location.state.tutor ? <><span style={{flexDirection: "column", display: "flex", width: "300px", marginLeft: "-300px"}}><label htmlFor="price">Price: </label>
                     <input value={price} onChange={(e) => setPrice(e.target.value)} type="price" placeholder="Enter Your Hourly Price" id="price" name="price" />
+                    
+                    </span><br></br></>: <span></span>
+                }
+                {
+                    location.state.tutor ? <><span style={{flexDirection: "column", display: "flex", width: "300px", marginLeft: "-300px"}}><label htmlFor="venmo">Venmo: </label>
+                    <input value={venmo} onChange={(e) => setVenmo(e.target.value)} type="venmo" placeholder="Enter Your Venmo" id="venmo" name="venmo" />
+                    
                     </span></>: <span></span>
                 }
                 
