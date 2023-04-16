@@ -654,7 +654,7 @@ app.post('/getposts', async (req, res) => {
     var posts = [];
     console.log(d.docs.length)
     for (var i = 0; i < d.docs.length; i++) {
-        var data = [d.docs[i].get('text'), d.docs[i].get('user'), d.docs[i].get('link')]
+        var data = [d.docs[i].get('text'), d.docs[i].get('user'), d.docs[i].get('link'), d.docs[i].get('anon')]
         posts.push(data);
     }
     return res.send(JSON.stringify({posts: posts}))
@@ -665,7 +665,8 @@ app.post('/addpost', async (req, res) => {
         board: req.body.board,
         text: req.body.text,
         user: req.body.user,
-        link: req.body.link
+        link: req.body.link,
+        anon: req.body.anon
     };
     const r = await db.collection('posts').doc().set(data);
     console.log("getting")
@@ -673,10 +674,32 @@ app.post('/addpost', async (req, res) => {
     var posts = [];
     console.log(d.docs.length)
     for (var i = 0; i < d.docs.length; i++) {
-        var data = [d.docs[i].get('text'), d.docs[i].get('user'), d.docs[i].get('link')]
+        var data = [d.docs[i].get('text'), d.docs[i].get('user'), d.docs[i].get('link'), d.docs[i].get('anon')]
         posts.push(data);
     }
     return res.send(JSON.stringify({posts: posts}))
+
+})
+
+app.post('/uploadpdfboard', upload.single("file"), async (req, res) => {
+    console.log("upload pdf board")
+    const {
+        file,
+        body: { user, board, link }
+    } = req;
+    var data = {
+        board: req.body.board,
+        user: req.body.user,
+        link: req.body.link,
+        text: file
+    };
+
+    const r = await db.collection('posts').doc().set(data);
+    
+    var doc = login.docs[0];
+    await doc.ref.update({ tutor: true })
+    console.log("2")
+    return res.send(JSON.stringify({ "studentRating": doc.get("studentRating"), "tutorRating": doc.get("tutorRating"), "u": doc.get("username"), "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), taking: doc.get("taking"), tutor: doc.get("tutor"), price: doc.get("price"), taken: doc.get("taken") }))
 
 })
 
