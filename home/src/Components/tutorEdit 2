@@ -1,0 +1,35 @@
+import React, { useState } from "react"
+import { useHref, useNavigate, useLocation } from "react-router-dom";
+import { Start } from "./Components/Start";
+
+
+
+export const tutorEdit = ({GlobalState}) => {
+    
+    return (
+        <div className="App EditCourse">
+            <h1> Edit Courses </h1>
+            <section id="container-editcourse" className="container-editcourse">
+                <label for="title:">Class Title: </label>
+                <input value={title} onChange={(e) => setTitle(e.target.value)} type="title" placeholder="Enter Course Title" id="title" name="title" />
+                <br></br>
+                <label for="title:">Class Professor: </label>
+                <input value={professor} onChange={(e) => setProfessor(e.target.value)} type="professor" placeholder="Enter Course Professor" id="professor" name="professor" />
+                <br></br>
+                <label for="title:">Class Semester: </label>
+                <input value={semester} onChange={(e) => setSemester(e.target.value)} type="semester" placeholder="Enter Course Semester" id="semester" name="semester" />
+                <br></br>
+            </section>
+            <button type="submit" className="editcourse-add" onClick={handleAdd}>Add Course</button>
+            <button type="submit" className="editcourse-delete" onClick={handleDelete}>Delete Course</button>
+
+            <h1 className="currenth1">Current Courses</h1>
+            <section id="container-currentcourse" className="container-currentcourse">
+                {
+                    Object.entries(location.state.taking).length === 0 ? "" : <p>{printing}</p>
+                }
+                
+            </section>
+            </div>
+    )
+}

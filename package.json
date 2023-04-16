@@ -39,6 +39,7 @@
     "@mui/material": "^5.11.13",
     "@mui/styled-engine-sc": "^5.11.11",
     "@react-pdf-viewer/core": "^2.4.1",
+    "@stripe/stripe-js": "^1.52.1",
     "@types/crypto-js": "^4.1.1",
     "autoprefixer": "^9.8.8",
     "bcrypt": "^5.1.0",

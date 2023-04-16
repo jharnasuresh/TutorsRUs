@@ -52,7 +52,7 @@ return (
 
         <br/>
         <DragDrop user={currUser}/>
-    
+        
         {/*
         <div className="container">
         <form className="form-group" onSubmit={handlePdfFileSubmit}>
