@@ -17,6 +17,7 @@ export const Board = ({ GlobalState }) => {
     const [link, setLink] = useState(false);
     const [anon, setAnon] = useState('false')
     const [emptyErr, setEmptyErr] = useState(false)
+    const [validU, setValidU] = useState(false)
     const words = ['oreo'];
     const [wordErr, setWordErr] = useState(false)
     setCurrUser(location.state.u)
@@ -28,12 +29,33 @@ export const Board = ({ GlobalState }) => {
         console.log('leaving ' + text + " " + location.state.b)
         setWordErr(false)
         setEmptyErr(false)
+        setValidU(false)
         if (text.toLowerCase().includes('oreo')) {
             setWordErr(true);
             return
         }
         if (text === '') {
             setEmptyErr(true)
+            return
+        }
+        if (text.includes('@')) {
+            var u = text.substring(text.indexOf('@') + 1)
+            if (u.includes(' ')) {
+                u = u.substring(0, u.indexOf(' '))
+            }
+            const headers = { "content-type": "application/json" };
+            const requestData = JSON.stringify({ user: u})
+            fetch('http://localhost:3001/checkvaliduser', { method: 'POST', body: requestData, headers: headers })
+            .then((res) => res.json())
+            .then((res) => {
+                console.log("checked " + res)
+                if (res === 'error') {
+                    setValidU(true)
+                    return
+                }
+            })
+        }
+        if (validU) {
             return
         }
         const headers = { "content-type": "application/json" };
@@ -168,6 +190,9 @@ export const Board = ({ GlobalState }) => {
             }
             {
                 emptyErr && <p>Type something before posting!</p>
+            }
+            {
+                validU && <p>That account does not exist</p>
             }
                 <div>
                 <input style={{width: '400px'}} value={text} onChange={(e) => setText(e.target.value)} type="text" placeholder="Type here..." id="text" name="text" />
