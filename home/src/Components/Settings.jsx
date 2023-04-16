@@ -186,6 +186,7 @@ export const Settings = ({ GlobalState }) => {
                     <input value={price} onChange={(e) => setPrice(e.target.value)} type="price" placeholder="Enter Your Hourly Price" id="price" name="price" />
                     </span></>: <span></span>
                 }
+                
 
                 <span style={{flexDirection: "column", display: "flex", width: "300px", marginLeft: "-300px"}}>
                 <button type="submit" className="setting-sub" onSubmit={handleSubmit}>Submit Changes</button>
