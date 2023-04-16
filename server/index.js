@@ -681,6 +681,17 @@ app.post('/addpost', async (req, res) => {
 
 })
 
+app.post('/checkvaliduser', async (req, res) => {
+    console.log("checking")
+    var list = await db.collection('users').where('username', '==', req.body.user).get()
+    if (list.size == 0) {
+        return res.send(JSON.stringify("error"))
+    }
+    return res.send(JSON.stringify("success"))
+
+    
+})
+
 app.post('/uploadpdfboard', upload.single("file"), async (req, res) => {
     console.log("upload pdf board")
     const {
