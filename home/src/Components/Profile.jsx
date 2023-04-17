@@ -100,28 +100,31 @@ export const Profile = ({ GlobalState }) => {
       
 
       {tutor === true &&
-          <><div className={"img2"} style ={{position: 'absolute', marginLeft: '500px', marginTop: '-780px', height: '50px'}}><img class="img2" src = "/Images/verifiedtut.png"/></div>
+          <><div className={"img2"} style ={{position: 'absolute', marginLeft: '-920px', marginTop: '00px', height: '50px'}}><img class="img2" src = "/Images/verifiedtut.png"/></div>
           </>
       }
-      {location.state.tutor && <button style ={{position: 'absolute', marginLeft: '1050px', marginTop: '-680px', height: '50px'}}onClick={toggle}>Toggle Accounts</button>}
+      <p style={{marginRight: '-1230px', border: '2px solid gray',  padding: '10px', width: '150px', marginTop: '-800px'}}>Are you a student and a tutor? Toggle between your accounts!</p>
+      {location.state.tutor && <button style ={{position: 'absolute', marginLeft: '1240px', marginTop: '-600px', height: '50px'}}onClick={toggle}>Toggle Accounts</button>}
 
-    <div style={{position: 'absolute', marginLeft: '-700px', marginTop: '-500px'}}>
+    <div style={{position: 'absolute', marginLeft: '-900px', marginTop: '-500px', backgroundColor: 'white', padding: '20px', paddingBottom: '150px', border: '2px solid black'}}>
+
       <Avatar src={location.state.profpic} sx={{ width: 300, height: 300 }} />
     </div>
-    <div style={{position: 'absolute', marginLeft: '-1775px', marginTop: '200px'}}>
+    <div style={{position: 'absolute', marginLeft: '-2000px', marginTop: '-780px'}}>
       <About user={location.state.u} email={location.state.email} lang={location.state.lang} yours={true} price={location.state.price} tutor={tutor} studentRating={location.state.studentRating} tutorRating={location.state.tutorRating}/>
     </div>
-    <div style={{position: 'absolute', marginLeft: '525px', marginTop: '420px'}}>
+    <div style={{position: 'absolute', marginLeft: '300px', marginTop: '-200px'}}>
         <CourseInfo courses={printing} past={false}/>
     </div>
       
       {
-        (tutor) ? <div style={{position: 'absolute', marginLeft: '525px', marginTop: '600px'}}><CourseInfo courses={printingTaken} past={true}/></div> : <span></span>
+        (tutor) ? <div style={{position: 'absolute', marginLeft: '300px', marginTop: '150px'}}><CourseInfo courses={printingTaken} past={true}/></div> : <span></span>
       }
       <div className='ur-profile-btn'>
 
 
-      <div style={{position: 'absolute', marginLeft: '100px', marginTop: '100px'}}>
+      <div style={{position: 'absolute', marginLeft: '10px', marginTop: '-1300px'}}>
+
           <a className="popupbutton">
             <button onClick={() => setButtonPopup(true)} className="submit">Followers: {numFollowers}</button>
           </a>
@@ -131,7 +134,9 @@ export const Profile = ({ GlobalState }) => {
             <ButtonList followers= {location.state.followers} oldUser = {location.state.u} following = {location.state.following}/>
 
           </Followers>
-        <div style={{position: 'absolute', marginLeft: '0px', marginTop: '100px'}}>
+
+        <div style={{position: 'absolute', marginLeft: '-105px', marginTop: '-600px'}}>
+
         <a className=".popupbutton2">
           <button onClick={() => setButtonPopup2(true)} className="submit">Following: {numFollowing}</button>
         </a>
@@ -152,7 +157,7 @@ export const Profile = ({ GlobalState }) => {
 
       <br />
     </div>
-
+  
   );
 }
 
