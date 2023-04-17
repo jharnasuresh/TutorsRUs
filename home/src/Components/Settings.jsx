@@ -197,6 +197,7 @@ export const Settings = ({ GlobalState }) => {
                     
                     </span></>: <span></span>
                 }
+                
 
                 <span style={{flexDirection: "column", display: "flex", width: "300px", marginLeft: "-300px"}}>
                 <button type="submit" className="setting-sub" onSubmit={handleSubmit}>Submit Changes</button>
