@@ -708,21 +708,24 @@ app.post('/getposts', async (req, res) => {
     var posts = [];
     console.log(d.docs.length)
     for (var i = 0; i < d.docs.length; i++) {
-        var data = [d.docs[i].get('text'), d.docs[i].get('user'), d.docs[i].get('link'), d.docs[i].get('anon'), d.docs[i].get('replies')]
+        var data = [d.docs[i].get('text'), d.docs[i].get('user'), d.docs[i].get('link'), d.docs[i].get('anon'), d.docs[i].get('replies'), d.docs[i].get('pdf')]
         posts.push(data);
     }
     return res.send(JSON.stringify({posts: posts}))
 })
 
 app.post('/addpost', async (req, res) => {
+    console.log("add post")
     var data = {
         board: req.body.board,
         text: req.body.text,
         user: req.body.user,
         link: req.body.link,
         anon: req.body.anon,
+        replies: [],
         upvotes: [],
-        downvotes: []
+        downvotes: [],
+        pdf: req.body.pdf
     };
     const r = await db.collection('posts').doc().set(data);
     console.log("getting")
@@ -730,7 +733,7 @@ app.post('/addpost', async (req, res) => {
     var posts = [];
     console.log(d.docs.length)
     for (var i = 0; i < d.docs.length; i++) {
-        var data = [d.docs[i].get('text'), d.docs[i].get('user'), d.docs[i].get('link'), d.docs[i].get('anon'), d.docs[i].get('replies')]
+        var data = [d.docs[i].get('text'), d.docs[i].get('user'), d.docs[i].get('link'), d.docs[i].get('anon'), d.docs[i].get('replies'), d.docs[i].get('pdf')]
         posts.push(data);
     }
     return res.send(JSON.stringify({posts: posts}))
@@ -753,7 +756,7 @@ app.post('/addreply', async (req, res) => {
     var posts = [];
     console.log(p.docs.length)
     for (var i = 0; i < p.docs.length; i++) {
-        var data = [d.docs[i].get('text'), d.docs[i].get('user'), d.docs[i].get('link'), d.docs[i].get('anon'), d.docs[i].get('replies')]
+        var data = [d.docs[i].get('text'), d.docs[i].get('user'), d.docs[i].get('link'), d.docs[i].get('anon'), d.docs[i].get('replies'), d.docs[i].get('pdf')]
         posts.push(data);
     }
 
@@ -772,6 +775,7 @@ app.post('/checkvaliduser', async (req, res) => {
     
 })
 
+/*
 app.post('/uploadpdfboard', upload.single("file"), async (req, res) => {
     console.log("upload pdf board")
     const {
@@ -793,7 +797,7 @@ app.post('/uploadpdfboard', upload.single("file"), async (req, res) => {
     return res.send(JSON.stringify({ "studentRating": doc.get("studentRating"), "tutorRating": doc.get("tutorRating"), "u": doc.get("username"), "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), taking: doc.get("taking"), tutor: doc.get("tutor"), price: doc.get("price"), taken: doc.get("taken") }))
 
 })
-
+*/
 app.post("/info", async (req, res) => {
     console.log("iii " + req.body["username"] + " otehr " + req.body.currU)
     const login = await db.collection('users').where('username', '==', req.body["username"]).get();

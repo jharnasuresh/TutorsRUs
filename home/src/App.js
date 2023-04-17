@@ -29,6 +29,7 @@ import Discussion from './Components/Discussion'
 import Board from './Components/Board';
 import UploadPDFBoard from './Components/UploadPDFBoard';
 import {CreateDiscussion} from './Components/CreateDiscussion';
+import { ViewPDF } from './Components/ViewPDF';
 
 function App() {
 
@@ -76,6 +77,8 @@ return (
         <Route exact path="/Board" element={<Board GlobalState={GlobalState}/>}/>
         <Route exact path="/CreateDiscussion" element={<CreateDiscussion GlobalState={GlobalState}/>}/>
         <Route exact path="/UploadPDFBoard" element={<UploadPDFBoard GlobalState={GlobalState}/>}/>
+        <Route exact path="/ViewPDF" element={<ViewPDF GlobalState={GlobalState}/>}/>
+
 
         <Route path="*" element={<Login />} />
         
