@@ -14,17 +14,41 @@ export const Board = ({ GlobalState }) => {
     const { currUser, setCurrUser } = GlobalState;
     console.log(location.state.posts)
     const [text, setText] = useState('')
+    const [reply, setReply] = useState('')
     const [link, setLink] = useState(false);
     const [anon, setAnon] = useState('false')
+    const [anonReply, setAnonReply] = useState('false')
     const [emptyErr, setEmptyErr] = useState(false)
+    const [emptyErrReply, setEmptyErrReply] = useState(false)
     const [validU, setValidU] = useState(false)
     const words = ['oreo'];
     const [wordErr, setWordErr] = useState(false)
+    const [wordErrReply, setWordErrReply] = useState(false)
+
     const [lookAtPost, setLookAtPost] = useState(location.state.posts[0]);
     setCurrUser(location.state.u)
 
     //console.log(location.state.boards)
 
+    var r = lookAtPost[4]
+    console.log(r)
+    var replies = [] // replies is an array of arrays, each inner array is a reply
+    for (var i = 0; i < r.length; i++) {
+        var temp = r[i]
+        var reptext = temp.substring(0, temp.indexOf("~"))
+        temp = temp.substring(temp.indexOf("~") + 1)
+        var usern = temp.substring(0, temp.indexOf("~"))
+        temp = temp.substring(temp.indexOf("~") + 1)
+        var an = temp.substring(0, temp.indexOf("~"))
+        temp = temp.substring(temp.indexOf("~") + 1)
+        var upv = temp.substring(0, temp.indexOf("~"))
+        temp = temp.substring(temp.indexOf("~") + 1)
+        var downv = temp.substring(0, temp.indexOf("~"))
+        var info = [reptext, usern, an, upv, downv]
+        replies.push(info)
+    }
+
+    //console.log(replies)
     const upVotePost = () => {
         const headers = { "content-type": "application/json" };
         const requestData = JSON.stringify({ user: currUser, post: lookAtPost})
@@ -164,6 +188,37 @@ export const Board = ({ GlobalState }) => {
 
     }
 
+    const addReply = () => { //TODO
+        setWordErrReply(false)
+        setEmptyErrReply(false)
+        if (reply.toLowerCase().includes('oreo')) {
+            setWordErrReply(true);
+            return
+        }
+        if (reply === '') {
+            setEmptyErr(true)
+            return
+        }
+
+        const headers = { "content-type": "application/json" };
+        const requestData = JSON.stringify({ text: reply, user: currUser, anon: anon, post: lookAtPost[0], board: location.state.board });
+        fetch('http://localhost:3001/addreply', { method: 'POST', body: requestData, headers: headers })
+            .then((res) => res.json())
+            .then((res) => {
+                console.log("r = " + res["studentRating"])
+                navigate("/Board", {
+
+                    state: {
+                        u: currUser,
+                        posts: res.posts,
+                        board: location.state.board
+                    }
+                });
+            })
+
+    }
+
+    //console.log(lookAtPost)
 
     return (
 
@@ -216,7 +271,9 @@ export const Board = ({ GlobalState }) => {
                 <div style={{padding: "10px", fontFamily: "Bowlby One", color: "rgb(96, 44, 145)", size: '2', textAlign: 'left'}}>
                     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Bowlby+One" />
                        
-                        <h1>{lookAtPost[0]}</h1>
+                    {
+                        lookAtPost[2] ? <a href={lookAtPost[0]}>{lookAtPost[0]}</a> : tagIfNeeded(lookAtPost[0])
+                    }
                         {
                             lookAtPost[3] === 'true' ? <p>Posted by: Anonymous</p> : <p>Posted by: {lookAtPost[1]}</p>
                         }
@@ -241,13 +298,18 @@ export const Board = ({ GlobalState }) => {
                     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Bowlby+One" />
                        
                 <h1> Compose a Reply: </h1>
-                <input style={{width: '400px'}} value={text} onChange={(e) => setText(e.target.value)} type="text" placeholder="Type here..." id="text" name="text" />
-                <button onClick={addPost}>Post</button>
+                {
+                    wordErrReply && <p>Please make sure your post is appropriate!</p>
+                }
+                <input style={{width: '400px'}} value={reply} onChange={(e) => setReply(e.target.value)} type="reply" placeholder="Type here..." id="reply" name="reply" />
+                <button onClick={addReply}>Post</button> {/* posts as a post, need to make it a reply*/}
+                <select id="anonreply" name="anonreply" onChange={(e) => setAnonReply(e.target.value)}>
+                    <option value='false'>With Username</option>
+                    <option value='true'>Anonymously</option>
+                </select>
 
                 </div>
             </div>
-
-        
 
             </div>
             <br/>
