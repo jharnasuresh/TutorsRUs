@@ -106,7 +106,7 @@ export const Discussion = ({GlobalState}) => {
     return (
         
         <div className = "App">
-             <div style={{padding: "20px", fontFamily: "Bowlby One", color: "rgb(96, 44, 145)"}}>
+             <div style={{padding: "20px", fontFamily: "Bowlby One", color: "rgb(96, 44, 145)", marginTop: '-700px'}}>
                         <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Bowlby+One" />
                         <h1>Your Discussion Boards!</h1>
             </div>
