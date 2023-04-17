@@ -167,6 +167,9 @@ export const Board = ({ GlobalState }) => {
         })
 
     }
+    const deletePost = () => {
+        
+    }
 
     const tagIfNeeded = (text) => {
 
@@ -224,6 +227,7 @@ export const Board = ({ GlobalState }) => {
 
         
         <div className = "App">
+
              <div style={{padding: "20px", fontFamily: "Bowlby One", color: "rgb(96, 44, 145)", marginTop: "50px"}}>
                         <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Bowlby+One" />
                         <h1>{location.state.board} Board</h1>
@@ -271,12 +275,24 @@ export const Board = ({ GlobalState }) => {
                 <div style={{padding: "10px", fontFamily: "Bowlby One", color: "rgb(96, 44, 145)", size: '2', textAlign: 'left'}}>
                     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Bowlby+One" />
                        
+
+                        <h1>{lookAtPost[0]}</h1>
                     {
                         lookAtPost[2] ? <a href={lookAtPost[0]}>{lookAtPost[0]}</a> : tagIfNeeded(lookAtPost[0])
                     }
+
                         {
                             lookAtPost[3] === 'true' ? <p>Posted by: Anonymous</p> : <p>Posted by: {lookAtPost[1]}</p>
+
+
+
                         }
+                         {
+                            lookAtPost[1] === currUser ? <button onClick={deletePost}>DELETE</button> : <></>
+
+
+                         }
+
                         <nav>
                         <li>
 
