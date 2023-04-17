@@ -708,7 +708,7 @@ app.post('/getposts', async (req, res) => {
     var posts = [];
     console.log(d.docs.length)
     for (var i = 0; i < d.docs.length; i++) {
-        var data = [d.docs[i].get('text'), d.docs[i].get('user'), d.docs[i].get('link'), d.docs[i].get('anon')]
+        var data = [d.docs[i].get('text'), d.docs[i].get('user'), d.docs[i].get('link'), d.docs[i].get('anon'), d.docs[i].get('replies')]
         posts.push(data);
     }
     return res.send(JSON.stringify({posts: posts}))
@@ -730,10 +730,34 @@ app.post('/addpost', async (req, res) => {
     var posts = [];
     console.log(d.docs.length)
     for (var i = 0; i < d.docs.length; i++) {
-        var data = [d.docs[i].get('text'), d.docs[i].get('user'), d.docs[i].get('link'), d.docs[i].get('anon')]
+        var data = [d.docs[i].get('text'), d.docs[i].get('user'), d.docs[i].get('link'), d.docs[i].get('anon'), d.docs[i].get('replies')]
         posts.push(data);
     }
     return res.send(JSON.stringify({posts: posts}))
+
+})
+
+app.post('/addreply', async (req, res) => {
+    var info = req.body.text + "~" + req.body.user + "~" + req.body.anon + "~0~0"
+    var list = await db.collection('posts').where('text', '==', req.body.post).where('board', '==', req.body.board).get();
+    console.log(list.size + " " + req.body.post + " " + req.body.board)
+    var doc = list.docs[0]
+    var replies = doc.get('replies');
+    replies.push(info);
+    console.log(replies + " cftvgbhj")
+    await doc.ref.update({replies: replies})
+    list = await db.collection('posts').where('text', '==', req.body.post).where('board', '==', req.body.board).get();
+    doc = list.docs[0]
+    var p = await db.collection('posts').where('board', '==', req.body.board).get()
+    //var pp = p.docs[0]
+    var posts = [];
+    console.log(p.docs.length)
+    for (var i = 0; i < p.docs.length; i++) {
+        var data = [d.docs[i].get('text'), d.docs[i].get('user'), d.docs[i].get('link'), d.docs[i].get('anon'), d.docs[i].get('replies')]
+        posts.push(data);
+    }
+
+    return res.send(JSON.stringify({replies: doc.get('replies'), posts: posts}))
 
 })
 
