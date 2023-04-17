@@ -1,6 +1,6 @@
 
 
-import React, {Component, useState} from 'react';
+import React, {Component, useState, useEffect} from 'react';
 import './Board.css'
 import CreateDiscussion from './CreateDiscussion'
 import { useLocation, Link, useNavigate } from "react-router-dom";
@@ -11,8 +11,9 @@ import { useLocation, Link, useNavigate } from "react-router-dom";
 export const Board = ({ GlobalState }) => {
     const navigate = useNavigate();
     const location = useLocation();
+    const [lookAtPost, setLookAtPost] = useState(location.state.posts[0]);
     const { currUser, setCurrUser } = GlobalState;
-    console.log(location.state.posts)
+    console.log(location.state.lookAtPost)
     const [text, setText] = useState('')
     const [reply, setReply] = useState('')
     const [link, setLink] = useState(false);
@@ -24,29 +25,38 @@ export const Board = ({ GlobalState }) => {
     const words = ['oreo'];
     const [wordErr, setWordErr] = useState(false)
     const [wordErrReply, setWordErrReply] = useState(false)
-
-    const [lookAtPost, setLookAtPost] = useState(location.state.posts[0]);
+    console.log("start2 " + location.state.posts[0])
+    
+    //console.log("start " + location.state.posts)
+    console.log("check " + lookAtPost)
     setCurrUser(location.state.u)
 
-    //console.log(location.state.boards)
+    console.log(location.state.posts[0])
 
-    var r = lookAtPost[4]
-    console.log(r)
+    var listofposts = location.state.posts
+    
+    
+
     var replies = [] // replies is an array of arrays, each inner array is a reply
-    for (var i = 0; i < r.length; i++) {
-        var temp = r[i]
-        var reptext = temp.substring(0, temp.indexOf("~"))
-        temp = temp.substring(temp.indexOf("~") + 1)
-        var usern = temp.substring(0, temp.indexOf("~"))
-        temp = temp.substring(temp.indexOf("~") + 1)
-        var an = temp.substring(0, temp.indexOf("~"))
-        temp = temp.substring(temp.indexOf("~") + 1)
-        var upv = temp.substring(0, temp.indexOf("~"))
-        temp = temp.substring(temp.indexOf("~") + 1)
-        var downv = temp.substring(0, temp.indexOf("~"))
-        var info = [reptext, usern, an, upv, downv]
-        replies.push(info)
+    if (lookAtPost != undefined) {
+        var r = lookAtPost[4]
+        console.log(r)
+        for (var i = 0; i < r.length; i++) {
+            var temp = r[i]
+            var reptext = temp.substring(0, temp.indexOf("~"))
+            temp = temp.substring(temp.indexOf("~") + 1)
+            var usern = temp.substring(0, temp.indexOf("~"))
+            temp = temp.substring(temp.indexOf("~") + 1)
+            var an = temp.substring(0, temp.indexOf("~"))
+            temp = temp.substring(temp.indexOf("~") + 1)
+            var upv = temp.substring(0, temp.indexOf("~"))
+            temp = temp.substring(temp.indexOf("~") + 1)
+            var downv = temp.substring(0, temp.indexOf("~"))
+            var info = [reptext, usern, an, upv, downv]
+            replies.push(info)
+        }
     }
+    
 
     //console.log(replies)
     const upVotePost = () => {
@@ -113,19 +123,27 @@ export const Board = ({ GlobalState }) => {
             return
         }
         const headers = { "content-type": "application/json" };
-        const requestData = JSON.stringify({ "user": currUser, board: location.state.board, text: text, user: currUser, link: link, anon: anon });
+        const requestData = JSON.stringify({ "user": currUser, board: location.state.board, text: text, user: currUser, link: link, anon: anon, pdf: false });
         fetch('http://localhost:3001/addpost', { method: 'POST', body: requestData, headers: headers })
             .then((res) => res.json())
             .then((res) => {
-                console.log("r = " + res["studentRating"])
+                //console.log("r = " + res["studentRating"])
+                console.log("res " + res.posts)
+                /*
                 navigate("/Board", {
 
                     state: {
                         u: currUser,
                         posts: res.posts,
+                        lookAtPost: res.posts[0],
                         board: location.state.board
                     }
-                });
+                });*/
+                listofposts.push([text, currUser, link, anon, []])
+                console.log("next")
+                setLookAtPost(listofposts[0])
+                console.log("next2")
+                
             })
     }
 
@@ -183,11 +201,12 @@ export const Board = ({ GlobalState }) => {
             }
             console.log("tag " + u)
             return <>
-            <span>{before}</span><button className='linked' onClick={() => {toProfile(u)}}>{u}</button><span>{after}</span>
+            <h1><span>{before}</span><button className='linked' onClick={() => {toProfile(u)}}>{u}</button><span>{after}</span></h1>
+            
             </>
         }
 
-        return <p>{text}</p>;
+        return <h1>{text}</h1>;
 
     }
 
@@ -199,7 +218,7 @@ export const Board = ({ GlobalState }) => {
             return
         }
         if (reply === '') {
-            setEmptyErr(true)
+            setEmptyErrReply(true)
             return
         }
 
@@ -214,16 +233,20 @@ export const Board = ({ GlobalState }) => {
                     state: {
                         u: currUser,
                         posts: res.posts,
+                        lookAtPost: res.posts[0],
                         board: location.state.board
                     }
                 });
             })
+            
 
     }
 
     //console.log(lookAtPost)
+    //setLookAtPost(location.state.posts[0])
 
     return (
+        
 
         
         <div className = "App">
@@ -241,16 +264,15 @@ export const Board = ({ GlobalState }) => {
                         
             {
     
-                location.state.posts.map((post) => (
+                listofposts.map((post) => (
                     <>
-                    {
-                        console.log(post[3])
-                    }
                     <div style={{border: 'solid', backgroundColor: "#F8C8DC"}}>
                         <br/>
-                    {
-                        <button className="link-btn" style={{textAlign: 'left'}} onClick={(e) => setLookAtPost(post)} > {post[0]}</button> 
-                    }
+                        {
+                            post[5] ? <button className="link-btn" style={{textAlign: 'left'}} onClick={(e) => setLookAtPost(post)} > Click here to view post</button> : <button className="link-btn" style={{textAlign: 'left'}} onClick={(e) => setLookAtPost(post)} > {post[0]}</button>
+                        }
+                         
+                    
                     {
                         post[3] === 'true' ? <p>Posted by Anonymous</p> : <p>Posted by {post[1]}</p>
                     } 
@@ -275,11 +297,25 @@ export const Board = ({ GlobalState }) => {
                 <div style={{padding: "10px", fontFamily: "Bowlby One", color: "rgb(96, 44, 145)", size: '2', textAlign: 'left'}}>
                     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Bowlby+One" />
                        
-
-                        <h1>{lookAtPost[0]}</h1>
                     {
-                        lookAtPost[2] ? <a href={lookAtPost[0]}>{lookAtPost[0]}</a> : tagIfNeeded(lookAtPost[0])
-                    }
+                        lookAtPost != undefined && <>
+
+                        {/* {
+                            lookAtPost[5] ? <button className="link-btn" onClick={() => {navigate('/ViewPDF', {state: {u: currUser, pdf: lookAtPost[0]}})}}>Click here to view PDF</button> : <h1>{lookAtPost[0]}</h1>
+                        }
+
+                        
+                    {
+                      */}
+                      { //PDF
+                        lookAtPost[5] && <button className="link-btn" onClick={() => {navigate('/ViewPDF', {state: {u: currUser, pdf: lookAtPost[0]}})}}>Click here to view PDF</button>
+                      }
+                      {
+                        !lookAtPost[5] && (lookAtPost[2] ? <a href={lookAtPost[0]}>{lookAtPost[0]}</a> : tagIfNeeded(lookAtPost[0]))
+                      }
+                    
+                          
+                    
 
                         {
                             lookAtPost[3] === 'true' ? <p>Posted by: Anonymous</p> : <p>Posted by: {lookAtPost[1]}</p>
@@ -306,6 +342,9 @@ export const Board = ({ GlobalState }) => {
                             <a href="./Help" onClick={reportPost}><i class="fa-solid fa-warning"></i></a>
                         </li>
                         </nav>
+                        </>
+
+}
                 </div>
             </div>
 
@@ -313,16 +352,22 @@ export const Board = ({ GlobalState }) => {
             <div style={{padding: "10px", fontFamily: "Georgia", color: "rgb(96, 44, 145)", size: '0', textAlign: 'left', fontSize: '8px', textAlignLast: 'left'}}>
                     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Bowlby+One" />
                        
-                <h1> Compose a Reply: </h1>
-                {
-                    wordErrReply && <p>Please make sure your post is appropriate!</p>
-                }
-                <input style={{width: '400px'}} value={reply} onChange={(e) => setReply(e.target.value)} type="reply" placeholder="Type here..." id="reply" name="reply" />
-                <button onClick={addReply}>Post</button> {/* posts as a post, need to make it a reply*/}
-                <select id="anonreply" name="anonreply" onChange={(e) => setAnonReply(e.target.value)}>
-                    <option value='false'>With Username</option>
-                    <option value='true'>Anonymously</option>
-                </select>
+                       {
+                        lookAtPost != undefined && <><h1> Compose a Reply: </h1>
+                        {
+                            wordErrReply && <h2 style={{color: 'black'}}>Please make sure your post is appropriate!</h2>
+                        }
+                        {
+                            emptyErrReply && <h2 style={{color: 'black'}}>Type something before posting!</h2>
+                        }
+                        <input style={{width: '400px'}} value={reply} onChange={(e) => setReply(e.target.value)} type="reply" placeholder="Type here..." id="reply" name="reply" />
+                        <button onClick={addReply}>Post</button> {/* posts as a post, need to make it a reply*/}
+                        <select id="anonreply" name="anonreply" onChange={(e) => setAnonReply(e.target.value)}>
+                            <option value='false'>With Username</option>
+                            <option value='true'>Anonymously</option>
+                        </select></>
+                       }
+                
 
                 </div>
             </div>

@@ -78,6 +78,7 @@ export const Discussion = ({GlobalState}) => {
             state: {
                 u: currUser,
                 posts: res.posts, 
+                lookAtPost: res.posts[0],
                 board: b
             }
         });
