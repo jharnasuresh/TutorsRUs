@@ -20,6 +20,8 @@ export const NotYourProfile = ({GlobalState}) => {
   const [active, setActive] = useState(location.state.active)
   var numFollowers = (location.state.followers).length + ""
   var tut = (location.state.tutor) ? "tut"  : "kjd";
+  var venmo = location.state.venmo;
+  console.log("VENMO" + venmo)
   //console.log(tut)
   if ((location.state.followers).length > 3) {
     numFollowers = "3+"
@@ -97,7 +99,8 @@ export const NotYourProfile = ({GlobalState}) => {
                     tutor: r["tutor"],
                     profpic: r["profpic"],
                     studentRating: r["studentRating"],
-                    tutorRating: r["tutorRating"]
+                    tutorRating: r["tutorRating"],
+                    venmo: r["venmo"]
                 }
             });
           }
@@ -157,7 +160,7 @@ export const NotYourProfile = ({GlobalState}) => {
         </div>
         <h2>Pay your Tutor!</h2>
         <a> 
-          Venmo: 
+          Venmo: {venmo}
         </a>
         <a>
           
