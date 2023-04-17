@@ -105,7 +105,7 @@ export const Profile = ({ GlobalState }) => {
       }
       {location.state.tutor && <button style ={{position: 'absolute', marginLeft: '1050px', marginTop: '-680px', height: '50px'}}onClick={toggle}>Toggle Accounts</button>}
 
-    <div style={{position: 'absolute', marginLeft: '-700px', marginTop: '100px'}}>
+    <div style={{position: 'absolute', marginLeft: '-700px', marginTop: '-500px'}}>
       <Avatar src={location.state.profpic} sx={{ width: 300, height: 300 }} />
     </div>
     <div style={{position: 'absolute', marginLeft: '-1775px', marginTop: '200px'}}>
@@ -121,7 +121,7 @@ export const Profile = ({ GlobalState }) => {
       <div className='ur-profile-btn'>
 
 
-      <div style={{position: 'absolute', marginLeft: '100px', marginTop: '-1250px'}}>
+      <div style={{position: 'absolute', marginLeft: '100px', marginTop: '100px'}}>
           <a className="popupbutton">
             <button onClick={() => setButtonPopup(true)} className="submit">Followers: {numFollowers}</button>
           </a>
@@ -131,7 +131,7 @@ export const Profile = ({ GlobalState }) => {
             <ButtonList followers= {location.state.followers} oldUser = {location.state.u} following = {location.state.following}/>
 
           </Followers>
-        <div style={{position: 'absolute', marginLeft: '0px', marginTop: '-550px'}}>
+        <div style={{position: 'absolute', marginLeft: '0px', marginTop: '100px'}}>
         <a className=".popupbutton2">
           <button onClick={() => setButtonPopup2(true)} className="submit">Following: {numFollowing}</button>
         </a>

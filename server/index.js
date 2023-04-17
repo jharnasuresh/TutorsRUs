@@ -307,7 +307,7 @@ if (!login.empty) {
     var doc = login.docs[0];
     await doc.ref.update({ tutor: true })
     console.log("2")
-    return res.send(JSON.stringify({ "studentRating": doc.get("studentRating"), "tutorRating": doc.get("tutorRating"), "u": doc.get("username"), "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), taking: doc.get("taking"), tutor: doc.get("tutor"), price: doc.get("price"), taken: doc.get("taken") }))
+    return res.send(JSON.stringify({ "studentRating": doc.get("studentRating"), "tutorRating": doc.get("tutorRating"), "u": doc.get("username"), "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), taking: doc.get("taking"), tutor: doc.get("tutor"), price: doc.get("price"), venmo: doc.get("venmo"), taken: doc.get("taken") }))
 
 }
 return res.send(JSON.stringify("error"))
@@ -369,7 +369,7 @@ app.post("/searchcoursetitle", async (req, res) => {
         console.log(list.docs[i].get("username"))
         var u = list.docs[i];
         //users.push(u.get("username"))
-        users[u.get("username")] = { fname: u.get('FName'), lname: u.get('LName'), price: u.get('price'), studentRating: u.get("studentRating"), tutorRating: u.get("tutorRating"), lang: u.get('lang'), taken: u.get("takenTitles") }
+        users[u.get("username")] = { venmo: u.get("venmo"), fname: u.get('FName'), lname: u.get('LName'), price: u.get('price'), studentRating: u.get("studentRating"), tutorRating: u.get("tutorRating"), lang: u.get('lang'), taken: u.get("takenTitles") }
 
     }
     if (Object.keys(users).includes(req.body.currUser)) {
@@ -787,7 +787,7 @@ app.post("/info", async (req, res) => {
         follows = true;
     }
 
-    return res.send(JSON.stringify({ "u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), "profpic": doc.get("profpic"), "taking": doc.get("taking"), "taken": doc.get("taken"), "tutor": doc.get("tutor"), "price": doc.get("price"), "follows": follows, "studentRating": doc.get("studentRating"), "tutorRating": doc.get("tutorRating"), }))
+    return res.send(JSON.stringify({ "u": req.body["username"], "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), "profpic": doc.get("profpic"), "taking": doc.get("taking"), "taken": doc.get("taken"), "tutor": doc.get("tutor"), "price": doc.get("price"), "follows": follows, "studentRating": doc.get("studentRating"), "tutorRating": doc.get("tutorRating"), "venmo": doc.get("venmo"), }))
 
 
 })
@@ -885,6 +885,7 @@ app.post("/update", async (req, res) => {
     var active = doc.get("active")
     var lang = doc.get("lang")
     var price = doc.get("price")
+    var venmo = doc.get("venmo")
     if (req.body.fname != "" && req.body.fname !== fname) {
         await doc.ref.update({ FName: req.body.fname });
     }
@@ -898,6 +899,9 @@ app.post("/update", async (req, res) => {
     if (req.body.email != "" && req.body.email !== email) {
         await doc.ref.update({ email: req.body.email });
     }
+    if (req.body.venmo != "" && req.body.venmo !== venmo) {
+        await doc.ref.update({ venmo: req.body.venmo });
+    }
     if (req.body.pass != "" && md5(req.body.pass) !== pass) {
         await doc.ref.update({ password: md5(req.body.pass) });
     }
@@ -910,7 +914,7 @@ app.post("/update", async (req, res) => {
 
     const up = await db.collection('users').where('username', '==', user).get();
     doc = up.docs[0];
-    return res.send(JSON.stringify({ "studentRating": doc.get("studentRating"), "tutorRating": doc.get("tutorRating"), "u": doc.get("username"), "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": active, "lang": doc.get("lang"), "profpic": doc.get("profpic"), "taking": doc.get("taking"), "followers": doc.get("followers"), "following": doc.get("following"), "price": doc.get("price"), "taken": doc.get("taken") }))
+    return res.send(JSON.stringify({ "venmo": doc.get("venmo"), "studentRating": doc.get("studentRating"), "tutorRating": doc.get("tutorRating"), "u": doc.get("username"), "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": active, "lang": doc.get("lang"), "profpic": doc.get("profpic"), "taking": doc.get("taking"), "followers": doc.get("followers"), "following": doc.get("following"), "price": doc.get("price"), "taken": doc.get("taken") }))
 
 
 })
@@ -1192,6 +1196,7 @@ app.post("/notyourprofile", async (req, res) => {
     var oldlang = oldUserDataDoc.get("lang")
     var oldPFP = oldUserDataDoc.get("profpic")
     var oldcourse = oldUserDataDoc.get("taking")
+    var venmo = oldUserDataDoc.get("venmo")
 
 
 
@@ -1218,7 +1223,7 @@ app.post("/notyourprofile", async (req, res) => {
 
     const upOld = await db.collection('users').where('username', '==', oldUser).get();
     oldUserDataDoc = upOld.docs[0];
-    return res.send(JSON.stringify({ "studentRating": oldUserDataDoc.get("studentRating"), "tutorRating": oldUserDataDoc.get("tutorRating"), "newFollowers": followers, "newFollowing": following, "u": oldUser, "fname": oldfname, "lname": oldlname, "email": oldemail, "followers": oldfollowers, "active": oldactive, "lang": oldlang, "taking": oldcourse, price: oldUserDataDoc.get("price"), "profpic": oldPFP, "tutor": oldUserDataDoc.get("tutor") })) // idk if this is the right price
+    return res.send(JSON.stringify({"venmo": oldUserDataDoc.get("venmo"), "studentRating": oldUserDataDoc.get("studentRating"), "tutorRating": oldUserDataDoc.get("tutorRating"), "newFollowers": followers, "newFollowing": following, "u": oldUser, "fname": oldfname, "lname": oldlname, "email": oldemail, "followers": oldfollowers, "active": oldactive, "lang": oldlang, "taking": oldcourse, price: oldUserDataDoc.get("price"), "profpic": oldPFP, "tutor": oldUserDataDoc.get("tutor") })) // idk if this is the right price
 
 
 });
