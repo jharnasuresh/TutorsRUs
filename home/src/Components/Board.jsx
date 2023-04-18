@@ -26,7 +26,6 @@ export const Board = ({ GlobalState }) => {
     const [wordErr, setWordErr] = useState(false)
     const [wordErrReply, setWordErrReply] = useState(false)
     const [isDeleted, setIsDeleted] = useState(location.state.isDeleted);
-    const [lookAtPost, setLookAtPost] = useState(location.state.posts[0]);
     console.log("start2 " + location.state.posts[0])
     
     //console.log("start " + location.state.posts)
@@ -131,7 +130,12 @@ export const Board = ({ GlobalState }) => {
             .then((res) => {
                 //console.log("r = " + res["studentRating"])
                 console.log("res " + res.posts)
-                /*
+                
+                
+                /*listofposts.push([text, currUser, link, anon, []])
+                console.log("next")
+                setLookAtPost(listofposts[0])
+                console.log("next2")*/
                 navigate("/Board", {
 
                     state: {
@@ -141,12 +145,7 @@ export const Board = ({ GlobalState }) => {
                         lookAtPost: res.posts[0],
                         board: location.state.board
                     }
-                });*/
-                listofposts.push([text, currUser, link, anon, []])
-                console.log("next")
-                setLookAtPost(listofposts[0])
-                console.log("next2")
-                
+                });
             })
     }
 
@@ -290,11 +289,8 @@ export const Board = ({ GlobalState }) => {
                     <>
                     <div style={{border: 'solid', backgroundColor: "#F8C8DC"}}>
                         <br/>
-                    {
-                        <button className="link-btn" style={{textAlign: 'left'}} onClick={(e) => isDeleted ? (setLookAtPost(post), setIsDeleted(false)) : setLookAtPost(post)} > {post[0]}</button> 
-                    }
                         {
-                            post[5] ? <button className="link-btn" style={{textAlign: 'left'}} onClick={(e) => setLookAtPost(post)} > Click here to view post</button> : <button className="link-btn" style={{textAlign: 'left'}} onClick={(e) => setLookAtPost(post)} > {post[0]}</button>
+                            post[5] ? <button className="link-btn" style={{textAlign: 'left'}} onClick={(e) => setLookAtPost(post)} > Click here to view post</button> : <button className="link-btn" style={{textAlign: 'left'}} onClick={(e) => isDeleted ? (setLookAtPost(post), setIsDeleted(false)) : setLookAtPost(post)} > {post[0]}</button>
                         }
                          
                     
