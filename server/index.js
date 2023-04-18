@@ -777,11 +777,11 @@ app.post('/addpost', async (req, res) => {
 app.post('/addreply', async (req, res) => {
     var info = req.body.text + "~" + req.body.user + "~" + req.body.anon + "~0~0"
     var list = await db.collection('posts').where('text', '==', req.body.post).where('board', '==', req.body.board).get();
-    console.log(list.size + " " + req.body.post + " " + req.body.board)
+    //console.log(list.size + " " + req.body.post + " " + req.body.board)
     var doc = list.docs[0]
     var replies = doc.get('replies');
     replies.push(info);
-    console.log(replies + " cftvgbhj")
+    //console.log(replies + " cftvgbhj")
     await doc.ref.update({replies: replies})
     list = await db.collection('posts').where('text', '==', req.body.post).where('board', '==', req.body.board).get();
     doc = list.docs[0]

@@ -111,14 +111,14 @@ export const Profile = ({ GlobalState }) => {
       <Avatar src={location.state.profpic} sx={{ width: 300, height: 300 }} />
     </div>
     <div style={{position: 'absolute', marginLeft: '-2000px', marginTop: '-780px'}}>
-      <About user={location.state.u} email={location.state.email} lang={location.state.lang} yours={true} price={location.state.price} tutor={tutor} studentRating={location.state.studentRating} tutorRating={location.state.tutorRating}/>
+      <About venmo={location.state.venmo} user={location.state.u} email={location.state.email} lang={location.state.lang} yours={true} price={location.state.price} tutor={tutor} studentRating={location.state.studentRating} tutorRating={location.state.tutorRating}/>
     </div>
-    <div style={{position: 'absolute', marginLeft: '300px', marginTop: '-200px'}}>
+    <div style={{position: 'absolute', marginLeft: '300px', marginTop: '-100px'}}>
         <CourseInfo courses={printing} past={false}/>
     </div>
       
       {
-        (tutor) ? <div style={{position: 'absolute', marginLeft: '300px', marginTop: '150px'}}><CourseInfo courses={printingTaken} past={true}/></div> : <span></span>
+        (tutor) ? <div style={{position: 'absolute', marginLeft: '300px', marginTop: '230px'}}><CourseInfo courses={printingTaken} past={true}/></div> : <span></span>
       }
       <div className='ur-profile-btn'>
 

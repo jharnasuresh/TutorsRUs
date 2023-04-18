@@ -130,16 +130,16 @@ export const NotYourProfile = ({GlobalState}) => {
     </div>      
     <hr />
     <div style={{position: 'absolute', marginLeft: '-1775px', marginTop: '-400px'}}>
-    <About user={location.state.u} mail={"mailto:" + email} email={email} lang={location.state.lang} yours={false} price={location.state.price} tutor={location.state.tutor} studentRating={location.state.studentRating} tutorRating={location.state.tutorRating} follows={location.state.follows}/>    
+    <About venmo={location.state.venmo} user={location.state.u} mail={"mailto:" + email} email={email} lang={location.state.lang} yours={false} price={location.state.price} tutor={location.state.tutor} studentRating={location.state.studentRating} tutorRating={location.state.tutorRating} follows={location.state.follows}/>    
     </div>
       
       <br/>
-      <div style={{position: 'absolute', marginLeft: '525px', marginTop: '170px'}}>
+      <div style={{position: 'absolute', marginLeft: '525px', marginTop: '270px'}}>
         <CourseInfo courses={printing} past={false}/>
       </div>
       <br />
       {
-        (location.state.tutor) ? <div style={{position: 'absolute', marginLeft: '525px', marginTop: '500px'}}><CourseInfo courses={printingTaken} past={true}/></div> : <span></span>
+        (location.state.tutor) ? <div style={{position: 'absolute', marginLeft: '525px', marginTop: '600px'}}><CourseInfo courses={printingTaken} past={true}/></div> : <span></span>
       }
       <div  className='profile-btn'  >
       <h3>Followers: {numFollowers}</h3>

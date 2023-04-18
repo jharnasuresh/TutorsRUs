@@ -59,6 +59,8 @@ export const Board = ({ GlobalState }) => {
             replies.push(info)
         }
     }
+
+    console.log([...replies])
     
 
     //console.log(replies)
@@ -292,7 +294,7 @@ export const Board = ({ GlobalState }) => {
                     <div style={{border: 'solid', backgroundColor: "#F8C8DC"}}>
                         <br/>
                         {
-                            post[5] ? <button className="link-btn" style={{textAlign: 'left'}} onClick={(e) => setLookAtPost(post)} > Click here to view post</button> : <button className="link-btn" style={{textAlign: 'left'}} onClick={(e) => isDeleted ? (setLookAtPost(post), setIsDeleted(false)) : setLookAtPost(post)} > {post[0]}</button>
+                            post[5] ? <button className="link-btn" style={{textAlign: 'left'}} onClick={(e) => setLookAtPost(post)} >{post[6]}</button> : <button className="link-btn" style={{textAlign: 'left'}} onClick={(e) => isDeleted ? (setLookAtPost(post), setIsDeleted(false)) : setLookAtPost(post)} > {post[0]}</button>
                         }
                          
                     
@@ -379,18 +381,6 @@ export const Board = ({ GlobalState }) => {
             <div style={{padding: "10px", fontFamily: "Georgia", color: "rgb(96, 44, 145)", size: '0', textAlign: 'left', fontSize: '8px', textAlignLast: 'left'}}>
                     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Bowlby+One" />
                        
-
-                    {/*
-                <h1> Compose a Reply: </h1>
-                {
-                    wordErrReply && <p>Please make sure your post is appropriate!</p>
-                }
-                <input style={{width: '400px'}} value={reply} onChange={(e) => setReply(e.target.value)} type="reply" placeholder="Type here..." id="reply" name="reply" />
-                <button onClick={addReply}>Post</button>  posts as a post, need to make it a reply
-                <select id="anonreply" name="anonreply" onChange={(e) => setAnonReply(e.target.value)}>
-                    <option value='false'>With Username</option>
-                    <option value='true'>Anonymously</option> 
-            </select> */}
 
                        {
                         
