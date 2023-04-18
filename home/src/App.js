@@ -29,8 +29,7 @@ import Discussion from './Components/Discussion'
 import Board from './Components/Board';
 import UploadPDFBoard from './Components/UploadPDFBoard';
 import {CreateDiscussion} from './Components/CreateDiscussion';
-import { ViewPDF } from './Components/ViewPDF';
-
+import  ViewPDF  from './Components/ViewPDF';
 function App() {
 
   const [currUser, setCurrUser] = useState("");

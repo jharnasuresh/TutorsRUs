@@ -1,21 +1,26 @@
 import React, { useState } from "react"
 import { useHref, useNavigate, useLocation } from "react-router-dom";
-import { Viewer } from "@react-pdf-viewer/core";
+import { Document, Page, pdfjs } from 'react-pdf'
+
+
 
 
 import "./Help.css"
 import Tabs from "./Tabs";
-export const ViewPDF = ({ GlobalState }) => {
+const ViewPDF = () => {
+    const [numPages, setNumPages] = useState(null);
+  const [pageNumber, setPageNumber] = useState(1);
     const location = useLocation();
+    pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
-    const { currUser, setCurrUser } = GlobalState;
-    setCurrUser(location.state.u)
+    
+    const pdfContentType = 'application/pdf';
 
     const base64toBlob = (data) => {
         // Cut the prefix `data:application/pdf;base64` from the raw base 64
-        const base64WithoutPrefix = data.substr('data:application/pdf;base64,'.length);
+        const base64WithoutPrefix = data.substr(`data:${pdfContentType};base64,`.length);
 
-        const bytes = atob(base64WithoutPrefix);
+        const bytes = window.atob(base64WithoutPrefix);
         let length = bytes.length;
         let out = new Uint8Array(length);
 
@@ -23,30 +28,32 @@ export const ViewPDF = ({ GlobalState }) => {
             out[length] = bytes.charCodeAt(length);
         }
 
-        return new Blob([out], { type: 'application/pdf' });
+        return new Blob([out], { type: pdfContentType });
     };
 
-    const blob = base64toBlob(location.state.pdf);
-    const url = URL.createObjectURL(blob);
+    const url = URL.createObjectURL(base64toBlob(location.state.pdf));
 
+    console.log(url)
+    console.log(new String(location.state.pdf) instanceof String)
+
+    function onDocumentLoadSuccess({ numPages }) {
+        setNumPages(numPages);
+      }
 
     return (
+        <div style={{textAlign: 'center'}}>
+            <Document file={location.state.pdf} onLoadSuccess={onDocumentLoadSuccess}>
+        <Page pageNumber={pageNumber} />
+      </Document>
+      <p>
+        Page {pageNumber} of {numPages}
+      </p> 
+      
 
 
-        <div className="App">
-            <div
-                style={{
-                    border: '1px solid rgba(0, 0, 0, 0.3)',
-                    height: '750px',
-                }}
-            >
-                <Viewer fileUrl={url} />
-            </div>
+    </div>
+    );
 
-        </div>
+};
 
-
-
-    )
-
-}
+export default ViewPDF;
