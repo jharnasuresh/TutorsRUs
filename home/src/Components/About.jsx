@@ -36,6 +36,10 @@ class About extends Component {
                         <br></br>
                         <br></br>
                         <h2 style={{display: 'inline', paddingRight: '50px', marginLeft: '-285px'}}>Tutor Rating:</h2><p style={{display: 'inline'}}>{this.props.tutorRating}/5.0</p>
+                        <br/>
+                        <br/>
+                        <h2 style={{display: 'inline', paddingRight: '50px', marginLeft: '-285px'}}>Venmo:</h2><p style={{display: 'inline'}}>@{this.props.venmo}</p>
+
                         </>
                         : <span></span>
                     }
