@@ -1314,7 +1314,7 @@ app.post("/createdisc", async (req, res) => {
         return res.send(JSON.stringify("error"))
     }
     const r = await db.collection('boards').doc(req.body.name).set(data);
-    console.log("at the end of post");
+    //console.log("at the end of post");
     return res.send(JSON.stringify({"returnedName": req.body.name, "returnedClass": req.body.course }))
 });
 

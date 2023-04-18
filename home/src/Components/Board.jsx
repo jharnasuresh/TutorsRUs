@@ -129,7 +129,7 @@ export const Board = ({ GlobalState }) => {
             .then((res) => {
                 //console.log("r = " + res["studentRating"])
                 console.log("res " + res.posts)
-                /*
+                
                 navigate("/Board", {
 
                     state: {
@@ -138,11 +138,13 @@ export const Board = ({ GlobalState }) => {
                         lookAtPost: res.posts[0],
                         board: location.state.board
                     }
-                });*/
+                });
+                /*
                 listofposts.push([text, currUser, link, anon, []])
                 console.log("next")
                 setLookAtPost(listofposts[0])
                 console.log("next2")
+                */
                 
             })
     }
