@@ -3,7 +3,6 @@
 
 
 const { getAuth, sendSignInLinkToEmail, sendEmailVerification } = require('firebase/auth');
-
 const { linkWithCredential, EmailAuthProvider } = require("firebase/auth");
 const { reauthenticateWithCredential } = require("firebase/auth");
 const toVerify = new Boolean(true);
@@ -222,7 +221,7 @@ app.post("/upvotepost", async(req,res) => {
 
     const upCurr = await db.collection('posts').where('text', '==', req.body.post[0]).get();
     postDataDoc = upCurr.docs[0];
-    return res.send(JSON.stringify({user: req.body.user})) // idk if this is the right price
+    return res.send(JSON.stringify({user: req.body.user})) 
 
 
 });
@@ -250,9 +249,36 @@ app.post("/downvotepost", async(req,res) => {
 
     const upCurr = await db.collection('posts').where('text', '==', req.body.post[0]).get();
     postDataDoc = upCurr.docs[0];
-    return res.send(JSON.stringify({user: req.body.user})) // idk if this is the right price
+    return res.send(JSON.stringify({user: req.body.user})) 
 
 
+});
+
+app.post("/deletepost", async(req,res) => {
+    /*const postData = await db.collection('posts').where('text', '==', req.body.post[0]).get();
+    console.log("no problem here!")
+    var postDataDoc = postData.docs[0];
+    postDataDoc.deleteDoc();*/
+       /* console.log("june look this is the post " + (req.body.post)[0]);
+        var postData = await db.collection('posts').where('text', '==', req.body.post[0]).get();
+        var doc = postData.docs[0];
+
+        await doc.ref.update({ anon: true });
+        var t = await db.collection("posts").doc((req.body.post)[0]).delete();*/
+        const postingData = await db.collection('posts').where('text', '==', (req.body.post)[0]).get();
+    var postingDataDoc = postingData.docs[0];
+    postingDataDoc.ref.delete();
+
+    var d = await db.collection('posts').where('board', '==', req.body.board).get();
+    var posts = [];
+    console.log(d.docs.length)
+    for (var i = 0; i < d.docs.length; i++) {
+        var data = [d.docs[i].get('text'), d.docs[i].get('user'), d.docs[i].get('link'), d.docs[i].get('anon'), d.docs[i].get('replies')]
+        posts.push(data);
+    }
+    return res.send(JSON.stringify({posts: posts}));
+
+    
 });
 
 app.post("/verify", async (req, res) => {
@@ -725,6 +751,7 @@ app.post('/addpost', async (req, res) => {
         replies: [],
         upvotes: [],
         downvotes: [],
+        replies: [],
         pdf: req.body.pdf
     };
 
@@ -891,6 +918,7 @@ app.post("/delete", async (req, res) => {
     const login = await db.collection('users').where('username', '==', req.body["username"]).get();
     var doc = login.docs[0];
     doc.ref.delete();
+
 
     return res.send(JSON.stringify("success"))
 

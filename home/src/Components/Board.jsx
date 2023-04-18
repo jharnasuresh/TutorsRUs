@@ -24,6 +24,7 @@ export const Board = ({ GlobalState }) => {
     const words = ['oreo'];
     const [wordErr, setWordErr] = useState(false)
     const [wordErrReply, setWordErrReply] = useState(false)
+    const [isDeleted, setIsDeleted] = useState(location.state.isDeleted);
     console.log("start2 " + location.state.posts[0])
     
     //console.log("start " + location.state.posts)
@@ -129,22 +130,18 @@ export const Board = ({ GlobalState }) => {
                 //console.log("r = " + res["studentRating"])
                 console.log("res " + res.posts)
                 
+
                 navigate("/Board", {
 
                     state: {
                         u: currUser,
                         posts: res.posts,
+                        isDeleted: false,
                         lookAtPost: res.posts[0],
                         board: location.state.board
                     }
                 });
-                /*
-                listofposts.push([text, currUser, link, anon, []])
-                console.log("next")
-                setLookAtPost(listofposts[0])
-                console.log("next2")
-                */
-                
+
             })
     }
 
@@ -187,7 +184,25 @@ export const Board = ({ GlobalState }) => {
 
     }
     const deletePost = () => {
-        
+        const headers = { "content-type": "application/json" };
+        //const requestData = JSON.stringify({ user: currUser, post: lookAtPost})
+
+        const requestData = JSON.stringify({ user: currUser, post: lookAtPost, board: location.state.board, text: text, user: currUser, link: link, anon: anon });
+        fetch('http://localhost:3001/deletepost', { method: 'POST', body: requestData, headers: headers })
+        .then((res) => res.json())
+        .then((res) => {
+            console.log("deleted " + res);
+            setIsDeleted(true);
+            navigate("/Board", {
+
+                state: {
+                    u: currUser,
+                    posts: res.posts,
+                    board: location.state.board,
+                    isDeleted: true
+                }
+            });
+        })
     }
 
     const tagIfNeeded = (text) => {
@@ -234,6 +249,7 @@ export const Board = ({ GlobalState }) => {
                     state: {
                         u: currUser,
                         posts: res.posts,
+                        isDeleted: false,
                         lookAtPost: res.posts[0],
                         board: location.state.board
                     }
@@ -271,6 +287,7 @@ export const Board = ({ GlobalState }) => {
                         <br/>
                         {
                             post[5] ? <button className="link-btn" style={{textAlign: 'left'}} onClick={(e) => setLookAtPost(post)} > {post[6]}</button> : <button className="link-btn" style={{textAlign: 'left'}} onClick={(e) => setLookAtPost(post)} > {post[0]}</button>
+
                         }
                          
                     
@@ -295,6 +312,9 @@ export const Board = ({ GlobalState }) => {
              <div style={{width: '800px', height: '1000px', textAlign: 'left', border: 'solid', backgroundColor: 'white', color: 'black', borderRadius: '10px', padding: '5px', marginTop: "-1000px", marginLeft: "500px", textAlign:'left' }}>
              
              <div style={{border: 'solid', backgroundColor: "#F8C8DC"}}>
+                    {
+                            isDeleted ? <p> This post was deleted </p>  : <p>This post exists</p>
+                    }
                 <div style={{padding: "10px", fontFamily: "Bowlby One", color: "rgb(96, 44, 145)", size: '2', textAlign: 'left'}}>
                     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Bowlby+One" />
                        
@@ -330,6 +350,7 @@ export const Board = ({ GlobalState }) => {
 
                          }
 
+                         
                         <nav>
                         <li>
 
@@ -353,6 +374,19 @@ export const Board = ({ GlobalState }) => {
             <div style={{padding: "10px", fontFamily: "Georgia", color: "rgb(96, 44, 145)", size: '0', textAlign: 'left', fontSize: '8px', textAlignLast: 'left'}}>
                     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Bowlby+One" />
                        
+
+                    
+                <h1> Compose a Reply: </h1>
+                {
+                    wordErrReply && <p>Please make sure your post is appropriate!</p>
+                }
+                <input style={{width: '400px'}} value={reply} onChange={(e) => setReply(e.target.value)} type="reply" placeholder="Type here..." id="reply" name="reply" />
+                <button onClick={addReply}>Post</button> {/* posts as a post, need to make it a reply*/}
+                <select id="anonreply" name="anonreply" onChange={(e) => setAnonReply(e.target.value)}>
+                    <option value='false'>With Username</option>
+                    <option value='true'>Anonymously</option>
+                </select>
+
                        {
                         lookAtPost != undefined && <><h1> Compose a Reply: </h1>
                         {
@@ -369,6 +403,7 @@ export const Board = ({ GlobalState }) => {
                         </select></>
                        }
                 
+
 
                 </div>
             </div>
