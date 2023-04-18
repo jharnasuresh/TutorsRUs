@@ -13,7 +13,6 @@ export const Board = ({ GlobalState }) => {
     const location = useLocation();
     const [lookAtPost, setLookAtPost] = useState(location.state.posts[0]);
     const { currUser, setCurrUser } = GlobalState;
-    console.log(location.state.lookAtPost)
     const [text, setText] = useState('')
     const [reply, setReply] = useState('')
     const [link, setLink] = useState(false);
@@ -131,11 +130,7 @@ export const Board = ({ GlobalState }) => {
                 //console.log("r = " + res["studentRating"])
                 console.log("res " + res.posts)
                 
-                
-                /*listofposts.push([text, currUser, link, anon, []])
-                console.log("next")
-                setLookAtPost(listofposts[0])
-                console.log("next2")*/
+
                 navigate("/Board", {
 
                     state: {
@@ -146,6 +141,7 @@ export const Board = ({ GlobalState }) => {
                         board: location.state.board
                     }
                 });
+
             })
     }
 
@@ -290,7 +286,8 @@ export const Board = ({ GlobalState }) => {
                     <div style={{border: 'solid', backgroundColor: "#F8C8DC"}}>
                         <br/>
                         {
-                            post[5] ? <button className="link-btn" style={{textAlign: 'left'}} onClick={(e) => setLookAtPost(post)} > Click here to view post</button> : <button className="link-btn" style={{textAlign: 'left'}} onClick={(e) => isDeleted ? (setLookAtPost(post), setIsDeleted(false)) : setLookAtPost(post)} > {post[0]}</button>
+                            post[5] ? <button className="link-btn" style={{textAlign: 'left'}} onClick={(e) => setLookAtPost(post)} > {post[6]}</button> : <button className="link-btn" style={{textAlign: 'left'}} onClick={(e) => setLookAtPost(post)} > {post[0]}</button>
+
                         }
                          
                     

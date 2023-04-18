@@ -734,7 +734,7 @@ app.post('/getposts', async (req, res) => {
     var posts = [];
     console.log(d.docs.length)
     for (var i = 0; i < d.docs.length; i++) {
-        var data = [d.docs[i].get('text'), d.docs[i].get('user'), d.docs[i].get('link'), d.docs[i].get('anon'), d.docs[i].get('replies'), d.docs[i].get('pdf')]
+        var data = [d.docs[i].get('text'), d.docs[i].get('user'), d.docs[i].get('link'), d.docs[i].get('anon'), d.docs[i].get('replies'), d.docs[i].get('pdf'), d.docs[i].get('pdfname')]
         posts.push(data);
     }
     return res.send(JSON.stringify({posts: posts}))
@@ -754,13 +754,20 @@ app.post('/addpost', async (req, res) => {
         replies: [],
         pdf: req.body.pdf
     };
+
+    if (req.body.pdf) {
+        data.pdfname = req.body.pdfname
+    }
+
+    //console.log(data)
+
     const r = await db.collection('posts').doc().set(data);
     console.log("getting")
     var d = await db.collection('posts').where('board', '==', req.body.board).get();
     var posts = [];
     console.log(d.docs.length)
     for (var i = 0; i < d.docs.length; i++) {
-        var data = [d.docs[i].get('text'), d.docs[i].get('user'), d.docs[i].get('link'), d.docs[i].get('anon'), d.docs[i].get('replies'), d.docs[i].get('pdf')]
+        var data = [d.docs[i].get('text'), d.docs[i].get('user'), d.docs[i].get('link'), d.docs[i].get('anon'), d.docs[i].get('replies'), d.docs[i].get('pdf'), d.docs[i].get('pdfname')]
         posts.push(data);
     }
     return res.send(JSON.stringify({posts: posts}))
@@ -783,7 +790,7 @@ app.post('/addreply', async (req, res) => {
     var posts = [];
     console.log(p.docs.length)
     for (var i = 0; i < p.docs.length; i++) {
-        var data = [d.docs[i].get('text'), d.docs[i].get('user'), d.docs[i].get('link'), d.docs[i].get('anon'), d.docs[i].get('replies'), d.docs[i].get('pdf')]
+        var data = [d.docs[i].get('text'), d.docs[i].get('user'), d.docs[i].get('link'), d.docs[i].get('anon'), d.docs[i].get('replies'), d.docs[i].get('pdf'), d.docs[i].get('pdfname')]
         posts.push(data);
     }
 
@@ -1342,8 +1349,18 @@ app.post("/createdisc", async (req, res) => {
         return res.send(JSON.stringify("error"))
     }
     const r = await db.collection('boards').doc(req.body.name).set(data);
-    console.log("at the end of post");
-    return res.send(JSON.stringify({"returnedName": req.body.name, "returnedClass": req.body.course }))
+    //console.log("at the end of post");
+    var list = await db.collection('users').where("username", '==', req.body.username).get();
+    if (!list.empty) {
+        //var boards =
+        console.log("sending")
+        var boards = list.docs[0].get("boards");
+        boards.push(req.body.name)
+        await list.docs[0].ref.update({boards: boards})
+        list = await db.collection('users').where("username", '==', req.body.username).get();
+        return res.send(JSON.stringify({boards: list.docs[0].get("boards")}))
+    }
+    //return res.send(JSON.stringify({"returnedName": req.body.name, "returnedClass": req.body.course }))
 });
 
 app.post('/leaveboard', async (req, res) => {

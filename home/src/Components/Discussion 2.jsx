@@ -67,7 +67,6 @@ export const Discussion = ({GlobalState}) => {
 
     const toBoard = (b) => {
         navigate("/Board", {
-        
             state: {
                 u: location.state.u,
             }
