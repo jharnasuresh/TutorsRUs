@@ -790,7 +790,7 @@ app.post('/addreply', async (req, res) => {
     var posts = [];
     console.log(p.docs.length)
     for (var i = 0; i < p.docs.length; i++) {
-        var data = [d.docs[i].get('text'), d.docs[i].get('user'), d.docs[i].get('link'), d.docs[i].get('anon'), d.docs[i].get('replies'), d.docs[i].get('pdf'), d.docs[i].get('pdfname')]
+        var data = [p.docs[i].get('text'), p.docs[i].get('user'), p.docs[i].get('link'), p.docs[i].get('anon'), p.docs[i].get('replies'), p.docs[i].get('pdf'), p.docs[i].get('pdfname')]
         posts.push(data);
     }
 
