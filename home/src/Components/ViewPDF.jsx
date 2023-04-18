@@ -9,11 +9,11 @@ import "./Help.css"
 import Tabs from "./Tabs";
 const ViewPDF = () => {
     const [numPages, setNumPages] = useState(null);
-  const [pageNumber, setPageNumber] = useState(1);
+    const [pageNumber, setPageNumber] = useState(1);
     const location = useLocation();
     pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
-    
+
     const pdfContentType = 'application/pdf';
 
     const base64toBlob = (data) => {
@@ -38,20 +38,18 @@ const ViewPDF = () => {
 
     function onDocumentLoadSuccess({ numPages }) {
         setNumPages(numPages);
-      }
+    }
 
     return (
-        <div style={{textAlign: 'center'}}>
+        <div style={{ display: 'flex', justifyContent: 'center'}}>
             <Document file={location.state.pdf} onLoadSuccess={onDocumentLoadSuccess}>
-        <Page pageNumber={pageNumber} />
-      </Document>
-      <p>
-        Page {pageNumber} of {numPages}
-      </p> 
-      
+                <Page pageNumber={pageNumber} renderTextLayer={false}/>
+            </Document>
+           
 
 
-    </div>
+
+        </div>
     );
 
 };
