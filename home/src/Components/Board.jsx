@@ -4,6 +4,7 @@ import React, {Component, useState, useEffect} from 'react';
 import './Board.css'
 import CreateDiscussion from './CreateDiscussion'
 import { useLocation, Link, useNavigate } from "react-router-dom";
+import { Row } from 'react-bootstrap';
 //import { blue } from 'tailwindcss/colors';
 
 
@@ -35,6 +36,7 @@ export const Board = ({ GlobalState }) => {
     console.log(location.state.posts[0])
 
     var listofposts = location.state.posts
+    var listofreploes = location.state.replies
     
     
 
@@ -381,19 +383,61 @@ export const Board = ({ GlobalState }) => {
                        
 
                        {
-                        lookAtPost != undefined && <><h1> Compose a Reply: </h1>
+                        
+                        lookAtPost != undefined &&                      <div> <><h1> Compose a Reply: </h1>
                         {
                             wordErrReply && <h2 style={{color: 'black'}}>Please make sure your post is appropriate!</h2>
                         }
+
                         {
                             emptyErrReply && <h2 style={{color: 'black'}}>Type something before posting!</h2>
                         }
+   
                         <input style={{width: '400px'}} value={reply} onChange={(e) => setReply(e.target.value)} type="reply" placeholder="Type here..." id="reply" name="reply" />
                         <button onClick={addReply}>Post</button> {/* posts as a post, need to make it a reply*/}
                         <select id="anonreply" name="anonreply" onChange={(e) => setAnonReply(e.target.value)}>
                             <option value='false'>With Username</option>
                             <option value='true'>Anonymously</option>
                         </select></>
+                        
+                            {replies.map((replies) => (
+                                <>
+
+                            <div style={{border: 'solid', backgroundColor: "#F8C8DC"}}>
+                            <></>
+                             <a style={{fontSize: 20 }}>
+                            {replies[0]}
+                            </a>
+                            
+                            {
+                                replies[3] === 'true' ? <p>Posted by Anonymous</p> : <p>Posted by {replies[1]}</p>
+                            } 
+
+
+                                
+                                <br/>
+                                </div>
+                                <a style={{display: "flex", fontSize: "15px" }}>
+                                    <li style={{padding: "10px"}}>
+
+                                    <a href="" onClick={upVotePost}><i class="fa-solid fa-thumbs-up"></i></a>
+                                    </li>
+                                    <li style={{padding: "10px"}}>
+
+                                    <a href="" onClick={downVotePost}><i class="fa-solid fa-thumbs-down"></i></a>
+                                    </li>
+                                    <br></br>
+                                    <li style={{padding: "10px"}}>
+                                    <a href="./Help" onClick={reportPost}><i class="fa-solid fa-warning"></i></a>
+                                    </li>
+                                    </a>
+                                <br/>
+                                </>
+                            ))}
+                            
+                
+                            </div>
+
                        }
                 
 
