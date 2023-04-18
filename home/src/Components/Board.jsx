@@ -13,7 +13,6 @@ export const Board = ({ GlobalState }) => {
     const location = useLocation();
     const [lookAtPost, setLookAtPost] = useState(location.state.posts[0]);
     const { currUser, setCurrUser } = GlobalState;
-    console.log(location.state.lookAtPost)
     const [text, setText] = useState('')
     const [reply, setReply] = useState('')
     const [link, setLink] = useState(false);
@@ -271,7 +270,7 @@ export const Board = ({ GlobalState }) => {
                     <div style={{border: 'solid', backgroundColor: "#F8C8DC"}}>
                         <br/>
                         {
-                            post[5] ? <button className="link-btn" style={{textAlign: 'left'}} onClick={(e) => setLookAtPost(post)} > Click here to view post</button> : <button className="link-btn" style={{textAlign: 'left'}} onClick={(e) => setLookAtPost(post)} > {post[0]}</button>
+                            post[5] ? <button className="link-btn" style={{textAlign: 'left'}} onClick={(e) => setLookAtPost(post)} > {post[6]}</button> : <button className="link-btn" style={{textAlign: 'left'}} onClick={(e) => setLookAtPost(post)} > {post[0]}</button>
                         }
                          
                     

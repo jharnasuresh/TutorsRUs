@@ -29,23 +29,25 @@ export const CreateDiscussion = ({GlobalState}) => {
         }
         console.log("entered handle submit ~~~~~~~~")
         
-        const requestData = JSON.stringify({"name": name, "course": className});
+        const requestData = JSON.stringify({"name": name, "course": className, username: currUser});
         const headers = { "content-type": "application/json" };
 
         async function getResponse() { 
 
             console.log("hello???????111111");
-            const response = await fetch('http://localhost:3001/createdisc', { method: 'POST', body: requestData, headers: headers });
-            var r = await response.json();
-            if (r === 'error') {
-                console.log("oh no")
-                setShowTakenErr(true)
-                return;
-            }
-            
-                //navigate somewhere
-            
-            console.log("hello???????22222");
+            fetch('http://localhost:3001/createdisc', { method: 'POST', body: requestData, headers: headers })
+            .then((res) => res.json())
+            .then((res) => {
+                //console.log("verified! " + res["tutor"])
+                if (res === 'error') {
+                    console.log("oh no")
+                    setShowTakenErr(true)
+                    return;
+                }
+                navigate('/Discussion', {state: {u: currUser, boards: res.boards}})
+
+                // Logs wL2dvYWwgbW9yZ...
+            });
         }
 
     
