@@ -26,24 +26,28 @@ export const UploadPDFBoard = () => {
 
     const handleUpload = () => {
 
-        async function getResponse() {
+        async function getResponse() { //This works fine, base64 string is correct
             console.log("uplodinggg")
             //let formData = new FormData()
             var file = files[0]
+            console.log(file instanceof File)
             var url = URL.createObjectURL(file)
             var str;
             //file.src = url
             console.log(files[0])
             const reader = new FileReader();
+            reader.readAsDataURL(files[0]);
             reader.onloadend = () => {
                 // Use a regex to remove data url part
+                console.log(reader.result)
                 const base64String = reader.result
+                /*
                     .replace('data:', '')
                     .replace(/^.+,/, '');
-    
+    */
                 //console.log(base64String);
                 str = base64String
-                console.log("str " + str)
+                //console.log("str " + str)
 
             const headers = { "content-type": "application/json" };
             const requestData = JSON.stringify({ user: location.state.user, board: location.state.board, link: false, text: str, anon: false, pdf: true})
@@ -56,7 +60,7 @@ export const UploadPDFBoard = () => {
             })
                 // Logs wL2dvYWwgbW9yZ...
             };
-            reader.readAsDataURL(file);
+            
             /*
             formData.append('file', files[0])
             formData.append("user", location.state.user)
