@@ -12,7 +12,8 @@ import { Row } from 'react-bootstrap';
 export const Board = ({ GlobalState }) => {
     const navigate = useNavigate();
     const location = useLocation();
-    const [lookAtPost, setLookAtPost] = useState(location.state.posts[0]);
+    const [lookAtPost, setLookAtPost] = useState(undefined);
+    const [replies, setReplies] = useState([])
     const { currUser, setCurrUser } = GlobalState;
     console.log(location.state.lookAtPost)
     const [text, setText] = useState('')
@@ -38,9 +39,9 @@ export const Board = ({ GlobalState }) => {
     var listofposts = location.state.posts
     var listofreploes = location.state.replies
     
-    
+    /*
 
-    var replies = [] // replies is an array of arrays, each inner array is a reply
+    var repliess = [] // replies is an array of arrays, each inner array is a reply
     if (lookAtPost != undefined) {
         var r = lookAtPost[4]
         console.log(r)
@@ -56,12 +57,38 @@ export const Board = ({ GlobalState }) => {
             temp = temp.substring(temp.indexOf("~") + 1)
             var downv = temp
             var info = [reptext, usern, an, upv, downv]
-            replies.push(info)
+            repliess.push(info)
         }
     }
 
-    console.log([...replies])
+    console.log([...repliess])
     
+*/
+
+    const setRepliesFunc = (post) => {
+console.log("---set replies---")
+var repliess = [] // replies is an array of arrays, each inner array is a reply
+    
+        var r = post[4]
+        console.log(r)
+        for (var i = 0; i < r.length; i++) {
+            var temp = r[i]
+            console.log("temp " + temp)
+            var reptext = temp.substring(0, temp.indexOf("~"))
+            temp = temp.substring(temp.indexOf("~") + 1)
+            var usern = temp.substring(0, temp.indexOf("~"))
+            temp = temp.substring(temp.indexOf("~") + 1)
+            var an = temp.substring(0, temp.indexOf("~"))
+            temp = temp.substring(temp.indexOf("~") + 1)
+            var upv = temp.substring(0, temp.indexOf("~"))
+            temp = temp.substring(temp.indexOf("~") + 1)
+            var downv = temp
+            var info = [reptext, usern, an, upv, downv]
+            repliess.push(info)
+        }
+        setReplies(repliess)
+    
+    }
 
     //console.log(replies)
     const upVotePost = () => {
@@ -81,6 +108,28 @@ export const Board = ({ GlobalState }) => {
         .then((res) => res.json())
         .then((res) => {
             console.log("checked " + res);
+        })
+    }
+
+    const upVoteReply = (reply) => {
+        const headers = { "content-type": "application/json" };
+        const requestData = JSON.stringify({ user: currUser, post: lookAtPost, reply: reply, board: location.state.board})
+        fetch('http://localhost:3001/upvotereply', { method: 'POST', body: requestData, headers: headers })
+        .then((res) => res.json())
+        .then((res) => {
+            console.log("checked " + res);
+            setReplies(res.replies)
+        })
+    }
+    
+    const downVoteReply = (reply) => {
+        const headers = { "content-type": "application/json" };
+        const requestData = JSON.stringify({ user: currUser, post: lookAtPost, reply: reply, board: location.state.board})
+        fetch('http://localhost:3001/downvotereply', { method: 'POST', body: requestData, headers: headers })
+        .then((res) => res.json())
+        .then((res) => {
+            console.log("checked " + res);
+            setReplies(res.replies)
         })
     }
 
@@ -294,7 +343,7 @@ export const Board = ({ GlobalState }) => {
                     <div style={{border: 'solid', backgroundColor: "#F8C8DC"}}>
                         <br/>
                         {
-                            post[5] ? <button className="link-btn" style={{textAlign: 'left'}} onClick={(e) => setLookAtPost(post)} >{post[6]}</button> : <button className="link-btn" style={{textAlign: 'left'}} onClick={(e) => isDeleted ? (setLookAtPost(post), setIsDeleted(false)) : setLookAtPost(post)} > {post[0]}</button>
+                            post[5] ? <button className="link-btn" style={{textAlign: 'left'}} onClick={(e) => {setLookAtPost(post); setRepliesFunc(post);}} >{post[6]}</button> : <button className="link-btn" style={{textAlign: 'left'}} onClick={(e) => isDeleted ? (setLookAtPost(post), setIsDeleted(false)) : (setLookAtPost(post), setRepliesFunc(post))} > {post[0]}</button>
                         }
                          
                     
@@ -361,14 +410,14 @@ export const Board = ({ GlobalState }) => {
                         <nav>
                         <li>
 
-                            <a href="" onClick={upVotePost}><i class="fa-solid fa-thumbs-up"></i></a>
+                            <span onClick={upVotePost}><i class="fa-solid fa-thumbs-up"></i></span>
                         </li>
                         <li>
 
-                        <a href="" onClick={downVotePost}><i class="fa-solid fa-thumbs-down"></i></a>
+                        <span onClick={downVotePost}><i class="fa-solid fa-thumbs-down"></i></span>
                         </li>
                         <li>
-                            <a href="./Help" onClick={reportPost}><i class="fa-solid fa-warning"></i></a>
+                            <span onClick={reportPost}><i class="fa-solid fa-warning"></i></span>
                         </li>
                         </nav>
                         </>
@@ -405,9 +454,9 @@ export const Board = ({ GlobalState }) => {
 
                             <div style={{border: 'solid', backgroundColor: "#F8C8DC"}}>
                             <></>
-                             <a style={{fontSize: 20 }}>
+                             <span style={{fontSize: 20 }}>
                             {replies[0]}
-                            </a>
+                            </span>
                             
                             {
                                 replies[3] === 'true' ? <p>Posted by Anonymous</p> : <p>Posted by {replies[1]}</p>
@@ -417,20 +466,20 @@ export const Board = ({ GlobalState }) => {
                                 
                                 <br/>
                                 </div>
-                                <a style={{display: "flex", fontSize: "15px" }}>
+                                <span style={{display: "flex", fontSize: "15px" }}>
                                     <li style={{padding: "10px"}}>
-
-                                    <a href="" onClick={upVotePost}><i class="fa-solid fa-thumbs-up"></i></a>
+                                    <span>{replies[3]}              </span>
+                                    <span onClick={() => {upVoteReply(replies[0])}}><i class="fa-solid fa-thumbs-up"></i></span>
                                     </li>
                                     <li style={{padding: "10px"}}>
-
-                                    <a href="" onClick={downVotePost}><i class="fa-solid fa-thumbs-down"></i></a>
+                                    <span>{replies[4]}              </span>
+                                    <span onClick={() => {downVoteReply(replies[0])}}><i class="fa-solid fa-thumbs-down"></i></span>
                                     </li>
                                     <br></br>
                                     <li style={{padding: "10px"}}>
-                                    <a href="./Help" onClick={reportPost}><i class="fa-solid fa-warning"></i></a>
+                                    <span onClick={() => {console.log("report")}}><i class="fa-solid fa-warning"></i></span>
                                     </li>
-                                    </a>
+                                    </span>
                                 <br/>
                                 </>
                             ))}
