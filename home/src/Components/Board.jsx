@@ -225,8 +225,9 @@ export const Board = ({ GlobalState }) => {
             }
             console.log("tag " + u)
             return <>
-            <h1><span>{before}</span><button className='linked' onClick={() => {toProfile(u)}}>{u}</button><span>{after}</span></h1>
-            
+
+                <h1 style={{padding: "20px", fontFamily: "Bowlby One", color: "rgb(96, 44, 145)"}}><span>{before}</span><button className='linked' style={{fontFamily: "Bowlby One", color: "rgb(96, 44, 145)", fontSize: '28px'}} onClick={() => { toProfile(u) }}>{u}</button><span>{after}</span></h1>
+
             </>
         }
 
@@ -335,15 +336,14 @@ export const Board = ({ GlobalState }) => {
                         
                     {
                       */}
-                      { //PDF
-                        lookAtPost[5] && <button className="link-btn" onClick={() => {navigate('/ViewPDF', {state: {u: currUser, pdf: lookAtPost[0]}})}}>Click here to view PDF</button>
-                      }
-                      {
-                        !lookAtPost[5] && (lookAtPost[2] ? <a href={lookAtPost[0]}>{lookAtPost[0]}</a> : tagIfNeeded(lookAtPost[0]))
-                      }
-                    
-                          
-                    
+
+                                { //PDF
+                                    lookAtPost[5] && <button className="link-btn"  style={{padding: "20px", fontFamily: "Bowlby One", color: "rgb(96, 44, 145)", fontSize: '28px'}} onClick={() => { navigate('/ViewPDF', { state: { u: currUser, pdf: lookAtPost[0] } }) }}>Click here to view PDF</button>
+                                }
+                                {
+                                    !lookAtPost[5] && (lookAtPost[2] ? <span style={{padding: "20px", fontFamily: "Bowlby One", color: "rgb(96, 44, 145)"}}>{lookAtPost[0]}</span> : tagIfNeeded(lookAtPost[0]))
+                                }
+
 
                         {
                             lookAtPost[3] === 'true' ? <p>Posted by: Anonymous</p> : <p>Posted by: {lookAtPost[1]}</p>
