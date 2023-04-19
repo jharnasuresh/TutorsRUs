@@ -158,10 +158,6 @@ export const NotYourProfile = ({GlobalState}) => {
 
           <InlineWidget url={urlTut} />
         </div>
-        <h2>Pay your Tutor!</h2>
-        <a> 
-          Venmo: {venmo}
-        </a>
         <a>
           
         </a>
