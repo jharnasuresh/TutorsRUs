@@ -21,7 +21,8 @@ nav {
     min-height: 10vh;
     align-items: center;
     font-family: Georgia, 'Times New Roman', Times, serif;
-    background-color: #F8C8DC;
+    background: radial-gradient(circle, #F8C8DC 25%, #89CFF0 75%);
+
 }
 
 
@@ -36,7 +37,7 @@ nav .nav-links  {
 
 
 nav .nav-links a:hover{
-    background-color: #88caff;
+    background-color: #89CFF0;
     
 }
 

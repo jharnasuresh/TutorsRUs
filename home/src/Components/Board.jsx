@@ -258,7 +258,7 @@ export const Board = ({ GlobalState }) => {
 
 
                 console.log(res.posts)
-                
+
                 navigate("/Board", {
 
                     state: {
@@ -269,7 +269,7 @@ export const Board = ({ GlobalState }) => {
                     }
                 });
 
-                
+
             })
     }
 
@@ -326,7 +326,7 @@ export const Board = ({ GlobalState }) => {
                 });
 
                 */
-               setRepliesFunc(res.posts[res.count])
+                setRepliesFunc(res.posts[res.count])
             })
 
 
@@ -345,7 +345,7 @@ export const Board = ({ GlobalState }) => {
                 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Bowlby+One" />
                 <h1>{location.state.board} Board</h1>
             </div>
-            <div style={{ width: '400px', height: '1000px', textAlign: 'left', border: 'solid', backgroundColor: 'white', color: 'black', borderRadius: '10px', padding: '5px', marginTop: "50px", marginLeft: "-900px" }}>
+            <div style={{ width: '400px', height: '1000px', textAlign: 'left', border: 'solid', borderColor: "rgb(96, 44, 145)", backgroundColor: 'white', color: 'black', borderRadius: '10px', padding: '5px', marginTop: "50px", marginLeft: "-900px" }}>
                 <div style={{ padding: "10px", fontFamily: "Bowlby One", color: "rgb(96, 44, 145)", size: '2' }}>
                     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Bowlby+One" />
                     <h1>Older Posts</h1>
@@ -381,15 +381,15 @@ export const Board = ({ GlobalState }) => {
                 }
             </div>
 
-            <div style={{ width: '800px', height: '1000px', textAlign: 'left', border: 'solid', backgroundColor: 'white', color: 'black', borderRadius: '10px', padding: '5px', marginTop: "-1000px", marginLeft: "500px", textAlign: 'left' }}>
+            <div style={{ width: '800px', height: '1000px', textAlign: 'left', border: 'solid', borderColor: "rgb(96, 44, 145)",  backgroundColor: 'white', color: 'black', borderRadius: '10px', padding: '5px', marginTop: "-1000px", marginLeft: "500px", textAlign: 'left' }}>
 
-                <div style={{ border: 'solid', backgroundColor: "#F8C8DC" }}>
-                    
+                <div style={{ border: 'solid',  borderColor: "rgb(96, 44, 145)" , backgroundColor: "#F8C8DC" }}>
+
                     {
                         isDeleted && <p> This post was deleted </p>
                     }
-                    
-                    
+
+
                     <div style={{ padding: "10px", fontFamily: "Bowlby One", color: "rgb(96, 44, 145)", size: '2', textAlign: 'left' }}>
                         <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Bowlby+One" />
 
@@ -419,14 +419,15 @@ export const Board = ({ GlobalState }) => {
 
 
                                 }
+                                
+
+
+                                <nav style={{background: "none"}}>
                                 {
-                                    lookAtPost[1] === currUser ? <button onClick={deletePost}>DELETE</button> : <></>
+                                    lookAtPost[1] === currUser ? <button style={{ background: "none", color: "rgb(96, 44, 145)"}}onClick={deletePost}><i class="fa-solid fa-trash-can"></i></button> : <></>
 
 
                                 }
-
-
-                                <nav>
                                     <li>
 
                                         <span onClick={upVotePost}><i class="fa-solid fa-thumbs-up"></i></span>
@@ -442,22 +443,14 @@ export const Board = ({ GlobalState }) => {
                             </>
 
                         }
-   
-                        <input style={{width: '400px'}} value={reply} onChange={(e) => setReply(e.target.value)} type="reply" placeholder="Type here..." id="reply" name="reply" />
-                        <button style= {{backgroundColor: "#BBE5EA"}} onClick={addReply}>Post</button> {/* posts as a post, need to make it a reply*/}
-                        <select id="anonreply" name="anonreply" onChange={(e) => setAnonReply(e.target.value)}>
-                            <option value='false'>With Username</option>
-                            <option value='true'>Anonymously</option>
-                        </select></>
-                        
-                            {replies.map((replies) => (
-                                <>
 
-                    </div>
+            
+
+                        </div >
                 </div>
 
                 <div style={{ border: 'solid' }}>
-                    <div style={{ padding: "10px", fontFamily: "Georgia", color: "rgb(96, 44, 145)", size: '0', textAlign: 'left', fontSize: '8px', textAlignLast: 'left' }}>
+                    <div style={{ padding: "10px", fontFamily: "Georgia", color: "rgb(96, 44, 145)", borderColor: "rgb(96, 44, 145)",  size: '0', textAlign: 'left', fontSize: '8px', textAlignLast: 'left' }}>
                         <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Bowlby+One" />
 
 
@@ -472,8 +465,8 @@ export const Board = ({ GlobalState }) => {
                                     emptyErrReply && <h2 style={{ color: 'black' }}>Type something before posting!</h2>
                                 }
 
-                                <input style={{ width: '400px' }} value={reply} onChange={(e) => setReply(e.target.value)} type="reply" placeholder="Type here..." id="reply" name="reply" />
-                                <button onClick={addReply}>Post</button> {/* posts as a post, need to make it a reply*/}
+                                <input style={{ width: '400px', border: 'solid', borderColor: "rgb(96, 44, 145)" }} value={reply} onChange={(e) => setReply(e.target.value)} type="reply" placeholder="Type here..." id="reply" name="reply" />
+                                <button style={{border: "solid", borderColor: "rgb(96, 44, 145)"}} onClick={addReply}>Post</button> {/* posts as a post, need to make it a reply*/}
                                 <select id="anonreply" name="anonreply" onChange={(e) => setAnonReply(e.target.value)}>
                                     <option value='false'>With Username</option>
                                     <option value='true'>Anonymously</option>
@@ -482,7 +475,7 @@ export const Board = ({ GlobalState }) => {
                                 {replies.map((replies) => (
                                     <>
 
-                                        <div style={{ border: 'solid', backgroundColor: "#F8C8DC" }}>
+                                        <div style={{ border: 'solid', borderColor: "rgb(96, 44, 145)",  backgroundColor: "#F8C8DC" }}>
                                             <></>
                                             <span style={{ fontSize: 20, padding: '5px' }}>
                                                 {replies[0]}
@@ -496,7 +489,7 @@ export const Board = ({ GlobalState }) => {
 
                                             <br />
                                         </div>
-                                        <span style={{ display: "flex", fontSize: "15px" }}>
+                                        <span style={{ display: "flex", fontSize: "15px", border: "solid", borderColor: "rgb(96, 44, 145)" }}>
                                             <li style={{ padding: "10px" }}>
                                                 <span>{replies[3]}              </span>
                                                 <span onClick={() => { upVoteReply(replies[0]) }}><i class="fa-solid fa-thumbs-up"></i></span>
@@ -505,7 +498,7 @@ export const Board = ({ GlobalState }) => {
                                                 <span>{replies[4]}              </span>
                                                 <span onClick={() => { downVoteReply(replies[0]) }}><i class="fa-solid fa-thumbs-down"></i></span>
                                             </li>
-                                
+
                                         </span>
                                         <br />
                                     </>

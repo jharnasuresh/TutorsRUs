@@ -116,7 +116,7 @@ export const Discussion = ({GlobalState}) => {
                 location.state.boards.map((b) => (
                    
   
-                    <div style={{width: '600px', height: '100px', textAlign: 'center', border: 'solid', backgroundColor: 'white', color: 'gray', borderRadius: '10px', padding: '5px', marginTop: "20px"}}>
+                    <div style={{marginTop: "1000px", display: "inline-block", position: "relative", width: '600px', height: '100px', textAlign: 'center', border: 'solid', backgroundColor: 'white', color: 'gray', borderRadius: '10px', padding: '5px', marginTop: "20px"}}>
                         <button className="linked" onClick={(e) => {toBoard(b)}}>{b}</button>
                         <button onClick={(e) => {leaveBoard(b)}}>Leave</button>
                     </div>
@@ -125,7 +125,7 @@ export const Discussion = ({GlobalState}) => {
                 )
                 )
             }
-                <div style={{ justifyContent: 'start' }} class = "Discussion">
+                <div style={{marginTop: "500px"}} class = "Discussion">
             <button type="submit" onClick={() => navigate('/CreateDiscussion', {state: {u: currUser}})}>Create New Discussion Board</button>        
         </div>
                 
