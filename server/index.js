@@ -13,7 +13,7 @@ app.use(express.urlencoded({ extended: false }));
 const admin = require("firebase-admin");
 
 const { db } = require('./firebase.js')
-const{ doc, setDoc } = require ("firebase/firestore"); 
+const { doc, setDoc } = require("firebase/firestore");
 //const toSendToken = require('./tokenSender.js');
 const bp = require('body-parser')
 app.use(bp.json({ limit: '50mb' }));
@@ -48,8 +48,8 @@ const todos = [];
 // Get all todos
 app.get("/todos", (req, res) => {
     return res.status(200).json({
-    data: todos,
-    error: null,
+        data: todos,
+        error: null,
     });
 });
 
@@ -199,11 +199,11 @@ app.post('/signup', async (req, res) => {
 
 });
 
-app.post("/upvotepost", async(req,res) => {
+app.post("/upvotepost", async (req, res) => {
     const postData = await db.collection('posts').where('text', '==', req.body.post[0]).get();
     console.log("no problem here!")
     var postDataDoc = postData.docs[0];
-    var upvotes= postDataDoc.get("upvotes")
+    var upvotes = postDataDoc.get("upvotes")
 
 
 
@@ -221,17 +221,27 @@ app.post("/upvotepost", async(req,res) => {
 
     const upCurr = await db.collection('posts').where('text', '==', req.body.post[0]).get();
     postDataDoc = upCurr.docs[0];
-    return res.send(JSON.stringify({user: req.body.user})) 
+
+    var d = await db.collection('posts').where('board', '==', req.body.board).get();
+    var posts = [];
+    console.log(d.docs.length)
+    for (var i = 0; i < d.docs.length; i++) {
+        var data = [d.docs[i].get('text'), d.docs[i].get('user'), d.docs[i].get('link'), d.docs[i].get('anon'), d.docs[i].get('replies'), d.docs[i].get('pdf'), d.docs[i].get('pdfname')]
+        posts.push(data);
+    }
+    return res.send(JSON.stringify({ posts: posts }))
+
+    //return res.send(JSON.stringify({ user: req.body.user }))
 
 
 });
 
 
-app.post("/downvotepost", async(req,res) => {
+app.post("/downvotepost", async (req, res) => {
     const postData = await db.collection('posts').where('text', '==', req.body.post[0]).get();
-    console.log("no problem here!")
+    console.log("no problem here!!")
     var postDataDoc = postData.docs[0];
-    var downvotes= postDataDoc.get("downvotes")
+    var downvotes = postDataDoc.get("downvotes")
 
 
 
@@ -249,23 +259,147 @@ app.post("/downvotepost", async(req,res) => {
 
     const upCurr = await db.collection('posts').where('text', '==', req.body.post[0]).get();
     postDataDoc = upCurr.docs[0];
-    return res.send(JSON.stringify({user: req.body.user})) 
+
+    var d = await db.collection('posts').where('board', '==', req.body.board).get();
+    var posts = [];
+    console.log(d.docs.length)
+    for (var i = 0; i < d.docs.length; i++) {
+        var data = [d.docs[i].get('text'), d.docs[i].get('user'), d.docs[i].get('link'), d.docs[i].get('anon'), d.docs[i].get('replies'), d.docs[i].get('pdf'), d.docs[i].get('pdfname')]
+        posts.push(data);
+    }
+    return res.send(JSON.stringify({ posts: posts }))
+
+    return res.send(JSON.stringify({ user: req.body.user }))
 
 
 });
 
-app.post("/deletepost", async(req,res) => {
+
+
+app.post("/upvotereply", async (req, res) => {
+    const postData = await db.collection('posts').where('text', '==', req.body.post[0]).get();
+    console.log("no problem here!!!")
+    var postDataDoc = postData.docs[0];
+
+    var replies = postDataDoc.get('replies')
+
+    var temp;
+    var count = replies.length
+    for (var i = 0; i < replies.length; i++) {
+        console.log("here " + replies[i])
+        if (replies[i].includes(`${req.body.reply}~${req.body.user}`)) {
+            console.log('found')
+            temp = replies[i]
+            var reptext = temp.substring(0, temp.indexOf("~"))
+            temp = temp.substring(temp.indexOf("~") + 1)
+            var usern = temp.substring(0, temp.indexOf("~"))
+            temp = temp.substring(temp.indexOf("~") + 1)
+            var an = temp.substring(0, temp.indexOf("~"))
+            temp = temp.substring(temp.indexOf("~") + 1)
+            var upv = temp.substring(0, temp.indexOf("~"))
+            temp = temp.substring(temp.indexOf("~") + 1)
+            var downv = temp
+            //var info = [reptext, usern, an, upv, downv]
+            upv++;
+
+            replies[i] = `${reptext}~${usern}~${an}~${upv}~${downv}`
+            break;
+        }
+    }
+
+    console.log(replies)
+
+    await postDataDoc.ref.update({replies: replies})
+    const upCurr =  await db.collection('posts').where('text', '==', req.body.post[0]).get();
+
+console.log('updated')
+    var d = await db.collection('posts').where('board', '==', req.body.board).get();
+    var posts = [];
+    console.log(d.docs.length)
+    for (var i = 0; i < d.docs.length; i++) {
+        var data = [d.docs[i].get('text'), d.docs[i].get('user'), d.docs[i].get('link'), d.docs[i].get('anon'), d.docs[i].get('replies'), d.docs[i].get('pdf'), d.docs[i].get('pdfname')]
+        posts.push(data);
+        console.log("d " + data)
+        if (d.docs[i].get('text') === req.body.post[0]) {
+            int = i;
+        }
+    }
+    console.log("posts " + posts)
+    return res.send(JSON.stringify({ posts: posts, count: count, replies: posts[int] }))
+
+    //return res.send(JSON.stringify({ user: req.body.user }))
+
+
+});
+
+
+app.post("/downvotereply", async (req, res) => {
+    const postData = await db.collection('posts').where('text', '==', req.body.post[0]).get();
+    console.log("no problem here!!!!")
+    var postDataDoc = postData.docs[0];
+
+    var replies = postDataDoc.get('replies')
+
+    var temp;
+    var count = replies.length;
+    for (var i = 0; i < replies.length; i++) {
+        if (replies[i].includes(`${req.body.reply}~${req.body.user}`)) {
+            console.log('found')
+            temp = replies[i]
+            var reptext = temp.substring(0, temp.indexOf("~"))
+            temp = temp.substring(temp.indexOf("~") + 1)
+            var usern = temp.substring(0, temp.indexOf("~"))
+            temp = temp.substring(temp.indexOf("~") + 1)
+            var an = temp.substring(0, temp.indexOf("~"))
+            temp = temp.substring(temp.indexOf("~") + 1)
+            var upv = temp.substring(0, temp.indexOf("~"))
+            temp = temp.substring(temp.indexOf("~") + 1)
+            var downv = temp
+            //var info = [reptext, usern, an, upv, downv]
+            downv++;
+
+            replies[i] = `${reptext}~${usern}~${an}~${upv}~${downv}`
+            break;
+        }
+    }
+
+    await postDataDoc.ref.update({replies: replies})
+    const upCurr =  await db.collection('posts').where('text', '==', req.body.post[0]).get();
+
+    var d = await db.collection('posts').where('board', '==', req.body.board).get();
+    var posts = [];
+    console.log(d.docs.length)
+    var int;
+    for (var i = 0; i < d.docs.length; i++) {
+        var data = [d.docs[i].get('text'), d.docs[i].get('user'), d.docs[i].get('link'), d.docs[i].get('anon'), d.docs[i].get('replies'), d.docs[i].get('pdf'), d.docs[i].get('pdfname')]
+        posts.push(data);
+        if (d.docs[i].get('text') === req.body.post[0]) {
+            int = i;
+        }
+    }
+    console.log(posts)
+    return res.send(JSON.stringify({ posts: posts, count: count, replies: posts[int] }))
+
+    //return res.send(JSON.stringify({ user: req.body.user }))
+
+
+});
+
+
+
+
+app.post("/deletepost", async (req, res) => {
     /*const postData = await db.collection('posts').where('text', '==', req.body.post[0]).get();
     console.log("no problem here!")
     var postDataDoc = postData.docs[0];
     postDataDoc.deleteDoc();*/
-       /* console.log("june look this is the post " + (req.body.post)[0]);
-        var postData = await db.collection('posts').where('text', '==', req.body.post[0]).get();
-        var doc = postData.docs[0];
+    /* console.log("june look this is the post " + (req.body.post)[0]);
+     var postData = await db.collection('posts').where('text', '==', req.body.post[0]).get();
+     var doc = postData.docs[0];
 
-        await doc.ref.update({ anon: true });
-        var t = await db.collection("posts").doc((req.body.post)[0]).delete();*/
-        const postingData = await db.collection('posts').where('text', '==', (req.body.post)[0]).get();
+     await doc.ref.update({ anon: true });
+     var t = await db.collection("posts").doc((req.body.post)[0]).delete();*/
+    const postingData = await db.collection('posts').where('text', '==', (req.body.post)[0]).get();
     var postingDataDoc = postingData.docs[0];
     postingDataDoc.ref.delete();
 
@@ -273,12 +407,12 @@ app.post("/deletepost", async(req,res) => {
     var posts = [];
     console.log(d.docs.length)
     for (var i = 0; i < d.docs.length; i++) {
-        var data = [d.docs[i].get('text'), d.docs[i].get('user'), d.docs[i].get('link'), d.docs[i].get('anon'), d.docs[i].get('replies')]
+        var data = [d.docs[i].get('text'), d.docs[i].get('user'), d.docs[i].get('link'), d.docs[i].get('anon'), d.docs[i].get('replies'), d.docs[i].get('pdf'), d.docs[i].get('pdfname')]
         posts.push(data);
     }
-    return res.send(JSON.stringify({posts: posts}));
+    return res.send(JSON.stringify({ posts: posts }));
 
-    
+
 });
 
 app.post("/verify", async (req, res) => {
@@ -321,22 +455,22 @@ app.post("/parse", upload.single("file"), async (req, res) => {
 
 
 
-var login = await db.collection('users').where('username', '==', req.body.user).get();
-if (!login.empty) {
-    const info = {
-        username: req.body.user, 
-        transcript: file
+    var login = await db.collection('users').where('username', '==', req.body.user).get();
+    if (!login.empty) {
+        const info = {
+            username: req.body.user,
+            transcript: file
+        }
+
+        const r = await db.collection('transcripts').doc(req.body.user).set(info);
+
+        var doc = login.docs[0];
+        await doc.ref.update({ tutor: true })
+        console.log("2")
+        return res.send(JSON.stringify({ "studentRating": doc.get("studentRating"), "tutorRating": doc.get("tutorRating"), "u": doc.get("username"), "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), taking: doc.get("taking"), tutor: doc.get("tutor"), price: doc.get("price"), venmo: doc.get("venmo"), taken: doc.get("taken") }))
+
     }
-
-    const r = await db.collection('transcripts').doc(req.body.user).set(info);
-    
-    var doc = login.docs[0];
-    await doc.ref.update({ tutor: true })
-    console.log("2")
-    return res.send(JSON.stringify({ "studentRating": doc.get("studentRating"), "tutorRating": doc.get("tutorRating"), "u": doc.get("username"), "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), taking: doc.get("taking"), tutor: doc.get("tutor"), price: doc.get("price"), venmo: doc.get("venmo"), taken: doc.get("taken") }))
-
-}
-return res.send(JSON.stringify("error"))
+    return res.send(JSON.stringify("error"))
 
 });
 
@@ -710,7 +844,7 @@ app.post("/searchboards", async (req, res) => {
     }
 
     return res.send(JSON.stringify(boards))
-    
+
 });
 
 app.post("/joinboard", async (req, res) => {
@@ -723,7 +857,7 @@ app.post("/joinboard", async (req, res) => {
             return res.send(JSON.stringify(req.body.username))
         }
         boards.push(req.body.board);
-        await user.ref.update({ boards: boards }); 
+        await user.ref.update({ boards: boards });
     }
     return res.send(JSON.stringify(req.body.username))
 })
@@ -737,7 +871,7 @@ app.post('/getposts', async (req, res) => {
         var data = [d.docs[i].get('text'), d.docs[i].get('user'), d.docs[i].get('link'), d.docs[i].get('anon'), d.docs[i].get('replies'), d.docs[i].get('pdf'), d.docs[i].get('pdfname')]
         posts.push(data);
     }
-    return res.send(JSON.stringify({posts: posts}))
+    return res.send(JSON.stringify({ posts: posts }))
 })
 
 app.post('/addpost', async (req, res) => {
@@ -770,11 +904,12 @@ app.post('/addpost', async (req, res) => {
         var data = [d.docs[i].get('text'), d.docs[i].get('user'), d.docs[i].get('link'), d.docs[i].get('anon'), d.docs[i].get('replies'), d.docs[i].get('pdf'), d.docs[i].get('pdfname')]
         posts.push(data);
     }
-    return res.send(JSON.stringify({posts: posts}))
+    return res.send(JSON.stringify({ posts: posts }))
 
 })
 
 app.post('/addreply', async (req, res) => {
+    console.log("adding reply")
     var info = req.body.text + "~" + req.body.user + "~" + req.body.anon + "~0~0"
     var list = await db.collection('posts').where('text', '==', req.body.post).where('board', '==', req.body.board).get();
     //console.log(list.size + " " + req.body.post + " " + req.body.board)
@@ -782,19 +917,25 @@ app.post('/addreply', async (req, res) => {
     var replies = doc.get('replies');
     replies.push(info);
     //console.log(replies + " cftvgbhj")
-    await doc.ref.update({replies: replies})
+    await doc.ref.update({ replies: replies })
     list = await db.collection('posts').where('text', '==', req.body.post).where('board', '==', req.body.board).get();
     doc = list.docs[0]
     var p = await db.collection('posts').where('board', '==', req.body.board).get()
     //var pp = p.docs[0]
     var posts = [];
+    var count;
     console.log(p.docs.length)
     for (var i = 0; i < p.docs.length; i++) {
         var data = [p.docs[i].get('text'), p.docs[i].get('user'), p.docs[i].get('link'), p.docs[i].get('anon'), p.docs[i].get('replies'), p.docs[i].get('pdf'), p.docs[i].get('pdfname')]
         posts.push(data);
+        if (p.docs[i].get('text') === req.body.post) {
+            count = i;
+        }
     }
 
-    return res.send(JSON.stringify({replies: doc.get('replies'), posts: posts}))
+    console.log(p.docs[count].get('replies'))
+
+    return res.send(JSON.stringify({ replies: doc.get('replies'), posts: posts, count: count }))
 
 })
 
@@ -806,7 +947,7 @@ app.post('/checkvaliduser', async (req, res) => {
     }
     return res.send(JSON.stringify("success"))
 
-    
+
 })
 
 /*
@@ -856,7 +997,7 @@ app.post("/info", async (req, res) => {
 
 app.post("/rating", async (req, res) => {
 
-    console.log(req.body.account + " " + req.body.username) 
+    console.log(req.body.account + " " + req.body.username)
     const login = await db.collection('users').where('username', '==', req.body["username"]).get();
     if (login.empty) {
         return res.send("error")
@@ -866,12 +1007,12 @@ app.post("/rating", async (req, res) => {
     var currRating = 0;
     if (req.body.account === "tutor") {
         currRating = doc.get("tutorRating")
-    } 
+    }
     else if (req.body.account === "student") {
         currRating = doc.get("studentRating")
     }
 
-    
+
     console.log("old rating = " + currRating)
     var rate = Math.round(((JSON.parse(req.body.rating1) + JSON.parse(req.body.rating2) + JSON.parse(req.body.rating3)) / 3) * 10) / 10
     if (currRating > 0) {
@@ -883,10 +1024,10 @@ app.post("/rating", async (req, res) => {
     }
     console.log("new rating = " + currRating)
 
-    
+
     if (req.body.account === "tutor") {
         await doc.ref.update({ tutorRating: currRating });
-    } 
+    }
     else if (req.body.account === "student") {
         await doc.ref.update({ studentRating: currRating });
     }
@@ -1286,7 +1427,7 @@ app.post("/notyourprofile", async (req, res) => {
 
     const upOld = await db.collection('users').where('username', '==', oldUser).get();
     oldUserDataDoc = upOld.docs[0];
-    return res.send(JSON.stringify({"venmo": oldUserDataDoc.get("venmo"), "studentRating": oldUserDataDoc.get("studentRating"), "tutorRating": oldUserDataDoc.get("tutorRating"), "newFollowers": followers, "newFollowing": following, "u": oldUser, "fname": oldfname, "lname": oldlname, "email": oldemail, "followers": oldfollowers, "active": oldactive, "lang": oldlang, "taking": oldcourse, price: oldUserDataDoc.get("price"), "profpic": oldPFP, "tutor": oldUserDataDoc.get("tutor") })) // idk if this is the right price
+    return res.send(JSON.stringify({ "venmo": oldUserDataDoc.get("venmo"), "studentRating": oldUserDataDoc.get("studentRating"), "tutorRating": oldUserDataDoc.get("tutorRating"), "newFollowers": followers, "newFollowing": following, "u": oldUser, "fname": oldfname, "lname": oldlname, "email": oldemail, "followers": oldfollowers, "active": oldactive, "lang": oldlang, "taking": oldcourse, price: oldUserDataDoc.get("price"), "profpic": oldPFP, "tutor": oldUserDataDoc.get("tutor") })) // idk if this is the right price
 
 
 });
@@ -1304,10 +1445,10 @@ app.post("/pfpupload", async (req, res) => {
     var profpic = doc.get("profpic")
     console.log("2.4")
     //if (req.body["pfpurl"] !== profpic) {
-        console.log("2.75")
-        //console.log(req.body.pfpurl)
-        await doc.ref.update({ profpic: req.body.pfpurl });
-        console.log("3")
+    console.log("2.75")
+    //console.log(req.body.pfpurl)
+    await doc.ref.update({ profpic: req.body.pfpurl });
+    console.log("3")
     //}
 
 
@@ -1330,7 +1471,7 @@ app.post("/getboards", async (req, res) => {
     if (!list.empty) {
         //var boards =
         console.log("sending")
-        return res.send(JSON.stringify({boards: list.docs[0].get("boards")}))
+        return res.send(JSON.stringify({ boards: list.docs[0].get("boards") }))
     }
 });
 
@@ -1339,7 +1480,7 @@ app.post("/getboards", async (req, res) => {
 app.post("/createdisc", async (req, res) => {
     console.log("------------hello--------------")
     console.log("before set doc " + req.body.name + " " + req.body.course);
-      var data = {
+    var data = {
         name: req.body.name,
         class: req.body.course
     };
@@ -1356,9 +1497,9 @@ app.post("/createdisc", async (req, res) => {
         console.log("sending")
         var boards = list.docs[0].get("boards");
         boards.push(req.body.name)
-        await list.docs[0].ref.update({boards: boards})
+        await list.docs[0].ref.update({ boards: boards })
         list = await db.collection('users').where("username", '==', req.body.username).get();
-        return res.send(JSON.stringify({boards: list.docs[0].get("boards")}))
+        return res.send(JSON.stringify({ boards: list.docs[0].get("boards") }))
     }
     //return res.send(JSON.stringify({"returnedName": req.body.name, "returnedClass": req.body.course }))
 });
@@ -1369,7 +1510,7 @@ app.post('/leaveboard', async (req, res) => {
     var u = list.docs[0]
     var boards = u.get('boards')
     boards.splice(boards.indexOf(req.body.board), 1);
-    await u.ref.update({boards: boards});
+    await u.ref.update({ boards: boards });
     var list = await db.collection('users').where('username', '==', req.body.user).get();
     var doc = list.docs[0]
     var follows = false;

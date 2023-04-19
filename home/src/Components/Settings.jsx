@@ -227,10 +227,10 @@ export const Settings = ({ GlobalState }) => {
         } 
              
             <div>
-            <span style={{flexDirection: "column", display: "flex", marginLeft: "300px"}}>
+            <span style={{flexDirection: "column", display: "flex", marginLeft: "380px"}}>
             <button type="submit" onClick={backToProfile}>Back to profile</button>
             </span>
-            <span style={{flexDirection: "column", display: "flex", width: "250px", marginLeft: "50px", marginTop: "30px"}}>
+            <span style={{flexDirection: "column", display: "flex", width: "250px", marginLeft: "50px", marginTop: "60px"}}>
                 <button className='submit' onClick={() => setButtonPopup(true)}>Delete Account</button>
                 <Popup trigger={buttonPopup} setTrigger={setButtonPopup} user={location.state.u} del="acct">Are you sure you want to delete your account?</Popup>
             </span>
