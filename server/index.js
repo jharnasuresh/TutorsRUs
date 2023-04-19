@@ -1471,7 +1471,7 @@ app.post("/getboards", async (req, res) => {
     if (!list.empty) {
         //var boards =
         console.log("sending")
-        return res.send(JSON.stringify({ boards: list.docs[0].get("boards") }))
+        return res.send(JSON.stringify({ boards: list.docs[0].get("boards"), isTutor: list.docs[0].get('tutor') }))
     }
 });
 
