@@ -284,6 +284,7 @@ app.post("/upvotereply", async (req, res) => {
     var replies = postDataDoc.get('replies')
 
     var temp;
+    var count = replies.length
     for (var i = 0; i < replies.length; i++) {
         console.log("here " + replies[i])
         if (replies[i].includes(`${req.body.reply}~${req.body.user}`)) {
@@ -324,7 +325,7 @@ console.log('updated')
         }
     }
     console.log("posts " + posts)
-    return res.send(JSON.stringify({ posts: posts, int: int, replies: replies }))
+    return res.send(JSON.stringify({ posts: posts, count: count, replies: posts[int] }))
 
     //return res.send(JSON.stringify({ user: req.body.user }))
 
@@ -340,6 +341,7 @@ app.post("/downvotereply", async (req, res) => {
     var replies = postDataDoc.get('replies')
 
     var temp;
+    var count = replies.length;
     for (var i = 0; i < replies.length; i++) {
         if (replies[i].includes(`${req.body.reply}~${req.body.user}`)) {
             console.log('found')
@@ -376,7 +378,7 @@ app.post("/downvotereply", async (req, res) => {
         }
     }
     console.log(posts)
-    return res.send(JSON.stringify({ posts: posts, int: int, replies: replies }))
+    return res.send(JSON.stringify({ posts: posts, count: count, replies: posts[int] }))
 
     //return res.send(JSON.stringify({ user: req.body.user }))
 
@@ -921,13 +923,19 @@ app.post('/addreply', async (req, res) => {
     var p = await db.collection('posts').where('board', '==', req.body.board).get()
     //var pp = p.docs[0]
     var posts = [];
+    var count;
     console.log(p.docs.length)
     for (var i = 0; i < p.docs.length; i++) {
         var data = [p.docs[i].get('text'), p.docs[i].get('user'), p.docs[i].get('link'), p.docs[i].get('anon'), p.docs[i].get('replies'), p.docs[i].get('pdf'), p.docs[i].get('pdfname')]
         posts.push(data);
+        if (p.docs[i].get('text') === req.body.post) {
+            count = i;
+        }
     }
 
-    return res.send(JSON.stringify({ replies: doc.get('replies'), posts: posts }))
+    console.log(p.docs[count].get('replies'))
+
+    return res.send(JSON.stringify({ replies: doc.get('replies'), posts: posts, count: count }))
 
 })
 
