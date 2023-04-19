@@ -160,7 +160,7 @@ export const Settings = ({ GlobalState }) => {
 
     return (
         <div className="App">
-            <div style={{padding: "20px", fontFamily: "Bowlby One", color: "rgb(96, 44, 145)"}}>
+            <div style={{padding: "20px", fontFamily: "Bowlby One", color: "rgb(96, 44, 145)", marginTop: '-100px'}}>
                         <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Bowlby+One" />
                         <h1>Edit Profile</h1>
             </div>
@@ -203,7 +203,7 @@ export const Settings = ({ GlobalState }) => {
             <button type="submit" className="setting-sub" onSubmit={handleSubmit}>Submit Changes</button>
             </span>
             </form>
-            <span style={{flexDirection: "column", display: "flex", marginLeft: "300px", marginTop: "-560px", paddingLeft: "100px"}}>
+            <span style={{flexDirection: "column", display: "flex", marginLeft: "300px", marginTop: "-700px", paddingLeft: "100px"}}>
             <button type="submit" onClick={() => navigate('/EditCourse', {state: {u: currUser, taking: location.state.taking, tutor: location.state.tutor}})}>Edit Current Courses</button>
             </span>
                 {
@@ -230,13 +230,13 @@ export const Settings = ({ GlobalState }) => {
             <span style={{flexDirection: "column", display: "flex", marginLeft: "380px"}}>
             <button type="submit" onClick={backToProfile}>Back to profile</button>
             </span>
-            <span style={{flexDirection: "column", display: "flex", width: "250px", marginLeft: "50px", marginTop: "60px"}}>
-                <button className='submit' onClick={() => setButtonPopup(true)}>Delete Account</button>
+            <span style={{flexDirection: "column", display: "flex", width: "250px", marginLeft: "50px", marginTop: "200px"}}>
+                <button style={{backgroundColor: 'rgb(252, 177, 177)'}} className='submit' onClick={() => setButtonPopup(true)}>Delete Account</button>
                 <Popup trigger={buttonPopup} setTrigger={setButtonPopup} user={location.state.u} del="acct">Are you sure you want to delete your account?</Popup>
             </span>
             </div>
             <span style={{flexDirection: "column", display: "flex", marginLeft: "300px", marginTop: "-81px"}}>
-            <button className='submit' onClick={handleDeactivate}>{aButton} Account</button>
+            <button style={{backgroundColor: 'rgb(252, 177, 177)'}} className='submit' onClick={handleDeactivate}>{aButton} Account</button>
             </span>
             
         </div>

@@ -13,6 +13,7 @@ export const Board = ({ GlobalState }) => {
     const navigate = useNavigate();
     const location = useLocation();
     const [lookAtPost, setLookAtPost] = useState(undefined);
+    const [endorsed, setEndorsed] = useState(false)
     const [replies, setReplies] = useState([])
     const { currUser, setCurrUser } = GlobalState;
     console.log(location.state.lookAtPost)
@@ -88,6 +89,7 @@ export const Board = ({ GlobalState }) => {
         }
         console.log(repliess)
         setReplies(repliess)
+        setEndorsed(post[7])
 
         console.log(replies)
 
@@ -201,7 +203,8 @@ export const Board = ({ GlobalState }) => {
                         posts: res.posts,
                         isDeleted: false,
                         lookAtPost: res.posts[0],
-                        board: location.state.board
+                        board: location.state.board,
+                        tutor: location.state.isTutor
                     }
                 });
             })
@@ -265,7 +268,8 @@ export const Board = ({ GlobalState }) => {
                         u: currUser,
                         posts: res.posts,
                         board: location.state.board,
-                        isDeleted: true
+                        isDeleted: true,
+                        tutor: location.state.isTutor
                     }
                 });
 
@@ -329,6 +333,19 @@ export const Board = ({ GlobalState }) => {
                 setRepliesFunc(res.posts[res.count])
             })
 
+
+    }
+
+    const endorsePost = (post) => {
+        console.log('clicked hehe')
+        const headers = { "content-type": "application/json" };
+        const requestData = JSON.stringify({ post: post, board: location.state.board });
+        fetch('http://localhost:3001/endorsepost', { method: 'POST', body: requestData, headers: headers })
+            .then((res) => res.json())
+            .then((res) => {
+                setEndorsed(true)
+               //setRepliesFunc(res.posts[res.count])
+            })
 
     }
 
@@ -409,14 +426,8 @@ export const Board = ({ GlobalState }) => {
                                 {
                                     !lookAtPost[5] && (lookAtPost[2] ? <a href={lookAtPost[0]}>{lookAtPost[0]}</a> : tagIfNeeded(lookAtPost[0]))
                                 }
-
-
-
-
                                 {
                                     lookAtPost[3] === 'true' ? <p>Posted by: Anonymous</p> : <p>Posted by: {lookAtPost[1]}</p>
-
-
 
                                 }
                                 
@@ -425,6 +436,9 @@ export const Board = ({ GlobalState }) => {
                                 <nav style={{background: "none"}}>
                                 {
                                     lookAtPost[1] === currUser ? <button style={{ background: "none", color: "rgb(96, 44, 145)"}}onClick={deletePost}><i class="fa-solid fa-trash-can"></i></button> : <></>
+                                {
+                                    lookAtPost[1] === currUser ? <button onClick={deletePost}>DELETE</button> : <></>
+                                }
 
 
                                 }
@@ -448,6 +462,18 @@ export const Board = ({ GlobalState }) => {
 
                         </div >
                 </div>
+
+                {
+                    
+                    location.state.isTutor && lookAtPost != undefined &&
+                    <div style={{border: 'solid', padding: '5px'}}> 
+                        <h4><span>Think this is a good post? Endorse it </span><span onClick={() => {endorsePost(lookAtPost)}} style={{textDecoration: 'underline'}}>here!</span></h4>
+                    </div>
+                    
+                }
+                {
+                    endorsed && <div>ENDORSED</div>
+                }
 
                 <div style={{ border: 'solid' }}>
                     <div style={{ padding: "10px", fontFamily: "Georgia", color: "rgb(96, 44, 145)", borderColor: "rgb(96, 44, 145)",  size: '0', textAlign: 'left', fontSize: '8px', textAlignLast: 'left' }}>

@@ -2,6 +2,7 @@
 import React, {Component, useState} from 'react';
 import './Discuss.css'
 import CreateDiscussion from './CreateDiscussion'
+import ReportPost from './ReportPost';
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import { blue } from 'tailwindcss/colors';
 {/*class Discussion extends Component {
@@ -79,7 +80,8 @@ export const Discussion = ({GlobalState}) => {
                 u: currUser,
                 posts: res.posts, 
                 board: b,
-                lookAtPost: res.posts[0]
+                lookAtPost: res.posts[0],
+                isTutor: location.state.tutor
             }
         });
     })
@@ -125,8 +127,10 @@ export const Discussion = ({GlobalState}) => {
                 )
                 )
             }
+
                 <div style={{marginTop: "500px"}} class = "Discussion">
             <button type="submit" onClick={() => navigate('/CreateDiscussion', {state: {u: currUser}})}>Create New Discussion Board</button>        
+             
         </div>
                 
             </div>
