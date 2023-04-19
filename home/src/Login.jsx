@@ -48,7 +48,10 @@ export const Login = ({GlobalState}) => {
     return (
 
         <div className="App auth-form-container img">
-            <h2>Login</h2>
+             <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Bowlby+One" />
+             <div style={{fontFamily: "Bowlby One", marginTop: '-400px', color: "rgb(96, 44, 145)", padding: '20px'}}>
+                <h2>Welcome!</h2>
+            </div>
             {
                 showErr ? (<p style={{color:'red'}}>Incorrect username or password. Try Again.</p>): <span></span>
             }
@@ -57,12 +60,14 @@ export const Login = ({GlobalState}) => {
             }
 
 
-            <form classname="login-form" onSubmit={handleSubmit}>
-                <label htmlFor="username:">Username: </label>
-                <input value={user} onChange={(e) => setUsername(e.target.value)} type="username" placeholder="enter your username" id="username" name="username" />
+            <form style={{backgroundColor: 'rgba(255, 255, 255, 0.365)', padding: '50px', border: '1px solid gray', paddingTop: '10px', borderRadius: '10px'}} classname="login-form" onSubmit={handleSubmit}>
+            <h3 style={{color: 'gray', padding: '20px'}}>Login to Continue</h3>
+               {/* <label style={{fontFamily: "Bowlby One", paddingRight: '5px', color: 'gray'}}htmlFor="username:">Username: </label>*/}
+                <input value={user} onChange={(e) => setUsername(e.target.value)} type="username" placeholder="Enter your Username" id="username" name="username" />
                 <br></br>
-                <label for="password:">Password: </label>
-                <input value={pass} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="enter your password" id="password" name="password" />
+                <br></br>
+                {/*<label style={{fontFamily: "Bowlby One", paddingRight: '5px', color: 'gray'}}for="password:">Password: </label>*/}
+                <input value={pass} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Enter your Password" id="password" name="password" />
                 <br></br>
 
                 <button type="submit" onSubmit={handleSubmit}>Log In</button>
