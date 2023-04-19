@@ -287,6 +287,7 @@ app.post("/upvotereply", async (req, res) => {
     var count = replies.length
     for (var i = 0; i < replies.length; i++) {
         console.log("here " + replies[i])
+        console.log(`${req.body.reply}~${req.body.user}`)
         if (replies[i].includes(`${req.body.reply}~${req.body.user}`)) {
             console.log('found')
             temp = replies[i]
@@ -303,6 +304,7 @@ app.post("/upvotereply", async (req, res) => {
             upv++;
 
             replies[i] = `${reptext}~${usern}~${an}~${upv}~${downv}`
+            console.log(`chekcing ${reptext}~${usern}~${an}~${upv}~${downv}`)
             break;
         }
     }
@@ -319,7 +321,7 @@ console.log('updated')
     for (var i = 0; i < d.docs.length; i++) {
         var data = [d.docs[i].get('text'), d.docs[i].get('user'), d.docs[i].get('link'), d.docs[i].get('anon'), d.docs[i].get('replies'), d.docs[i].get('pdf'), d.docs[i].get('pdfname'), d.docs[i].get('endorsed')]
         posts.push(data);
-        console.log("d " + data)
+        //console.log("d " + data)
         if (d.docs[i].get('text') === req.body.post[0]) {
             int = i;
         }
