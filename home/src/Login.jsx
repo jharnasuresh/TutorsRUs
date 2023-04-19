@@ -61,7 +61,7 @@ export const Login = ({GlobalState}) => {
 
 
             <form style={{backgroundColor: 'rgba(255, 255, 255, 0.365)', padding: '50px', border: '1px solid gray', paddingTop: '10px', borderRadius: '10px'}} classname="login-form" onSubmit={handleSubmit}>
-            <h3 style={{color: 'gray', padding: '20px'}}>Login to Continue</h3>
+            <h3 style={{color: 'rgb(70, 71, 70)', padding: '20px'}}>Login to Continue</h3>
                {/* <label style={{fontFamily: "Bowlby One", paddingRight: '5px', color: 'gray'}}htmlFor="username:">Username: </label>*/}
                 <input value={user} onChange={(e) => setUsername(e.target.value)} type="username" placeholder="Enter your Username" id="username" name="username" />
                 <br></br>
