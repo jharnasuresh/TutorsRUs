@@ -12,37 +12,44 @@ class About extends Component {
         
         return (
             <section id="container-about" className="container-about">
-                    <div style={{fontFamily: "Bowlby One"}}>
+                     
+                    <div style={{fontFamily: "Bowlby One", textAlign: "center"}}>
                     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Bowlby+One" />
                      <h2>{this.props.user}</h2>
                      </div>
-                    <h2 style={{display: 'inline', paddingRight: '50px', marginLeft: '-190px'}}>Primary Language:</h2> 
+                     <div style={{flexDirection: "column"}}>
+                    <h2 style={{display: 'inline', textAlign: "center",marginLeft: '-190px'}}>Primary Language:</h2> 
+
                     <p style={{display: 'inline'}}>{ this.props.lang === "" ? "English" : this.props.lang} </p>
                     <br></br>
                     <br></br>
-                    <h2 style={{display: 'inline', paddingRight: '50px', marginLeft: '-150px'}}>Email:</h2> 
+                    <h2 style={{display: 'inline' , marginLeft: '-150px'}}>Email:</h2> 
                     {
-                        (this.props.yours) ? <p style={{display: 'inline',paddingRight: '50px'}}>{this.props.email}</p> : <a style={{display: 'inline', paddingRight: '50px'}} href={this.props.mail}>{this.props.email}</a>
+                        (this.props.yours) ? <p style={{display: 'inline', }}>{this.props.email}</p> : <a style={{display: 'inline', paddingRight: '50px'}} href={this.props.mail}>{this.props.email}</a>
                     }
                     <br></br>
                     <br></br>
-                    <h2 style={{display: 'inline', marginLeft: '-445px'}}>Rating:</h2>
+                    <h2 style={{display: 'inline', paddingLeft: '50px',  marginLeft: '-445px'}}>Rating:</h2>
                     {
-                        this.props.follows ? <p style={{display: 'inline', paddingRight: '50px'}}>{this.props.studentRating}/5.0 </p> : <p></p>
+                        this.props.follows ? <p style={{display: 'inline',}}>{this.props.studentRating}/5.0 </p> : <p></p>
                     }
+                                    
                     <br></br>
                     {
-                        (this.props.tutor) ? <><h2 style={{display: 'inline', paddingRight: '50px', marginLeft: '-360px'}}>Price:</h2><p style={{display: 'inline'}}>${this.props.price}/hour</p> 
+                        (this.props.tutor) ? <><h2 style={{display: 'inline', marginLeft: '-360px'}}>Price:</h2><p style={{display: 'inline'}}>${this.props.price}/hour</p> 
                         <br></br>
                         <br></br>
-                        <h2 style={{display: 'inline', paddingRight: '50px', marginLeft: '-285px'}}>Tutor Rating:</h2><p style={{display: 'inline'}}>{this.props.tutorRating}/5.0</p>
+                        <h2 style={{display: 'inline', marginLeft: '-285px'}}>Tutor Rating:</h2><p style={{display: 'inline'}}>{this.props.tutorRating}/5.0</p>
                         <br/>
                         <br/>
-                        <h2 style={{display: 'inline', paddingRight: '50px', marginLeft: '-285px'}}>Venmo:</h2><p style={{display: 'inline'}}>@{this.props.venmo}</p>
+                        <h2 style={{display: 'inline', marginLeft: '-285px'}}>Venmo:</h2><p style={{display: 'inline'}}>@{this.props.venmo}</p>
 
                         </>
                         : <span></span>
                     }
+                    </div>
+                    <br></br>
+                    <br></br>
                     
             </section>
         )

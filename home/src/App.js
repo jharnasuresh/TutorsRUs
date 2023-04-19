@@ -30,6 +30,7 @@ import Board from './Components/Board';
 import UploadPDFBoard from './Components/UploadPDFBoard';
 import {CreateDiscussion} from './Components/CreateDiscussion';
 import  ViewPDF  from './Components/ViewPDF';
+import ReportPost from './Components/ReportPost';
 function App() {
 
   const [currUser, setCurrUser] = useState("");
@@ -77,6 +78,7 @@ return (
         <Route exact path="/CreateDiscussion" element={<CreateDiscussion GlobalState={GlobalState}/>}/>
         <Route exact path="/UploadPDFBoard" element={<UploadPDFBoard GlobalState={GlobalState}/>}/>
         <Route exact path="/ViewPDF" element={<ViewPDF GlobalState={GlobalState}/>}/>
+        <Route exact path="/ReportPost" element={<ReportPost GlobalState={GlobalState}/>}/>
 
 
         <Route path="*" element={<Login />} />

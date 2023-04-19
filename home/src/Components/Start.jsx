@@ -106,12 +106,12 @@ export const Start = ({GlobalState}) => {
 
     <div>
       <Calendly/>
-      <a href='https://calendar.google.com/calendar/u/0/r'><button>Link To your Calendar!</button>
-      </a>
       
       <Calendar/>
 
-         
+      <a href='https://calendar.google.com/calendar/u/0/r'><button>Link To your Calendar!</button>
+      </a>
+      
       </div>
 
       
