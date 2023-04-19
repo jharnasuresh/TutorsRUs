@@ -255,6 +255,10 @@ export const Board = ({ GlobalState }) => {
             .then((res) => {
                 console.log("deleted " + res);
                 setIsDeleted(true);
+
+
+                console.log(res.posts)
+                
                 navigate("/Board", {
 
                     state: {
@@ -264,6 +268,8 @@ export const Board = ({ GlobalState }) => {
                         isDeleted: true
                     }
                 });
+
+                
             })
     }
 
@@ -378,9 +384,12 @@ export const Board = ({ GlobalState }) => {
             <div style={{ width: '800px', height: '1000px', textAlign: 'left', border: 'solid', backgroundColor: 'white', color: 'black', borderRadius: '10px', padding: '5px', marginTop: "-1000px", marginLeft: "500px", textAlign: 'left' }}>
 
                 <div style={{ border: 'solid', backgroundColor: "#F8C8DC" }}>
+                    
                     {
-                        isDeleted ? <p> This post was deleted </p> : <p>This post exists</p>
+                        isDeleted && <p> This post was deleted </p>
                     }
+                    
+                    
                     <div style={{ padding: "10px", fontFamily: "Bowlby One", color: "rgb(96, 44, 145)", size: '2', textAlign: 'left' }}>
                         <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Bowlby+One" />
 
