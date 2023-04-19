@@ -80,7 +80,8 @@ export const Discussion = ({GlobalState}) => {
                 u: currUser,
                 posts: res.posts, 
                 board: b,
-                lookAtPost: res.posts[0]
+                lookAtPost: res.posts[0],
+                isTutor: location.state.tutor
             }
         });
     })

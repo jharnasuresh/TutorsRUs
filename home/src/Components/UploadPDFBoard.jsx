@@ -57,7 +57,8 @@ export const UploadPDFBoard = () => {
                             state: {
                                 u: location.state.user,
                                 posts: res.posts, 
-                                board: location.state.board
+                                board: location.state.board,
+                                isTutor: res.tutor
                             }
                         });
 

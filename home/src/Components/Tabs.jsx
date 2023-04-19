@@ -108,7 +108,8 @@ const toBoards = (e) => {
         
             state: {
                 u: currUser,
-                boards: res.boards
+                boards: res.boards,
+                tutor: res.isTutor
             }
         });
     })
