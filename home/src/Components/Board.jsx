@@ -435,13 +435,12 @@ export const Board = ({ GlobalState }) => {
 
                                 <nav style={{background: "none"}}>
                                 {
-                                    lookAtPost[1] === currUser ? <button style={{ background: "none", color: "rgb(96, 44, 145)"}}onClick={deletePost}><i class="fa-solid fa-trash-can"></i></button> : <></>
-                                {
-                                    lookAtPost[1] === currUser ? <button onClick={deletePost}>DELETE</button> : <></>
+                                    lookAtPost[1] === currUser ? <button style={{ background: "none", color: "rgb(96, 44, 145)"}} onClick={deletePost}> <i class="fa-solid fa-trash-can"> </i></button> : <></>
+                                
                                 }
 
 
-                                }
+                                
                                     <li>
 
                                         <span onClick={upVotePost}><i class="fa-solid fa-thumbs-up"></i></span>
