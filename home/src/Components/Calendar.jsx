@@ -40,6 +40,7 @@ export default function Calendar() {
       interactionPlugin,
       googleCalendarPlugin
     ],
+    eventBorderColor: "#8FDEE8", 
 
     //Main Key
     googleCalendarApiKey: "AIzaSyDz4YskXpTe-Pslm1tyQv0_a1dc75-hkwA",
@@ -57,13 +58,15 @@ export default function Calendar() {
     ],
     eventClick: handleDateClick,
     initialView: "dayGridMonth",
-    eventBackgroundColor: '#FF4500',
+    eventBackgroundColor: '#8FDEE8',
     headerToolbar: {
       left: "prev,next today",
       center: "title",
       right: "dayGridMonth,listMonth"
     },
-    eventContent: renderEventContent
+    eventColor: '#8FDEE8',
+    eventContent: renderEventContent, 
+
 
 
 

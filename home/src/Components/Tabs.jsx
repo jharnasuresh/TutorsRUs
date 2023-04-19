@@ -130,7 +130,7 @@ const toBoards = (e) => {
             <nav>
                         
                 
-                <div className="img"><img class="img" src = "/Images/IMG_4596.png"/></div>
+                <div className="img"><img class="img" src = "/Images/TutorsRUs_nobaackground.png"/></div>
                 
                 <ul className="nav-links">
                     <li>
