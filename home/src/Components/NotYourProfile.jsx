@@ -121,38 +121,42 @@ export const NotYourProfile = ({GlobalState}) => {
       
       {tut === 'tut' &&
       
-      <div className={"img2"} style ={{position: 'absolute', marginLeft: '500px', marginTop: '-780px', height: '50px'}}><img class="img2" src = "/Images/verifiedtut.png"/></div>
+      <div className={"img2"} style ={{position: 'absolute', marginLeft: '-730px', marginTop: '80px', height: '50px'}}><img class="img2" src = "/Images/verifiedtut.png"/></div>
 
     }
 
-<div style={{position: 'absolute', marginLeft: '-700px', marginTop: '-350px'}}>
+<div style={{position: 'absolute', marginLeft: '-700px', marginTop: '-450px', backgroundColor: 'white', padding: '20px', paddingBottom: '150px', border: '2px solid black'}}>
       <Avatar src={location.state.profpic} sx={{ width: 300, height: 300 }} />
     </div>      
     <hr />
-    <div style={{position: 'absolute', marginLeft: '-1775px', marginTop: '-400px'}}>
+    <div style={{position: 'absolute', marginLeft: '-1775px', marginTop: '-725px'}}>
     <About venmo={location.state.venmo} user={location.state.u} mail={"mailto:" + email} email={email} lang={location.state.lang} yours={false} price={location.state.price} tutor={location.state.tutor} studentRating={location.state.studentRating} tutorRating={location.state.tutorRating} follows={location.state.follows}/>    
     </div>
       
       <br/>
-      <div style={{position: 'absolute', marginLeft: '525px', marginTop: '270px'}}>
+      <div style={{position: 'absolute', marginLeft: '525px', marginTop: '0px'}}>
         <CourseInfo courses={printing} past={false}/>
       </div>
       <br />
       {
-        (location.state.tutor) ? <div style={{position: 'absolute', marginLeft: '525px', marginTop: '600px'}}><CourseInfo courses={printingTaken} past={true}/></div> : <span></span>
+        (location.state.tutor) ? <div style={{position: 'absolute', marginLeft: '525px', marginTop: '350px'}}><CourseInfo courses={printingTaken} past={true}/></div> : <span></span>
       }
       <div  className='profile-btn'  >
-      <h3>Followers: {numFollowers}</h3>
-      <h3>Following: {numFollowing} </h3>
+      <h3 style={{float: 'left', marginLeft: '100px', marginTop: '-20px', paddingRight: '40px'}}>Followers: {numFollowers}</h3> 
+      <h3 style={{float: 'right', marginTop: '-20px'}}>Following: {numFollowing} </h3>
+   <br></br>
       
       
-
-<button type="submit" onClick={handleSubmit}> {isFollowing} </button>
-<button onClick={() => navigate("/Rating", {state: {currU: location.state.oldU, otherU:location.state.u, tutor: location.state.tutor }})}>Rate This User</button>
+<div style={{marginBottom: '100px', marginLeft: '80px'}}>
+  <button style={{border: '1px solid black'}} type="submit" onClick={handleSubmit}> {isFollowing} </button>
+  <button style={{border: '1px solid black'}} onClick={() => navigate("/Rating", {state: {currU: location.state.oldU, otherU:location.state.u, tutor: location.state.tutor }})}>Rate This User</button>
+</div>
 {
-        
+       
       tut === 'tut' && 
-      <div style = {{height: '300px'}}>
+      <div style = {{height: '300px', paddingTop: '10px'}}>
+        <br></br>
+        <br></br>
         <h2>Schedule with Tutor:</h2>
         <div className="inline-widget">
 
