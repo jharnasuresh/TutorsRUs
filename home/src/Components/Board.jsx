@@ -442,6 +442,17 @@ export const Board = ({ GlobalState }) => {
                             </>
 
                         }
+   
+                        <input style={{width: '400px'}} value={reply} onChange={(e) => setReply(e.target.value)} type="reply" placeholder="Type here..." id="reply" name="reply" />
+                        <button style= {{backgroundColor: "#BBE5EA"}} onClick={addReply}>Post</button> {/* posts as a post, need to make it a reply*/}
+                        <select id="anonreply" name="anonreply" onChange={(e) => setAnonReply(e.target.value)}>
+                            <option value='false'>With Username</option>
+                            <option value='true'>Anonymously</option>
+                        </select></>
+                        
+                            {replies.map((replies) => (
+                                <>
+
                     </div>
                 </div>
 
