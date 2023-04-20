@@ -208,6 +208,7 @@ app.post("/upvotepost", async (req, res) => {
 
 
     console.log("the current user is " + req.body.user)
+    console.log(upvotes);
     if (upvotes.includes(req.body.user)) {
         console.log("we already liked");
     }
@@ -216,20 +217,27 @@ app.post("/upvotepost", async (req, res) => {
         upvotes.push(req.body.user);
     }
 
-
+    console.log("1");
     await postDataDoc.ref.update({ upvotes: upvotes });
-
+    console.log("2");
     const upCurr = await db.collection('posts').where('text', '==', req.body.post[0]).get();
+    console.log("3");
     postDataDoc = upCurr.docs[0];
+    console.log("4");
 
+    console.log(req.body.board);
     var d = await db.collection('posts').where('board', '==', req.body.board).get();
+    console.log("5");
     var posts = [];
+    console.log("6");
     console.log(d.docs.length)
+    console.log("7");
     for (var i = 0; i < d.docs.length; i++) {
         var data = [d.docs[i].get('text'), d.docs[i].get('user'), d.docs[i].get('link'), d.docs[i].get('anon'), d.docs[i].get('replies'), d.docs[i].get('pdf'), d.docs[i].get('pdfname')]
         posts.push(data);
     }
-    return res.send(JSON.stringify({ posts: posts }))
+    console.log("8");
+    return res.send(JSON.stringify({ posts: posts,numUpvotes: upvotes.length }))
 
     //return res.send(JSON.stringify({ user: req.body.user }))
 
@@ -247,7 +255,7 @@ app.post("/downvotepost", async (req, res) => {
 
     console.log("the current user is " + req.body.user)
     if (downvotes.includes(req.body.user)) {
-        console.log("we already liked");
+        console.log("we already disliked");
     }
     else {
         console.log("we are linking right now")
@@ -267,14 +275,72 @@ app.post("/downvotepost", async (req, res) => {
         var data = [d.docs[i].get('text'), d.docs[i].get('user'), d.docs[i].get('link'), d.docs[i].get('anon'), d.docs[i].get('replies'), d.docs[i].get('pdf'), d.docs[i].get('pdfname'), d.docs[i].get('endorsed')]
         posts.push(data);
     }
-    return res.send(JSON.stringify({ posts: posts }))
+    return res.send(JSON.stringify({ posts: posts, numDownvotes: downvotes.length  }))
 
     return res.send(JSON.stringify({ user: req.body.user }))
 
 
 });
 
+app.post("/numuvpost", async (req, res) => {
+    const postData = await db.collection('posts').where('text', '==', req.body.post[0]).get();
+    console.log("no problem here!")
+    var postDataDoc = postData.docs[0];
+    var upvotes = postDataDoc.get("upvotes")
 
+
+
+    console.log("the current user is " + req.body.user)
+    console.log(upvotes);
+
+    console.log(req.body.board);
+    var d = await db.collection('posts').where('board', '==', req.body.board).get();
+    console.log("5");
+    var posts = [];
+    console.log("6");
+    console.log(d.docs.length)
+    console.log("7");
+    for (var i = 0; i < d.docs.length; i++) {
+        var data = [d.docs[i].get('text'), d.docs[i].get('user'), d.docs[i].get('link'), d.docs[i].get('anon'), d.docs[i].get('replies'), d.docs[i].get('pdf'), d.docs[i].get('pdfname')]
+        posts.push(data);
+    }
+    console.log("8");
+    return res.send(JSON.stringify({ posts: posts, numUpvotes: upvotes.length }))
+
+    //return res.send(JSON.stringify({ user: req.body.user }))
+
+
+});
+
+app.post("/numdownpost", async (req, res) => {
+    const postData = await db.collection('posts').where('text', '==', req.body.post[0]).get();
+    console.log("no problem here!")
+    var postDataDoc = postData.docs[0];
+    var downvotes = postDataDoc.get("downvotes")
+
+
+
+    console.log("the current user is " + req.body.user)
+    console.log(downvotes);
+
+    console.log(req.body.board);
+    var d = await db.collection('posts').where('board', '==', req.body.board).get();
+    console.log("5");
+    var posts = [];
+    console.log("6");
+    console.log(d.docs.length)
+    console.log("7");
+    for (var i = 0; i < d.docs.length; i++) {
+        var data = [d.docs[i].get('text'), d.docs[i].get('user'), d.docs[i].get('link'), d.docs[i].get('anon'), d.docs[i].get('replies'), d.docs[i].get('pdf'), d.docs[i].get('pdfname')]
+        posts.push(data);
+    }
+    console.log("8");
+    return res.send(JSON.stringify({ posts: posts, numDownvotes: downvotes.length }))
+
+    //return res.send(JSON.stringify({ user: req.body.user }))
+
+
+});
 
 app.post("/upvotereply", async (req, res) => {
     const postData = await db.collection('posts').where('text', '==', req.body.post[0]).get();

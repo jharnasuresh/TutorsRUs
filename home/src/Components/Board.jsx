@@ -13,6 +13,7 @@ export const Board = ({ GlobalState }) => {
     const navigate = useNavigate();
     const location = useLocation();
     const [lookAtPost, setLookAtPost] = useState(undefined);
+    const [isLookingAtPost, setIsLookingAtPost] = useState(false);
     const [endorsed, setEndorsed] = useState(false)
     const [replies, setReplies] = useState([])
     const { currUser, setCurrUser } = GlobalState;
@@ -29,6 +30,8 @@ export const Board = ({ GlobalState }) => {
     const [wordErr, setWordErr] = useState(false)
     const [wordErrReply, setWordErrReply] = useState(false)
     const [isDeleted, setIsDeleted] = useState(location.state.isDeleted);
+    const [numUpvotes, setNumUpvotes] = useState(0);
+    const [numDownvotes, setNumDownvotes] = useState(0);
     //console.log("start2 " + location.state.posts[0])
 
     //console.log("start " + location.state.posts)
@@ -37,6 +40,7 @@ export const Board = ({ GlobalState }) => {
 
     //console.log(location.state.posts[0])
 
+    console.log(lookAtPost);
     var listofposts = location.state.posts
     var listofreploes = location.state.replies
 
@@ -98,21 +102,51 @@ export const Board = ({ GlobalState }) => {
     //console.log(replies)
     const upVotePost = () => {
         const headers = { "content-type": "application/json" };
-        const requestData = JSON.stringify({ user: currUser, post: lookAtPost })
+        const requestData = JSON.stringify({ user: currUser, post: lookAtPost, board:location.state.board })
         fetch('http://localhost:3001/upvotepost', { method: 'POST', body: requestData, headers: headers })
             .then((res) => res.json())
             .then((res) => {
                 console.log("checked " + res);
+                console.log(res.numUpvotes);
+                setNumUpvotes(res.numUpvotes)
             })
     }
 
     const downVotePost = () => {
         const headers = { "content-type": "application/json" };
-        const requestData = JSON.stringify({ user: currUser, post: lookAtPost })
+        const requestData = JSON.stringify({ user: currUser, post: lookAtPost, board: location.state.board })
         fetch('http://localhost:3001/downvotepost', { method: 'POST', body: requestData, headers: headers })
             .then((res) => res.json())
             .then((res) => {
                 console.log("checked " + res);
+
+                setNumDownvotes(res.numDownvotes)
+            })
+    }
+
+    const setNumUpvotesFunc = () => {
+        console.log("look i just called set num upvotes")
+        const headers = { "content-type": "application/json" };
+        console.log("helooooooooooooo jjjjjjj");
+        const requestData = JSON.stringify({ user: currUser, post: lookAtPost, board:location.state.board })
+        fetch('http://localhost:3001/numuvpost', { method: 'POST', body: requestData, headers: headers })
+            .then((res) => res.json())
+            .then((res) => {
+                console.log("checked " + res);
+                setNumUpvotes(res.numUpvotes);
+            })
+    }
+
+    const setNumDownvotesFunc = () => {
+        console.log("look i just called set num downvotes")
+        const headers = { "content-type": "application/json" };
+        console.log("helooooooooooooo jjjjjjj");
+        const requestData = JSON.stringify({ user: currUser, post: lookAtPost, board:location.state.board })
+        fetch('http://localhost:3001/numdownpost', { method: 'POST', body: requestData, headers: headers })
+            .then((res) => res.json())
+            .then((res) => {
+                console.log("checked " + res);
+                setNumDownvotes(res.numDownvotes);
             })
     }
 
@@ -376,7 +410,7 @@ export const Board = ({ GlobalState }) => {
                             <div style={{ border: 'solid', backgroundColor: "#F8C8DC" }}>
                                 <br />
                                 {
-                                    post[5] ? <button className="link-btn" style={{ textAlign: 'left' }} onClick={(e) => { setLookAtPost(post); setRepliesFunc(post); }} >{post[6]}</button> : <button className="link-btn" style={{ textAlign: 'left' }} onClick={(e) => isDeleted ? (setLookAtPost(post), setIsDeleted(false)) : (setLookAtPost(post), setRepliesFunc(post))} > {post[0]}</button>
+                                    post[5] ? <button className="link-btn" style={{ textAlign: 'left' }} onClick={(e) => { setLookAtPost(post); setIsLookingAtPost(true); setRepliesFunc(post); }} >{post[6]}</button> : <button className="link-btn" style={{ textAlign: 'left' }} onClick={(e) => isDeleted ? (setLookAtPost(post), setIsLookingAtPost(true), setIsDeleted(false)) : (setLookAtPost(post),  setIsLookingAtPost(true), setRepliesFunc(post))} > {post[0]}</button>
                                 }
 
 
@@ -403,7 +437,12 @@ export const Board = ({ GlobalState }) => {
                 <div style={{ border: 'solid',  borderColor: "rgb(96, 44, 145)" , backgroundColor: "#F8C8DC" }}>
 
                     {
-                        isDeleted && <p> This post was deleted </p>
+                        isDeleted ? <p> This post was deleted </p> : isLookingAtPost ? setNumUpvotesFunc() : console.log()
+                        
+                          
+                    }
+                    {
+                        isDeleted ? console.log : isLookingAtPost ? setNumDownvotesFunc() : console.log
                     }
 
 
@@ -412,6 +451,7 @@ export const Board = ({ GlobalState }) => {
 
                         {
                             lookAtPost != undefined && <>
+                            
 
                                 {/* {
                             lookAtPost[5] ? <button className="link-btn" onClick={() => {navigate('/ViewPDF', {state: {u: currUser, pdf: lookAtPost[0]}})}}>Click here to view PDF</button> : <h1>{lookAtPost[0]}</h1>
@@ -435,19 +475,22 @@ export const Board = ({ GlobalState }) => {
 
                                 <nav style={{background: "none"}}>
                                 {
+                                    
                                     lookAtPost[1] === currUser ? <button style={{ background: "none", color: "rgb(96, 44, 145)"}} onClick={deletePost}> <i class="fa-solid fa-trash-can"> </i></button> : <></>
                                 
-                                }
-
-
-                                
+                                }        
                                     <li>
 
                                         <span onClick={upVotePost}><i class="fa-solid fa-thumbs-up"></i></span>
+                                        <p>{numUpvotes}</p>
+                                       
                                     </li>
                                     <li>
 
                                         <span onClick={downVotePost}><i class="fa-solid fa-thumbs-down"></i></span>
+
+                                    <p>{numDownvotes}</p>
+
                                     </li>
                                     <li>
                                         <span onClick={reportPost}><i class="fa-solid fa-warning"></i></span>
