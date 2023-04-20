@@ -31,6 +31,8 @@ export const Board = ({ GlobalState }) => {
     const [wordErrReply, setWordErrReply] = useState(false)
     const [isDeleted, setIsDeleted] = useState(location.state.isDeleted);
     const [numUpvotes, setNumUpvotes] = useState(0);
+    const [hasReported, setHasReported] = useState(false);
+    const [numReports, setNumReports] = useState(0);
     const [numDownvotes, setNumDownvotes] = useState(0);
     //console.log("start2 " + location.state.posts[0])
 
@@ -176,16 +178,36 @@ export const Board = ({ GlobalState }) => {
             })
     }
 
-    const reportPost = () => {
-        /*const headers = { "content-type": "application/json" };
-        const requestData = JSON.stringify({ user: u, post: lookAtPost})
-        fetch('http://localhost:3001/reportpost', { method: 'POST', body: requestData, headers: headers })
+    const hasReportedFunc = () => {
+        const headers = { "content-type": "application/json" };
+        const requestData = JSON.stringify({ user: currUser, post: lookAtPost})
+        fetch('http://localhost:3001/hasreportedpost', { method: 'POST', body: requestData, headers: headers })
         .then((res) => res.json())
         .then((res) => {
             console.log("checked " + res);
-        })*/
+            setHasReported(res.hasReported);
+            setNumReports(res.numReports);
+        })
     }
 
+    const reportFunc = () => {
+        if (!hasReported) {
+            const headers = { "content-type": "application/json" };
+            const requestData = JSON.stringify({ user: currUser, post: lookAtPost, board:location.state.board})
+            fetch('http://localhost:3001/reportpost', { method: 'POST', body: requestData, headers: headers })
+            .then((res) => res.json())
+            .then((res) => {
+                console.log("checked " + res);
+                setHasReported(true);
+            })
+            navigate("/ReportPost", {
+
+                state: {
+                    u: currUser
+                }
+            });
+        }
+    }
     const addPost = () => {
         console.log('leaving ' + text + " " + location.state.b)
         setWordErr(false)
@@ -447,6 +469,9 @@ export const Board = ({ GlobalState }) => {
                         isDeleted ? console.log : isLookingAtPost ? setNumDownvotesFunc() : console.log
                     }
 
+{
+                        isDeleted ? console.log : isLookingAtPost ? hasReportedFunc() : console.log
+                    }
 
                     <div style={{ padding: "10px", fontFamily: "Bowlby One", color: "rgb(96, 44, 145)", size: '2', textAlign: 'left' }}>
                         <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Bowlby+One" />
@@ -495,7 +520,14 @@ export const Board = ({ GlobalState }) => {
 
                                     </li>
                                     <li>
-                                        <span onClick={reportPost}><i class="fa-solid fa-warning"></i></span>
+                                        {
+                                        hasReported ? <p>You have reported this post </p> : <span href="./ReportPost" onClick={reportFunc}><i class="fa-solid fa-warning"></i></span>
+                                        
+                                        }
+
+                                        {
+                                            hasReported ? console.log() : <p>{numReports}</p>
+                                        }
                                     </li>
                                 </nav>
                             </>

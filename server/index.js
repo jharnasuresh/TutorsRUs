@@ -295,6 +295,80 @@ app.post("/downvotepost", async (req, res) => {
 
 });
 
+
+
+app.post("/reportpost", async (req, res) => {
+    const postData = await db.collection('posts').where('text', '==', req.body.post[0]).get();
+    console.log("no problem here!!")
+    var postDataDoc = postData.docs[0];
+    console.log("a");
+    var reports = postDataDoc.get("reports")
+
+    console.log("b");
+
+    console.log("the current user is " + req.body.user)
+    console.log("c");
+    if (reports.includes(req.body.user)) {
+        console.log("d");
+        console.log("we already reported");
+    }
+    else {
+        console.log("d");
+        console.log("we are reporting right now")
+        reports.push(req.body.user);
+    }
+
+    if (reports.length == 3) {
+        postDataDoc.ref.delete();
+    }
+    console.log("e");
+  
+    await postDataDoc.ref.update({ reports: reports });
+    console.log("f");
+    const upCurr = await db.collection('posts').where('text', '==', req.body.post[0]).get();
+    postDataDoc = upCurr.docs[0];
+    console.log("g");
+    var d = await db.collection('posts').where('board', '==', req.body.board).get();
+    console.log("h");
+    var posts = [];
+    console.log("i");
+    console.log(d.docs.length)
+    for (var i = 0; i < d.docs.length; i++) {
+        var data = [d.docs[i].get('text'), d.docs[i].get('user'), d.docs[i].get('link'), d.docs[i].get('anon'), d.docs[i].get('replies'), d.docs[i].get('pdf'), d.docs[i].get('pdfname'), d.docs[i].get('endorsed')]
+        posts.push(data);
+    }
+    console.log("j");
+    return res.send(JSON.stringify({ posts: posts}))
+
+
+
+});
+
+app.post("/hasreportedpost", async (req, res) => {
+    const postData = await db.collection('posts').where('text', '==', req.body.post[0]).get();
+    console.log("no problem here!!")
+    var postDataDoc = postData.docs[0];
+    var reports = postDataDoc.get("reports")
+    var hasReported = false;
+
+
+    console.log("the current user is " + req.body.user)
+    if (reports.includes(req.body.user)) {
+        console.log("we already reported");
+        hasReported = true;
+
+    }
+    else {
+        console.log("we have not reported")
+        hasReported = false;
+        
+    }
+    return res.send(JSON.stringify({hasReported: hasReported , numReports:reports.length}))
+
+
+
+});
+
 app.post("/numuvpost", async (req, res) => {
     const postData = await db.collection('posts').where('text', '==', req.body.post[0]).get();
     console.log("no problem here!")
@@ -967,6 +1041,7 @@ app.post('/addpost', async (req, res) => {
         upvotes: [],
         downvotes: [],
         replies: [],
+        reports: [],
         pdf: req.body.pdf,
         endorsed: false
     };
@@ -983,7 +1058,7 @@ app.post('/addpost', async (req, res) => {
     var posts = [];
     console.log(d.docs.length)
     for (var i = 0; i < d.docs.length; i++) {
-        var data = [d.docs[i].get('text'), d.docs[i].get('user'), d.docs[i].get('link'), d.docs[i].get('anon'), d.docs[i].get('replies'), d.docs[i].get('pdf'), d.docs[i].get('pdfname'), d.docs[i].get('endorsed')]
+        var data = [d.docs[i].get('text'), d.docs[i].get('user'), d.docs[i].get('link'), d.docs[i].get('anon'), d.docs[i].get('replies'), d.docs[i].get('upvotes'), d.docs[i].get('downvotes'), d.docs[i].get('reports'), d.docs[i].get('pdf'), d.docs[i].get('pdfname'), d.docs[i].get('endorsed')]
         posts.push(data);
     }
     var users = await db.collection('users').where('username', '==', req.body.user).get()
