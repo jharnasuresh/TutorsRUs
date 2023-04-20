@@ -147,14 +147,14 @@ export const NotYourProfile = ({GlobalState}) => {
    <br></br>
       
       
-<div style={{marginBottom: '100px', marginLeft: '80px'}}>
+<div style={{marginBottom: '120px', marginLeft: '80px'}}>
   <button style={{border: '1px solid black'}} type="submit" onClick={handleSubmit}> {isFollowing} </button>
   <button style={{border: '1px solid black'}} onClick={() => navigate("/Rating", {state: {currU: location.state.oldU, otherU:location.state.u, tutor: location.state.tutor }})}>Rate This User</button>
 </div>
 {
        
       tut === 'tut' && 
-      <div style = {{height: '300px', paddingTop: '10px'}}>
+      <div style = {{height: '300px', paddingTop: '10px', marginLeft: '80px'}}>
         <br></br>
         <br></br>
         <h2>Schedule with Tutor:</h2>

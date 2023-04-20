@@ -23,31 +23,32 @@ class About extends Component {
 
                     <p style={{display: 'inline'}}>{ this.props.lang === "" ? "English" : this.props.lang} </p>
                     <br></br>
-                    <br></br>
-                    <h2 style={{display: 'inline' , marginLeft: '-250px', color: black}}>Email:</h2> 
+                    <h2 style={{display: 'inline' , marginLeft: '-260px', color: black}}>Email:</h2> 
                     {
                         (this.props.yours) ? <p style={{display: 'inline', }}>{this.props.email}</p> : <a style={{display: 'inline', paddingRight: '50px'}} href={this.props.mail}>{this.props.email}</a>
                     }
                     <br></br>
-                    <br></br>
-                    <h2 style={{display: 'inline', paddingLeft: '50px',  marginLeft: '-500px'}}>Rating:</h2>
+                    <h2 style={{display: 'inline', paddingLeft: '98px',  marginLeft: '-550px'}}>Rating:</h2>
                     {
                         this.props.follows ? <p style={{display: 'inline',}}>{this.props.studentRating}/5.0 </p> : <p></p>
                     }
                                     
                     <br></br>
+
                     {
-                        (this.props.tutor) ? <><h2 style={{display: 'inline', marginLeft: '-380px'}}>Price:</h2><p style={{display: 'inline'}}>${this.props.price}/hour</p> 
-                        <br></br>
+                        (this.props.tutor) ? <><h2 style={{display: 'inline', marginLeft: '-390px'}}>Price:</h2><p style={{display: 'inline'}}>${this.props.price}/hour</p> 
                         <br></br>
                         <h2 style={{display: 'inline', marginLeft: '-325px'}}>Tutor Rating:</h2><p style={{display: 'inline'}}>{this.props.tutorRating}/5.0</p>
                         <br></br>
                         
                       
-                        <h2 style={{display: 'inline', marginLeft: '-370px'}}>Venmo:</h2><p style={{display: 'inline'}}>@{this.props.venmo}</p>
-   
-                        <button style={{border: "solid"}}onClick={() => window.location = 'mailto:'+this.props.email}>Request a Refund</button>
-
+                        {
+                          (this.props.yours) ? <></> : <><h2 style={{display: 'inline', marginLeft: '-50px'}}>Venmo:</h2><p style={{display: 'inline'}}>@{this.props.venmo}</p></>
+                        
+                        }
+                        {
+                        (this.props.yours) ? <></> : <button style={{border: "solid", marginLeft: '200px'}}onClick={() => window.location = 'mailto:'+this.props.email+"?cc=tutorsrus62@gmail.com"}>Request a Refund</button>
+                        }
 
                         </>
                         : <span></span>
