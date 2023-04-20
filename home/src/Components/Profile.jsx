@@ -123,10 +123,10 @@ export const Profile = ({ GlobalState }) => {
       <div className='ur-profile-btn'>
 
 
-      <div style={{position: 'absolute', marginLeft: '10px', marginTop: '-1300px'}}>
+      <div style={{position: 'absolute', marginLeft: '10px', marginTop: '-1320px'}}>
 
           <a className="popupbutton">
-            <button onClick={() => setButtonPopup(true)} className="submit">Followers: {numFollowers}</button>
+            <button style={{backgroundColor:'#F8C8DC' }} onClick={() => setButtonPopup(true)} className="submit">Followers: {numFollowers}</button>
           </a>
       </div>
           <Followers trigger={buttonPopup} setTrigger={setButtonPopup} followers= {location.state.followers} oldUser = {location.state.u}>
@@ -135,10 +135,10 @@ export const Profile = ({ GlobalState }) => {
 
           </Followers>
 
-        <div style={{position: 'absolute', marginLeft: '-105px', marginTop: '-600px'}}>
+        <div style={{position: 'absolute', marginLeft: '-105px', marginTop: '-620px'}}>
 
         <a className=".popupbutton2">
-          <button onClick={() => setButtonPopup2(true)} className="submit">Following: {numFollowing}</button>
+          <button style={{backgroundColor:'#F8C8DC'}} onClick={() => setButtonPopup2(true)} className="submit">Following: {numFollowing}</button>
         </a>
         </div>
         <Following trigger={buttonPopup2} setTrigger={setButtonPopup2}>
