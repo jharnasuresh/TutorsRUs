@@ -204,6 +204,7 @@ app.post("/upvotepost", async (req, res) => {
     console.log("no problem here!")
     var postDataDoc = postData.docs[0];
     var upvotes = postDataDoc.get("upvotes")
+    var downvotes = postDataDoc.get("downvotes")
 
 
 
@@ -217,8 +218,14 @@ app.post("/upvotepost", async (req, res) => {
         upvotes.push(req.body.user);
     }
 
+    if (downvotes.includes(req.body.user)) {
+        console.log("we already disliked but want to like");
+        var ind = downvotes.indexOf(req.body.user)
+        downvotes.splice(ind, 1)
+    }
+
     console.log("1");
-    await postDataDoc.ref.update({ upvotes: upvotes });
+    await postDataDoc.ref.update({ upvotes: upvotes, downvotes: downvotes});
     console.log("2");
     const upCurr = await db.collection('posts').where('text', '==', req.body.post[0]).get();
     console.log("3");
@@ -237,7 +244,7 @@ app.post("/upvotepost", async (req, res) => {
         posts.push(data);
     }
     console.log("8");
-    return res.send(JSON.stringify({ posts: posts,numUpvotes: upvotes.length }))
+    return res.send(JSON.stringify({ posts: posts, numUpvotes: upvotes.length, numDownvotes: downvotes.length }))
 
     //return res.send(JSON.stringify({ user: req.body.user }))
 
@@ -249,6 +256,7 @@ app.post("/downvotepost", async (req, res) => {
     const postData = await db.collection('posts').where('text', '==', req.body.post[0]).get();
     console.log("no problem here!!")
     var postDataDoc = postData.docs[0];
+    var upvotes = postDataDoc.get("upvotes")
     var downvotes = postDataDoc.get("downvotes")
 
 
@@ -262,8 +270,14 @@ app.post("/downvotepost", async (req, res) => {
         downvotes.push(req.body.user);
     }
 
+    if (upvotes.includes(req.body.user)) {
+        console.log("we already liked but want to dislike");
+        var ind = upvotes.indexOf(req.body.user)
+        upvotes.splice(ind, 1)
+    }
 
-    await postDataDoc.ref.update({ downvotes: downvotes });
+
+    await postDataDoc.ref.update({ upvotes: upvotes, downvotes: downvotes });
 
     const upCurr = await db.collection('posts').where('text', '==', req.body.post[0]).get();
     postDataDoc = upCurr.docs[0];
@@ -275,9 +289,8 @@ app.post("/downvotepost", async (req, res) => {
         var data = [d.docs[i].get('text'), d.docs[i].get('user'), d.docs[i].get('link'), d.docs[i].get('anon'), d.docs[i].get('replies'), d.docs[i].get('pdf'), d.docs[i].get('pdfname'), d.docs[i].get('endorsed')]
         posts.push(data);
     }
-    return res.send(JSON.stringify({ posts: posts, numDownvotes: downvotes.length  }))
+    return res.send(JSON.stringify({ posts: posts, numDownvotes: downvotes.length, numUpvotes: upvotes.length  }))
 
-    return res.send(JSON.stringify({ user: req.body.user }))
 
 
 });

@@ -109,6 +109,7 @@ export const Board = ({ GlobalState }) => {
                 console.log("checked " + res);
                 console.log(res.numUpvotes);
                 setNumUpvotes(res.numUpvotes)
+                setNumDownvotes(res.numDownvotes)
             })
     }
 
@@ -120,6 +121,7 @@ export const Board = ({ GlobalState }) => {
             .then((res) => {
                 console.log("checked " + res);
 
+                setNumUpvotes(res.numUpvotes)
                 setNumDownvotes(res.numDownvotes)
             })
     }
