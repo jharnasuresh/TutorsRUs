@@ -107,7 +107,7 @@ export const Start = ({GlobalState}) => {
     <div>
       <Calendly/>
       
-      <Calendar/>
+      <Calendar />
 
       <a href='https://calendar.google.com/calendar/u/0/r'><button>Link To your Calendar!</button>
       </a>

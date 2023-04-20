@@ -73,9 +73,9 @@ export default function Calendar() {
   };
 
   return (
-    <>
+    <div style={{backgroundColor: "white"}} >
       <FullCalendar {...setting} />
       
-    </>
+    </div>
   );
 }
