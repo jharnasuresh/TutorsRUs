@@ -69,16 +69,21 @@
     "pdf2json": "^3.0.3",
     "pdfjs-dist": "^3.4.120",
     "postcss": "^7.0.39",
+    "react": "^18.2.0",
     "react-bootstrap": "^2.7.2",
     "react-calendly": "^4.1.1",
     "react-datepicker": "^4.10.0",
+    "react-dom": "^18.2.0",
     "react-pdf": "^6.2.2",
+    "react-player": "^2.12.0",
     "react-router-dom": "^6.8.1",
     "reactjs-popup": "^2.0.5",
+    "redux": "^4.2.1",
     "scheduler": "^0.23.0",
     "styled-components": "^5.3.9",
     "supertest": "^6.3.3",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.17"
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.17",
+    "video-react": "^0.16.0"
   },
   "devDependencies": {
     "typescript-plugin-css-modules": "^4.2.2"
