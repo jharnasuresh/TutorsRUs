@@ -32,6 +32,7 @@ const Button = (props) => {
                     following: res["following"],
                     follows: true,
                     taking: res["taking"],
+                    taken: res["taken"],
                     tutor: res["tutor"],
                     price: res["price"],
                     studentRating: res["studentRating"],

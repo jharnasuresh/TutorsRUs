@@ -58,7 +58,10 @@ export const NotYourProfile = ({GlobalState}) => {
 
   var printingTaken = "";
 
+  console.log(location.state.taken)
+
   if (location.state.taken != undefined) {
+    console.log('print taken')
     function pTaken (str) {
       printingTaken+=str.title + "-" + str.professor + "-" + str.semester + "-" + str.grade  + ", "
 
