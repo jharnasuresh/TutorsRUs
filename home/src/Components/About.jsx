@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import  './Main.css'
+import { black } from 'tailwindcss/colors'
 /*onst handleSubmit = (e) => {
     e.preventDefault();
     console.log(code);
@@ -23,7 +24,7 @@ class About extends Component {
                     <p style={{display: 'inline'}}>{ this.props.lang === "" ? "English" : this.props.lang} </p>
                     <br></br>
                     <br></br>
-                    <h2 style={{display: 'inline' , marginLeft: '-250px'}}>Email:</h2> 
+                    <h2 style={{display: 'inline' , marginLeft: '-250px', color: black}}>Email:</h2> 
                     {
                         (this.props.yours) ? <p style={{display: 'inline', }}>{this.props.email}</p> : <a style={{display: 'inline', paddingRight: '50px'}} href={this.props.mail}>{this.props.email}</a>
                     }
@@ -41,8 +42,12 @@ class About extends Component {
                         <br></br>
                         <h2 style={{display: 'inline', marginLeft: '-325px'}}>Tutor Rating:</h2><p style={{display: 'inline'}}>{this.props.tutorRating}/5.0</p>
                         <br></br>
-                        <br></br>
-                        <h2 style={{display: 'inline', marginLeft: '-420px'}}>Venmo:</h2><p style={{display: 'inline'}}>@{this.props.venmo}</p>
+                        
+                      
+                        <h2 style={{display: 'inline', marginLeft: '-370px'}}>Venmo:</h2><p style={{display: 'inline'}}>@{this.props.venmo}</p>
+   
+                        <button style={{border: "solid"}}onClick={() => window.location = 'mailto:'+this.props.email}>Request a Refund</button>
+
 
                         </>
                         : <span></span>
