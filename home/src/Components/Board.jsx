@@ -45,6 +45,7 @@ export const Board = ({ GlobalState }) => {
     console.log(lookAtPost);
     var listofposts = location.state.posts
     var listofreploes = location.state.replies
+    console.log(listofposts)
 
     /*
 
@@ -262,7 +263,7 @@ export const Board = ({ GlobalState }) => {
                         isDeleted: false,
                         lookAtPost: res.posts[0],
                         board: location.state.board,
-                        tutor: location.state.isTutor
+                        isTutor: location.state.isTutor
                     }
                 });
             })
@@ -327,7 +328,7 @@ export const Board = ({ GlobalState }) => {
                         posts: res.posts,
                         board: location.state.board,
                         isDeleted: true,
-                        tutor: location.state.isTutor
+                        isTutor: location.state.isTutor
                     }
                 });
 
@@ -347,7 +348,7 @@ export const Board = ({ GlobalState }) => {
             }
             console.log("tag " + u)
             return <>
-                <h1><span>{before}</span><button className='linked' onClick={() => { toProfile(u) }}>{u}</button><span>{after}</span></h1>
+                <h1 style={{ padding: "10px", fontFamily: "Bowlby One", color: "rgb(96, 44, 145)", size: '2' }}><span>{before}</span><button className='linked' style={{ padding: "10px", fontFamily: "Bowlby One", color: "rgb(96, 44, 145)", fontSize: '28px' }} onClick={() => { toProfile(u) }}>{u}</button><span>{after}</span></h1>
 
             </>
         }
@@ -433,6 +434,7 @@ export const Board = ({ GlobalState }) => {
                         <>
                             <div style={{ border: 'solid', backgroundColor: "#F8C8DC" }}>
                                 <br />
+                                {console.log(post)}
                                 {
                                     post[5] ? <button className="link-btn" style={{ textAlign: 'left' }} onClick={(e) => { setLookAtPost(post); setIsLookingAtPost(true); setRepliesFunc(post); }} >{post[6]}</button> : <button className="link-btn" style={{ textAlign: 'left' }} onClick={(e) => isDeleted ? (setLookAtPost(post), setIsLookingAtPost(true), setIsDeleted(false)) : (setLookAtPost(post),  setIsLookingAtPost(true), setRepliesFunc(post))} > {post[0]}</button>
                                 }
@@ -491,7 +493,7 @@ export const Board = ({ GlobalState }) => {
                                     lookAtPost[5] && <button className="link-btn" onClick={() => { navigate('/ViewPDF', { state: { u: currUser, pdf: lookAtPost[0] } }) }}>Click here to view PDF</button>
                                 }
                                 {
-                                    !lookAtPost[5] && (lookAtPost[2] ? <a href={lookAtPost[0]}>{lookAtPost[0]}</a> : tagIfNeeded(lookAtPost[0]))
+                                    !lookAtPost[5] && (lookAtPost[2] ? <a style={{ padding: "10px", fontFamily: "Bowlby One", color: "rgb(96, 44, 145)", fontSize: '28px' , textAlign: 'center'}} href={lookAtPost[0]}>{lookAtPost[0]}</a> : tagIfNeeded(lookAtPost[0]))
                                 }
                                 {
                                     lookAtPost[3] === 'true' ? <p>Posted by: Anonymous</p> : <p>Posted by: {lookAtPost[1]}</p>
@@ -538,6 +540,9 @@ export const Board = ({ GlobalState }) => {
 
                         </div >
                 </div>
+
+                {console.log(location.state.isTutor)}
+                {console.log(lookAtPost)}
 
                 {
                     
@@ -633,7 +638,7 @@ export const Board = ({ GlobalState }) => {
             <div>
 
                 <input style={{ width: '400px' }} value={text} onChange={(e) => setText(e.target.value)} type="text" placeholder="Type here..." id="text" name="text" />
-                <button onClick={addPost}>Post</button>
+                <button onClick={() => {addPost()}}>Post</button>
                 <br />
                 <h4>Post: </h4>
                 <select id="anon" name="anon" onChange={(e) => setAnon(e.target.value)}>
