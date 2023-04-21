@@ -323,7 +323,7 @@ app.post("/reportpost", async (req, res) => {
     }
     console.log("e");
   
-    await postDataDoc.ref.update({ reports: reports });
+    //await postDataDoc.ref.update({ reports: reports });
     console.log("f");
     const upCurr = await db.collection('posts').where('text', '==', req.body.post[0]).get();
     postDataDoc = upCurr.docs[0];
