@@ -321,9 +321,12 @@ app.post("/reportpost", async (req, res) => {
     if (reports.length == 3) {
         postDataDoc.ref.delete();
     }
+    else {
+        await postDataDoc.ref.update({ reports: reports });
+    }
     console.log("e");
   
-    //await postDataDoc.ref.update({ reports: reports });
+    
     console.log("f");
     const upCurr = await db.collection('posts').where('text', '==', req.body.post[0]).get();
     postDataDoc = upCurr.docs[0];

@@ -88,7 +88,8 @@ export const Rating = (props) => {
                     tutor: res["tutor"],
                     price: res["price"],
                     studentRating: res["studentRating"],
-                    tutorRating: res["tutorRating"]
+                    tutorRating: res["tutorRating"],
+                    venmo: res["venmo"]
                 }
             });
         })
