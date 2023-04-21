@@ -472,7 +472,7 @@ console.log('updated')
     var posts = [];
     console.log(d.docs.length)
     for (var i = 0; i < d.docs.length; i++) {
-        var data = [d.docs[i].get('text'), d.docs[i].get('user'), d.docs[i].get('link'), d.docs[i].get('anon'), d.docs[i].get('replies'), d.docs[i].get('pdf'), d.docs[i].get('pdfname'), d.docs[i].get('endorsed')]
+        var data = [d.docs[i].get('text'), d.docs[i].get('user'), d.docs[i].get('link'), d.docs[i].get('anon'), d.docs[i].get('replies'),  d.docs[i].get('pdf'), d.docs[i].get('pdfname'), d.docs[i].get('endorsed'), d.docs[i].get('upvotes'), d.docs[i].get('downvotes'), d.docs[i].get('reports')]
         posts.push(data);
         //console.log("d " + data)
         if (d.docs[i].get('text') === req.body.post[0]) {
@@ -526,7 +526,7 @@ app.post("/downvotereply", async (req, res) => {
     console.log(d.docs.length)
     var int;
     for (var i = 0; i < d.docs.length; i++) {
-        var data = [d.docs[i].get('text'), d.docs[i].get('user'), d.docs[i].get('link'), d.docs[i].get('anon'), d.docs[i].get('replies'), d.docs[i].get('pdf'), d.docs[i].get('pdfname'), d.docs[i].get('endorsed')]
+        var data = [d.docs[i].get('text'), d.docs[i].get('user'), d.docs[i].get('link'), d.docs[i].get('anon'), d.docs[i].get('replies'),  d.docs[i].get('pdf'), d.docs[i].get('pdfname'), d.docs[i].get('endorsed'), d.docs[i].get('upvotes'), d.docs[i].get('downvotes'), d.docs[i].get('reports')]
         posts.push(data);
         if (d.docs[i].get('text') === req.body.post[0]) {
             int = i;
@@ -562,7 +562,7 @@ app.post("/deletepost", async (req, res) => {
     var posts = [];
     console.log(d.docs.length)
     for (var i = 0; i < d.docs.length; i++) {
-        var data = [d.docs[i].get('text'), d.docs[i].get('user'), d.docs[i].get('link'), d.docs[i].get('anon'), d.docs[i].get('replies'), d.docs[i].get('pdf'), d.docs[i].get('pdfname'), d.docs[i].get('endorsed')]
+        var data = [d.docs[i].get('text'), d.docs[i].get('user'), d.docs[i].get('link'), d.docs[i].get('anon'), d.docs[i].get('replies'),  d.docs[i].get('pdf'), d.docs[i].get('pdfname'), d.docs[i].get('endorsed'), d.docs[i].get('upvotes'), d.docs[i].get('downvotes'), d.docs[i].get('reports')]
         posts.push(data);
     }
     return res.send(JSON.stringify({ posts: posts }));
@@ -1023,7 +1023,7 @@ app.post('/getposts', async (req, res) => {
     var posts = [];
     console.log(d.docs.length)
     for (var i = 0; i < d.docs.length; i++) {
-        var data = [d.docs[i].get('text'), d.docs[i].get('user'), d.docs[i].get('link'), d.docs[i].get('anon'), d.docs[i].get('replies'), d.docs[i].get('pdf'), d.docs[i].get('pdfname'), d.docs[i].get('endorsed')]
+        var data = [d.docs[i].get('text'), d.docs[i].get('user'), d.docs[i].get('link'), d.docs[i].get('anon'), d.docs[i].get('replies'),  d.docs[i].get('pdf'), d.docs[i].get('pdfname'), d.docs[i].get('endorsed'), d.docs[i].get('upvotes'), d.docs[i].get('downvotes'), d.docs[i].get('reports')]
         posts.push(data);
     }
     return res.send(JSON.stringify({ posts: posts }))
@@ -1058,7 +1058,7 @@ app.post('/addpost', async (req, res) => {
     var posts = [];
     console.log(d.docs.length)
     for (var i = 0; i < d.docs.length; i++) {
-        var data = [d.docs[i].get('text'), d.docs[i].get('user'), d.docs[i].get('link'), d.docs[i].get('anon'), d.docs[i].get('replies'), d.docs[i].get('upvotes'), d.docs[i].get('downvotes'), d.docs[i].get('reports'), d.docs[i].get('pdf'), d.docs[i].get('pdfname'), d.docs[i].get('endorsed')]
+        var data = [d.docs[i].get('text'), d.docs[i].get('user'), d.docs[i].get('link'), d.docs[i].get('anon'), d.docs[i].get('replies'),  d.docs[i].get('pdf'), d.docs[i].get('pdfname'), d.docs[i].get('endorsed'), d.docs[i].get('upvotes'), d.docs[i].get('downvotes'), d.docs[i].get('reports')]
         posts.push(data);
     }
     var users = await db.collection('users').where('username', '==', req.body.user).get()
@@ -1085,7 +1085,7 @@ app.post('/addreply', async (req, res) => {
     var count;
     console.log(p.docs.length)
     for (var i = 0; i < p.docs.length; i++) {
-        var data = [p.docs[i].get('text'), p.docs[i].get('user'), p.docs[i].get('link'), p.docs[i].get('anon'), p.docs[i].get('replies'), p.docs[i].get('pdf'), p.docs[i].get('pdfname'), p.docs[i].get('endorsed')]
+        var data = [p.docs[i].get('text'), p.docs[i].get('user'), p.docs[i].get('link'), p.docs[i].get('anon'), p.docs[i].get('replies'),  p.docs[i].get('pdf'), p.docs[i].get('pdfname'), p.docs[i].get('endorsed'), p.docs[i].get('upvotes'), p.docs[i].get('downvotes'), p.docs[i].get('reports')]
         posts.push(data);
         if (p.docs[i].get('text') === req.body.post) {
             count = i;
