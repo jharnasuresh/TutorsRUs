@@ -203,7 +203,7 @@ export const Settings = ({ GlobalState }) => {
             <button type="submit" className="setting-sub" onSubmit={handleSubmit}>Submit Changes</button>
             </span>
             </form>
-            <span style={{flexDirection: "column", display: "flex", marginLeft: "300px", marginTop: "-700px", paddingLeft: "100px"}}>
+            <span style={{flexDirection: "column", display: "flex", marginLeft: "300px", marginTop: "-500px", paddingLeft: "100px"}}>
             <button type="submit" onClick={() => navigate('/EditCourse', {state: {u: currUser, taking: location.state.taking, tutor: location.state.tutor}})}>Edit Current Courses</button>
             </span>
                 {
