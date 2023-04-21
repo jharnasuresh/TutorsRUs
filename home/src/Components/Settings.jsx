@@ -225,6 +225,10 @@ export const Settings = ({ GlobalState }) => {
                 <><span style={{flexDirection: "column", display: "flex", marginLeft: "300px", paddingLeft: "100px"}}><button type="submit" onClick={() => navigate('/EditPFP', {state: {u: currUser, profpic: location.state.profpic}})}>Edit Profile Picture</button>  
                 </span></>: <span></span>
         } 
+        <br/>
+        <br/>
+        <br/>
+        <br/>
              
             <div>
             <span style={{flexDirection: "column", display: "flex", marginLeft: "380px"}}>
