@@ -553,7 +553,7 @@ export const Board = ({ GlobalState }) => {
                     
                 }
                 {
-                    endorsed && <div>ENDORSED</div>
+                    endorsed && <div>   <div className="img"><img style= {{height: "200px", marginTop: "-100px"}}class="img" src = "/Images/endorsed.png"/></div> </div>
                 }
 
                 <div style={{ border: 'solid' }}>
