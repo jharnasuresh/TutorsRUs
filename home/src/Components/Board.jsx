@@ -106,6 +106,7 @@ export const Board = ({ GlobalState }) => {
     const upVotePost = () => {
         const headers = { "content-type": "application/json" };
         const requestData = JSON.stringify({ user: currUser, post: lookAtPost, board:location.state.board })
+        console.log("1")
         fetch('http://localhost:3001/upvotepost', { method: 'POST', body: requestData, headers: headers })
             .then((res) => res.json())
             .then((res) => {
@@ -119,7 +120,10 @@ export const Board = ({ GlobalState }) => {
     const downVotePost = () => {
         const headers = { "content-type": "application/json" };
         const requestData = JSON.stringify({ user: currUser, post: lookAtPost, board: location.state.board })
+        console.log("2")
+
         fetch('http://localhost:3001/downvotepost', { method: 'POST', body: requestData, headers: headers })
+        
             .then((res) => res.json())
             .then((res) => {
                 console.log("checked " + res);
@@ -134,6 +138,7 @@ export const Board = ({ GlobalState }) => {
         const headers = { "content-type": "application/json" };
         console.log("helooooooooooooo jjjjjjj");
         const requestData = JSON.stringify({ user: currUser, post: lookAtPost, board:location.state.board })
+        
         fetch('http://localhost:3001/numuvpost', { method: 'POST', body: requestData, headers: headers })
             .then((res) => res.json())
             .then((res) => {
@@ -434,7 +439,6 @@ export const Board = ({ GlobalState }) => {
                         <>
                             <div style={{ border: 'solid', backgroundColor: "#F8C8DC" }}>
                                 <br />
-                                {console.log(post)}
                                 {
                                     post[5] ? <button className="link-btn" style={{ textAlign: 'left' }} onClick={(e) => { setLookAtPost(post); setIsLookingAtPost(true); setRepliesFunc(post); }} >{post[6]}</button> : <button className="link-btn" style={{ textAlign: 'left' }} onClick={(e) => isDeleted ? (setLookAtPost(post), setIsLookingAtPost(true), setIsDeleted(false)) : (setLookAtPost(post),  setIsLookingAtPost(true), setRepliesFunc(post))} > {post[0]}</button>
                                 }
