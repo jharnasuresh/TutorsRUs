@@ -34,7 +34,7 @@ const DragDrop = (props) => {
             fetch('http://localhost:3001/parse', { method: 'POST', body: formData})
             .then((res) => res.json())
             .then((res) => {
-                console.log("verified! " + res["tutor"])
+                console.log("verified! " + res.tutor)
             navigate("/Profile", {
             
                 state: {
@@ -48,7 +48,7 @@ const DragDrop = (props) => {
                     profpic: res["profpic"],
                     followers: res["followers"],
                     following: res["following"],
-                    tutor: res["tutor"],
+                    tutor: res.tutor,
                     price: res["price"],
                     taken: res["taken"],
                     studentRating: res["studentRating"],

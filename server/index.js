@@ -348,7 +348,12 @@ app.post("/reportpost", async (req, res) => {
 });
 
 app.post("/hasreportedpost", async (req, res) => {
-    const postData = await db.collection('posts').where('text', '==', req.body.post[0]).get();
+    if (req.body.post[5]) {
+        var temp = await db.collection('posts').where('pdfname', '==', req.body.post[6]).get();
+    } else {
+        var temp = await db.collection('posts').where('text', '==', req.body.post[0]).get();
+    }
+    const postData = temp;
     console.log("no problem here!!")
     var postDataDoc = postData.docs[0];
     var reports = postDataDoc.get("reports")
@@ -373,7 +378,13 @@ app.post("/hasreportedpost", async (req, res) => {
 });
 
 app.post("/numuvpost", async (req, res) => {
-    const postData = await db.collection('posts').where('text', '==', req.body.post[0]).get();
+    
+    if (req.body.post[5]) {
+        var temp = await db.collection('posts').where('pdfname', '==', req.body.post[6]).get();
+    } else {
+        var temp = await db.collection('posts').where('text', '==', req.body.post[0]).get();
+    }
+    const postData = temp;
     console.log("no problem here!")
     var postDataDoc = postData.docs[0];
     var upvotes = postDataDoc.get("upvotes")
@@ -403,7 +414,14 @@ app.post("/numuvpost", async (req, res) => {
 });
 
 app.post("/numdownpost", async (req, res) => {
-    const postData = await db.collection('posts').where('text', '==', req.body.post[0]).get();
+    if (req.body.post[5]) {
+        console.log("yes")
+        var temp = await db.collection('posts').where('pdfname', '==', req.body.post[6]).get();
+    } else {
+        console.log("no")
+        var temp = await db.collection('posts').where('text', '==', req.body.post[0]).get();
+    }
+    const postData = temp;
     console.log("no problem here!")
     var postDataDoc = postData.docs[0];
     var downvotes = postDataDoc.get("downvotes")
@@ -625,7 +643,7 @@ app.post("/parse", upload.single("file"), async (req, res) => {
         var doc = login.docs[0];
         await doc.ref.update({ tutor: true })
         console.log("2")
-        return res.send(JSON.stringify({ "studentRating": doc.get("studentRating"), "tutorRating": doc.get("tutorRating"), "u": doc.get("username"), "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), taking: doc.get("taking"), tutor: doc.get("tutor"), price: doc.get("price"), venmo: doc.get("venmo"), taken: doc.get("taken") }))
+        return res.send(JSON.stringify({ "studentRating": doc.get("studentRating"), "tutorRating": doc.get("tutorRating"), "u": doc.get("username"), "fname": doc.get("FName"), "lname": doc.get("LName"), "email": doc.get("email"), "active": doc.get("active"), "userUniqueString": doc.get("userUniqueString"), "followers": doc.get("followers"), "following": doc.get("following"), "lang": doc.get("lang"), taking: doc.get("taking"), "tutor": true, price: doc.get("price"), venmo: doc.get("venmo"), taken: doc.get("taken") }))
 
     }
     return res.send(JSON.stringify("error"))

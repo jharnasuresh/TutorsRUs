@@ -35,6 +35,7 @@ const Button = (props) => {
                     taken: res["taken"],
                     tutor: res["tutor"],
                     price: res["price"],
+                    profpic: res["profpic"],
                     studentRating: res["studentRating"],
                     tutorRating: res["tutorRating"],
                     venmo: res["venmo"]
